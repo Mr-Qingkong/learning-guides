@@ -71,19 +71,22 @@ git add -A
 git commit -m "update %DATE%" >nul 2>&1
 
 echo [5/6] Fetching remote to check for divergence...
-git fetch origin 2>nul
+git fetch origin
 if errorlevel 1 (
-  echo   [WARN] fetch failed (network). Will try pushing anyway.
+  echo   [WARN] fetch failed ^(network^). Will try pushing anyway.
   goto :do_push
 )
 
 if not exist ".git\refs\remotes\origin\main" goto :do_push
 
-for /f %%A in ('git rev-list --count HEAD..origin/main 2^>nul') do set BEHIND=%%A
+git rev-list --count HEAD..origin/main > "%TEMP%\_behind.txt" 2>nul
+set /p BEHIND=<"%TEMP%\_behind.txt"
+del "%TEMP%\_behind.txt" >nul 2>&1
+if not defined BEHIND goto :do_push
 if "%BEHIND%"=="0" goto :do_push
 
 echo   Remote is ahead by %BEHIND% commit^(s^). Merging remote changes first...
-git merge --no-edit origin/main
+git merge --no-edit --allow-unrelated-histories origin/main
 if errorlevel 1 (
   echo   [X] Merge conflict. Resolve it manually in this folder, then rerun.
   echo       Files in conflict are listed above. Nothing has been pushed.
