@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>生物学进阶指南</h1>
-          <p class="report-intro__summary">生命的四大支柱：细胞是结构基础，DNA 是信息基础，中心法则解释「信息如何流动」，进化解释「多样性从何而来」。这份指南把这四条主线串成完整的生命观。</p>
+          <p class="report-intro__summary">生命的四大支柱：细胞是结构基础，DNA 是信息基础，中心法则解释「信息如何流动」，进化解释「多样性从何而来」。这份指南不止讲是什么，更把分子机制与群体遗传学写成可推导的模型。</p>
           <div class="intro-meta">
             <span>领域：生物</span>
             <span>难度：进阶</span>
@@ -26,7 +26,8 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>细胞：原核 vs 真核</h2>
+          <h2><span class="sec-num">1</span>细胞：原核 vs 真核与区室化</h2>
+          <p class="lede">细胞不是「一袋化学物质」，而是一套靠膜系统把反应分区、靠能量货币驱动的高度组织化装置。</p>
           <table>
             <caption class="caption">两类细胞对比</caption>
             <thead><tr><th>特征</th><th>原核细胞</th><th>真核细胞</th></tr></thead>
@@ -37,84 +38,204 @@
               <tr><th scope="row">代表</th><td>细菌、蓝藻</td><td>动植物、真菌</td></tr>
             </tbody>
           </table>
+          <p><strong>为什么真核细胞能长得更大？</strong>一个粗略的物理约束是：体积按 r³ 增长，而物质交换靠表面积按 r² 增长。若只靠表面扩散，细胞半径增大后，单位体积可获得的「供给」会以 1/r 的速率下降。真核细胞靠两招突破：一是内部膜系统（内质网、高尔基体）把<strong>反应区室化</strong>，二是细胞骨架配合分子马达做<strong>主动运输</strong>，不再单纯依赖被动扩散。</p>
           <table>
-            <caption class="caption">关键细胞器功能</caption>
-            <thead><tr><th>细胞器</th><th>功能</th><th>类比</th></tr></thead>
+            <caption class="caption">关键细胞器与功能</caption>
+            <thead><tr><th>细胞器</th><th>功能</th><th>机制要点</th></tr></thead>
             <tbody>
-              <tr><th scope="row">细胞核</th><td>储存 DNA、控制遗传</td><td>指挥中心</td></tr>
-              <tr><th scope="row">线粒体</th><td>有氧呼吸、产生 ATP</td><td>发电厂</td></tr>
-              <tr><th scope="row">核糖体</th><td>合成蛋白质</td><td>装配车间</td></tr>
-              <tr><th scope="row">内质网/高尔基体</th><td>加工、运输蛋白质</td><td>加工与物流</td></tr>
+              <tr><th scope="row">细胞核</th><td>储存 DNA、转录调控</td><td>核膜上的核孔控制 RNA/蛋白进出</td></tr>
+              <tr><th scope="row">线粒体</th><td>有氧呼吸、产生 ATP</td><td>电子传递链建立质子梯度，ATP 合酶「借坡」合成 ATP</td></tr>
+              <tr><th scope="row">核糖体</th><td>合成蛋白质</td><td>按 mRNA 密码子逐个装配氨基酸</td></tr>
+              <tr><th scope="row">内质网/高尔基体</th><td>加工、运输蛋白质</td><td>折叠、糖基化后定向分选</td></tr>
             </tbody>
           </table>
+          <div class="callout tip"><span class="callout-label">能量货币</span>ATP 之所以是「通用货币」，是因为它的磷酸酐键水解时自由能释放约 −30 kJ/mol 量级（随条件变化），既足够推动多数反应，又便于由呼吸/光合快速再生与循环使用。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>中心法则：信息如何流动</h2>
+          <h2><span class="sec-num">2</span>中心法则：机制与信息流</h2>
           <p class="lede">遗传信息的流动方向：DNA → RNA → 蛋白质，这就是分子生物学的「中心法则」。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>复制（DNA→DNA）</h4><p>细胞分裂前，DNA 自我复制，把遗传信息完整传给子细胞。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>转录（DNA→RNA）</h4><p>以 DNA 为模板合成信使 RNA（mRNA），「抄写」基因信息。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>翻译（RNA→蛋白质）</h4><p>核糖体按 mRNA 上的「密码子」读取信息，把氨基酸串成蛋白质。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>复制（DNA→DNA）</h4><p>半保留复制：双螺旋解链，各自的链作模板，按碱基互补（A–T、G–C）合成新链，使子代获得完整信息。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>转录（DNA→RNA）</h4><p>RNA 聚合酶沿模板链读取，把 T 换成 U，合成 mRNA；转录由启动子等调控序列控制「何时、多少」。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>翻译（RNA→蛋白质）</h4><p>核糖体按密码子（每 3 碱基）逐个招募转运 RNA（tRNA），把氨基酸连成多肽链。</p></div></div>
           </div>
-          <p>DNA 的碱基（A/T/G/C）以「三联体密码」对应氨基酸——每 3 个碱基（一个密码子）编码一个氨基酸，这是生命「编码」的核心机制。</p>
+          <div class="prompt-block"><span class="prompt-label">编码的算术</span><button class="copy-btn" type="button">复制</button>碱基有 4 种：A、U、G、C
+三联体密码子组合数 = 4³ = 64 种
+
+氨基酸常见为 20 种；
+64 &gt; 20，因此密码子必然「冗余」（多个密码子
+对应同一氨基酸），这也让编码具有容错空间。
+
+起点与终止信号占据其中一部分密码子。</div>
+          <p>需注意中心法则的现代细化：存在逆转录（RNA→DNA）与 RNA 复制等「例外」，因此它更像一张<strong>信息流的主干地图</strong>，而非不可违反的铁律。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>遗传：孟德尔定律</h2>
+          <h2><span class="sec-num">3</span>孟德尔遗传与哈代-温伯格平衡</h2>
+          <p class="lede">孟德尔定律告诉我们「遗传的分配规则」，哈代-温伯格定律告诉我们「在理想条件下基因频率如何静止不动」——后者是检验进化是否发生的零假设。</p>
           <table>
-            <caption class="caption">孟德尔遗传规律</caption>
-            <thead><tr><th>定律</th><th>内容</th></tr></thead>
+            <caption class="caption">孟德尔两条定律</caption>
+            <thead><tr><th>定律</th><th>内容</th><th>条件</th></tr></thead>
             <tbody>
-              <tr><th scope="row">分离定律</th><td>每对等位基因在形成配子时分离，后代各得其一</td></tr>
-              <tr><th scope="row">自由组合定律</th><td>不同基因（位于不同染色体）的遗传彼此独立</td></tr>
+              <tr><th scope="row">分离定律</th><td>每对等位基因在形成配子时彼此分离，各入一个配子</td><td>二倍体、有性生殖</td></tr>
+              <tr><th scope="row">自由组合定律</th><td>不同基因（位于不同染色体）的遗传彼此独立</td><td>基因不连锁</td></tr>
             </tbody>
           </table>
-          <p>基因有<strong>显性/隐性</strong>之分：显性基因存在时性状就表现，隐性需成对才表现。但多数性状其实是「多基因 + 环境」共同决定的，远比「豌豆的圆皱」复杂。</p>
+          <div class="prompt-block"><span class="prompt-label">哈代-温伯格方程（可推导）</span><button class="copy-btn" type="button">复制</button>设某基因两个等位基因频率为 p（A）与 q（a），
+且 p + q = 1。
+
+随机交配下，子代基因型频率为：
+  AA : Aa : aa = p² : 2pq : q²
+
+推导：配子各以 p、q 概率携带 A、a；
+两次抽样相乘即得 p²、2pq、q²。
+
+必要条件（缺一则频率会变）：
+  ① 无自然选择  ② 无突变  ③ 无迁移
+  ④ 种群无限大  ⑤ 随机交配</div>
+          <p>哈代-温伯格的价值在于「反证」：现实中总有一条条件不满足，于是基因频率必然改变——而这个「改变」就是<strong>进化的定义</strong>（世代间基因频率的变化）。它把「进化是否在发生」变成一个可计算的检验问题。</p>
+          <div class="callout warn"><span class="callout-label">常见误读</span>「显性」不等于「常见」。若 a 为隐性、q=0.9，则性状表现隐性的个体（aa = q² = 0.81）反而占多数。显隐性只描述表达关系，不决定频率高低。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>进化：不止自然选择</h2>
-          <p class="lede">进化 = 遗传变异 + 自然选择 + 遗传漂变 + 基因流动，四者共同塑造物种。</p>
+          <h2><span class="sec-num">4</span>自然选择的量化模型</h2>
+          <p class="lede">自然选择可以写成一句话的算术：适应度差异 × 时间 = 等位基因频率的定向变化。</p>
+          <div class="feature-list">
+            <div class="feature"><div class="f-ico">w</div><div><h4>适应度（fitness）</h4><p>相对适应度 w 衡量某基因型留下后代的能力。以最高者为 1，其余按比例折算，选择系数 s = 1 − w。</p></div></div>
+            <div class="feature"><div class="f-ico">Δ</div><div><h4>频率变化</h4><p>在简单选择模型下，有利等位基因的频率每代按 s 的比例推进；s 越大，固定（fixation）越快。</p></div></div>
+            <div class="feature"><div class="f-ico">漂</div><div><h4>遗传漂变</h4><p>有限种群中，抽样误差使频率随机游走。有效种群大小 N 越小，漂变越强，可能盖过微弱的选择。</p></div></div>
+            <div class="feature"><div class="f-ico">平</div><div><h4>平衡选择</h4><p>杂合子优势等机制可维持多态，使等位基因频率不走向固定，而是停在稳定平衡点。</p></div></div>
+          </div>
+          <p>选择与漂变的相对强弱，直观上取决于<strong>s 与 1/N 的比较</strong>：当 s 远大于 1/N 时选择主导，方向明确；当 s 远小于 1/N 时漂变主导，变化近于随机。这解释了为什么「中性」的分子变化在大种群与小种群中表现不同。</p>
           <ul>
             <li><strong>变异</strong>：突变与有性生殖产生差异，是进化的「原材料」。</li>
             <li><strong>自然选择</strong>：更适应环境的个体留下更多后代，性状逐渐积累。</li>
             <li><strong>遗传漂变</strong>：小种群中，某些基因频率「随机」变化（与适应性无关）。</li>
+            <li><strong>基因流动</strong>：迁入迁出把等位基因带入或带出，可抵消局部选择与漂变。</li>
             <li><strong>共同祖先</strong>：所有现存生物共享一个共同祖先，亲缘关系可用「进化树」表达。</li>
           </ul>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>生态：能量沿食物链流动</h2>
+          <h2><span class="sec-num">5</span>生态：能量流动与十分之一定律</h2>
           <p class="lede">生态系统的能量来自太阳，沿「生产者 → 消费者 → 分解者」单向流动、逐级递减。</p>
-          <p>绿色植物（生产者）把光能转为化学能；食草动物（初级消费者）取食植物；食肉动物再逐级捕食。每一级大约只有 10% 的能量传给下一级（<strong>十分之一法则</strong>），所以食物链通常不超过 4–5 级。物质（如碳、氮）则在生态系统中循环利用。</p>
+          <p>绿色植物（生产者）把光能转为化学能；食草动物（初级消费者）取食植物；食肉动物再逐级捕食。每一级大约只有 10% 的能量传给下一级（<strong>十分之一法则</strong>），其余以呼吸耗散、排泄等方式流失。因为能量按 r 比例逐级衰减，所以可用能量随营养级呈<strong>指数衰减</strong>，这就是食物链通常不超过 4–5 级的量化原因。</p>
+          <p>与能量不同，<strong>物质</strong>（碳、氮、磷、水）在生物与无机环境之间循环利用：能量是「单向流」，物质是「循环流」，这是生态系统运行的两条基本主线。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">生物进阶速记</span><button class="copy-btn" type="button">复制</button>· 原核（无核） vs 真核（有核）
-· 中心法则：DNA → RNA → 蛋白质
-· 孟德尔：分离定律 + 自由组合定律；显性/隐性
-· 进化四要素：变异、自然选择、遗传漂变、基因流动
-· 生态：能量单向流动、逐级递减（约 10%）</div>
+          <h2><span class="sec-num">6</span>前沿进展：现代综合与系统生物学</h2>
+          <p class="lede">二十世纪以来，生物学从「描述」走向「机制与量化」，出现了几次关键整合。</p>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-era">现代综合</div>
+              <div class="tl-date">20 世纪上半叶</div>
+              <p>把孟德尔遗传学、群体遗传学与达尔文式自然选择统一为「现代进化综合」，核心贡献者包括费希尔、霍尔丹、赖特等，为进化提供了数学骨架。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">分子革命</div>
+              <div class="tl-date">1950 年代起</div>
+              <p>DNA 双螺旋结构（沃森与克里克，1953，基于富兰克林等人的 X 射线衍射数据）确立后，遗传信息首次有了物质机制，分子生物学成为主流。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">中性理论与分子钟</div>
+              <div class="tl-date">1960–1970 年代</div>
+              <p>木村资生的中性理论主张：分子层面大量变异在选择上是中性的，由漂变主导。它把「选择 vs 漂变」的争论推进到可测量的层面。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">测序与组学</div>
+              <div class="tl-date">近数十年</div>
+              <p>自桑格测序到大规模并行测序普及，基因组、转录组、蛋白质组数据爆发式增长，催生了以「整网动态」为对象的系统生物学与生物信息学。</p>
+            </div>
+          </div>
         </section>
 
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">7</span>跨学科视角：生物学与数理方法</h2>
+          <div class="grid-2">
+            <div class="card">
+              <h3>群体遗传学</h3>
+              <p>用概率与微分方程描述基因频率的演化。哈代-温伯格是零假设，选择和漂变是作用于它的「力」。</p>
+            </div>
+            <div class="card">
+              <h3>统计物理</h3>
+              <p>蛋白质折叠、分子马达与细胞内的随机性，可用能量景观与热涨落来刻画；许多细胞过程本质是「在噪声中做出决策」。</p>
+            </div>
+            <div class="card">
+              <h3>信息论</h3>
+              <p>遗传突变、基因调控可看作信息编码与信道；「冗余密码子」与纠错机制让编码对错误更稳健。</p>
+            </div>
+            <div class="card">
+              <h3>系统生物学</h3>
+              <p>把细胞视为由基因/蛋白构成的调控网络，用网络拓扑（反馈、模块、枢纽）解释鲁棒性与涌现行为，而非逐一成分。</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界</h2>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">常见误区</span>
+              <p>「进化是随机的」——变异（突变）是随机的，选择是非随机的、定向的，二者需分开谈。</p>
+              <p>「更高级的生物」——进化不朝「高级」方向，只针对当下环境的适应，不存在终点。</p>
+              <p>「一个基因一个性状」——多数性状由多基因与环境共同决定，且基因常有多效性。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">更稳的理解</span>
+              <p>进化 = 世代间基因频率的变化，由选择、漂变、突变、迁移共同驱动。</p>
+              <p>适应是「局部最优」，常受历史约束，未必全局最优。</p>
+              <p>分子层大量变异近中性，选择与漂变的相对强弱可用 s 与 1/N 比较来判断。</p>
+            </div>
+          </div>
+          <table>
+            <caption class="caption">边界清单</caption>
+            <thead><tr><th>议题</th><th>可以说</th><th>不宜说</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">显隐性</th><td>描述等位基因的表达关系</td><td>「显性基因更常见/更强」</td></tr>
+              <tr><th scope="row">中心法则</th><td>信息流主干方向为 DNA→RNA→蛋白</td><td>「任何信息都不可逆传」</td></tr>
+              <tr><th scope="row">食物链长度</th><td>能量逐级约 10% 衰减限制了级数</td><td>「4–5 级是绝对定律」</td></tr>
+              <tr><th scope="row">进化方向</th><td>适应是相对的、局部的</td><td>「生物在向更高形态进步」</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">生物进阶速记</span><button class="copy-btn" type="button">复制</button>· 原核（无核）vs 真核（有核，区室化）
+· 中心法则：DNA → RNA → 蛋白质（有逆转录等例外）
+· 密码子：4³ = 64 &gt; 20 种氨基酸 → 编码冗余
+· 孟德尔：分离定律 + 自由组合定律
+· 哈代-温伯格：p+q=1；AA:Aa:aa = p²:2pq:q²
+· 平衡条件：无选择/突变/迁移，种群无限大，随机交配
+· 选择系数 s = 1 − w；s 与 1/N 比较决定选择或漂变主导
+· 进化四驱动：选择、漂变、突变、迁移
+· 生态：能量单向流动、逐级约 10% 递减
+· 物质循环、能量流动——两条主线
+· 中性理论：分子层大量变异近中性（木村资生）
+· 现代综合：遗传学 + 群体遗传 + 自然选择</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">对比原核细胞与真核细胞的差异</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用自己的话讲一遍「中心法则」</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">解释显性与隐性基因的区别</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">区分自然选择与遗传漂变</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">解释「为什么食物链通常不长」</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用「中心法则」解释一个基因突变如何影响性状</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：由 4 种碱基与三联体结构，推出密码子总数，并解释为何编码必然冗余</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">计算：某基因 A 频率 p=0.6，写出 AA、Aa、aa 的 HW 期望频率并验证三者之和为 1</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">验证：设计一个隐性纯合（aa）实际频率显著偏离 q² 的场景，说明哪条 HW 条件被破坏</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">建模：写出含选择系数 s 的简单一世代频率变化表达式，说明 s=0 时退化为 HW</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">估算：若每个营养级传递约 10% 能量，计算从生产者到第 4 级的能量留存比例</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">机制：画出示意流程说明线粒体中质子梯度如何驱动 ATP 合成</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">辨析：区分「突变随机」与「选择非随机」，各举一个可检验的预测</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">推理：给定有效种群大小 N 与选择系数 s，判断变化更可能由选择还是漂变主导</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">综合：用中心法则解释「一个点突变如何导致蛋白质功能改变」，并说明为何有时无表型影响</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，基于细胞生物学、分子生物学与进化论的通行知识整理。</p>
+        <p class="footnote">原创交互式学习资料，基于细胞生物学、分子生物学、群体遗传学与进化论的通行知识整理。历史人名与年代依学界通行表述。</p>
       </footer>
     </div>
   </article>

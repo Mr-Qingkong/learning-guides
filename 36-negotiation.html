@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>谈判技巧指南</title>
+  <title>谈判进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>谈判技巧指南</h1>
-          <p class="report-intro__summary">谈判力不来自口才与气势，而来自准备：你有多少备选项、能把蛋糕做多大、能否识破对方的战术。这份指南讲分配式与整合式谈判、BATNA 与保留价、锚定与让步策略、信息不对称下的提问，以及常见战术的反制。</p>
+          <h1>谈判进阶指南</h1>
+          <p class="report-intro__summary">谈判是可计算的双边优化问题：ZOPA 界定可行域，BATNA 决定你的保留价，议题的效用结构决定整合空间，锚定与让步是信息不对称下的信号博弈。这份指南用博弈论与实验经济学的语言重讲分配式 / 整合式谈判、议价区间与锚定、不对称信息下的提问，以及战术反制的机制。</p>
           <div class="intro-meta">
             <span>领域：职场 · 沟通</span>
             <span>难度：进阶</span>
@@ -24,51 +24,80 @@
     </header>
     <div class="page__content">
       <main>
+
         <section>
-          <h2><span class="sec-num">1</span>两种谈判：分配式与整合式</h2>
-          <p class="lede">先判断蛋糕的大小能不能变，再决定打法——这是上桌之前的第一道分岔。</p>
-          <table>
-            <caption class="caption">分配式与整合式谈判对比</caption>
-            <thead><tr><th>维度</th><th>分配式（Distributive）</th><th>整合式（Integrative）</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">假设</th><td>蛋糕固定，谈怎么分</td><td>蛋糕可变，先做大再分</td></tr>
-              <tr><th scope="row">典型场景</th><td>单一价格、一次性交易</td><td>多议题、长期合作关系</td></tr>
-              <tr><th scope="row">信息策略</th><td>守住底线，少亮底牌</td><td>有选择地共享，交换分歧利益</td></tr>
-              <tr><th scope="row">风险</th><td>拉锯消耗，两败俱伤</td><td>善意被利用，单方面泄底</td></tr>
-            </tbody>
-          </table>
-          <p>立场（position）是你嘴上要的东西，利益（interest）是你真正要满足的需要。《谈判力》（Fisher &amp; Ury，哈佛谈判项目）的核心论断是：立场通常对立，利益未必对立——两人争图书馆开窗还是关窗，一问缘由：一个要通风，一个怕吹风，开隔壁房间的窗即可同时满足。所谓<mark class="key">把蛋糕做大</mark>，就是从立场下沉到利益，再交换你们在意的不同部分。</p>
-          <div class="callout tip"><span class="callout-label">判断法</span>议题多于一个、关系长于一次、双方优先级不对称，就存在整合空间。只谈单一价格的纯分配局面其实很少见——多数谈判是被想象力锁死在分配式里的。</div>
+          <h2><span class="sec-num">1</span>谈判的形式化：可行域、效用与议价区间</h2>
+          <p class="lede">把谈判写成一个优化问题，很多技巧就自动推出了——不再需要记口诀，而是能自己推导该怎么做。</p>
+          <p>ZOPA（Zone of Possible Agreement）是双方保留价之间的<strong>可行协议区间</strong>。设定一个单一价格议题：卖方保留价 s（低于此价宁可不卖），买方保留价 b（高于此价宁可不买）。若 b ≥ s，则可行域为 [s, b]，宽度为 (b − s)，成交价落在其中某点；若 b &lt; s，则不存在 ZOPA，理性结果是<strong>不成交</strong>——强行成交只会让至少一方拿到比自己的 BATNA 更差的结果。</p>
+          <p>多议题谈判要转到<strong>效用</strong>上分析。设议题 i 的取值为 x_i，你的效用函数 U(x) = Σ_i w_i · u_i(x_i)，其中 w_i 是议题权重（优先级），u_i 是该议题的效用函数。谈判的可行域是「双方效用均不低于各自保留效用」的集合，可行域的<strong>面积与形状</strong>决定了整合空间的大小。</p>
+          <div class="prompt-block"><span class="prompt-label">议价区间的分解</span><button class="copy-btn" type="button">复制</button>ZOPA 存在条件（单议题）： b ≥ s
+可行域宽度：            W_zone = b − s
+成交价位置由谈判力决定： p = s + θ · (b − s)，θ ∈ [0,1]
+  θ 反映相对谈判力（备选、耐心、信息、声誉）
+
+多议题下的整合空间：
+  我方效用 U_A = Σ w_i^A · u_i(x_i)
+  对方效用 U_B = Σ w_i^B · u_i(x_i)
+  可行域 = { x | U_A(x) ≥ R_A 且 U_B(x) ≥ R_B }
+  （R 为各自保留效用，由 BATNA 折算）
+
+关键：若双方优先级 w_i 不同（你有更看重的议题，我有更看重的议题），
+      就存在「交换」空间，把散点做大成帕累托改进</div>
+          <p>这个模型的实用结论：<strong>谈判前的准备 = 估计 s 与 b、估计对方优先级 w_i^B、优化自己的 BATNA</strong>。谈判桌上的所有话术，本质都是在 (b − s) 与 θ 上做文章——而这两者都主要由桌上的信息与桌上的备选决定，不由嗓门决定。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>BATNA 与保留价：谈判力的真正来源</h2>
-          <p class="lede">你的谈判力来自「谈不成时的最佳备选方案」，而不是嗓门、职位或情绪。</p>
+          <h2><span class="sec-num">2</span>BATNA：谈判力从何而来</h2>
+          <p class="lede">你的谈判力来自「谈不成时最好的去处」，而不是你的表达、职位或情绪。BATNA 是把谈判力折算成数字的那一步。</p>
           <div class="feature-list">
             <div class="feature"><div class="f-ico">1</div><div><h4>BATNA</h4><p>Best Alternative to a Negotiated Agreement——不成交时你会去做的那件最好的事。手里有别的 offer，才谈得上底气。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>保留价（Reservation Price）</h4><p>把 BATNA 折算成数字或条件，越过即离席。它由你的备选决定，而不是由对方的出价决定。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>ZOPA</h4><p>双方保留价之间的可行协议区间。区间之外的讨价还价都是表演——先估区间，再上桌。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>变强路径</h4><p>谈判前做大 BATNA（多拿一个 offer、多找一家供应商），比任何话术都有效。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>保留价（Reservation Price）</h4><p>把 BATNA 折算成数字或条件，越过即离席。它由你的备选决定，而不是由对方的出价决定——出价改变不了你的最佳备选。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>ZOPA</h4><p>双方保留价之间的可行区间。区间之外的讨价还价都是表演——先估区间，再上桌。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>变强路径</h4><p>谈判前做大 BATNA（多拿一个 offer、多找一家供应商），比任何话术都有效：它同时抬高 s 与 θ。</p></div></div>
           </div>
-          <p>对方同样有 BATNA：评估对方备选的虚实，别把强硬当实力——虚张声势在信息和时间面前会露馅。同时警惕谈判研究中的「协议偏误」（agreement bias）：没有备选的人最容易接受比自己 BATNA 还差的协议，因为「聊胜于无」的诱惑压过了数学。</p>
+          <p>谈判力可粗略写成<strong>相对保留价的函数</strong>：设双方保留效用 R_A、R_B，在帕累托前沿上的落点越偏向谁，谁实力越强。相对实力 ∝ f(BATNA 质量、耐心/贴现率、信息质量、声誉与可置信承诺)。四者中 <strong>BATNA 是唯一能在上桌之前主动改变、且幅度最大的变量</strong>——所以「谈判的最好准备是更好的备选」不是鸡汤，而是模型推论。</p>
+          <p>对方同样有 BATNA：评估对方备选的虚实，别把强硬当实力——虚张声势在信息和时间面前会露馅。同时警惕「协议偏误」（agreement bias）：没有备选的人最容易接受比 BATNA 还差的协议，因为「聊胜于无」的即时线索压过了数学。这与前景理论一致：损失厌恶使「没成交」被感知为确定的损失，从而过度驱动成交。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">3</span>锚定效应与让步策略</h2>
-          <p class="lede">先出价者往往把整场谈判拖进自己数字的引力场——只要那个数字足够进取又不失可信。</p>
-          <p>Tversky 与 Kahneman 对锚定效应的经典研究显示：哪怕是转轮盘得到的随机数字，都会影响人们对数量的估计。谈判同理：首次报价成为「锚」，后续所有让步都围绕它重新定中心。<strong>先报价通常有利</strong>，前提有三：充分准备、报价可辩护（有依据支撑）、略进取但不荒谬——离谱的锚摧毁的是你的可信度。</p>
+          <h2><span class="sec-num">3</span>整合式谈判的数学：为什么「把蛋糕做大」可行</h2>
+          <p class="lede">「蛋糕固定」是假设，不是事实。只要有至少两个议题、且双方优先级不对称，就存在帕累托改进空间。</p>
+          <p>构造一个最小例子，展示整合的空间从哪来。假设两个议题：价格 P 与交期 D。你更在意价格，对方更在意交期（即 w_价格^A &gt; w_交期^A，而 w_交期^B &gt; w_价格^B）。</p>
           <table>
-            <caption class="caption">让步的三条纪律</caption>
+            <caption class="caption">优先级不对称如何制造交换空间</caption>
+            <thead><tr><th>方案</th><th>价格 P</th><th>交期 D</th><th>你方效用</th><th>对方效用</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">甲：硬压价、短交期</th><td>低（利好你）</td><td>紧（不利对方）</td><td>高</td><td>低</td></tr>
+              <tr><th scope="row">乙：让价、宽松交期</th><td>高（不利你）</td><td>松（利好对方）</td><td>低</td><td>高</td></tr>
+              <tr><th scope="row">丙：价格中等 + 宽松交期</th><td>中</td><td>松</td><td>中高</td><td>高</td></tr>
+            </tbody>
+          </table>
+          <p>方案丙可能<strong>同时</strong>让双方效用高于甲或乙——这就是「整合」。机制是：你用不在乎的东西（交期）换你在乎的（价格），对方亦然，双方都把边际损失小的维度让出去、把边际收益大的换回来。用经济学语言：<mark class="key">当双方边际替代率不同时，交换能产生帕累托改进</mark>。</p>
+          <p>由此推出整合式谈判的操作条件：<strong>议题数 ≥ 2</strong>（否则无维度可换）、<strong>优先级不对称</strong>（否则交换无利可图）、<strong>信息可交换</strong>（否则找不到对方优先级）。这也解释了为什么「打包谈」几乎总优于「逐项谈」——逐项谈把多议题降维成单议题，主动放弃整合空间。</p>
+          <div class="callout tip"><span class="callout-label">判断法</span>议题多于一个、关系长于一次、双方优先级不对称，就存在整合空间。只谈单一价格的纯分配局面其实很少见——多数谈判是被想象力锁死在分配式里的。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>锚定与让步：信号博弈视角</h2>
+          <p class="lede">先出价的动作，本质是向对方发送一个关于你自己保留价的信号。锚定效应是这一信号在对方认知中的落地。</p>
+          <p>Tversky 与 Kahneman 的经典研究显示：即使一个与问题无关的随机数字（如转轮盘结果），也会显著影响人们对数量的判断。机制含两个成分：<strong>锚点激活不足</strong>（从锚出发调整时调整不够）与<strong>选择性通达</strong>（锚点改变后续哪些信息更易被想起）。在谈判中，首次报价成为参照点，后续让步都围绕它重新定中心——因此先报价通常有利。</p>
+          <p>先报价有利的三个前提（缺一，优势会反转为劣势）：<strong>充分准备</strong>（知道 ZOPA 大概在哪）、<strong>报价可辩护</strong>（有市场数据、成本结构支撑）、<strong>略进取但不荒谬</strong>（离谱的锚摧毁可信度，反而把对方锚到「你在虚张声势」上）。</p>
+          <table>
+            <caption class="caption">让步的三条纪律（及其信号含义）</caption>
             <thead><tr><th>让步原则</th><th>具体做法</th><th>传递的信号</th></tr></thead>
             <tbody>
-              <tr><th scope="row">递减幅度</th><td>100 → 60 → 20 → 5</td><td>越让越小，接近真实底线</td></tr>
+              <tr><th scope="row">递减幅度</th><td>100 → 60 → 20 → 5</td><td>让步幅度收缩，暗示接近真实底线</td></tr>
               <tr><th scope="row">对价交换</th><td>每次让步都换回对等条件</td><td>让步有价，不免费</td></tr>
               <tr><th scope="row">迟疑与变速</th><td>关键让步前停顿、要时间</td><td>让步有成本，不是无限供应</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">收到极端锚</span>不要围着对方的数字反驳（反驳会反向确认锚），而是以自己准备好的数字重开一条报价线，或直接点破：「这个数和市价差得有点远，我们从 X 开始谈。」同时把让步做成「事件」——每次让步都索取对价，否则让步会被解读为还有空间。</div>
+          <p>从信号博弈看，让步模式是「关于你保留价的贝叶斯信号」：递减幅度告诉对方「我的空间在收敛」，匀速大幅让步则告诉对方「我的空间似乎还很大」。这正是「越让越大反而更被动」的原因——不是你让得不够多，而是你让出的<strong>信号</strong>错了。</p>
+          <div class="callout tip"><span class="callout-label">收到极端锚</span>不要围着对方的数字反驳（反驳会反向确认锚，因为你在处理它），而是以自己准备好的数字重开一条报价线，或直接点破：「这个数和市价差得有点远，我们从 X 开始谈。」同时把让步做成「事件」——每次让步都索取对价，否则让步会被解读为还有空间。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">4</span>信息不对称下的提问与倾听</h2>
-          <p class="lede">整合式谈判的瓶颈是信息：双方都怕先亮底牌，蛋糕就永远做不大。破局靠提问，不是靠猜。</p>
+          <h2><span class="sec-num">5</span>不对称信息下的提问与技术边界</h2>
+          <p class="lede">整合式谈判的瓶颈是信息：双方都怕先亮底牌，蛋糕就永远做不大。破局靠提问与互惠式披露，而不是靠猜。</p>
           <ul>
             <li><strong>开放式问题挖动机</strong>：「这个交期为什么这么关键」比「最快多久」更容易挖出隐藏利益——对方在乎的可能是上市节点，而非物理交期。</li>
             <li><strong>多议题打包</strong>：把价格、交期、付款方式、服务范围放进同一桌谈。你不在乎的议题，可能正是对方的核心诉求——分歧利益才有交换空间。</li>
@@ -76,9 +105,11 @@
             <li><strong>互惠式披露</strong>：想让对方透露优先级，自己先小规模给出信息。信息交换遵循互惠原则，单向索取会触发戒备。</li>
           </ul>
           <p>倾听是提问的下半场：记下对方反复提到的词、被刻意跳过的议题、语气变化的位置——这些是优先级的真实信号。谈判桌上的信息优势，多半是在对方说话时挣到的。</p>
+          <div class="callout warn"><span class="callout-label">技术边界</span>「所有信息都该坦诚交换」在<strong>一次性、零和</strong>的局面里是错的：对方可能利用你的披露反向压价。更准确的规则是<strong>有条件互惠</strong>——先给低风险信息，观察对方是否对等回应，再决定是否升级披露深度。信息策略的适用性，取决于关系是一次还是多次、双方目标是否正相关。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>常见战术识别与反制</h2>
+          <h2><span class="sec-num">6</span>常见战术识别与反制</h2>
           <p class="lede">战术发挥作用的前提是你没认出它。命名即解毒：说出战术的名字，它就失效了一半。</p>
           <table>
             <caption class="caption">四种常见战术与反制</caption>
@@ -90,41 +121,108 @@
               <tr><th scope="row">低锚哭穷</th><td>「我们预算只有这么多」</td><td>要求匹配范围：预算之内砍掉什么、加预算能换来什么——把预算从墙变成变量</td></tr>
             </tbody>
           </table>
-          <p>反制战术的总原则：把注意力从「人」拉回「问题」——对事不对人地回应，既不失关系，也不失阵地。最后记住：<strong>谈判破裂不是失败，接受一个低于 BATNA 的协议才是</strong>。</p>
+          <p>反制战术的总原则：把注意力从「人」拉回「问题」——对事不对人地回应，既不失关系，也不失阵地。从机制上看，这些战术都在试图改变你对<strong>可行域与保留价</strong>的估计（让你以为 ZOPA 更小），因此最好的解毒剂是<strong>你在上桌之前就已算清自己的 s 与 b</strong>。最后记住：谈判破裂不是失败，接受一个低于 BATNA 的协议才是。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">谈判技巧速记</span><button class="copy-btn" type="button">复制</button>· 先分类型：蛋糕能不能变大，决定分配式还是整合式打法
-· 立场会对立，利益未必对立——多问「为什么你要这个」
-· 谈判力 = BATNA：谈不成时的最佳备选，不是嗓门
-· 保留价来自 BATNA，越过即离席；双方保留价之间是 ZOPA
+          <h2><span class="sec-num">7</span>前沿与研究进展</h2>
+          <p class="lede">谈判研究近四十年从「行为清单」发展为「实验可检验的博弈模型」，以下几条是主干。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">锚定效应</span><span class="tl-date">Tversky &amp; Kahneman, 1974</span><p>用随机数字实验证明无关锚点也会影响数量估计，为「先报价」策略提供了认知机制基础。</p></div>
+            <div class="tl-item"><span class="tl-era">原则式谈判</span><span class="tl-date">Fisher &amp; Ury, 1981</span><p>《谈判力》（Getting to Yes）提出立场/利益之分与 BATNA 概念，把谈判从「气势比拼」转为「备选比拼」，成为被引用最广的实践框架。</p></div>
+            <div class="tl-item"><span class="tl-era">议价博弈与轮流出价</span><span class="tl-date">Rubinstein, 1982</span><p>给出轮流出价模型的均衡解：在完全信息下的无限期议价中，成交份额由双方的贴现因子（耐心）决定，为「耐心即力量」提供了形式化依据。</p></div>
+            <div class="tl-item"><span class="tl-era">整合式谈判与联合收益</span><span class="tl-date">1980s–1990s 实验经济学</span><p>大量实验显示，多议题、优先级不对称时，交换能显著提高联合收益；同时发现人们普遍<strong>系统性地错失整合机会</strong>（myopic 谈判），低估了「把蛋糕做大」的可得性。</p></div>
+            <div class="tl-item"><span class="tl-era">情绪与个体差异</span><span class="tl-date">1990s–2010s</span><p>情绪表达（愤怒、失望）被证明会影响对方让步行为，效果方向不总一致，依赖对方谈判力与期望；「第一报价」与人格特质的影响存在争议，注意重复性。</p></div>
+            <div class="tl-item"><span class="tl-era">算法谈判与自动议价</span><span class="tl-date">2000s 至今</span><p>自动议价与拍卖机制设计成为独立方向，关注策略的稳健性与市场效率；跨文化差异与「面子」等社会因素如何并入模型，仍是开放问题。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到「某策略平均多拿 X%」的结论，先问三件事：是实验室单次博弈还是真实长期关系、样本是学生还是职业买家/卖家、效应能否被独立重复。谈判属于「高情境依赖」领域，任何绝对化的百分比都要折扣对待。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>跨学科视角</h2>
+          <p class="lede">谈判不是一个孤立技巧，它与多个学科共享同一套形式语言。</p>
+          <div class="grid-2">
+            <div class="card"><h4>博弈论</h4><p>轮流出价、纳什议价解、信号博弈——保留价、耐心、议价份额都能被模型化，为「为什么备选与耐心是力量」给出证明。</p></div>
+            <div class="card"><h4>认知心理学</h4><p>锚定与调整、参照点效应、框架效应，解释首次报价与措辞如何改变对方的心理参照点。</p></div>
+            <div class="card"><h4>行为经济学</h4><p>损失厌恶与前景理论解释了「协议偏误」——把没成交感受为确定损失，从而接受低于 BATNA 的协议。</p></div>
+            <div class="card"><h4>机制设计 / 拍卖理论</h4><p>把谈判视为信息不对称下的资源配置问题；VCG、次价拍卖等工具说明机制本身如何决定效率与收入分配。</p></div>
+            <div class="card"><h4>社会心理学</h4><p>互惠原则、承诺一致、权威与面子，解释了战术为何有效，也提示了跨文化情境下的失效风险。</p></div>
+            <div class="card"><h4>运筹学 / 决策分析</h4><p>多目标决策（效用加权、帕累托前沿）为多议题谈判提供了排序与打包的量化工具。</p></div>
+          </div>
+          <p>把这些放一起看，会发现一个共同结构：<strong>可行域界定 + 偏好表达 + 信号传递 + 均衡分割</strong>。这正是「谈判」的通用形态，也是它能迁移到商业合作、国际关系与自动化市场设计的原因。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「谈判就是分蛋糕，赢家只有一个」
+「先报价一定吃亏 / 一定占便宜」
+「让步越多越显诚意」
+「强硬就能赢」
+「所有信息都该坦诚交换」</pre><div class="why">问题：把「一次零和」当成通则。多数谈判有多议题与不对称优先级，存在帕累托改进；先报价的利弊取决于准备与可信度；无对价的让步被读成「还有空间」；强硬只在你有更强 BATNA 时有效；无条件披露在一次性零和局面里会被反向利用。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>先判断是分配式还是整合式，
+再决定信息策略
+先报价：准备充分 + 可辩护 + 略进取才有利
+每次让步都换回对价，幅度递减
+力量来自 BATNA，不来自语气
+信息披露采取「有条件互惠」：
+先给低风险信息，看对方是否对等回应</pre><div class="why">要点：谈判是双边优化。判断一个战术是否适用，看它改变的是可行域（把蛋糕做大）、保留价（备选与耐心），还是仅仅是对方的估计（信号与锚）。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">先报价（锚定）</th><td>准备充分、有数据支撑、单议题</td><td>信息不足、不清楚对方约束时易被反制</td></tr>
+              <tr><th scope="row">打包谈（整合式）</th><td>多议题、优先级不对称、长期关系</td><td>纯单一价格、一次性零和交易</td></tr>
+              <tr><th scope="row">最后通牒</th><td>你有明确更强 BATNA 时</td><td>对方也有替代时，通牒直接导致破裂</td></tr>
+              <tr><th scope="row">情绪表达</th><td>关系允许、对方在意关系时</td><td>跨文化差异大，可能被读成失控或不被接受</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">谈判速记</span><button class="copy-btn" type="button">复制</button>· ZOPA 存在条件：b ≥ s；宽度 = b − s
+· 成交价 p = s + θ·(b − s)，θ 由相对谈判力决定
+· 谈判力 ∝ f(BATNA 质量、耐心/贴现率、信息、声誉)
+· 保留价来自 BATNA，越过即离席；备选决定底线
 · 上桌前先做大 BATNA：多拿 offer、多找替代方
-· 没有备选的人最容易接受烂协议（协议偏误）
+· 没有备选的人最容易接受烂协议（协议偏误 / 损失厌恶）
+· 整合空间来自：议题 ≥ 2 + 优先级不对称 + 信息可交换
+· 双方边际替代率不同 → 交换可帕累托改进
 · 先报价通常有利：准备充分、可辩护、略进取不荒谬
 · 让步要递减并换对价：越让越小，每次换回条件
+· 让步是信号：匀速大让 = 告诉对方「我空间还很大」
 · 收到极端锚：不被牵引，以自己的数字重开报价线
 · 多议题打包谈，用分歧利益互相交换
-· 想要信息，先做小规模的互惠披露
+· 信息披露用「有条件互惠」：先给低风险，看是否对等
 · 命名即解毒：点破「红白脸」「最后通牒」的名字
 · 多数截止时间可谈；急的一方先失分
 · 谈判破裂不是失败，接受低于 BATNA 的协议才是</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">11</span>练习清单</h2>
+          <p class="lede">以下练习要求给出可核验的结论或产物，而不是「做过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">为下次谈判写下三样：你的 BATNA、保留价、对方可能的 BATNA</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">上桌前做大一次 BATNA：多找一个替代方案或备选报价</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">准备一次先报价：写下三个可辩护的依据</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">把一个单议题谈判改造成三个议题的打包方案</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">复盘一次被锚定的经历：当时的应对与下次的改进</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">识别一次战术（通牒/红白脸/时间压力）并说出它的名字</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">谈判后复盘：实际 ZOPA 有多大，哪些信息本可以交换</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">为下次谈判写下三样并估算区间：你的 BATNA、保留价 s、对方可能的保留价 b</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">估计 ZOPA 宽度并用 p = s + θ·(b−s) 给出你预计的成交点，说明 θ 的取值理由</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">上桌前做大一次 BATNA：多找一个替代方案或备选报价，量化它对保留价的抬高幅度</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">准备一次先报价：写下三个可辩护的依据，并说明为何该数字「进取但不荒谬」</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">把一个单议题谈判改造成至少三个议题的打包方案，列出双方各自的优先级权重</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">构造一个双议题例子，给出三个方案表，验证其中是否至少存在一个帕累托改进</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">为一次让步设计「递减序列」，并写明每次让步要换回的对价</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">复盘一次被锚定的经历：当时的应对违反了什么原则，下次的修正动作是什么</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">识别一次战术（通牒/红白脸/时间压力/低锚哭穷）并给出「命名 + 反制」脚本</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">查阅一项整合式谈判或议价博弈研究，写出其模型设定、结论与至少一条适用边界</label></div>
           </div>
         </section>
+
       </main>
       <footer>
-        <p class="footnote">原创交互式学习资料，基于 Fisher &amp; Ury《谈判力》、Tversky &amp; Kahneman 锚定效应研究与通行谈判实践整理。</p>
+        <p class="footnote">原创交互式学习资料。模型部分参考 Fisher 与 Ury 的《谈判力》（BATNA 与立场/利益之分）、Tversky 与 Kahneman 的锚定效应研究，以及 Rubinstein 轮流出价议价模型的形式化结论；整合式谈判关于「多议题交换可帕累托改进」的说法，属于实验经济学与议价理论中较稳定但情境依赖的结论。需注意：情绪表达、第一报价与个体差异类研究的可重复性存在争议，正文已标注。所有数值为量级估计，具体结论请以原始文献为准。</p>
       </footer>
     </div>
   </article>

@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>英语学习进阶指南</h1>
-          <p class="report-intro__summary">语言不是「知识」而是「技能」。这份指南讲二语习得的关键假说，再拆词汇、听说、读写和发音的专项方法，帮你告别「背了忘、开不了口」的死循环。</p>
+          <p class="report-intro__summary">英语不是知识科目而是技能科目，因此它的进步速度由几个可量化的量决定：词汇覆盖率决定你能读懂多少，间隔重复的间隔函数决定记忆的长期留存，输入与输出的配比决定流利度的天花板。本指南把这些量写成公式与阈值，连接二语习得理论与语料库语言学的研究结论，并给出可自证的训练方案。</p>
           <div class="intro-meta">
             <span>领域：语言</span>
             <span>难度：进阶</span>
@@ -26,82 +26,224 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>二语习得的底层原理</h2>
+          <h2><span class="sec-num">1</span>二语习得的核心假设：输入、输出与注意</h2>
+          <p class="lede">「多听多看就会了」只对了一半。二语习得理论真正解决的问题是：为什么有的人浸泡多年仍开不了口，而有的人在有限输入下进步飞快。</p>
+          <p>最有影响力的框架来自克拉申（Stephen Krashen）在 1980 年代提出的<strong>输入假说</strong>（input hypothesis）。其核心断言是：语言习得发生在学习者接触到略高于当前水平的可理解输入时，记作 <code>i+1</code>——其中 <code>i</code> 表示现有水平，<code>+1</code> 表示恰好超出的那一小步。这个假设的可操作化难点在于：<code>i</code> 与 <code>+1</code> 都不可直接测量，只能通过「理解率」间接估计。常见的工程化近似是把「生词率」当作代用指标：</p>
+          <div class="prompt-block"><span class="prompt-label">输入难度的可操作化</span><button class="copy-btn" type="button">复制</button>若一段材料中未知词（或未知结构）占比为 p，则理解率 ≈ 1 − p
+· p ≈ 5%（即 95% 以上已知）：接近「舒适区」，可用于大量泛读
+· p ≈ 2%（98% 已知）：研究上常被称为「独立阅读」阈值
+· p &gt; 10%：认知负荷过高，容易退化为「查词—遗忘」循环
+
+费时近似（每次查词平均损耗 t ≈ 20–30 秒）：
+  读 1000 词、生词率 10% → 查词 100 次 → 额外耗时 ≈ 30–50 分钟
+  同样的 1000 词、生词率 2% → 查词 20 次 → 额外耗时 ≈ 7–10 分钟
+结论：把生词率降到低个位数，是阅读速度的量级级差异来源。</div>
+          <p>克拉申框架中的另两条常被并列讨论：<strong>情感过滤假说</strong>（affective filter）指出焦虑、自我意识与动机不足会抑制输入的处理与内化；<strong>自然顺序假说</strong>主张语法结构的习得存在相对固定的先后次序，与课堂教学顺序不完全一致。这两条在实证上受到的挑战较多——情感因素确实影响表现，但其「过滤」机制的量化证据弱于输入量的效应；自然顺序的证据也主要来自特定语法语素的习得研究。</p>
+          <p>对第一条假说最有力的补充来自斯温（Merrill Swain）的<strong>输出假说</strong>（output hypothesis, 1985）：仅有输入不足以让学习者达到接近母语者的产出水平，因为理解可以「靠语义线索蒙过去」，而产出会强制语法与词汇的精确检索。输出承担三项功能：</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>可理解输入（i+1）</h4><p>习得发生在「略高于当前水平」的输入中——你能听懂大约 80%，剩下的靠上下文猜。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>情感过滤假说</h4><p>焦虑、压力、抵触会「过滤掉」输入；放松、有趣的材料习得效率更高。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>输出假说</h4><p>光输入不够，输出会暴露你的「表达缺口」，逼你补上不会说的部分。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>注意假说</h4><p>要有意识地「注意」到语言形式（如时态、搭配），否则输入再多也只是「过耳不过脑」。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>注意功能（noticing）</h4><p>想说却说不出来时，学习者会「注意」到自己的表达缺口（gap），从而有针对性地补足——这是输出不可替代的价值。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>假设检验</h4><p>每次开口都是一次关于「这样表达对不对」的假设，对方的反馈（理解、澄清、纠正）就是检验结果。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>元语言功能</h4><p>用目标语讨论目标语本身（「这个词是正式还是口语？」），能提升对语言形式的控制精度。</p></div></div>
           </div>
+          <p>把三条假说合起来，可得到一个可用的训练不等式：<strong>有效习得 ≈ 可理解输入量 × 输出机会 × 注意强度 + 反馈质量</strong>。任一项为零，进步都会停滞。这也解释了典型现象：只刷剧不开口的人听力好但产出差；只背单词不输入的人阅读慢且语感差。</p>
+          <div class="callout tip"><span class="callout-label">判断标准</span>评估任何英语方法，只问三个问题：它是否提供了略高于当前水平的可理解输入？它是否强制你产出并被理解？它是否让你「注意到」具体形式？三个都答不上来的方法，大概率只是制造了学习的仪式感。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>词汇：别背孤立的单词</h2>
-          <p class="lede">孤立背单词是低效的根源。记住的是「词块」，不是「单词」。</p>
+          <h2><span class="sec-num">2</span>词汇覆盖率：读懂一篇文章需要多少个词</h2>
+          <p class="lede">「要背多少单词」有一个可计算的答案：不是记住词典的全部，而是覆盖高频词达到能支持理解的比例。</p>
+          <p>英语词汇的分布极度偏斜：少数高频词承载了大部分文本。基于大型语料库（如 COCA、BNC）的词频统计，覆盖率的量级规律如下（记 <code>C(k)</code> 为掌握最高频 <code>k</code> 词族时对一般书面文本的平均覆盖率）：</p>
           <table>
-            <caption class="caption">词汇习得要点</caption>
-            <thead><tr><th>方法</th><th>说明</th></tr></thead>
+            <caption class="caption">词频与覆盖率的量级关系（一般书面文本，约数）</caption>
+            <thead><tr><th>掌握高频词族数 k</th><th>平均覆盖率 C(k)</th><th>每 100 词中的未知词</th><th>可支持的典型活动</th></tr></thead>
             <tbody>
-              <tr><th scope="row">词块（Collocation）</th><td>记「make a decision」而非孤立记 make / decision</td></tr>
-              <tr><th scope="row">语境记忆</th><td>在句子/文章里遇到生词，结合上下文记</td></tr>
-              <tr><th scope="row">高频优先</th><td>先掌握最高频 2000-3000 词，覆盖日常 80% 以上</td></tr>
-              <tr><th scope="row">间隔复习</th><td>用 Anki 按遗忘曲线复习，而非一次性抄十遍</td></tr>
+              <tr><th scope="row">约 1,000</th><td>约 75%–80%</td><td>20–25 个</td><td>极简单对话、儿童读物</td></tr>
+              <tr><th scope="row">约 2,000</th><td>约 80%–85%</td><td>15–20 个</td><td>日常口语、简单新闻标题</td></tr>
+              <tr><th scope="row">约 3,000</th><td>约 88%–92%</td><td>8–12 个</td><td>通俗读物、一般新闻</td></tr>
+              <tr><th scope="row">约 5,000</th><td>约 93%–95%</td><td>5–7 个</td><td>报纸、流行小说、影视字幕</td></tr>
+              <tr><th scope="row">约 8,000–9,000</th><td>约 96%–98%</td><td>2–4 个</td><td>学术文本、原著小说</td></tr>
+              <tr><th scope="row">约 15,000+</th><td>约 99%+</td><td>&lt; 1 个</td><td>专业文献、文学精读</td></tr>
+            </tbody>
+          </table>
+          <p>上表的数字不应被当作精确常数（取决于文本类型与词族定义），但趋势是稳健的：<strong>覆盖率是词数的凹函数，前期增长快、后期收益递减</strong>。这带来两个重要推论：</p>
+          <ul>
+            <li><strong>先广后深</strong>：从 0 到 3,000 词族的边际收益最大，投入产出比最高；而 8,000 到 15,000 需要成倍投入却只换来几个百分点。</li>
+            <li><strong>覆盖率不等于理解率</strong>：若未知词恰好是承载关键信息的实词，理解会断裂。因此同一覆盖率下，读物「主题熟悉度」显著影响实际理解。</li>
+          </ul>
+          <p>更进一步，覆盖率与「读懂」之间有一个著名的经验阈值讨论：多项研究指出，要「较舒适地独立理解」一般文本，需要 95%–98% 的词汇覆盖率，而这对应约 8,000–9,000 词族。这是「分级阅读」的理论依据——不是降智讨巧，而是把未知率压到认知负荷可承受的区间。</p>
+          <div class="callout warn"><span class="callout-label">边界</span>「95%–98% 阈值」来自特定语料与特定任务（阅读理解、无辅助阅读），并非普适定律。听力场景的阈值通常更高（因为无法回看），而专业领域的词汇分布与一般文本差异极大，不能把这套比例直接外推到所有场景。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>记忆的数学：遗忘曲线与间隔重复</h2>
+          <p class="lede">背了忘不是意志力问题，而是记忆的自然衰减。间隔重复之所以有效，是因为它把复习安排在「即将遗忘」的临界点，用最小次数换取最大留存。</p>
+          <p>艾宾浩斯（Hermann Ebbinghaus）在 1880 年代的自我实验给出了记忆留存随时间的衰减规律。撇开历史细节，其数学骨架已被后续研究形式化为<strong>指数衰减模型</strong>（近年更精确的拟合多用幂律函数）：</p>
+          <div class="prompt-block"><span class="prompt-label">遗忘与留存的近似模型</span><button class="copy-btn" type="button">复制</button>指数留存模型：R(t) = e^(−t/S)
+  R = 在延迟 t 后仍能回忆的概率；S = 记忆稳定性（时间常数）
+
+· 达到留存率 R 所需时间：t = −S·ln(R)
+· R = 0.5 时的 t 即「半衰期」：t_½ = S·ln2 ≈ 0.693·S
+
+关键假设（间隔重复的核心）：每次成功回忆都会提高 S
+  在遗忘临界点（如 R ≈ 0.9 或按算法设定的目标留存）复习，
+  能使 S 的增量最大化，从而让下一次复习间隔近似指数拉长
+
+简化间隔序列（示意，公比 ≈ 1.5–2.5）：
+  1 天 → 3 天 → 7 天 → 16 天 → 35 天 → 75 天 …
+  复习总次数 ≈ log(目标时长) / log(间隔公比)，呈对数增长</div>
+          <p>这个模型解释了间隔重复的两个反直觉结论：</p>
+          <ul>
+            <li><strong>「快要忘的时候复习」效果最好</strong>：在 R 已降到较低但仍高于 0 时复习，记忆增益最大；而在 R 仍接近 1 时复习（刚刚背完立刻再背），几乎不增加稳定性，是纯浪费。</li>
+            <li><strong>难度感知与学习效果相反</strong>：感觉「轻松顺畅」的重复（连续重读）带来的长期留存差；感觉「有点吃力才想起来」的检索练习留存显著更好。这就是「合意困难」与「检索练习」的核心结论。</li>
+          </ul>
+          <p>现代记忆软件（如 Anki 的 SM-2 及其后续变体）正是把上述原则算法化：为每张卡片维护一个稳定性或难度参数，按目标留存率反解下一次复习间隔。其可检验的预测是：<strong>在相同总复习次数下，间隔拉长的安排应优于均匀密集的安排</strong>。这一预测在实验心理学中得到了较稳定的支持，属于该领域证据较强的结论之一。</p>
+          <div class="callout tip"><span class="callout-label">迁移到词汇</span>把公式用在英语上会得到一个具体策略：生词卡片应做成「需要你主动回忆」的形式（看定义想词、看词想用法），而不是「看词选择意思」；间隔按 1→3→7→16 天拉长；同一批词不要在一次学习里重复抄写十遍。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>四项技能的训练机制：听力、口语、阅读、写作</h2>
+          <p class="lede">听、说、读、写对应四种不同性质的加工过程，训练方法必须匹配各自瓶颈，不能互相替代。</p>
+          <div class="feature-list">
+            <div class="feature"><div class="f-ico">1</div><div><h4>听力：把「音—形—义」通道打通</h4><p>听力的瓶颈通常不是词汇量，而是<strong>语音解码速度</strong>：大脑必须把连续语流切分成词。连读、弱读、同化会使词边界消失，因此「精听 + 听写」的价值在于强制逐词解码。推荐流程：先整段盲听抓大意 → 逐句听写 → 对照原文标记「听错的位置」→ 归纳错因（是音变、还是词不认识？）。错因分类比总错误数更有诊断价值。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>口语：从「检索」到「自动化」</h4><p>口语的两级目标是流利度与准确度。流利度取决于<strong>词块的自动化提取</strong>，因此训练单位应是「整块的表达」而非单词。影子跟读（shadowing）训练语音—节奏的同步加工；复述（retelling）训练在没有文本依赖下的自主产出，二者不可互相代替。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>阅读：分级 + 大量 + 少查词</h4><p>阅读的核心是<strong>把生词率压到可承受区间后尽量多读</strong>。策略上分两条线：泛读（graded extensive reading）追求总量与流畅度，不查词；精读（intensive reading）追求结构分析，每段只挑 2–3 个关键结构深挖。二者比例可由目标反推，而不是随机混合。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>写作：先流利后准确，分轮修改</h4><p>写作的常见错误是「一边写一边改」，导致产出量枯竭。可用两轮法：第一轮限时自由写作（不查词、不停顿，目标是产出量），第二轮只做结构与准确性修改（分维度：语法、搭配、逻辑衔接）。改写（rewriting）他人的句子是连接输入与输出的高效手段。</p></div></div>
+          </div>
+          <p>把四者放入统一框架：听力与阅读是<strong>接收通道</strong>，口语与写作是<strong>产出通道</strong>。产出通道的表现上限由接收通道的输入质量决定，但产出通道不会被输入自动提升——这需要刻意练习。因此一个健康的训练配比应当同时包含「高强度输入」和「有反馈的产出」，而不是单一维度的堆量。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>语音与音位意识：为什么「听不懂」常是发音问题</h2>
+          <p class="lede">听与说是同一个系统的两端：你的发音系统无法区分的音，你的听觉系统往往也难以稳定分辨。</p>
+          <ul>
+            <li><strong>音位对立</strong>：英语靠音位对立区分意义（如 /iː/ 与 /ɪ/、/θ/ 与 /s/、/æ/ 与 /e/）。若母语中不存在这种对立，学习者会长期把它们归为同一个范畴——这被称为「范畴化困难」，是口音的主要来源。</li>
+            <li><strong>重音与节奏</strong>：英语是「重音计时」语言，重音位置改变会改变词性甚至意义（如名词与动词的重音转移）。重音错位的代价往往高于个别元音不准。</li>
+            <li><strong>连读、弱读与同化</strong>：真实语流中功能词常被弱读，词与词之间发生连读与音变，这是「每个词都认识却听不懂整句」的主要成因。针对性的训练是「听写 + 标注实际发音」，而非反复泛听。</li>
+            <li><strong>语调</strong>：语调承载信息结构（新信息、对比、疑问）与态度，是「听起来像不像」的关键，也是中级向高级跃升的分水岭。</li>
+          </ul>
+          <p>一条可操作的推论：发音应尽早介入。原因不是「越早越容易学」，而是发音习惯会自我强化——错误的音位范畴会同时歪曲你的产出与你的感知，越晚修正，需要推翻的既有映射越多。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">二语习得从「方法论之争」逐步转向「可测量的机制与个体差异」，以下是几条至今仍活跃的主线。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">输入假说与自然顺序</span><span class="tl-date">1980s</span><p>可理解输入与情感过滤为「大量听读」提供了理论依据，也让 i+1 成为教学设计的常用启发式。批评主要在于 i 与 i+1 不可直接测量，以及过低估计了产出与显性教学的作用。</p></div>
+            <div class="tl-item"><span class="tl-era">输出假说与互动假说</span><span class="tl-date">1985 起</span><p>产出被赋予「注意缺口、检验假设」的功能；互动假说进一步强调「意义协商」在会话中的驱动作用。此后研究普遍接受：输入与输出是互补而非替代关系。</p></div>
+            <div class="tl-item"><span class="tl-era">语料库语言学</span><span class="tl-date">1990s 至今</span><p>大型语料库（如 COCA、BNC）与词频统计把「该学哪些词、哪些搭配常用」变成可查询的实证问题，直接支撑了词块教学与分级阅读的选材；词族、覆盖率、搭配强度等概念成为教学决策的量化依据。</p></div>
+            <div class="tl-item"><span class="tl-era">检索练习与间隔效应</span><span class="tl-date">2000s 至今</span><p>认知心理学关于「检索练习优于重复阅读」「间隔优于集中」的结论在词汇学习中反复被验证，并直接催生了现代间隔重复算法。这一方向的证据强度在语言学习诸结论中相对较高，因为它有可控实验与可复现的效应量。</p></div>
+            <div class="tl-item"><span class="tl-era">关键期与个体差异的再讨论</span><span class="tl-date">2000s 至今</span><p>关于「学习年龄是否有硬性上限」，大样本研究给出的图景比传统「关键期假说」更细致：语法与语音的最终成就与起始年龄相关性较强，但词汇与阅读的成就受教育与使用量影响更大。争论焦点在于因果解释与测量方法。</p></div>
+            <div class="tl-item"><span class="tl-era">语音识别与自动反馈</span><span class="tl-date">2010s 至今</span><p>自动语音识别与合成技术使发音评分、逐词对齐、自动纠错成为可及的工具，也让「大规模口语练习 + 即时反馈」在成本上变得可行。争议在于评分的效度：可懂度（intelligibility）与「像不像母语者」是两个不同目标，工具往往把后者当作标准，这可能误导学习者把精力放在低回报的口音模仿上。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到「某种方法效率提升 X%」时，先确认三件事：测量的是即时测验成绩还是长期留存、被试的语言水平与母语背景是否与你的情况可比、以及是否控制了学习总时间。语言学习研究的效应量对「总投入时间」极度敏感，而这一点最常被忽略。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">语言学习不只是语言学的问题，它与认知科学、信息论、计算语言学、神经科学共享同一套描述工具。</p>
+          <div class="grid-2">
+            <div class="card"><h4>认知心理学</h4><p>记忆的检索—间隔规律、合意困难、生成效应，构成词汇与语法训练方法的实验依据；「感觉流利但记不住」正源于加工深度的差异。</p></div>
+            <div class="card"><h4>信息论</h4><p>语言存在大量冗余（可读性、上下文预测）。冗余既是理解率高于词汇覆盖率的原因，也解释了为什么「语境猜词」在低生词率下有效、在高生词率下失效。</p></div>
+            <div class="card"><h4>语料库语言学</h4><p>用频率、搭配强度、分布相似度（词向量的语言学前身）量化「哪些词值得先学」，把「语感」变成可统计的事实。</p></div>
+            <div class="card"><h4>语音学与听觉科学</h4><p>音位对立、语音的声学特征、范畴感知，解释了「听不清」与「发不准」为何经常同时出现，也是精听与跟读训练的机制基础。</p></div>
+            <div class="card"><h4>神经科学与脑可塑性</h4><p>语言加工依赖分布式网络，长期使用会改变加工效率；这支持「持续使用量决定最终成就」的观点，也提示早期训练在语音上的相对优势。</p></div>
+            <div class="card"><h4>计算语言学 / 自然语言处理</h4><p>分词、对齐、语言模型相关技术既支撑了自动纠错与评分工具，也为「如何衡量语言产出质量」提供了可计算指标（如困惑度、可读性指数）。</p></div>
+          </div>
+          <p>把这些放一起看，会得到一条共同的工程思路：<strong>把模糊的「语感」分解成可测量的量（覆盖率、生词率、留存率、可懂度），再针对瓶颈分配训练时间</strong>。这与任何资源分配问题同构。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「背完一本词典就能开口」
+
+「浸泡在英语环境里自然会」
+
+「多听就会说」
+
+「语法不用学，语感最重要」
+
+「生词必须立刻查、逐个记住」</pre><div class="why">问题：把陈述性知识当程序性技能、把输入当作产出的充分条件、忽视语言形式的显性注意价值，并在阅读中把认知资源全耗在查词上，破坏了流畅度与阅读总量。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>先覆盖高频 3,000 词族，
+再按主题扩展，而非按字母背词典
+
+环境只是输入来源，
+需配合「可理解 + 有产出 + 有反馈」
+
+输入建立理解，输出建立流利，
+两者是互补通道
+
+语法作为「注意的工具」，
+用来解释你反复出错的模式
+
+阅读中压低生词率、少查词，
+把查词集中到精读时段</pre><div class="why">要点：把每个结论还原到它的条件：输入的质量（是否可理解）、产出是否被强制、注意是否被引导。脱离这三条，任何方法都会退化成仪式。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法 / 结论</th><th>有效边界</th><th>失效或需修正的场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">i+1 可理解输入</th><td>目标语言有足够材料可选、水平可估</td><td>i 与 +1 不可精确测量；专业领域阈值为经验近似</td></tr>
+              <tr><th scope="row">分级泛读</th><td>初中级、需要建立阅读量与流畅度</td><td>专业阅读需专门术语与结构知识，泛读解决不了</td></tr>
+              <tr><th scope="row">间隔重复软件</th><td>词汇、搭配、事实性知识的长期留存</td><td>口语流利度与写作组织能力无法靠卡片习得</td></tr>
+              <tr><th scope="row">影子跟读</th><td>改善语音、节奏、听辨</td><td>不能替代自主产出训练；材料过难时会退化为无效模仿</td></tr>
+              <tr><th scope="row">「浸泡式」环境</th><td>环境提供了大量高频可理解输入</td><td>若缺少理解辅助与产出机会，浸泡只提高容忍度而非水平</td></tr>
+              <tr><th scope="row">词汇覆盖率阈值</th><td>一般书面文本的无辅助阅读理解</td><td>不同语料与任务（如听说）阈值不同，不可直接套用</td></tr>
             </tbody>
           </table>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>听说读写分项突破</h2>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>听力：大量 + 精听</h4><p>泛听磨耳朵，精听做「逐句听写/影子跟读」，直到能复述。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>口语：影子跟读 + 复述</h4><p>跟读模仿语音语调；听完用自己话复述，从「翻译」转向「直接用英语想」。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>阅读：分级 + 泛读</h4><p>选「每页生词少于 5 个」的材料大量读，读得懂才能读得下去。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>写作：先写再改</h4><p>从「自由写作」练流利度，再用工具/他人反馈改准确度。</p></div></div>
-          </div>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">英语学习核心速记</span><button class="copy-btn" type="button">复制</button>【习得三支柱】
+· 可理解输入：生词率降到低个位数，理解率 ≈ 1 − 未知词占比
+· 有反馈的产出：注意缺口 → 检验假设 → 修正表达
+· 引导注意：显性关注反复出错的语法与搭配模式
+【词汇】
+· 覆盖率是凹函数：0→3,000 词族收益最大，8,000→15,000 极缓
+· 一般文本舒适理解约需 95%–98% 覆盖率（约 8,000–9,000 词族）
+· 记词块与搭配（make a decision），不记孤立单词
+· 分级选材：每页生词控制到 2–5 个以内
+【记忆】
+· 留存 R(t) = e^(−t/S)；半衰期 t_½ ≈ 0.693·S
+· 在「快要忘但仍能想起」时复习，记忆增益最大
+· 间隔序列示意：1 → 3 → 7 → 16 → 35 → 75 天
+· 检索练习优于重复阅读；「感觉吃力」往往意味着记得更牢
+【四项技能】
+· 听力瓶颈常在语音解码，不在词汇：精听 + 听写 + 错因分类
+· 口语瓶颈在词块自动化：影子跟读 + 复述，分两级练
+· 阅读要「多读少查」；写作要「先写再改」分两轮
+· 输出通道不会被输入自动提升，必须刻意练
+【发音】
+· 音位对立（/iː/ vs /ɪ/、/θ/ vs /s/）是口音与听辨的共同根源
+· 重音位置改变词性/意义；弱读连读是「听不懂」的主因
+· 发音越早修正越省成本，因为错误会同时污染产出与感知
+【执行】
+· 训练配比须同时含「高强度输入」与「有反馈的产出」
+· 选材标准：有趣 + 可理解 + 有重复出现的词块
+· 评估标准：看长期留存与可懂度，不看单次测验分数</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>发音：越早越好</h2>
-          <p class="lede">发音一旦「固化」，后期纠正成本极高。</p>
-          <ul>
-            <li><strong>音位意识</strong>：分清易混音（如 /iː/ 与 /ɪ/、/θ/ 与 /s/）。</li>
-            <li><strong>重音与节奏</strong>：英语是「重音计时」语言，重音放错比个别音错更影响听懂。</li>
-            <li><strong>连读弱读</strong>：native 语速下的连读、弱读是「听不懂」的主因，需刻意训练。</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">5</span>常见误区</h2>
-          <div class="compare">
-            <div class="side bad"><span class="side-tag">✗ 低效</span><pre>每天背 50 个孤立单词、只做选择题和语法题，从不开口。</pre><div class="why">碎片记忆、零输出，无法形成语感。</div></div>
-            <div class="side good"><span class="side-tag">✓ 高效</span><pre>每天听读感兴趣的可理解材料，用自己的话复述，生词结合语境与词块记。</pre><div class="why">语境习得 + 主动输出，真正内化。</div></div>
-          </div>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">英语学习速记</span><button class="copy-btn" type="button">复制</button>· 核心：可理解输入 i+1 + 降低情感过滤 + 主动输出
-· 词汇：记词块、语境、高频优先、间隔复习
-· 听说读写：精听、影子跟读、分级泛读、自由写作
-· 发音：音位 + 重音节奏 + 连读弱读，越早越好</div>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求测量、推导或实现，产出可检验的数据与结论，而非「读过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">找一份「能听懂 80%」的材料并坚持 3 天</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">做一次逐句精听/影子跟读</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">记 10 个「词块」而非孤立单词</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">读完一段后用英语复述（不逐字背）</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">练一组易混音，并录音对比</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用 Anki 建一组生词/句子卡片</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">抽取一段 500 词的英文原文，统计不同类型词（type）与词次（token），计算 type/token 比，并估算实际内容词的重复率，说明为什么重复出现的往往是高频功能词</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">选三篇难度递增的材料，各取 200 词，标出未知词并计算生词率 p 与理解率 1 − p，实测自己「读懂大意」的实际比例，比较与计算值的差距</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用 R(t) = e^(−t/S) 做推导：给定 S = 5 天，分别计算 t = 1、3、7、14 天后的留存率；再反解 R = 0.9 与 R = 0.5 的时刻，说明为什么复习应安排在 R 降到约 0.9 附近</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">设计并执行一个「间隔 vs 集中」对照实验：选 30 个生词，15 个用拉长间隔复习、15 个在同一天重复五遍，7 天后做无提示测试，报告两组正确率差</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">写一个脚本从一份英文文本统计最高频 1000 词对全文的覆盖率，并对 10 篇不同文体（新闻、小说、论文）分别计算，画出覆盖率随词数增长的曲线</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">做一次精听并分类错误：选取 1 分钟音频逐句听写，把每处错误归类为「音变（连读/弱读/同化）」「词汇不认识」「注意力漂移」，统计各类占比并给出下一步训练重点</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用影子跟读处理一段材料，录音前后对比：标注至少三处在重音、弱读或连读上的改变，并说明为什么要改</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">执行一次「两轮写作」：同一题目先限时 15 分钟自由写作（不查词不停顿），再花 15 分钟只做结构与准确性修改，比较两稿的产出量与错误类型变化</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">建一个「词块库」：从一周的真实材料中提取 20 个搭配或固定表达（含例句与来源），按间隔序列安排复习，并在一周后用「造句而非选义」的方式自测</label></div>
           </div>
         </section>
       </main>
-
       <footer>
-        <p class="footnote">原创交互式学习资料，基于二语习得（可理解输入、输出假说等）的通行理论整理。</p>
+        <p class="footnote">原创交互式学习资料。理论部分参考二语习得领域的通行框架：克拉申的输入假说与情感过滤假说、斯温的输出假说、以及关于意义协商的互动假说；记忆部分的指数衰减与间隔效应参考实验心理学关于检索练习与间隔效应的通行结论，并说明近年研究更常用幂律拟合遗忘曲线，指数模型为便于计算的近似。词汇覆盖率数据为基于大型语料库词频统计的量级估计，随文本类型、词族定义与统计口径而变，表格数字仅用于说明趋势。发音与语音部分依据语音学中关于音位对立与重音计时的通行描述。文中所有阈值（如 95%–98% 覆盖率）均为特定任务下的经验近似，不应作为绝对标准；关键论断的争议状态已在正文中标注。</p>
       </footer>
     </div>
   </article>

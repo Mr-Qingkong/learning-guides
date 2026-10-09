@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>高效写作进阶指南</h1>
-          <p class="report-intro__summary">写作是「可训练的思维」而非「天赋的文笔」。这份指南讲金字塔原理、SCQA 叙事、逻辑连贯与说服三要素，再配一套可执行的编辑清单，让文字既清晰又有力。</p>
+          <p class="report-intro__summary">写作不是「把想法抄下来」，而是把读者脑中混乱的信念，按你的推理路径重新组织。这份指南把金字塔、SCQA、连贯与说服从「技巧」还原为可推导的机制：结构如何降低认知负荷，修辞如何更新读者信念，并用可量化的编辑指标指导改稿。</p>
           <div class="intro-meta">
             <span>领域：写作 / 沟通</span>
             <span>难度：进阶</span>
@@ -26,91 +26,205 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>金字塔原理：结论先行 + MECE</h2>
-          <p class="lede">好的结构让读者「自上而下」地读：先拿到结论，再顺着论证向下展开。</p>
+          <h2><span class="sec-num">1</span>写作的底层原理：降低读者的认知负荷</h2>
+          <p class="lede">阅读是一种「实时的、串行的、有限带宽」的认知过程。写作的本质，是不让读者在理解内容之外，再把力气花在猜测结构上。</p>
+          <p>把阅读建模为一条<strong>信息流</strong>：读者在时刻 <code>t</code> 的「理解状态」取决于已读内容构成的上下文。若新信息与旧上下文之间的关联稀疏，读者就需要在脑内做额外搜索来「接线」，这就是认知负荷。用互信息（mutual information，可简单理解为两段文字的共同信息量）来刻画：</p>
+          <div class="prompt-block"><span class="prompt-label">连贯性的信息论刻画</span><button class="copy-btn" type="button">复制</button>让阅读总负荷 ≈ Σ 每句的加工成本
+每句成本 ≈ 结构解析成本 + 语义接入成本
+
+更连贯 ＝ 让「新句」与前文「已知」互信息更高
+          I(新句 ; 已知) 越大 → 接入成本越低
+
+结论：好文章减少的是「意外性」，
+     不是减少信息量本身。
+所以「旧信息在前、新信息在后」不是文风偏好，
+而是一条降低接入成本的最优策略。</div>
+          <p>由此可以推出三个高层原则，它们不是经验之谈，而是降低负荷的必然推论：</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>结论先行</h4><p>把核心观点放在最前面，每一层的第一句都概括本层内容。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>自上而下</h4><p>「结论 → 分论点 → 证据」层层支撑，任何一层都能独立成立。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>MECE 原则</h4><p>分论点之间「不重叠、不遗漏」（Mutually Exclusive, Collectively Exhaustive）。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>同级并列</h4><p>同一层级的论点在逻辑上处于同一层次，不越级、不重复。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>结论先行降低「寻路成本」</h4><p>读者先在脑中建立顶层结构（几个要点），后续每个细节都能挂到已知的钩子上，避免边读边重建全局。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>结构显性降低「解析成本」</h4><p>标题、小标题、连接词把逻辑关系写在明面上，读者不必从语义反推关系，等于把隐式推理变成显式跳转。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>具体化降低「想象成本」</h4><p>「显著提升」不能让读者形成图像，而「从 5.0% 提升到 5.4%」立即给出可锚定的量，减少解释的自由度。</p></div></div>
           </div>
-          <div class="callout tip"><span class="callout-label">自检方法</span>写完给每个段落起一句「小标题」，只看这些小标题能否构成一个完整、无遗漏的论证——能，结构就立住了。</div>
+          <div class="callout tip"><span class="callout-label">一句话总结</span>清晰不是「写得简单」，而是「不让读者付出理解内容以外的代价」。所有写作技巧，都可以回到这条原理上做评判。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>SCQA：讲一个有张力的故事</h2>
-          <p class="lede">结论先行的金字塔负责「清晰」，SCQA 负责「抓住注意力」——两者可叠加使用。</p>
+          <h2><span class="sec-num">2</span>金字塔原理的集合论解释：MECE 为何成立</h2>
+          <p class="lede">MECE（相互独立、完全穷尽）常被当成口号背诵。它其实是一条严格的集合性质：一组分论点必须构成对母论点的「划分」。</p>
+          <p>把母论点看作全集 <code>U</code>，分论点看作子集 A₁, A₂, …, Aₖ。MECE 要求同时满足两条：</p>
+          <div class="prompt-block"><span class="prompt-label">MECE 的集合论定义与定理</span><button class="copy-btn" type="button">复制</button>划分（partition）定义，需同时满足：
+
+(1) 相互独立 Mutually Exclusive：
+      Aᵢ ∩ Aⱼ = ∅   （i ≠ j，任意两个分点不重叠）
+
+(2) 完全穷尽 Collectively Exhaustive：
+      A₁ ∪ A₂ ∪ … ∪ Aₖ = U
+
+可推导的两条结论：
+· 不满足 (1) → 存在被重复计算的论点 → 读者读到「同一件事说了两遍」，
+    信任下降（重叠意味着你没想清楚边界）
+· 不满足 (2) → 存在未被覆盖的论点 → 论证有漏洞，
+    反方极易抓住缺口（遗漏意味着结论不牢）
+
+· 完全穷尽 ＋ 相互独立 ⇒ 各分点权重可加，
+    支撑力「算术式」地汇总为母论点，不重不漏。</div>
+          <div class="callout tip"><span class="callout-label">自检方法</span>给每个段落起一句小标题，把它们当作集合。问两句：有没有两段在说同一件事（重叠）？把所有小标题拼起来，能不能等价地还原母论点（穷尽）？能，结构就立住了。</div>
+          <p><strong>为什么「同一层级」重要？</strong>金字塔要求同层论点处于同一抽象层级。若把「结论」与「支撑结论的证据」并列在同一行，就违反了划分的「同构」要求——抽象层级不一致的论点，无法用同一尺度比较权重，读者会感到「跳」。这也是「不越级、不重复」的真正依据。</p>
+          <h3>自上而下：推理链的传递性</h3>
+          <p>「结论 → 分论点 → 证据」本质上是一条<strong>蕴含链</strong>：证据蕴含分论点，分论点蕴含结论。逻辑学中的传递性保证：若 A ⇒ B 且 B ⇒ C，则 A ⇒ C。因此每一层只需对上一层负责，读者可以逐层验证，而不必一次承受整条链。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>SCQA 的张力模型：用「意外」抢占注意力</h2>
+          <p class="lede">金字塔负责「清晰」，SCQA 负责「被读完」。它利用的是人类对「预期违背」的自动化反应。</p>
+          <p>SCQA 的力量来自一个认知机制：大脑持续根据已有信息预测下一步，当实际信息与预测<strong>不一致</strong>（surprise，即低概率事件）时，注意力被强制重新分配。冲突（Complication）就是故意制造这种「预测误差」。</p>
           <table>
-            <caption class="caption">SCQA 四要素</caption>
-            <thead><tr><th>要素</th><th>作用</th><th>触发语</th></tr></thead>
+            <caption class="caption">SCQA 四要素与认知功能</caption>
+            <thead><tr><th>要素</th><th>认知功能</th><th>触发语</th></tr></thead>
             <tbody>
-              <tr><th scope="row">情境 Situation</th><td>建立共同背景</td><td>「我们目前……」「大家都希望……」</td></tr>
-              <tr><th scope="row">冲突 Complication</th><td>制造张力/问题</td><td>「但现实是……」「然而遇到了……」</td></tr>
-              <tr><th scope="row">疑问 Question</th><td>点明待解决问题</td><td>「那该怎么办？」「为什么会这样？」</td></tr>
-              <tr><th scope="row">答案 Answer</th><td>给出结论与方案</td><td>「我的建议是……」</td></tr>
+              <tr><th scope="row">情境 Situation</th><td>建立共享先验，对齐读者已有知识</td><td>「我们目前……」「大家都希望……」</td></tr>
+              <tr><th scope="row">冲突 Complication</th><td>制造预测误差，触发注意力</td><td>「但现实是……」「然而遇到了……」</td></tr>
+              <tr><th scope="row">疑问 Question</th><td>把张力显式化，形成待解缺口</td><td>「那该怎么办？」「为什么会这样？」</td></tr>
+              <tr><th scope="row">答案 Answer</th><td>闭合缺口，给出结论与方案</td><td>「我的建议是……」</td></tr>
             </tbody>
           </table>
-          <p>冲突是灵魂：没有冲突，SCQA 就成了流水账。冲突可以是「现状 vs 目标」「预期 vs 现实」「方案 A vs 方案 B」。</p>
+          <p>冲突是灵魂。没有冲突，读者的预测不需要修正，注意力不会升级——SCQA 就退化成了流水账。有效的冲突来自三类原始的「张力源」：目标与现状的落差、期望与现实的背离、方案之间的取舍。</p>
+          <div class="callout warn"><span class="callout-label">边界</span>张力不是「标题党」。冲突必须真实存在于问题本身，且答案确实能闭合它。若用夸张的冲突吸引注意、却给出平庸的答案，读者的预测误差被「错误地」满足，反而损耗信誉（见第 4 节的 Ethos）。</div>
+          <p>次序上，SCQA 通常置于金字塔之前作为<strong>引入</strong>：先用「情境—冲突—疑问」把读者带入，再让「答案」成为金字塔的顶层结论。两者叠加时，最佳实践是——SCQA 只写属于本篇的一个答案，避免引言就把所有结论讲完。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>逻辑连贯：让句子「接得上」</h2>
-          <p class="lede">句子堆在一起不等于成文。连贯靠「已知信息 → 新信息」的滚动推进。</p>
+          <h2><span class="sec-num">4</span>连贯的机制：旧信息—新信息的滚动推进</h2>
+          <p class="lede">句子堆在一起不等于成文。连贯性有明确的可操作机制：每一句的「出发点」必须接上上一句的「落点」。</p>
+          <p>语言学的<strong>信息结构</strong>理论把句子分成两部分：承载<strong>已知信息</strong>的〈话题/theme〉与承载<strong>新信息</strong>的〈述题/rheme〉。连贯的本质，是让相邻句子的信息如齿轮般咬合——前句的 rheme 成为后句的 theme，形成一条不回头的推进链。</p>
           <div class="compare">
-            <div class="side bad"><span class="side-tag">✗ 跳跃</span><pre>公司今年营收下降。管理层决定裁员。新产品要上市。</pre><div class="why">三句之间无连接词、无逻辑关系，读者需自己脑补。</div></div>
-            <div class="side good"><span class="side-tag">✓ 连贯</span><pre>由于营收连续两个季度下降，管理层决定通过裁员压缩成本；同时，为扭转局面，公司将在下季度推出新产品。</pre><div class="why">用「由于/同时/为」显式点明因果与并列关系。</div></div>
+            <div class="side bad"><span class="side-tag">✗ 断链</span><pre>公司今年营收下降。管理层决定裁员。新产品要上市。</pre><div class="why">三句各自站在不同起点，前句的「落点」没有被下句接住，读者要反复重建语境。</div></div>
+            <div class="side good"><span class="side-tag">✓ 咬合</span><pre>由于营收连续两个季度下降，管理层决定通过裁员压缩成本；同时，为扭转局面，公司将在下季度推出新产品。</pre><div class="why">「由于/同时/为」把因果关系链写在明面上，后句的出发点（成本、局面）都来自前句已给的信息。</div></div>
           </div>
-          <p>技巧：多用「因为、所以、但是、因此、然而、同时」等逻辑连接词；每段保持「一个中心 + 若干支撑」；旧信息在前、新信息在后，读起来才顺。</p>
+          <h3>显式连接词：把隐含关系「外化」</h3>
+          <p>逻辑连接词（因为、所以、但是、因此、然而、同时、例如）的价值在于——它们把本需要读者自行推断的关系，直接标注出来。对应第 1 节的信息论视角，连接词降低了「接入成本」：读者不需要反推「这两句到底是什么关系」，关系已被显式编码。</p>
+          <div class="callout tip"><span class="callout-label">判断准则</span>逐句检查：本句开头提到的人/物/概念，是否在上一句出现过？若没有，要么补一句过渡，要么调整语序（把已知信息移到句首）。这一步能消除绝大多数「读起来卡」的问题。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>说服三要素：情理并重</h2>
+          <h2><span class="sec-num">5</span>说服的神经机制与贝叶斯解释</h2>
+          <p class="lede">亚里士多德的「说服三要素」流传两千余年。用现代认知科学的语言重述，它恰好对应「信念更新」的三个通道。</p>
+          <p>把读者对某观点的<strong>相信程度</strong>建模为先验信念 P(H)。说服就是提供证据 E，使后验信念 P(H|E) 升高。贝叶斯定理给出更新规则（下式只表明「证据如何按似然比修正信念」）：</p>
+          <div class="prompt-block"><span class="prompt-label">把说服写成信念更新</span><button class="copy-btn" type="button">复制</button>贝叶斯更新（概念式）：
+
+  P(H|E) / P(¬H|E) = [P(H)/P(¬H)] × [P(E|H)/P(E|¬H)]
+      后验比        ＝    先验比      ×    似然比
+
+对应三要素：
+· Logos（逻辑）：提高似然比 P(E|H)/P(E|¬H)——
+   用数据与推理让证据「更像 H 为真时会发生的事」
+· Pathos（情感）：改变「先验」与注意权重——
+   让读者更愿意认真处理这条证据（动机与显著度）
+· Ethos（信誉）：对证据的「可信度」打折或加成——
+   同一句话，来自可信来源与可疑来源，更新幅度不同
+
+推论：三要素不是三个并列技巧，
+而是作用在同一条更新公式的不同因子上。</div>
           <table>
-            <caption class="caption">亚里士多德说服三要素</caption>
-            <thead><tr><th>要素</th><th>含义</th><th>实现方式</th></tr></thead>
+            <caption class="caption">亚里士多德说服三要素的现代对应</caption>
+            <thead><tr><th>要素</th><th>作用通道</th><th>实现方式</th></tr></thead>
             <tbody>
-              <tr><th scope="row">逻辑 Logos</th><td>用事实与推理说服</td><td>数据、案例、因果链、对比</td></tr>
-              <tr><th scope="row">情感 Pathos</th><td>触动读者的感受</td><td>具体场景、故事、痛点共鸣</td></tr>
-              <tr><th scope="row">信誉 Ethos</th><td>让读者信任你</td><td>专业资历、诚实承认局限、公平呈现反方</td></tr>
+              <tr><th scope="row">逻辑 Logos</th><td>提高证据的似然比，让推理可验证</td><td>数据、案例、因果链、对照与反证</td></tr>
+              <tr><th scope="row">情感 Pathos</th><td>改变先验与注意分配，激活行动动机</td><td>具体场景、故事、痛点、损失框架</td></tr>
+              <tr><th scope="row">信誉 Ethos</th><td>为整条证据链赋予可信度权重</td><td>专业资历、诚实承认局限、公平呈现反方</td></tr>
             </tbody>
           </table>
-          <p>只讲逻辑会显得冷冰冰，只讲情感显得不靠谱。好文章三者按比例搭配——汇报偏 Logos，营销偏 Pathos，而可信度（Ethos）是底线。</p>
+          <p>只讲逻辑会显得冷冰冰（读者缺少动机去更新），只讲情感显得不靠谱（似然比不升，证据站不住）。而 Ethos 是<strong>乘法因子</strong>：前两者再强，若信誉为零，更新幅度也会归零。这解释了为什么「公平呈现反方观点」反而增强说服力——它提高了来源的可信度权重。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>编辑清单：改稿的固定动作</h2>
-          <div class="prompt-block"><span class="prompt-label">改稿清单</span><button class="copy-btn" type="button">复制</button>1. 删：删掉所有「进行、实现、开展、赋能」等空话
-2. 拆：超过 40 字的句子拆短
-3. 换：抽象词换成具体名词与动词
-4. 标：每段只留一个中心，用连接词串起逻辑
-5. 读：大声读一遍，拗口即改
-6. 问：读者读完第一句，知道我要说什么吗？</div>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">写作研究从「修辞经验」走向「可测量、可计算」：认知负荷、可读性、以及与语言模型协作的新范式，是近十年的三条主线。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">可读性公式</span><span class="tl-date">20 世纪中期</span><p>Flesch 等提出以句长、词长为变量的可读性评分，第一次把「好不好读」量化成公式。局限明显：只看表面特征，忽略语义与领域知识，故只宜作粗筛指标。</p></div>
+            <div class="tl-item"><span class="tl-era">认知负荷理论</span><span class="tl-date">1980s 起</span><p>Sweller 等人提出认知负荷理论，把学习/阅读中的工作记忆负担分为内在、外在、相关三类；「减少外在负荷」成为清晰写作的理论依据。</p></div>
+            <div class="tl-item"><span class="tl-era">连贯性的计算语言学</span><span class="tl-date">1990s–2010s</span><p>研究者用〈实体网格〉与〈词汇衔接〉等方法度量文本连贯：看相邻句是否共享实体、是否用指代与同义词链维持话题，把「接得上」变成可计算指标。</p></div>
+            <div class="tl-item"><span class="tl-era">大规模写作反馈</span><span class="tl-date">约 2010 年代</span><p>自动作文评分的规模化研究推进（如 e-rater、自动评分与反馈相关工作），争议在于：机器能评语法与结构，却难评原创意与深度，易诱发「为评分而写」。</p></div>
+            <div class="tl-item"><span class="tl-era">与语言模型协作写作</span><span class="tl-date">约 2020 年代</span><p>生成式模型改变了写作流程：从「写」转向「改、判、取舍」。新争点包括：认知依赖（外包思考）、署名与原创性、以及「人机分工」的边界（模型擅长草拟与改写，人负责判断与取舍）。</p></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">谨慎对待</span>上述时间线与研究脉络为学界通行说法，具体的巅峰年份、作者与结论强度随领域发展而变。涉及具体论文时，请以原始文献为准，本指南不逐一断言其精确年份。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">写作速记</span><button class="copy-btn" type="button">复制</button>· 结构：结论先行 + 金字塔 + MECE
-· 叙事：SCQA（情境→冲突→疑问→答案）
-· 连贯：旧信息→新信息 + 逻辑连接词
-· 说服：Logos（逻辑）+ Pathos（情感）+ Ethos（信誉）</div>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">写作是「思维的外化」，因此它天然处在认知科学、逻辑学、统计学与计算语言学的交汇处。</p>
+          <div class="grid-2">
+            <div class="card"><h4>写作 ⟷ 认知心理学</h4><p>工作记忆容量有限（常引用的量级约为「7±2」个组块，后续研究认为更接近 4 个）。分块、结论先行、小标题，都是降低同时需要激活的信息量。</p></div>
+            <div class="card"><h4>写作 ⟷ 逻辑学</h4><p>论点—论据对应「前提—结论」，MECE 对应集合划分，反驳对应反例。写作的严谨性可被还原为论证的有效性。</p></div>
+            <div class="card"><h4>写作 ⟷ 统计学与因果推断</h4><p>「用数据说服」须避免相关当因果、避免用有偏样本。写作中的证据质量评估，与数据分析的推断纪律同源。</p></div>
+            <div class="card"><h4>写作 ⟷ 计算语言学</h4><p>可读性公式、词汇衔接、实体网格，把「清晰」变成可测量的量；如今也可用模型辅助检测连贯断裂与冗余。</p></div>
+            <div class="card"><h4>写作 ⟷ 修辞学与传播学</h4><p>Logos/Pathos/Ethos 与「框架效应」连接：同一事实的不同表述，会改变读者接收到的信息量与其权重。</p></div>
+            <div class="card"><h4>写作 ⟷ 信息论</h4><p>把文本看作信源与信道的编码：冗余太低则易误解，太高则啰嗦。「恰到好处的重复」正是抗噪声的信道编码策略。</p></div>
+          </div>
+          <p>这些连接的共同点是：<strong>写作的每一条规则，都能在另一门学科里找到机制性的解释</strong>。理解机制，才能在新场景（新文体、新媒介）中自己推导规则，而不是死记教条。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">许多「写作金句」在特定情境下成立，被无条件推广后就变成误导。以下是最容易踩的几个坑。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">✗ 误区说法</span><pre>「结论先行，所以开头必须先亮结论。」</pre><div class="why">在需要读者参与推理、或结论会引发抵触的场景（如敏感议题、谈判），直接抛结论可能触发防御性反驳。此时用 SCQA 铺垫、让读者自行走到结论，反而更有效。</div></div>
+            <div class="side good"><span class="side-tag">✓ 边界意识</span><pre>「先看读者与场景，再决定结论的位置。」</pre><div class="why">公文、汇报、邮件：结论先行；叙事、说服、公关：可先制造冲突，让结论在张力中显现。</div></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">其他常见误区</span></div>
+          <table>
+            <caption class="caption">「看起来对」但需限定条件的说法</caption>
+            <thead><tr><th>说法</th><th>问题所在</th><th>正确理解</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">「越短越好」</th><td>过度删减会丢失限定条件，制造歧义；过短也可能显得生硬</td><td>目标是「信息密度高」，而非「字数少」。短是结果，不是目的</td></tr>
+              <tr><th scope="row">「多用连接词就更连贯」</th><td>堆砌关联词会拖慢节奏，且掩盖真正的内容断链</td><td>连接词补的是「关系缺失」，不是万能胶；内容相关才是连贯的根</td></tr>
+              <tr><th scope="row">「MECE 必须做到完美」</th><td>很多真实问题无法严格穷尽，强行 MECE 会产生牵强的分类</td><td>MECE 是「努力方向」而非「及格线」；复杂议题允许写「其他」项兜底</td></tr>
+              <tr><th scope="row">「情感越强越打动人」</th><td>过度煽情会稀释 Logos，且一旦被识破即损伤 Ethos，说服力反而归零</td><td>Pathos 用来「让读者愿意处理证据」，不是「替代证据」</td></tr>
+              <tr><th scope="row">「好文章一次写成」</th><td>把「生成」与「编辑」混为一步，导致初稿追求完美而卡壳</td><td>分离两个阶段：先写「乱而全」的初稿，再按编辑清单冷改</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">写作速记</span><button class="copy-btn" type="button">复制</button>· 底层原理：写作＝降低读者的认知负荷（接入 + 解析成本）
+· 结构：结论先行 + 金字塔 + MECE（划分：不重叠 + 不遗漏）
+· MECE 不成立 → 重叠损信任 / 遗漏留漏洞
+· 次序：语义上「旧信息→新信息」，句子才咬合
+· 连贯：前句落点＝后句起点；连接词只补「关系缺失」
+· 叙事：SCQA（情境→冲突→疑问→答案），冲突制造预测误差
+· 说服：Logos 正在同一更新公式的不同因子上
+· 说服三要素作用于信念更新：似然比 / 先验与动机 / 可信度权重
+· Ethos 是乘法因子：信誉为零，说服归零
+· 公平呈现反方，反而提高可信度权重
+· 具体化 > 抽象：给可锚定的数字而非「显著提升」
+· 可读性公式只看表面特征，宜作粗筛不宜当标准
+· 分阶段：先写「乱而全」初稿，再冷改删繁
+· 自检：每段能否起一个小标题？小标题能否拼回母论点？
+· 边界：需要读者参与推理时，结论可后置
+· 写作规则都能在认知科学/逻辑/统计中找到机制解释</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求你推导、验证或动手实现，而非简单复述。每条都给出可检验的判据。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用 MECE 把一个大主题拆成不重不漏的 3-4 个分点</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用 SCQA 重写一份你最近写的汇报或方案</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">给一段跳跃的文字补上逻辑连接词</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">分析一篇爆文，拆出它的 Logos/Pathos/Ethos 占比</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用编辑清单把一篇旧稿删减 30% 而不丢信息</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">写完大声朗读并改掉所有拗口句</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：证明 MECE 的两条条件（相互独立、完全穷尽）是「各分点支撑力可加」的充要条件；再举一个「不穷尽」导致反方抓住漏洞的真实例子</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">验证：用 SCQA 与「直接给结论」两种写法改写同一份汇报，找 3 位读者做对照，记录他们对结论的接受度差异并解释原因</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">实现：写一段脚本，对一篇旧稿统计「每句词数分布」「平均句长」「连接词占比」，据此定位最可能需要拆分的长句</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">推导：用贝叶斯公式写出「为什么公平呈现反方能提高说服力」的推理，指出它在公式的哪个因子上起作用</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">验证：找出自己一篇文章里所有「前句落点≠后句起点」的断链句，逐句修复并统计修复前后的连贯度（可请他人盲评）</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">实现：设计一个「可读性粗筛」指标（如平均句长 + 抽象名词比例），在你自己的 5 篇文章上计算并排序，判断指标是否与主观可读性一致</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">验证：对同一论点写三个版本，分别强化 Logos/Pathos/Ethos（各留一版弱化），观察读者信念更新幅度的相对大小，检验「Ethos 作为乘数」的猜想</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">推导：把「每段只留一个中心」从信息论角度解释为「限制单句接入的新信息量」；给出一个连续两句同时引入 ≥3 个新概念、导致读者迷失的反例</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">实现：用编辑清单把一篇旧稿删减 30% 而不丢任何论点；逐条记录你删掉的是「冗余」还是「限定条件」，确保没有因删减制造歧义</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，基于结构化表达与古典修辞学的通行方法整理。</p>
+        <p class="footnote">原创交互式学习资料。原理部分依据认知负荷理论（工作记忆负荷）与信息结构（旧信息—新信息）的通行表述整理；MECE 的集合论解释、说服的贝叶斯式解读为便于理解的建模，非唯一解释；前沿时间线为学界通行说法，涉及具体研究时请以原始文献为准。文中不逐一断言具体论文的年份与作者，以免与最新进展冲突。</p>
       </footer>
     </div>
   </article>

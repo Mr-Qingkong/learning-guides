@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>统计学入门指南</title>
+  <title>统计学思维进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>统计学入门指南</h1>
-          <p class="report-intro__summary">统计学是用数据在不确定性中做判断的艺术。从均值中位数到正态分布、从假设检验到辛普森悖论，本指南帮你建立从「看数据」到「信数据」的完整推理链。</p>
+          <h1>统计学思维进阶指南</h1>
+          <p class="report-intro__summary">统计学是在不确定性中做判断的学问。本指南不停留在"记住 68-95-99.7"，而是给出推导链：标准误为何是 σ/√n、中心极限定理为何能救场、p 值到底在算什么、辛普森悖论为何会让分组与合并结论相反。读完你应能自己判断一个统计结论是否可信。</p>
           <div class="intro-meta">
             <span>领域：科学 · 方法</span>
             <span>难度：进阶</span>
@@ -25,8 +25,8 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>描述统计：数据的摘要</h2>
-          <p class="lede">描述统计的目标是：用几个数字压缩一堆数据，同时不丢失你最关心的信息——中心在哪、离散多大、形状如何。</p>
+          <h2><span class="sec-num">1</span>描述统计：从数据到摘要</h2>
+          <p class="lede">描述统计的目标是：用几个数字压缩一堆数据，同时不丢失最关键的信息——中心在哪、离散多大、形状如何。理解这一步，才能判断后面所有推断是否可信。</p>
           <table>
             <caption class="caption">集中趋势的三种度量</caption>
             <thead><tr><th>指标</th><th>含义</th><th>优缺点</th></tr></thead>
@@ -36,54 +36,114 @@
               <tr><th scope="row">众数 Mode</th><td>出现次数最多的值</td><td>适用于分类数据，但可能不唯一或不存在</td></tr>
             </tbody>
           </table>
+          <div class="prompt-block"><span class="prompt-label">离散度：为何用平方而不是绝对值</span><button class="copy-btn" type="button">复制</button>设数据 x₁, x₂, …, x_n，均值 x̄ = (1/n)Σxᵢ。
+偏差 dᵢ = xᵢ − x̄。注意 Σdᵢ = 0（正负抵消），故不能用"平均偏差"衡量离散。
+改用平方后求和（离差平方和 SS）：
+  SS = Σ (xᵢ − x̄)²
+样本方差（注意分母是 n−1，不是 n）：
+  s² = SS / (n − 1)
+样本标准差：
+  s = √( SS / (n − 1) ) = √s²
+为何用 n−1（贝塞尔校正）：
+  因为 x̄ 是由同组数据算出的，用 x̄ 代替真实 μ 会低估离散程度；
+  除以 n−1 而非 n 使 s² 成为总体方差 σ² 的无偏估计。
+  直观理解：n 个偏差中有 1 个"自由度"被均值占用 ⇒ 独立偏差只有 n−1 个。
+四分位距（更稳健的离散指标）：
+  IQR = Q₃ − Q₁（中间 50% 数据的跨度），不受极端值影响。
+经验判据：若 |x − x̄| &gt; 2s，通常视为需要解释的异常点。</div>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>均值 vs 中位数：看分布形态</h4><p>当数据大致对称时，均值≈中位数；当数据右偏（如收入分布），均值被少数大值拉高，中位数更能代表「典型水平」。新闻里说「平均工资」与「工资中位数」的差异就在这里。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>离散度：标准差与四分位距</h4><p>标准差衡量数据到均值的平均偏离程度；四分位距（IQR = Q3 - Q1）衡量中间 50% 数据的跨度。前者受极端值影响，后者更稳健。箱线图就是用四分位数画的。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>形状：偏度与峰度</h4><p>偏度衡量分布的不对称性（正偏=右尾长）；峰度衡量尾部厚度。两个分布可以有完全相同的均值和方差，但形状截然不同——所以看数据先画图。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>均值 vs 中位数：看分布形态</h4><p>数据大致对称时均值≈中位数；数据右偏（如收入分布）时，均值被少数大值拉高，中位数更能代表"典型水平"。新闻里"平均工资"与"工资中位数"的差异就在这里。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>离散度决定信息量</h4><p>两组数据可能均值相同但离散度相差极大。"平均体温 36.5℃"若伴随 s=3℃，说明存在大量异常；若 s=0.2℃，才是稳定指标。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>形状：偏度与峰度</h4><p>偏度衡量不对称性（正偏=右尾长）；峰度衡量尾部厚度。两个分布可以有完全相同的均值和方差，但形状截然不同——所以看数据先画图。</p></div></div>
           </div>
-          <div class="callout tip"><span class="callout-label">原则</span>永远先画图再看统计量。安斯库姆四重奏（Anscombe's Quartet）展示了四组均值、方差、相关系数完全相同但形状截然不同的数据——仅看摘要数字会完全误判数据结构。</div>
+          <div class="callout tip"><span class="callout-label">原则</span>永远先画图再看统计量。安斯库姆四重奏展示了四组均值、方差、相关系数完全相同但形状截然不同的数据——仅看摘要数字会完全误判数据结构。</div>
         </section>
         <section>
-          <h2><span class="sec-num">2</span>概率分布</h2>
-          <p class="lede">分布是统计学的「语法」——它告诉你一个值出现的可能性如何分配在数轴上。</p>
+          <h2><span class="sec-num">2</span>概率分布与中心极限定理</h2>
+          <p class="lede">分布是统计学的"语法"——它告诉你一个值出现的可能性如何分配在数轴上。而中心极限定理，是让"用样本推断总体"成为可能的头号功臣。</p>
+          <div class="prompt-block"><span class="prompt-label">样本均值的分布：标准误与 CLT</span><button class="copy-btn" type="button">复制</button>设总体均值 μ，总体标准差 σ，抽取 n 个独立样本，样本均值记 x̄。
+关键结论（样本均值的期望与方差）：
+  E[x̄] = μ                          （无偏）
+  Var(x̄) = σ² / n                     （n 越大，越稳定）
+  SE(x̄) = σ / √n                      （标准误）
+推导要点（方差部分）：
+  x̄ = (1/n)(X₁ + X₂ + … + X_n)
+  Var(x̄) = (1/n²) [ Var(X₁)+…+Var(X_n) ]   ← 独立性使协方差项全消
+         = (1/n²)(n·σ²) = σ²/n
+标准误的直觉：n 增大 4 倍，SE 只减小一半（√4=2）⇒ 靠增加样本降误差的代价很高。
+中心极限定理（CLT）：
+  只要 X₁,…,X_n 独立同分布，且 n 足够大（经验上 n ≥ 30），
+  则 x̄ 的分布近似正态：
+      x̄ ≈ N( μ, σ²/n )
+  关键：无论原始分布是不是正态，此结论都（渐近）成立。
+68-95-99.7 法则（正态下）：
+  P(μ−σ &lt; X &lt; μ+σ)   ≈ 68%
+  P(μ−2σ &lt; X &lt; μ+2σ) ≈ 95%
+  P(μ−3σ &lt; X &lt; μ+3σ) ≈ 99.7%
+标准误版本：把 σ 换成 σ/√n，即得 x̄ 的落区。</div>
           <table>
             <caption class="caption">关键概率分布速览</caption>
             <thead><tr><th>分布</th><th>描述</th><th>典型场景</th></tr></thead>
             <tbody>
-              <tr><th scope="row">正态分布</th><td>钟形对称，由均值 μ 和标准差 σ 决定</td><td>身高、测量误差、中心极限定理的极限</td></tr>
-              <tr><th scope="row">二项分布</th><td>n 次独立伯努利试验中成功次数</td><td>抛硬币、质检合格率</td></tr>
-              <tr><th scope="row">泊松分布</th><td>单位时间/空间内稀有事件发生次数</td><td>呼叫中心来电、放射性衰变</td></tr>
+              <tr><th scope="row">正态分布</th><td>钟形对称，由 μ 和 σ 决定</td><td>身高、测量误差、CLT 的极限</td></tr>
+              <tr><th scope="row">二项分布</th><td>n 次独立伯努利试验的成功次数</td><td>抛硬币、质检合格率</td></tr>
+              <tr><th scope="row">泊松分布</th><td>单位时间/空间内稀有事件次数</td><td>呼叫中心来电、放射性衰变</td></tr>
               <tr><th scope="row">均匀分布</th><td>区间内每个值等概率</td><td>随机数生成、无信息先验</td></tr>
             </tbody>
           </table>
-          <ul>
-            <li><strong>正态分布的 68-95-99.7 法则</strong>：约 68% 的数据落在 μ±1σ 内，95% 落在 μ±2σ 内，99.7% 落在 μ±3σ 内。这是快速判断异常值的经验法则。</li>
-            <li><strong>中心极限定理（CLT）</strong>：无论原始分布是什么形状，只要样本量足够大（通常 n≥30），样本均值的分布趋近正态分布。这是推断统计的基石——它让你即使不知道原始分布，也能对样本均值做推断。</li>
-            <li><strong>大数定律</strong>：样本量越大，样本均值越接近总体期望。这是「长期频率」定义概率的理论依据，也解释了为什么赌场长期必赢。</li>
-          </ul>
-          <p>中心极限定理的力量在于：<mark class="key">它把「不知道原始分布」的困难转化为「样本均值近似正态」的便利</mark>——这是 t 检验、z 检验等大量推断方法的共同基础。</p>
+          <p>CLT 的力量在于：<mark class="key">它把"不知道原始分布"的困难转化为"样本均值近似正态"的便利</mark>——这是 t 检验、z 检验等大量推断方法的共同基础。大数定律则说：样本量越大，x̄ 越接近 μ，这是"长期频率"定义概率的依据。</p>
         </section>
         <section>
-          <h2><span class="sec-num">3</span>推断统计与假设检验</h2>
-          <p class="lede">推断统计的核心问题：从有限的样本出发，对总体做出在概率上有保证的判断——关键是量化「不确定」。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>假设检验的逻辑</h4><p>设零假设 H₀（通常「没有差异」）和备择假设 H₁（「有差异」）。在 H₀ 为真的前提下计算观察到当前结果（或更极端）的概率——这就是 p 值。p 值小，说明在 H₀ 下这个结果不太可能发生。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>第一类与第二类错误</h4><p>第一类错误（α）：H₀ 为真但被拒绝——「假阳性」；第二类错误（β）：H₀ 为假但未被拒绝——「假阴性」。显著性水平 α 是你能容忍的假阳性率上限。功效（1-β）是正确拒绝假 H₀ 的概率。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>置信区间</h4><p>95% 置信区间不是「总体参数有 95% 的概率落在此区间」——参数是固定的，区间是随机的。正确的频率派解释是：重复抽样 100 次，约 95 个区间会覆盖真值。</p></div></div>
-          </div>
+          <h2><span class="sec-num">3</span>推断统计与假设检验：推导 p 值</h2>
+          <p class="lede">推断统计的核心问题：从有限样本出发，对总体做出在概率上有保证的判断——关键是量化"不确定"。理解 p 值的推导，才能不被它误导。</p>
+          <div class="prompt-block"><span class="prompt-label">假设检验的完整逻辑链</span><button class="copy-btn" type="button">复制</button>设定：
+  H₀（零假设）：通常"没有差异/没有效应"，如 μ = μ₀
+  H₁（备择假设）：如 μ ≠ μ₀（双侧）
+步骤：
+  (1) 在 H₀ 下，由 CLT 知 x̄ ≈ N(μ₀, σ²/n)
+  (2) 标准化得到检验统计量（σ 已知用 z；σ 未知且用 s 估计时用 t）：
+        z = (x̄ − μ₀) / (σ / √n)
+  (3) 计算"在 H₀ 为真时，观察到当前 z 或更极端值的概率" ⇒ p 值
+        双侧：p = P(|Z| ≥ |z_obs|)
+  (4) 判定：若 p &lt; α（如 0.05），则拒绝 H₀
+p 值不是"H₀ 为真的概率"——它是"假设 H₀ 为真，观察到当前或更极端结果的概率"。
+  两者的条件方向相反：
+    正确：P(数据 | H₀)      ← p 值算的是这个
+    误读：P(H₀ | 数据)      ← 这是很多错误的来源
+  β 与功效：
+    第一类错误 α = 假阳性（H₀ 真却被拒）
+    第二类错误 β = 假阴性（H₀ 假却未拒）
+    功效 = 1 − β = 正确拒绝假 H₀ 的概率
+  三者权衡：固定 n 时，α 减小 ⇒ β 增大（更保守，更难发现真效应）。
+  要同时降低 α 与 β，只能增大样本量 n。</div>
           <table>
             <caption class="caption">假设检验的四种结果</caption>
             <thead><tr><th></th><th>H₀ 为真</th><th>H₀ 为假</th></tr></thead>
             <tbody>
-              <tr><th scope="row">不拒绝 H₀</th><td>正确（概率 1-α）</td><td>第二类错误（概率 β）</td></tr>
-              <tr><th scope="row">拒绝 H₀</th><td>第一类错误（概率 α）</td><td>正确（功效 1-β）</td></tr>
+              <tr><th scope="row">不拒绝 H₀</th><td>正确（概率 1−α）</td><td>第二类错误（概率 β）</td></tr>
+              <tr><th scope="row">拒绝 H₀</th><td>第一类错误（概率 α）</td><td>正确（功效 1−β）</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">误区</span>p 值不是「H₀ 为真的概率」。p 值是「假设 H₀ 为真，观察到当前结果或更极端结果的概率」。p < 0.05 不代表你的发现「有 95% 的概率是对的」——它只说明在 H₀ 下这个结果不太可能出现。2016 年美国统计学会专门发表声明澄清 p 值的常见误用。</div>
+          <div class="callout tip"><span class="callout-label">置信区间</span>95% 置信区间不是"总体参数有 95% 概率落在此区间"。参数是固定的，区间是随机的：重复抽样 100 次，约 95 个区间会覆盖真值。区间形式为 x̄ ± z*·(σ/√n)，宽度与 √n 成反比。</div>
+          <div class="callout warn"><span class="callout-label">误区</span>p &lt; 0.05 不代表"有 95% 概率为真"，也不代表"效应很大"。大样本下极小的效应也能得到极小的 p 值——统计显著 ≠ 实际重要。2016 年美国统计学会发表声明专门澄清 p 值的常见误用。</div>
         </section>
         <section>
-          <h2><span class="sec-num">4</span>相关与回归</h2>
-          <p class="lede">相关衡量两个变量「一起变」的程度，回归用一条线描述「一个变量如何依赖另一个」——但两者都不能证明因果。</p>
+          <h2><span class="sec-num">4</span>相关与回归：从协变到预测</h2>
+          <p class="lede">相关衡量两个变量"一起变"的程度，回归用一条线描述"一个变量如何依赖另一个"——但两者都不能证明因果。</p>
+          <div class="prompt-block"><span class="prompt-label">最小二乘回归的推导思路</span><button class="copy-btn" type="button">复制</button>设数据 (xᵢ, yᵢ)，拟合直线 ŷ = a + b·x。
+准则：最小化残差平方和（SSE）
+  SSE = Σ ( yᵢ − ŷᵢ )² = Σ ( yᵢ − a − b·xᵢ )²
+求解（对 a、b 求偏导并令为 0）可得：
+  b = Cov(x, y) / Var(x) = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)²
+  a = ȳ − b·x̄
+斜率含义：x 每增加 1 个单位，y 平均变化 b 个单位。
+皮尔逊相关系数：
+  r = Cov(x, y) / ( s_x · s_y )，且 −1 ≤ r ≤ 1
+关键性质：对一元线性回归，r² = 回归解释的变异 / 总变异，
+  即 R² 表示"y 的变异中能被 x 线性解释的比例"。
+  · r = 0.5 ⇒ R² = 0.25 ⇒ 只解释 25% 的变异
+外推危险：模型只在 x 的观测范围内可靠，
+  用 0–100℃ 的数据预测 500℃ 几乎必然出错（关系可能早已改变）。</div>
           <table>
             <caption class="caption">皮尔逊相关系数 r 的解读</caption>
             <thead><tr><th>r 值范围</th><th>方向与强度</th><th>注意事项</th></tr></thead>
@@ -95,66 +155,103 @@
             </tbody>
           </table>
           <ul>
-            <li><strong>相关 ≠ 因果</strong>：冰淇淋销量和溺水事故正相关，不是因为吃冰淇淋导致溺水——两者的共同原因是夏季高温。这就是「混杂变量」的经典案例。</li>
-            <li><strong>线性回归的最小二乘法</strong>：找到一条直线使所有数据点到它的垂直距离平方和最小。斜率表示 x 每变化 1 单位，y 平均变化多少——但前提是关系确实近似线性。</li>
-            <li><strong>外推的危险</strong>：回归模型只在训练数据范围内可靠。用它预测范围外的值（如用 0-100°C 的数据预测 500°C）几乎必然出错。</li>
+            <li><strong>相关 ≠ 因果</strong>：冰淇淋销量和溺水事故正相关，不是因为吃冰淇淋导致溺水——两者的共同原因是夏季高温。这是"混杂变量"的经典案例。</li>
+            <li><strong>判定因果的三条件</strong>：时序先后、变量相关、排除混杂。仅有相关性无法满足后两条，因此观察性数据难以直接确立因果，需借助随机对照实验或因果推断方法。</li>
+            <li><strong>异常值的杠杆作用</strong>：单个极端点可能大幅拉动回归线，甚至翻转斜率符号。</li>
           </ul>
-          <p>安斯库姆四重奏（1973）展示了<mark class="key">四组均值、方差、相关系数和回归线完全相同的数据，但散点图形状截然不同</mark>——一个强线性、一个受异常值主导、一个完美曲线但非线性、一个被单个点决定全部。结论：只看统计量不看图是危险的。</p>
+          <p>安斯库姆四重奏展示了<mark class="key">四组均值、方差、相关系数和回归线完全相同、但散点图形状截然不同的数据</mark>——结论：只看统计量不看图是危险的。</p>
         </section>
         <section>
-          <h2><span class="sec-num">5</span>统计陷阱与误用</h2>
-          <p class="lede">统计不会说谎，但用统计的人会——有意或无意。识别常见陷阱，是数据素养的核心。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>辛普森悖论</h4><p>分组看数据时趋势和合并看时趋势完全相反。经典案例：加州大学伯克利分校 1973 年录取数据整体看女性录取率更低（性别歧视？），但按各系分组后，大多数系女性录取率反而更高——原因是女性更倾向于申请竞争激烈的系。合并数据时的混杂变量翻转了结论。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>p 值操纵（p-hacking）</h4><p>反复尝试不同的分析方式、样本子集、变量组合，直到 p < 0.05 再报告——这大幅膨胀了假阳性率。如果做 20 次检验，即使全部 H₀ 为真，平均也有一次会得到 p < 0.05。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>幸存者偏差</h4><p>只看「活下来的」样本得出错误结论。二战中分析返航轰炸机的弹孔位置加装装甲——错！应该看那些没有返航的飞机被击中在哪里。你看不到的数据可能比看到的更重要。</p></div></div>
+          <h2><span class="sec-num">5</span>前沿与研究进展</h2>
+          <p class="lede">统计学正经历一场"方法论自觉"：从"能否算出 p 值"转向"结论是否可重复、是否真能支撑因果"。以下为几条被广泛讨论的主线。</p>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-era">2010s</div><div class="tl-date">可重复性危机</div><p>心理学、医学等领域的大规模重复实验发现，相当比例已发表结果难以复现。原因被归为多重比较、p-hacking、发表偏倚与小样本效应等。这推动了研究规范的全面反思。</p></div>
+            <div class="tl-item"><div class="tl-era">2010s</div><div class="tl-date">预注册与开放科学</div><p>预注册（事先登记假设与分析方案）、开放数据与开放代码逐渐被期刊采纳，用以约束"事后挑选显著结果"的空间，提高研究的可检验性。</p></div>
+            <div class="tl-item"><div class="tl-era">2016 起</div><div class="tl-date">对 p 值的正式澄清与改造</div><p>美国统计学会就 p 值的使用发布声明，澄清常见误读。学界还讨论了更严格显著性阈值、报告效应量与置信区间、贝叶斯因子等替代或补充做法，结论仍在演进。</p></div>
+            <div class="tl-item"><div class="tl-era">2010s 起</div><div class="tl-date">因果推断的复兴</div><p>以有向无环图（DAG）、潜在结果框架、工具变量与断点回归等为核心，因果推断从观察数据中更严谨地识别效应，成为经济学、流行病学与数据科学的热门方向。</p></div>
+            <div class="tl-item"><div class="tl-era">2020s</div><div class="tl-date">贝叶斯方法的普及</div><p>计算能力提升使贝叶斯方法在机器学习、A/B 测试、临床决策中广泛应用。它要求显式写出先验，优点是能给出参数的概率陈述，代价是结论依赖先验选择。</p></div>
+            <div class="tl-item"><div class="tl-era">近年</div><div class="tl-date">算法公平与统计伦理</div><p>当统计模型用于招聘、信贷、司法时，"数据偏倚如何进入模型"成为核心议题。公平性指标之间常存在不可兼得的关系，如何取舍既是技术问题也是伦理问题。</p></div>
           </div>
+          <div class="callout warn"><span class="callout-label">审慎提示</span>上述为领域趋势的概括性描述，不涉及对具体研究好坏的评价。方法学争论仍在进行，任何单一立场都应视为讨论中的观点。</div>
+        </section>
+        <section>
+          <h2><span class="sec-num">6</span>跨学科视角</h2>
+          <p class="lede">统计是现代科学共用的"推理基础设施"。同一套推断逻辑，在不同领域承担着不同的关键任务。</p>
+          <div class="grid-2">
+            <div class="card"><h3>统计学 × 医学</h3><p>临床试验用随机对照与置信区间判断疗效，诊断试验用灵敏度/特异度与贝叶斯更新评估患病概率。统计设计不当，会直接损害结论的可信度。</p></div>
+            <div class="card"><h3>统计学 × 机器学习</h3><p>过拟合本质是方差问题，正则化是偏差-方差权衡的工程实现，交叉验证是泛化误差的估计。统计学习理论为"为何模型能泛化"提供了理论解释。</p></div>
+            <div class="card"><h3>统计学 × 经济</h3><p>计量经济学用回归做政策评估，因果推断方法（工具变量、断点、双重差分）正是为在观察数据中识别因果而发展起来的。</p></div>
+            <div class="card"><h3>统计学 × 心理学</h3><p>心理测量学用信度与效度刻画量表质量；实验设计用随机化与盲法控制偏倚。可重复性危机正源于这一领域的系统性自检。</p></div>
+            <div class="card"><h3>统计学 × 新闻传播</h3><p>调查报道、民调与图表呈现都依赖统计素养。抽样框、置信区间与图表纵轴起点，往往是同一事实被"讲成两个故事"的关键。</p></div>
+            <div class="card"><h3>统计学 × 哲学</h3><p>"概率是什么"（频率派 vs 贝叶斯派）、"相关何时能推因果"、归纳法的合理性，都是统计与哲学交叉的深层问题。</p></div>
+          </div>
+        </section>
+        <section>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">统计不会说谎，但用统计的人会——有意或无意。识别陷阱的关键，是回到"每一步推导的前提"。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">误区</span><h4>把 p 值当作"H₀ 为真的概率"</h4><p>p 值算的是 P(数据 | H₀)，不是 P(H₀ | 数据)。把两者混为一谈，会得出"p=0.03 意味着 H₀ 只有 3% 概率为真"这类错误结论。</p></div>
+            <div class="side good"><span class="side-tag">正确做法</span><h4>报告效应量与置信区间</h4><p>除 p 值外，报告效应量（差多大）与置信区间（多不确定）。统计显著不等于实际重要，大样本下微小效应也能显著。</p></div>
+          </div>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">陷阱</span><h4>辛普森悖论：只看合并数据</h4><p>分组趋势与合并趋势可能完全相反。合并数据的比较可能被分组比例这一混杂变量翻转，得出与事实相反的结论。</p></div>
+            <div class="side good"><span class="side-tag">对策</span><h4>同时看分组与合并</h4><p>绘制分组图并寻找混杂因子。当分组比例与结果相关时，合并结论就不可信。经典案例：某高校录取数据整体与分系的性别差异方向相反。</p></div>
+          </div>
+          <h4>几条易被忽略的边界条件</h4>
           <table>
-            <caption class="caption">常见统计误用一览</caption>
-            <thead><tr><th>陷阱</th><th>机制</th><th>对策</th></tr></thead>
+            <caption class="caption">常见统计结论的适用边界</caption>
+            <thead><tr><th>结论/方法</th><th>成立前提</th><th>易失效情境</th></tr></thead>
             <tbody>
-              <tr><th scope="row">选择性偏差</th><td>样本不代表总体</td><td>审查抽样框，关注覆盖误差</td></tr>
-              <tr><th scope="row">辛普森悖论</th><td>混杂变量翻转分组趋势</td><td>同时看分组和合并，找混杂因子</td></tr>
-              <tr><th scope="row">p-hacking</th><td>多次检验，挑显著的报告</td><td>预注册假设，做多重比较校正</td></tr>
-              <tr><th scope="row">图表误导</th><td>截断坐标轴夸大差异</td><td>看坐标轴起点和刻度</td></tr>
+              <tr><th scope="row">CLT：x̄ 近似正态</th><td>独立同分布 + n 足够大</td><td>重尾、强相关或极小样本</td></tr>
+              <tr><th scope="row">95% 置信区间覆盖真值</th><td>抽样随机、模型假设成立</td><td>选择偏差、模型误设</td></tr>
+              <tr><th scope="row">r 反映线性关系</th><td>变量关系近似线性、无极端值</td><td>U 形关系、单个异常点主导</td></tr>
+              <tr><th scope="row">回归预测有效</th><td>x 在观测范围内</td><td>外推到数据范围外</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">素养</span>看到一个统计结论，先问四个问题：谁说的（利益相关）？样本怎么来的（代表性）？比较的基准是什么（分母在哪）？有没有被忽略的变量（混杂）？——这四个问题挡住八成的统计忽悠。</div>
+          <div class="callout warn"><span class="callout-label">素养</span>看到一个统计结论，先问四个问题：谁说的（利益相关）？样本怎么来的（代表性）？比较基准是什么（分母在哪）？有没有被忽略的变量（混杂）？——这四个问题挡住八成的统计忽悠。</div>
         </section>
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <p class="lede">把描述、推断与陷阱压缩成一张可随身自查的卡片。</p>
           <div class="prompt-block"><span class="prompt-label">统计学速记</span><button class="copy-btn" type="button">复制</button>· 集中趋势：均值受极端值影响，中位数更稳健，众数适合分类数据
-· 先画图再看统计量（Anscombe 四重奏的教训）
-· 正态分布 68-95-99.7 法则
-· 中心极限定理：样本均值趋近正态（n≥30）
-· 大数定律：样本量越大，频率越接近概率
-· p 值 = H₀ 为真时观察到此结果或更极端的概率
-· p < 0.05 不等于「H₀ 只有 5% 为真」
-· 第一类错误 α = 假阳性，第二类错误 β = 假阴性
-· 功效 = 1-β = 正确拒绝假 H₀ 的概率
-· 95% 置信区间：长期重复抽样约 95% 覆盖真值
-· 相关 ≠ 因果，警惕混杂变量
+· 样本方差分母用 n−1（贝塞尔校正，保证无偏）
+· IQR = Q₃ − Q₁，抗极端值；先画图再看统计量
+· 样本均值：E[x̄]=μ，Var(x̄)=σ²/n，标准误 SE=σ/√n
+· n 增 4 倍，SE 只减半（√4=2）
+· 中心极限定理：独立同分布 + n≥30 ⇒ x̄ 近似正态
+· 正态 68-95-99.7 法则（σ、2σ、3σ）
+· 检验统计量 z = (x̄−μ₀)/(σ/√n)
+· p 值 = P(数据 | H₀) ≠ P(H₀ | 数据)
+· α = 假阳性率上限；β = 假阴性率；功效 = 1−β
+· 固定 n 时 α 与 β 反向；同时降低需增大 n
+· 95% CI = x̄ ± z*·(σ/√n)，宽度∝1/√n
+· 最小二乘：b = Cov(x,y)/Var(x)，a = ȳ − b·x̄
+· r² 表示 y 的变异中被 x 线性解释的比例
+· 相关 ≠ 因果；因果三条件：时序、相关、排除混杂
 · 辛普森悖论：分组趋势 ≠ 合并趋势
-· p-hacking 大幅膨胀假阳性率
+· p-hacking 大幅膨胀假阳性（20 次检验≈1 次假显著）
 · 幸存者偏差：看不到的数据可能更重要
 · 统计四问：谁说的？样本哪来的？基准是什么？漏了什么变量？</div>
         </section>
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <p class="lede">以下练习要求"推导与复算"，而非"复述定义"。逐条完成，逐条打勾。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">找一组真实数据（如班级成绩），分别计算均值和中位数，判断分布是否偏斜</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">画出安斯库姆四重喻的四组散点图，验证它们的统计量几乎完全相同</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用一枚硬币模拟中心极限定理：掷 30 次取均值，重复 1000 次，画出均值分布</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用一个真实案例画出假设检验的四种结果矩阵，标注 α、β、1-α、1-β 各自的位置</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">找一个「相关但非因果」的例子，画出可能的因果路径图并指出混杂变量</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用加州大学伯克利录取案例复现辛普森悖论：分组看和合并看的结论相反</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">找一则新闻报道中的统计数字，用「统计四问」检查其可信度</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用 5 个数据点手算均值、样本方差（分母 n−1）与标准差，验证 Σ(xᵢ−x̄)=0</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">从 Var(x̄)=σ²/n 出发，说明为何"样本量增大 4 倍只能让误差减半"，并讨论对实验设计的启示</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">给出一组非正态分布数据，用程序模拟 1000 次抽样（n=5 与 n=30各一次），对比样本均值分布形态，验证 CLT 的适用门槛</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">给定 x̄、μ₀、σ、n，手算 z 统计量，并说明在 α=0.05 双侧下是否拒绝 H₀</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">画一个 2×2 表，标注 α、β、1−α、1−β 的位置，并举例解释"α 减小为何可能使 β 增大"</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用一组数据手算最小二乘的斜率 b 与截距 a，解释 b 的实际含义与量纲</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">构造一个 r=0.6 的例子，计算 R² 并解释"相关 0.6 只解释了约 36% 的变异"意味着什么</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">复现辛普森悖论：设计一组分组与合并结论相反的数据，并指出混杂因子是什么</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">找一则新闻统计数字，用"统计四问"逐条检查；再写出如果由你来规范报道，会补充哪三项信息</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">内容综合自经典统计学教材与以下原始文献：Anscombe (1973) 四重奏、美国统计学会 2016 年 p 值声明、Simpson 悖论的加州大学伯克利案例，以及中心极限定理与假设检验的标准表述。</p>
+        <p class="footnote">内容综合自经典统计学教材与以下原始文献与标准表述：Anscombe (1973) 四重奏、Simpson 悖论的加州大学伯克利案例、美国统计学会 2016 年关于 p 值的声明，以及中心极限定理、假设检验与最小二乘回归的标准推导。前沿部分为领域研究方向的概括性描述，具体结论与争论请对照原始文献。</p>
       </footer>
     </div>
   </article>

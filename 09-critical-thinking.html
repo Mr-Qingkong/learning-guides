@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>批判性思维进阶指南</h1>
-          <p class="report-intro__summary">批判性思维 = 论证分析 + 谬误识别 + 偏差防御。这份指南讲论证的三种推理形式、高频逻辑谬误与认知偏差，并给你一套可随时套用的「质疑清单」。</p>
+          <p class="report-intro__summary">批判性思维不是「多质疑」，而是「知道该用什么形式检验什么主张」。本指南把论证有效性写成可判定的形式（命题逻辑与常见有效式）、把更新信念写成贝叶斯公式、把因果从相关中剥离出来（混杂与随机化），并连接双过程理论与因果推断的当代争论。</p>
           <div class="intro-meta">
             <span>领域：思维 / 逻辑</span>
             <span>难度：进阶</span>
@@ -26,83 +26,281 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>论证：前提如何推出结论</h2>
-          <p class="lede">任何论证都可拆成「前提 → 结论」，判断好坏的关键是「前提真不真、推理强不强」。</p>
+          <h2><span class="sec-num">1</span>论证的结构与有效性：把「推理好不好」变成可判定的问题</h2>
+          <p class="lede">任何论证都可由「前提集合 → 结论」表示。判断好坏不靠语气与立场，而靠两个正交的问题：前提是否为真，以及推理形式是否有效。</p>
+          <p>形式逻辑中，「有效」有精确定义：<strong>一个论证有效，当且仅当不存在「前提全真而结论为假」的情况</strong>。注意这个定义是纯形式的——它不关心前提在现实中是否成立。<code>有效 + 前提真 = 可靠性（soundness）</code>，这才是我们最终想要的性质。把这两层分开，能立刻解决大量日常争论：指出对方的前提为假，与指出对方的推理无效，是两种完全不同的批评。</p>
           <table>
-            <caption class="caption">三种推理形式</caption>
-            <thead><tr><th>类型</th><th>结构</th><th>判断标准</th><th>示例</th></tr></thead>
+            <caption class="caption">三种推理形式及其判据</caption>
+            <thead><tr><th>类型</th><th>结构</th><th>判据</th><th>能否「保真」</th></tr></thead>
             <tbody>
-              <tr><th scope="row">演绎推理</th><td>从一般到个别</td><td>有效/无效（前提真则结论必真）</td><td>「所有人都会死，苏格拉底是人，故他会死」</td></tr>
-              <tr><th scope="row">归纳推理</th><td>从个别到一般</td><td>强/弱（前提使结论「更可能」）</td><td>「观察的 1000 只天鹅都白，故天鹅白」</td></tr>
-              <tr><th scope="row">溯因推理</th><td>找「最佳解释」</td><td>解释力、简洁性</td><td>「地上湿，最可能是下过雨」</td></tr>
+              <tr><th scope="row">演绎推理</th><td>从一般到个别</td><td>有效 / 无效（二值、可判定）</td><td>前提真则结论必真</td></tr>
+              <tr><th scope="row">归纳推理</th><td>从个别到一般</td><td>强 / 弱（程度问题）</td><td>前提真只能提高结论概率，不能保证</td></tr>
+              <tr><th scope="row">溯因推理</th><td>寻找最佳解释</td><td>解释力、简洁性、可检验性</td><td>选出当前最优假设，可被新证据推翻</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">关键区分</span>「论证有效」不等于「结论为真」——有效只保证「若前提真，结论必真」；前提本身可能是假的。</div>
+          <p>逻辑连接词把命题组装起来，形成若干<strong>有效推理式</strong>与若干<strong>常被误用为有效式的无效式</strong>。下面这份对照表是形式谬误识别的核心工具（<code>→</code> 读作「蕴含/如果…那么」，<code>¬</code> 读作「非」）：</p>
+          <div class="prompt-block"><span class="prompt-label">有效式 vs 形式谬误（最容易混淆的四组）</span><button class="copy-btn" type="button">复制</button>设 P → Q 表示「若 P 则 Q」。
+
+【有效】
+· 肯定前件（modus ponens）：  P → Q,  P  ⊢ Q       有效
+· 否定后件（modus tollens）：   P → Q,  ¬Q ⊢ ¬P     有效
+
+【无效（形式谬误）】
+· 肯定后件（affirming the consequent）：
+    P → Q,  Q  ⊢ P        无效！
+    反例：P =「下雨」，Q =「地面湿」。
+    「地面湿」成立也可能因为洒水车，故推不出「下雨」。
+· 否定前件（denying the antecedent）：
+    P → Q,  ¬P ⊢ ¬Q       无效！
+    同上：非雨（洒水车）也可能导致地面湿。
+
+要点：「P → Q」与「Q → P」是两回事；
+      必要条件与充分条件常被偷换，是无效式的温床。</div>
+          <p>另一个高频的量化错误是<strong>量词辖域混淆</strong>：<code>∀x∃y R(x,y)</code>（对每个 x 都存在某个 y 与之有关系）与 <code>∃y∀x R(x,y)</code>（存在一个 y 对每个 x 都成立）在形式上完全不同，前者弱、后者强。日常语言中「每个人都有某个缺点」与「存在某个缺点每个人都有」，混淆二者会产生大量虚假推论。类似的还有「所有 S 都是 P」不蕴含「所有 P 都是 S」——这是肯定后件在范畴层面的变体。</p>
+          <div class="callout tip"><span class="callout-label">实用判据</span>遇到「既然……那么……」的推理，把它写成符号式，检查它属于「肯定前件」还是「肯定后件」。多数看起来很有说服力的日常推理，问题就出在这一步。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>高频逻辑谬误</h2>
+          <h2><span class="sec-num">2</span>非形式谬误：分类、误判与「谬误谬误」</h2>
+          <p class="lede">形式逻辑覆盖不了的错误，被归入非形式谬误。但比背清单更重要的是：知道这些清单是启发式的，不是判定的。</p>
           <table>
-            <caption class="caption">十种常见谬误</caption>
-            <thead><tr><th>谬误</th><th>含义</th><th>例子</th></tr></thead>
+            <caption class="caption">高频非形式谬误：结构、识别与反例</caption>
+            <thead><tr><th>谬误</th><th>结构要点</th><th>识别信号</th></tr></thead>
             <tbody>
-              <tr><th scope="row">人身攻击</th><td>攻击人而非论点</td><td>「他学历低，说的不可信」</td></tr>
-              <tr><th scope="row">稻草人</th><td>歪曲对方观点再攻击</td><td>「你支持环保？那你是不是反对所有发展？」</td></tr>
-              <tr><th scope="row">诉诸权威</th><td>因「名人说」就当真</td><td>「某明星推荐，所以有效」</td></tr>
-              <tr><th scope="row">诉诸情感</th><td>用情绪替代论证</td><td>「想想那些可怜的孩子」</td></tr>
-              <tr><th scope="row">滑坡谬误</th><td>把小步夸大成连锁灾难</td><td>「今天退一步，明天就全完了」</td></tr>
-              <tr><th scope="row">虚假两难</th><td>只给两个极端选项</td><td>「不支持我就是反对我」</td></tr>
-              <tr><th scope="row">循环论证</th><td>结论藏在前提里</td><td>「因为圣经是神的话，所以圣经可信」</td></tr>
-              <tr><th scope="row">错误归因</th><td>把相关当因果</td><td>「戴眼镜导致近视」</td></tr>
-              <tr><th scope="row">红鲱鱼</th><td>转移话题</td><td>「别管问题，先看他态度多差」</td></tr>
-              <tr><th scope="row">以偏概全</th><td>样本不足下普遍结论</td><td>「我认识的程序员都内向」</td></tr>
+              <tr><th scope="row">人身攻击</th><td>用说话者属性替代对主张的评价</td><td>出现「他这个人/他的身份……」而论点未被触及</td></tr>
+              <tr><th scope="row">稻草人</th><td>歪曲对方观点到最弱版本再反驳</td><td>被反驳的版本强于对方原话</td></tr>
+              <tr><th scope="row">诉诸权威</th><td>以身份替代证据（注意：援引领域内专家并不必然谬误）</td><td>权威是否处于其专业领域？是否有共识支持？</td></tr>
+              <tr><th scope="row">诉诸情感</th><td>用情绪强度替代论证强度</td><td>结论的说服力完全来自情绪唤起</td></tr>
+              <tr><th scope="row">滑坡</th><td>把「可能的第一步」当作「必然的连锁终点」</td><td>每一环的概率被默认为 1</td></tr>
+              <tr><th scope="row">虚假两难</th><td>把连续或多选项强行二值化</td><td>用「要么…要么…」省略中间状态</td></tr>
+              <tr><th scope="row">循环论证</th><td>结论（或其等价形式）被藏在前提中</td><td>前提的成立需要结论先成立</td></tr>
+              <tr><th scope="row">相关当因果</th><td>把统计关联直接读成因果</td><td>未排除共同原因、反向因果、选择偏差</td></tr>
+              <tr><th scope="row">红鲱鱼 / 转移话题</th><td>引入无关议题改变焦点</td><td>新话题与待证结论无逻辑联系</td></tr>
+              <tr><th scope="row">以偏概全</th><td>由小样本或不代表样本推普遍结论</td><td>样本量与抽样方式未交代</td></tr>
+              <tr><th scope="row">诉诸无知</th><td>「无法证明为假」故「为真」（或反之）</td><td>把举证责任倒置</td></tr>
+              <tr><th scope="row">错误类比</th><td>依赖两个事物在关键属性上的差异</td><td>类比的关键维度恰好不相似</td></tr>
             </tbody>
           </table>
+          <p>这里必须强调一个常被忽略的边界：<strong>「指出一个谬误」并不等于「结论为假」</strong>。一个论证有谬误，只说明这条论证不能支持该结论，结论仍可能由其他理由成立。把「你犯了 X 谬误」当作「你错了」的反驳，这本身是一种谬误（有时称为「谬误谬误」，argumentum ad logicam）。与之对称的还有：一个论证的形式有效，也不能保证结论为真（因为前提可能假）。</p>
+          <p>另一条边界是「滑坡」的判定门槛。滑坡并非总是谬误：若每一步的概率接近 1，或存在制度性的自动触发机制（一旦启动就无法停止），那么「连锁」判断可以是合理的。识别关键是<strong>每一步的转移概率</strong>，而不是「提到了连锁」这件事本身。</p>
+          <div class="callout warn"><span class="callout-label">易错点</span>「诉诸权威」与「引用专家」不是同一件事。当被引用者在该领域具备专业共识、且引用内容与其专业判断一致时，这是合理的证据使用。真正的问题是把权威当作<strong>不可质询的终局</strong>，或用领域外权威替代领域内证据。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>认知偏差：大脑的「自动陷阱」</h2>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>确认偏误</h4><p>只找支持自己的证据，忽视反面信息。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>可得性启发</h4><p>越容易想起的越觉得常见（如空难比车祸更让人怕）。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>锚定效应</h4><p>初始信息像「锚」一样拉偏判断（原价 999 现价 299）。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>框架效应</h4><p>同一事实，说法不同结论就不同（「存活率 90%」vs「死亡率 10%」）。</p></div></div>
+          <h2><span class="sec-num">3</span>贝叶斯推断：信念应当如何被证据更新</h2>
+          <p class="lede">「看到阳性检测结果，就得病的概率高吗？」这个问题把理性信念更新的全部数学暴露出来：答案同时取决于检测精度与疾病的基率，而多数人会忽略后者。</p>
+          <p>把假设记为 <code>H</code>，证据记为 <code>E</code>。贝叶斯公式由条件概率定义 <code>P(H∩E) = P(H)P(E|H) = P(E)P(H|E)</code> 直接移项得到：</p>
+          <div class="prompt-block"><span class="prompt-label">贝叶斯更新与优势形式</span><button class="copy-btn" type="button">复制</button>后验 ∝ 似然 × 先验：
+  P(H | E) = P(E | H) · P(H) / P(E)
+
+全概率展开（E 可由 H 与 ¬H 两条路径产生）：
+  P(E) = P(E|H)·P(H) + P(E|¬H)·P(¬H)
+
+优势形式（更便于口算，乘法代替除法）：
+  后验优势 = 先验优势 × 似然比
+  P(H|E)/P(¬H|E) = [P(H)/P(¬H)] × [P(E|H)/P(E|¬H)]
+
+要点：先验越极端，证据需要越强才能翻转结论。</div>
+          <p>用一组具体数字体会「基率忽视」的威力。设某病的患病率（基率）<code>P(H) = 1%</code>，检测的灵敏度 <code>P(E|H) = 99%</code>，假阳性率 <code>P(E|¬H) = 5%</code>。一个随机的人检测为阳性，他真患病的概率是：</p>
+          <div class="prompt-block"><span class="prompt-label">基率忽视的数值算例</span><button class="copy-btn" type="button">复制</button>设 10,000 人中：
+· 患病者 = 100 人 → 其中检测阳性 = 100 × 99% = 99 人
+· 未患病者 = 9,900 人 → 其中假阳性 = 9,900 × 5% = 495 人
+· 阳性总数 = 99 + 495 = 594 人
+
+故真患病概率 = 99 / 594 ≈ 16.7%
+
+核心结论：即使检测「准确率 99%」，阳性后真正患病的概率
+  仍可能远低于直觉（此例约 1/6），因为健康人群基数大，
+  假阳性的绝对数量压倒了真阳性。
+
+敏感性：假阳性率从 5% 降到 1% 时
+  阳性总数 = 99 + 99 = 198 → 后验 ≈ 50%（量级级变化）</div>
+          <p>这类题在实验心理学中被称为「贝叶斯推理问题」，大量研究报告了人类的系统性偏离：多数被试给出的估计显著高于正确答案（倾向于忽略先验或忽略假阳性率）。分歧在于解释机制：一种观点认为人使用的是「非贝叶斯的启发式」；另一种观点认为，若把问题改成<strong>自然频率形式</strong>（即上例的「10,000 人中 99 人」表述），正确率会大幅上升——这说明问题可能出在信息的呈现方式，而非人的推理能力本身。这一争论至今没有完全收敛，但「用频数表述能显著改善表现」相对稳健。</p>
+          <div class="callout tip"><span class="callout-label">可操作建议</span>处理任何「检测/筛查/预警」类信息时，一律换成「1 万个人里有几个」的频数表来算。这个转换能绕开绝大多数除法错误与基率忽视。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>相关与因果：把因果从关联中剥离</h2>
+          <p class="lede">「X 与 Y 相关」与「X 导致 Y」之间隔着三种常见混杂路径。把它们列清，是因果判断的基本功。</p>
+          <p>设观察到的相关 <code>X ↔ Y</code>，可能存在以下几种结构（有向无环图，DAG 是因果推断的标准语言）：</p>
+          <div class="prompt-block"><span class="prompt-label">三种混杂结构</span><button class="copy-btn" type="button">复制</button>1) 因果链：X → Y（真因果）
+   若 X 真的影响 Y，则干预 X 应改变 Y。
+
+2) 共同原因（混杂 confounding）：Z → X, Z → Y
+   例：Z =「年龄」既影响「运动量」也影响「健康」，
+   于是「运动与健康相关」可能部分由年龄造成。
+   对策：控制 Z（分层、回归、匹配）。
+
+3) 对撞（collider）：X → Z ← Y
+   对撞点 Z 被控制时，会「制造」X 与 Y 的关联！
+   例：Z =「是否被录取」，X = 能力，Y = 运气；
+   在录取者中，能力与运气呈负相关（因双边筛选）。
+   警告：控制对撞点会让原本无关的变量产生虚假关联。
+
+4) 反向因果：Y → X（如「病 → 就医」而非「就医 → 病」）
+   对策：时间顺序、工具变量、干预实验。</div>
+          <p>这三种结构带来一个反直觉但极重要的结论：<strong>「控制更多变量」并不总是更好</strong>。控制混杂能去伪存真，但控制对撞点会引入偏倚。因此因果推断的第一步不是找数据，而是先画出因果图，明确哪些变量该控、哪些不能控。近年因果推断领域的主要方法论进展（有向无环图、do 算子、潜在结果框架）正是把这一判断形式化。</p>
+          <p>识别因果的最强工具仍是<strong>随机化实验</strong>：随机分配处理组与对照组，使所有潜在混杂（包括未观测到的）在期望上被均衡，从而让「组间差异」可以归因于处理。观察性数据的替代手段包括工具变量、断点回归、双重差分、倾向得分匹配，它们各自的适用前提（如工具变量的排除性约束）都相当强，且大多<strong>不可直接检验</strong>。</p>
+          <p>一个高频的数字陷阱是<strong>辛普森悖论</strong>：分组内的趋势可能与合并后的趋势相反。原因是各组权重不同，合并时发生了「加权翻转」。这提醒我们：判断「相关还是因果」之前，先问「这个相关是在哪个层级上、以什么权重聚合出来的」。</p>
+          <div class="callout warn"><span class="callout-label">常见误用</span>把「调整了越多协变量的回归」当作越可信的因果证据，是极其常见的错误。若被调整的变量中包含对撞点或中介变量，结果反而会偏离真实因果效应。判断一篇研究是否可信，应看它是否<strong>明确写出因果假设与因果图</strong>，而非只看控制了多少变量。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>双过程理论：直觉与推理的两套系统</h2>
+          <p class="lede">为什么明明懂贝叶斯、懂逻辑，仍会在关键时刻犯错？双过程理论给出的答案是：有两套加工系统，而错误常来自「该用慢系统时用了快系统」。</p>
+          <p>双过程理论（在当代认知心理学中被广泛采用，代表性论述见于卡尼曼 2011 年的普及著作《思考，快与慢》；其学理源头可追溯到更早的启发式与偏差研究传统）区分两类加工：</p>
+          <div class="grid-2">
+            <div class="card"><h4>系统 1（直觉）</h4><p>快速、自动、并行、低认知负荷、依赖联想与情感。它在熟悉环境与高重复场景中非常高效，也是日常判断的主力。</p></div>
+            <div class="card"><h4>系统 2（推理）</h4><p>缓慢、受控、串行、高认知负荷、可执行形式运算。它能检查系统 1 的输出，但需要注意力资源与动机，且容易被疲劳与负荷抑制。</p></div>
           </div>
+          <p>这个框架的关键不是「系统 1 坏、系统 2 好」，而是<strong>匹配问题</strong>：在哪些判断上，系统的默认输出会系统性偏离规范答案。经典实验范式（如选择任务与合取谬误问题）显示：当问题以容易唤起直觉的形式呈现时，多数人会给出违反概率论或逻辑的答案；而当同一问题被改写为强调形式结构的形式时，正确率显著上升。这与上一节「频数表述改善贝叶斯推理」属于同一类现象。</p>
+          <p>认知偏差可被视为系统 1 的<strong>可预测的产出模式</strong>，而非随机错误：</p>
+          <table>
+            <caption class="caption">高频认知偏差：机制与对抗手段</caption>
+            <thead><tr><th>偏差</th><th>机制</th><th>典型表现</th><th>对抗手段</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">确认偏误</th><td>启发式搜索偏向与既有信念一致的证据</td><td>只读支持自己观点的材料</td><td>主动构造并检验反方最强论证</td></tr>
+              <tr><th scope="row">可得性启发</th><td>用「想起的容易程度」估计频率</td><td>高估罕见但醒目的风险</td><td>查基率数据，用频数替代印象</td></tr>
+              <tr><th scope="row">锚定效应</th><td>初始数值影响后续估计</td><td>被开价或随机数字拉偏</td><td>先独立估计，再看他人数值</td></tr>
+              <tr><th scope="row">框架效应</th><td>表述方式改变选择</td><td>「存活率 90%」与「死亡率 10%」决策不同</td><td>同时写出正反两种表述再比较</td></tr>
+              <tr><th scope="row">代表性启发</th><td>用「像不像典型」替代概率判断</td><td>合取谬误、忽视基率</td><td>回到频率与基数计算</td></tr>
+              <tr><th scope="row">事后偏见</th><td>结果已知后高估事前的可预测性</td><td>「我早就知道会这样」</td><td>事前写下预测与置信度，事后核对</td></tr>
+            </tbody>
+          </table>
+          <p>关于双过程理论，需要标注其争议状态：作为整体框架，它极有解释力且被大量使用；但「两个独立系统」的强版本（对应特定神经系统的二分）在实证上受到质疑，更谨慎的表述是「存在从自动到受控的加工连续谱」。引用时宜说明这是<strong>有效的描述性框架</strong>，而非已被完全确认的解剖学事实。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>质疑清单</h2>
-          <div class="prompt-block"><span class="prompt-label">面对任何观点先问</span><button class="copy-btn" type="button">复制</button>1. 他的结论是什么？理由/前提充分吗？
-2. 这是事实还是观点？证据来源可靠吗？有无利益相关？
-3. 推理形式是什么？有效吗？有没有偷换概念？
-4. 有没有别的解释或反例？
-5. 我是否因情绪、立场、锚定而倾向于相信？</div>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">批判性思维研究在过去二十年经历了一次重要的方法论重塑：从「列举人类犯的错」转向「检验这些结论本身能否复现」。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">启发式与偏差纲领</span><span class="tl-date">1970s 起</span><p>通过一系列简单实验（如合取谬误、基率忽视、锚定）系统展示了人类判断偏离规范模型的稳定模式，奠定了行为决策研究的基础，也让「认知偏差」成为跨学科通用词汇。</p></div>
+            <div class="tl-item"><span class="tl-era">生态理性与「快速节俭启发式」</span><span class="tl-date">1990s 起</span><p>另一条路线主张：启发式并非「缺陷」，而是在信息有限、时间受限环境中<strong>高效且往往更稳健</strong>的适应工具。两条路线的分歧在于「以规范模型为基准」还是「以环境适应性为基准」，这一争论至今活跃。</p></div>
+            <div class="tl-item"><span class="tl-era">双过程理论成型</span><span class="tl-date">2000s–2010s</span><p>把自动与受控加工整合为统一框架并被广泛普及。同期也出现对「两个系统」这一强类比的持续批评，推动研究转向更细的加工维度与个体差异。</p></div>
+            <div class="tl-item"><span class="tl-era">因果推断的形式化</span><span class="tl-date">1990s–2010s</span><p>有向无环图与 do 算子、以及潜在结果框架，把「混杂、对撞、中介」变成可分析的结构问题，使「相关 vs 因果」从口号变成可操作的检验流程。这是近年对「如何真正做批判性思维」最有实质贡献的方向之一。</p></div>
+            <div class="tl-item"><span class="tl-era">可复现性危机与重复实验</span><span class="tl-date">2010s 至今</span><p>大规模重复实验显示，社会心理学与部分经济学实验的原始效应量在重复研究中普遍缩减（「效应量衰减」现象）。这直接改变了引用方式：单一实验的结论应被视为待验证的线索，而非既成事实。</p></div>
+            <div class="tl-item"><span class="tl-era">预注册、开放数据与多实验室协作</span><span class="tl-date">近年</span><p>预注册（先登记假设与分析计划再收集数据）、开放数据与代码、以及多实验室联合重复，正在成为衡量研究可信度的新的制度标准。争论在于其成本与创新之间的平衡，但方法论方向已被广泛接受。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>评估任何「心理学实验证明……」的说法，先查五点：样本量与被试构成、是否预注册、效应量大小（而非只看 p 值）、是否被独立重复、以及是否报告了反面结果。这些标准不仅适用于评估他人，也适用于检验你自己的「直觉实验」。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">批判性思维速记</span><button class="copy-btn" type="button">复制</button>· 论证 = 前提 → 结论；分演绎（有效）/归纳（强弱）/溯因（最佳解释）
-· 十谬误：人身攻击、稻草人、诉诸权威/情感、滑坡、两难、循环、归因、红鲱鱼、以偏概全
-· 四偏差：确认、可得性、锚定、框架
-· 原则：审慎开放——不轻信、不固执</div>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">批判性思维没有独立的方法论，它的工具全部借自相邻学科：逻辑学给形式，统计学给推断，计算机科学给概率与决策，哲学给概念澄清。</p>
+          <div class="grid-2">
+            <div class="card"><h4>逻辑学</h4><p>命题逻辑与谓词逻辑提供「有效性」的判定工具：真值表、反例构造、量词辖域分析。这是形式谬误识别的底层机制。</p></div>
+            <div class="card"><h4>概率论与统计学</h4><p>贝叶斯更新、假设检验、置信区间与多重比较校正，把「信念强度」与「证据强度」变成可计算的量。</p></div>
+            <div class="card"><h4>因果推断</h4><p>有向无环图、do 算子、随机化与准实验设计，构成从观测数据中分离因果效应的标准工具，与流行病学、经济学高度重叠。</p></div>
+            <div class="card"><h4>认知心理学与神经科学</h4><p>双过程理论、工作记忆容量、注意与负荷，解释了「为什么明知正确仍会犯错」，也提示干预应作用于环境与流程，而非仅靠自制力。</p></div>
+            <div class="card"><h4>计算机科学与形式验证</h4><p>可满足性、证明系统、复杂度理论给出「什么问题可被机械判定」的边界；这也是「哪些推理可自动化、哪些必须依赖人类判断」的依据。</p></div>
+            <div class="card"><h4>科学哲学</h4><p>可证伪性、范式转换、理论负载的观察等概念，为「什么算证据、什么算解释」提供元层面的检验标准。</p></div>
+          </div>
+          <p>把这些合起来看，批判性思维可被重新表述为一项工程能力：<strong>为每个主张选择匹配的检验方法，并明确该方法的适用边界</strong>。主张是形式命题，就用逻辑；是概率判断，就用贝叶斯；是因果主张，就用因果图或实验；是经验概括，就用统计与重复。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">批判性思维本身也有失败模式，其中最危险的一种是把「批判」变成姿态而非方法。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「批判性思维就是多质疑、
+  谁都不信」
+
+「找出一个谬误，
+  就等于驳倒了结论」
+
+「两个观点各有道理，
+  所以真相在中间」
+
+「相关就是因果」
+
+「科学结论也会变，
+  所以都一样不可信」</pre><div class="why">问题：把怀疑当终点（走向虚无主义）、把「指出谬误」等同于「结论为假」（谬误谬误）、把「平衡」当作「正确」（中间立场谬误）、把统计关联直接读成机制，并用「一切都会变」抹平证据强度的差异。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>批判性思维 = 按主张类型
+  选择匹配的检验方法
+
+指出谬误只说「这条理由不成立」，
+  结论仍需独立检验
+
+「各有道理」不等于等价；
+  要看证据强度、样本与可复现性
+
+相关给出线索，因果需要
+  随机化或因果图分析
+
+结论会修正，
+  但修正方向通常由更强证据驱动，
+  而非随机漂移</pre><div class="why">要点：区分「这条论证有问题」与「这个结论是错的」，并区分「证据强度不同」与「都没有证据」。</div></div>
+          </div>
+          <table>
+            <caption class="caption">工具适用边界速查</caption>
+            <thead><tr><th>工具</th><th>适用场景</th><th>失效或误用场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">形式逻辑（有效性判定）</th><td>前提与结论关系清晰、可符号化的论证</td><td>自然语言歧义、隐含前提未显式化时容易误判</td></tr>
+              <tr><th scope="row">谬误清单</th><td>快速筛查可疑论证</td><td>当作结论真假的判据；专家论证也可能被误贴标签</td></tr>
+              <tr><th scope="row">贝叶斯更新</th><td>有明确先验与似然的信息整合</td><td>先验无法客观设定时，结论对先验敏感；连续证据须注意条件独立性</td></tr>
+              <tr><th scope="row">随机对照实验</th><td>要估计因果效应、伦理与可行性允许时</td><td>外部效度受限（样本与场景）；无法回答机制问题</td></tr>
+              <tr><th scope="row">观察性因果方法</th><td>干预不可行时的次优选择</td><td>关键假设（如排除性约束、平行趋势）不可检验，违反则结论失效</td></tr>
+              <tr><th scope="row">双过程理论</th><td>解释「为何明知而犯错」的描述框架</td><td>「两个独立系统」的强版本证据不足，宜作连续谱理解</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">批判性思维核心速记</span><button class="copy-btn" type="button">复制</button>【论证结构】
+· 有效 = 不存在「前提全真而结论为假」的情形
+· 可靠 = 有效 + 前提为真（两层须分开评价）
+· 演绎（有效/无效，二值）｜归纳（强/弱）｜溯因（最佳解释）
+· 有效式：肯定前件 P→Q, P ⊢ Q ；否定后件 P→Q, ¬Q ⊢ ¬P
+· 形式谬误：肯定后件 P→Q, Q ⊢ P ；否定前件 P→Q, ¬P ⊢ ¬Q
+· 量词辖域：∀x∃y 与 ∃y∀x 不等价，后者更强
+【非形式谬误】
+· 高频十二类：人身攻击、稻草人、诉权威、诉情感、滑坡、
+  虚假两难、循环论证、相关当因果、红鲱鱼、以偏概全、
+  诉诸无知、错误类比
+· 「指出谬误」≠「结论为假」（谬误谬误）
+· 滑坡判定看每一步的转移概率，而非「是否提到连锁」
+【贝叶斯】
+· P(H|E) = P(E|H)P(H) / P(E)
+· 后验优势 = 先验优势 × 似然比（口算首选）
+· 基率忽视算例：患病率 1%、灵敏度 99%、假阳性 5%
+  → 阳性后真患病 ≈ 16.7%（≈1/6）
+· 用「1 万人里有几个」的频数表述，可显著减少错误
+【相关与因果】
+· 三种混杂：共同原因（须控制）、对撞（不可控制）、反向因果
+· 控制更多变量 ≠ 更接近因果；控制对撞会制造虚假关联
+· 最强工具是随机化；观察性方法依赖强且多不可检验的假设
+· 辛普森悖论：合并趋势可与分组趋势相反（权重效应）
+【偏差与双过程】
+· 系统 1 快而自动；系统 2 慢而受控，需注意力资源
+· 确认、可得性、锚定、框架、代表性、事后偏见
+· 「两个独立系统」的强版本证据不足，宜作连续谱理解
+· 对抗原则：把判断外包给结构、清单与数据，而非依赖自制力
+【元原则】
+· 先问「这是什么类型的主张」，再选检验方法
+· 区分「理由不足」与「结论为假」；区分「证据弱」与「无证据」
+· 引用任何实验结果前：查样本、预注册、效应量、可复现性</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求符号化、计算或实现，产出可检验的结论，而非「读过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">拆解一篇文章的前提与结论，判断推理形式</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">在热搜/群聊里找出 3 种不同的逻辑谬误</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">识别一次自己身上的「确认偏误」</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">为「框架效应」找一个广告实例</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">为一个你坚信的观点找一个有力反例</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用「质疑清单」完整评估一条说法</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">为一组日常论述构造真值表：用 P、Q 写出「肯定前件」与「肯定后件」两种形式，验证前者在四行赋值下无「前提真结论假」的行，而后者存在，据此说明为什么后者无效</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">找出一个把必要条件当成充分条件的真实例子（如「不努力就一定不成，所以努力就一定成」），写出其符号形式并指出它属于哪一种形式谬误</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用贝叶斯公式手算：患病率 0.5%、灵敏度 95%、假阳性率 2%，求随机一人阳性后真患病的概率；再把假阳性率改为 0.5% 重算，解释结果变化的量级原因</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">把上题改写为「10 万人中有几个」的频数表形式，比较两种表述下你与同伴的作答正确率，说明呈现形式对推理的影响</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用优势形式推导连续两次独立检测后的后验：给定先验优势 1:99 与似然比 19:1，计算两次检测后的后验优势并转换为概率</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">构造一个含对撞点的 DAG（如「能力 → 录取 ← 运气」），说明为什么在录取者子样本中能力与运气可能出现负相关，并解释「控制变量反而引入偏差」</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">构造一个辛普森悖论的数值例子（给出两个分组各自的比率与不同的组规模），验证合并后的总体比率与分组方向相反，并指出聚合时的权重效应</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">选一篇声称因果结论的新闻或论文摘要，画出其隐含的因果图，标出至少一个潜在混杂与一个不可控制的对撞点，并说明结论在多大范围内成立</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">对一条你深信不疑的观点，用「事前预测 + 事后核对」的方式做一次校准：写下具体预测与置信度，一周后核对结果并计算你的校准误差，说明确认偏误是否在其中起了作用</label></div>
           </div>
         </section>
       </main>
-
       <footer>
-        <p class="footnote">原创交互式学习资料，基于非形式逻辑与认知心理学的通行分类整理。</p>
+        <p class="footnote">原创交互式学习资料。逻辑部分采用标准命题逻辑与谓词逻辑的记法与判定方法，有效式的名称（肯定前件、否定后件）为形式逻辑通行的拉丁语术语；贝叶斯部分为条件概率定义的直接推论，算例中的数字为教学设定，用于说明基率与假阳性率的相对影响。因果部分参考有向无环图与潜在结果框架的通行思想（共同原因、对撞、反向因果三类结构为因果推断中的标准区分）。双过程理论的普及性论述常归于卡尼曼 2011 年的著作《思考，快与慢》，其学理源头可追溯至更早的启发式与偏差研究；请在引用时注意「两个独立系统」的强版本在实证上存在争议，宜作加工连续谱理解。可复现性危机与效应量衰减为 2010 年代后多项大规模重复研究得出的通行观察。所有结论均提示读者回到原始文献核实。</p>
       </footer>
     </div>
   </article>

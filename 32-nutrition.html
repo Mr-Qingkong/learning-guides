@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>饮食营养指南</title>
+  <title>饮食营养深度进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>饮食营养指南</h1>
-          <p class="report-intro__summary">营养学的信号噪音比极高：热点年年换，底层逻辑几十年不变。本指南从宏量与微量营养素的功能讲起，落到热量平衡与 TDEE 校准、蛋白质分布、食品标签解读与流行饮食法评估——用同一把尺子量所有饮食法。</p>
+          <h1>饮食营养深度进阶指南</h1>
+          <p class="report-intro__summary">营养学是「信号噪音比极低」的领域：热点年年换，底层守恒律几十年不变。本指南先把三大宏量营养素的能量系数当成化学计量问题推导，再建立能量平衡公式与三大供能途径的物质流模型；随后深入蛋白质需要量与氮平衡、血糖指数与胰岛素反应的机制争议、微量营养素作为酶辅因子的催化逻辑。最后用同一把尺子拆解流行饮食法，并给出可校准、可证伪的个人实验方案。</p>
           <div class="intro-meta">
             <span>领域：自我管理</span>
             <span>难度：进阶</span>
@@ -24,118 +24,349 @@
     </header>
     <div class="page__content">
       <main>
+
         <section>
-          <h2><span class="sec-num">1</span>宏量营养素：功能与需求</h2>
-          <p class="lede">三种宏量营养素各有不可替代的功能——先明确「它干什么」，再谈吃多少。</p>
+          <h2><span class="sec-num">1</span>宏量营养素：从化学计量到能量系数</h2>
+          <p class="lede">「脂肪 9、碳蛋 4 kcal/g」不是任意规定，而是燃烧实验推出的化学计量结果。理解它为什么是这些数字，才能在标签与实际体重变化之间建立可验证的换算链。</p>
+          <p>三大宏量营养素之所以不可互相替代，是因为它们在体内承担<strong>不同层级的任务</strong>：蛋白质提供氮与氨基酸骨架（结构、酶、信号分子），碳水化合物是最快可动员的氧化底物与部分组织的必需燃料，脂肪则是能量密度最高的储能形式与脂溶性介质的载体。当把它们只当「热量」看时，就丢掉了氮平衡、糖原容量与必需脂肪酸这三条硬约束。</p>
           <table>
-            <caption class="caption">宏量营养素速览</caption>
-            <thead><tr><th>营养素</th><th>主要功能</th><th>能量密度</th><th>典型来源</th></tr></thead>
+            <caption class="caption">宏量营养素：功能、能量系数与体内储量上限</caption>
+            <thead><tr><th>营养素</th><th>主要功能</th><th>能量系数</th><th>体内可动员储量（量级）</th></tr></thead>
             <tbody>
-              <tr><th scope="row">蛋白质</th><td>组织修复、酶与激素合成、饱腹感强</td><td>约 4 kcal/g</td><td>肉蛋奶豆鱼</td></tr>
-              <tr><th scope="row">碳水化合物</th><td>最快供能底物，高强度活动的燃料</td><td>约 4 kcal/g</td><td>主食、薯类、水果</td></tr>
-              <tr><th scope="row">脂肪</th><td>必需脂肪酸载体、脂溶性维生素、激素原料</td><td>约 9 kcal/g</td><td>烹调油、坚果、鱼类</td></tr>
+              <tr><th scope="row">蛋白质</th><td>组织修复、酶与激素、免疫与转运</td><td>约 4 kcal/g</td><td>无「蛋白仓库」；动用即意味着分解功能组织</td></tr>
+              <tr><th scope="row">碳水化合物</th><td>快速供能、神经与红细胞必需、节约蛋白</td><td>约 4 kcal/g</td><td>肝糖原约数百 kcal、肌糖原约 1000–2000 kcal（因体型与训练而变）</td></tr>
+              <tr><th scope="row">脂肪</th><td>储能、必需脂肪酸、脂溶性维生素、激素原料</td><td>约 9 kcal/g</td><td>脂肪组织，理论储量可达数万 kcal</td></tr>
             </tbody>
           </table>
-          <p><strong>蛋白质需求量</strong>：普通成人《中国居民膳食指南（2022）》推荐约 1.0 g/kg 体重/天；规律力量训练者常参考 1.2~2.0 g/kg。数值因人而异，肾功能异常者须遵医嘱调整。</p>
+          <div class="prompt-block"><span class="prompt-label">能量系数的化学计量来源（为什么是 4/4/9）</span><button class="copy-btn" type="button">复制</button>产热当量（Atwater 系数）的逻辑：
+· 碳水与蛋白在弹式量热计中实测燃烧热，再扣除体内消化吸收与
+  含氮废物（尿素等）排出所「带走」的能量损失，得可用系数。
+· 脂肪几乎不含氮、代谢终产物为 CO₂ 与 H₂O，损失极小，
+  故可用系数最接近其燃烧热 → 数值最高（约 9 kcal/g）。
+
+∴ 能量系数 = 燃烧热 − 消化损耗 − 代谢排泄损失
+  这就是「物理燃烧值」与「生理可利用值」的区别。
+
+关键推论（可验证）：
+若某人每天多吃「标称额外 500 kcal」的脂肪，
+  其可利用能量几乎全额到账；
+而同样标称 500 kcal 的坚果，因纤维与结构包裹，
+  实际可利用值会略低于标签值（食物基质效应）。
+
+应用到体重换算：
+1 kg 脂肪组织 ≈ 约 7700 kcal（注意：是脂肪「组织」，含水分与结缔组织，
+  纯脂肪本身约 9400 kcal/kg）。
+∴ 每日净缺口 500 kcal 的理论减重速率 ≈ 500 / 7700 ≈ 0.065 kg/天
+  → 一周约 0.45 kg（这是稳态线性近似，真实过程非线性）</div>
+          <div class="callout warn"><span class="callout-label">边界</span>7700 kcal/kg 是工程近似，不是守恒恒等式。真实减重中基础代谢会随体重下降而下调、TEF 与活动耗能同步变化，且早期体重下降有大量水分与糖原（每克糖原伴随约 3 克水）。因此「线性外推」在中长期会高估减重，需要按新体重重算。</div>
           <ul>
-            <li><strong>碳水分型</strong>：完整来源（全谷、薯类、豆类）与精制来源（糖、白面制品）的差别在纤维、微量元素与血糖曲线，不在热量本身。</li>
+            <li><strong>碳水分型</strong>：完整来源（全谷、薯类、豆类）与精制来源（糖、白面制品）的差别在纤维、微量元素、食物基质结构与血糖曲线，不在于每克 4 kcal 的热量本身。</li>
             <li><strong>脂肪取舍</strong>：以不饱和为主（鱼、坚果、橄榄油），控制饱和脂肪，明确拒绝工业反式脂肪（部分氢化油）——后者是唯一需要「零容忍」的脂类。</li>
+            <li><strong>蛋白质质量</strong>：氨基酸评分（如 PDCAAS、更新的 DIAAS）衡量蛋白质满足人体必需氨基酸需求的能力；动物蛋白与豆类组合可互补，纯素者需刻意关注赖氨酸与含硫氨基酸。</li>
           </ul>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>微量营养素与水</h2>
-          <p class="lede">微量营养素不供能，但它们是代谢机器的齿轮——缺一个，整条流水线降速。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>常见现实缺口</h4><p>维生素 D（日晒不足地区普遍偏低）、B12（纯素饮食必须补充）、铁（育龄女性常见缺口）、钙（奶制品摄入不足者）、碘（部分内陆依赖加碘盐）。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>食补优先</h4><p>食物基质中的纤维与伴生成分是补剂没有的。补剂是「查漏」，不是主食——先修饮食结构，再谈瓶瓶罐罐。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>水</h4><p>占体重一半以上；口渴是滞后信号。训练与高温天气下按计划主动饮水，而不是等到渴了才喝。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>钠钾平衡</h4><p>多数人钠（盐）偏高、钾（蔬果）不足——多加一份蔬果比单纯减盐更容易执行，也更全面。</p></div></div>
-          </div>
-          <div class="callout tip"><span class="callout-label">边界</span>补剂行业证据密度参差。如患慢性病或正在服药，服用任何补充剂前请咨询医生——部分补剂与药物存在相互作用。</div>
+          <h2><span class="sec-num">2</span>三大供能途径：把「吃饭到供能」写成物质流</h2>
+          <p class="lede">食物不等于能量，能量要经过「消化 → 吸收 → 转运 → 氧化/储存」四道关。每一道关都能成为限速步骤，这就是为什么同样的热量在不同形态下代谢命运不同。</p>
+          <p>三大宏量营养素进入体内的走向可以抽象为三条通道：</p>
+          <div class="prompt-block"><span class="prompt-label">营养素到 ATP 的三条通道（简化物质流）</span><button class="copy-btn" type="button">复制</button>糖通道：碳水 → 葡萄糖 →（糖酵解）丙酮酸
+  ├─ 无氧：丙酮酸 → 乳酸（快速但每分子葡萄糖仅约 2 ATP）
+  └─ 有氧：丙酮酸 → 乙酰辅酶A → 三羧酸循环 + 氧化磷酸化
+          每分子葡萄糖净约 30–32 ATP
+
+脂通道：脂肪 →（脂肪酶水解）脂肪酸 + 甘油
+  ├─ 甘油 → 糖异生 / 糖酵解
+  └─ 脂肪酸 →（β 氧化）乙酰辅酶A → 三羧酸循环 + 氧化磷酸化
+          每分子软脂酸（16C）净约 100+ ATP，但产率（单位时间）慢
+
+蛋白通道：蛋白 → 氨基酸 →（脱氨基）碳骨架进入上述两通道
+  含氮部分 → 尿素循环 → 经肾排出
+  ∴ 蛋白供能代价高（既耗能又产氮废），一般不作为主力燃料
+
+三条通道的汇合点：乙酰辅酶A → 三羧酸循环 → 电子传递链
+∴ 无论吃什么，最终都在同一个「电子传递链」上结算 ATP。
+  差异只在：进入速度、是否需氧、以及副产物（乳酸 / 酮体 / 尿素）。
+
+存量的分配逻辑：
+· 先补糖原（肝/肌）——容量小，优先级高
+· 富余能量 → 脂肪合成（de novo lipogenesis）——容量几乎无限
+· 这也是「长期热量盈余必然变胖」的物理解释</div>
+          <div class="callout tip"><span class="callout-label">呼吸商</span>呼吸商（RQ）= 产生的 CO₂ / 消耗的 O₂。碳水约 1.0、脂肪约 0.7、蛋白约 0.8。RQ 接近 1 提示以碳水供能为主，接近 0.7 提示以脂肪为主——这提供了一个「间接测热」的窗口：通过气体交换反推燃料结构，而不必开刀取样。</div>
+          <p>关键工程问题：<strong>能量的「可用性」不仅是热量，还是速率</strong>。同样 200 kcal，白面包可在半小时内快速入血（血糖尖峰、胰岛素响应），而坚果与豆类因纤维、脂肪与结构包裹，释放缓慢。这解释了为何「热量相同、代谢结果不同」——被同一个化学计量约束，却走不同的动力学路径。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>热量平衡与 TDEE 估算</h2>
-          <p class="lede">体重管理的第一性原理只有一条：摄入与消耗的差值；其余都是执行工具。</p>
+          <h2><span class="sec-num">3</span>蛋白质需要量与氮平衡：一项可证伪的守恒方程</h2>
+          <p class="lede">营养学里少有「可精确记账」的项目，氮平衡是其中之一：进入的氮与排出的氮必须对账。</p>
+          <p>蛋白质含约 16% 的氮，因此通过测定摄入氮与排泄氮（尿、粪、汗、皮肤脱落）之差即可判断身体处于净合成还是净分解。</p>
+          <div class="prompt-block"><span class="prompt-label">氮平衡方程与需求量的定量推导</span><button class="copy-btn" type="button">复制</button>氮平衡（NB）= 摄入氮 − 排出氮
+  NB &gt; 0：正平衡（生长、增肌、孕期）
+  NB = 0：维持（成人常态）
+  NB &lt; 0：负平衡（饥饿、创伤、消耗性疾病）
+
+折算关系：蛋白质(g) ≈ 氮(g) × 6.25
+∴ 摄入氮 = 蛋白质摄入量 / 6.25
+
+膳食指南参考（中国居民膳食指南 2022）：
+· 普通成人：约 1.0 g/kg 体重/天（满足绝大多数人的最低需求之上）
+· 规律力量训练者：常参考 1.2–2.0 g/kg
+· 减脂期（热量缺口下）：偏高区间更有利保肌
+· 老年人：因「合成抵抗」，常建议高于普通成人
+
+为什么单次摄入有上限（「肌肉饱满」假说的定量）？
+肌肉蛋白合成（MPS）对单次氨基酸刺激呈饱和响应：
+  剂量—响应曲线在约 0.25–0.4 g/kg 每餐后趋于平台
+∴ 把总量摊到 3–4 餐，能多次触发 MPS，比一餐集中更优。
+
+上限与安全边界：
+· 健康肾：现有证据未显示高蛋白对健康肾有害（但证据仍在积累）
+· 已有肾病：必须遵医嘱限蛋白，这是绝对边界，不可套用通用建议</div>
+          <div class="callout warn"><span class="callout-label">常见误区</span>「高蛋白伤肾」在健康人群中的证据并不支持——真正被证实的是「已有肾病患者需限蛋白」。把疾病人群的约束误推到健康人群，是营养学最典型的过度外推错误之一。</div>
+          <ul>
+            <li><strong>「合成窗口」被夸大</strong>：训练后肌肉对氨基酸的敏感性可持续较长时间（据通行说法约 24 小时量级），前后几小时进食都有效，不必掐表。</li>
+            <li><strong>蛋白分布是优化层</strong>：先固定总量与质量，再谈分布。顺序反了，就是用 5% 的收益对冲 95% 的混乱。</li>
+            <li><strong>睡前缓释蛋白</strong>：酪蛋白类（奶制品）夜间缓释对合成的证据温和正面——加分项，非必需项。</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>血糖指数与胰岛素：一个被简化过度的机制</h2>
+          <p class="lede">血糖指数（GI）是营养学中最常被误用的指标之一——它测量的是「相对升糖速度」，而非「健康程度」。</p>
+          <div class="prompt-block"><span class="prompt-label">GI、GL 的定义与计算</span><button class="copy-btn" type="button">复制</button>血糖指数（GI）：
+  GI =（某食物 50 g 可利用碳水引起的血糖曲线下面积 AUC）
+     ÷（等量葡萄糖引起的 AUC） × 100
+  以葡萄糖为 100 的参照。
+
+血糖负荷（GL）：把「升糖速度」与「实际摄入量」结合
+  GL = GI × 该食物可利用碳水克数 / 100
+  ∴ 西瓜 GI 高，但单位份量碳水少 → GL 低 → 实际影响有限
+
+关键争议（必须区分「结论」与「假说」）：
+· 已证实：GI 反映急性升糖速度，可用于血糖管理场景。
+· 争议中：GI 能否预测长期健康结局（体重、糖尿病、心血管）？
+  个体差异大、食物基质与加工方式影响显著、长期证据不一致。
+  ∴ 把 GI 当作「唯一健康标尺」是过度简化。
+
+「胰岛素假说」的现状：
+  有人主张「胰岛素高 → 脂肪被锁住 → 必然发胖」，
+  并据此推荐极低碳水。这条因果链在能量平衡框架下仍存争议：
+  胰岛素确实调控脂肪动员，但最终是否净储存仍取决于整体能量收支。
+  目前主流共识：热量平衡仍是主导变量，激素是调节层而非唯一开关。</div>
+          <table>
+            <caption class="caption">GI 高低分类（常用分界，非绝对）</caption>
+            <thead><tr><th>类别</th><th>GI 范围（以葡萄糖 100 计）</th><th>典型食物</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">低 GI</th><td>≤ 55</td><td>豆类、燕麦（整粒）、多数蔬果、坚果</td></tr>
+              <tr><th scope="row">中 GI</th><td>56–69</td><td>全麦面包、糙米、部分水果</td></tr>
+              <tr><th scope="row">高 GI</th><td>≥ 70</td><td>白米、白面包、部分即食谷物、含糖饮料</td></tr>
+            </tbody>
+          </table>
+          <p><strong>进餐顺序效应</strong>：先吃蔬菜与蛋白、后吃主食，可显著平缓餐后血糖曲线（尤其对血糖管理需求者）。这条效应的机制与胃排空速率、GLP-1 等肠促胰岛素分泌相关，被多项小样本研究支持，但个体差异存在。</p>
+          <div class="callout tip"><span class="callout-label">实用换算</span>与其死记 GI 表，不如在实际饮食里用 GL 思维：高 GI 食物若份量小、或与脂肪/纤维/蛋白同吃（减慢胃排空），其净升糖效应会被大幅削弱。这才是可执行、可验证的用法。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>能量平衡：从静态公式到动态模型</h2>
+          <p class="lede">「摄入 < 消耗就减肥」是真理，但若把它当静态等式，就会在两周后被身体的反调节打得措手不及。</p>
           <ul>
             <li><strong>TDEE = BMR × 活动系数</strong>：基础代谢可用 Mifflin-St Jeor 等公式估算；活动系数从久坐约 1.2 到重体力约 1.9。</li>
-            <li><strong>估算 → 校准</strong>：公式误差可观。用 2~3 周「体重趋势 vs 摄入记录」反推真实 TDEE，比任何公式都可靠。</li>
-            <li><strong>缺口设定</strong>：温和缺口（每日约 300~500 kcal）比激进节食更可维持，肌肉流失更少，反弹概率更低。</li>
-            <li><strong>看趋势不看单日</strong>：水分波动大于脂肪变化——晨重按周平均看趋势，不比单日数字。</li>
+            <li><strong>TEF（食物热效应）</strong>：消化本身耗能——蛋白质最高（约 20%–30%）、碳水约 5%–10%、脂肪最低（约 0%–3%）。它是高蛋白饮食「更抗饿」的部分原理，但占总量比例有限，别当核心策略。</li>
+            <li><strong>估算 → 校准</strong>：公式误差可观。用 2–3 周「体重趋势 vs 摄入记录」反推真实 TDEE，比任何公式都可靠。</li>
           </ul>
-          <p><strong>食物热效应（TEF）</strong>：消化本身耗能——蛋白质最高（约 20%~30%）、碳水次之、脂肪最低。这是高蛋白饮食「更抗饿」的部分原理，但它是小头，别拿它当核心策略。</p>
-          <div class="callout tip"><span class="callout-label">审计</span>任何承诺「不控制热量也能瘦」的机制，最终都要经得起热量平衡的审计——把这句话当作饮食法的试金石。</div>
+          <div class="prompt-block"><span class="prompt-label">能量平衡的动态模型（为什么线性外推会失效）</span><button class="copy-btn" type="button">复制</button>静态版（第一周近似有效）：
+  ΔE_store = 摄入 − 消耗 = 缺口
+  减重速率 ≈ 缺口 / 7700 kcal/kg
+
+动态版（中长期必须加入反调节）：
+  ① 体重下降 m → BMR 下降（小体重耗能更少）
+  ② 代谢适应（adaptive thermogenesis）：实际消耗降幅常大于
+     体重减少所能解释的部分（约等于「身体的节能模式」）
+  ③ 活动耗能也随体重下降而减少（同样的运动，搬更轻的身体）
+  ④ 依从性漂移：缺口往往随时间放松
+
+∴ 真实减重曲线是一条凸曲线（先快后慢），不是直线。
+  推论：每下降一个平台，必须按新体重重算并适度再加活动量或
+  再减摄入，才能维持原缺口——否则缺口自动趋近于零。
+
+自校准算法（可反复执行）：
+  1. 连续 2–3 周，记录日均摄入（称重法更准）
+  2. 记录晨重周平均，算出每周变化 Δm
+  3. 反推真实 TDEE ≈ 日均摄入 − (Δm × 7700 / 7)
+  4. 用该 TDEE（而非公式值）设定下一阶段缺口
+  5. 重复：每 3–4 周重算一次</div>
+          <div class="callout tip"><span class="callout-label">审计</span>任何声称「不控制热量也能瘦」的机制，最终都要经得起能量平衡的审计；但审计的对象是「长期总收支」，而非某一天的账面——把这两点同时记住，才不会被静态数字误导。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>进食时机与蛋白质分布</h2>
+          <h2><span class="sec-num">6</span>微量营养素：作为酶辅因子的催化逻辑</h2>
+          <p class="lede">微量营养素不供能，但它们是代谢机器的齿轮与开关——缺一个关键辅因子，整条通路降速甚至停摆。</p>
+          <p>理解微量营养素的关键视角是<strong>辅因子与辅酶</strong>：许多维生素与矿物质是酶促反应的必需伙伴。B 族维生素多参与能量代谢中的转氨、脱羧与氧化还原；矿物质常作为酶活性中心的金属离子或信号分子。</p>
+          <div class="feature-list">
+            <div class="feature"><div class="f-ico">1</div><div><h4>常见现实缺口</h4><p>维生素 D（日晒不足地区普遍偏低）、B12（纯素饮食必须补充）、铁（育龄女性常见缺口）、钙（奶制品摄入不足者）、碘（部分内陆依赖加碘盐）。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>铁的机制细节</h4><p>血红素铁（动物来源）吸收率显著高于非血红素铁（植物来源）；维生素 C 可促进非血红素铁吸收，而茶多酚、植酸会抑制。这是「同一种营养素、不同搭配、不同结果」的机制范例。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>维生素 D</h4><p>本质近似激素前体：经皮肤（紫外线）或食物获得，再在肝、肾两步羟化后活化，调控钙磷代谢与免疫。日照不足者与深肤色人群更易偏低。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>钠钾平衡</h4><p>多数人钠（盐）偏高、钾（蔬果）不足。钾参与细胞膜电位与血压调节——多加一份蔬果比单纯减盐更容易执行，也更全面。</p></div></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">边界（重要）</span>「脂溶性维生素会蓄积」意味着过量风险真实存在（尤其 A、D、E、K，以及铁等矿物质）。补剂不是「多吃无害」：与药物可能存在相互作用。患慢性病或服药者，补充前请咨询医生，有条件者先检测再补。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>进食时机与蛋白质分布</h2>
           <p class="lede">总量优先、分布其次——但总量达标后，分布的边际收益真实存在。</p>
           <ul>
-            <li><strong>蛋白质分布</strong>：把每日蛋白摊到 3~4 餐（每餐约 0.25~0.4 g/kg）比集中在一餐更利于肌肉蛋白合成——单次刺激存在上限，超过即浪费。</li>
+            <li><strong>蛋白质分布</strong>：把每日蛋白摊到 3–4 餐（每餐约 0.25–0.4 g/kg）比集中一餐更利于肌肉蛋白合成——单次刺激存在饱和上限，超过即被氧化供能或排出。</li>
             <li><strong>训练前后</strong>：训练前后几小时内摄入蛋白质 + 碳水即可满足需求；「合成窗口」远比早年宣传的宽，不必掐表。</li>
             <li><strong>睡前</strong>：酪蛋白类（奶制品）缓释供夜间修复的证据温和正面——加分项，非必需项。</li>
-            <li><strong>进餐顺序</strong>：先菜后饭类策略可平缓餐后血糖曲线——进餐顺序效应有支持证据，尤其适合血糖管理需求者。</li>
+            <li><strong>碳水时机</strong>：训练量大者训练前后补碳有助恢复糖原；日常久坐者则更应关注总碳水质量与全天的血糖平稳。</li>
           </ul>
           <p>把「时机」视为优化层：<mark class="key">先固定总量与蛋白质质量，再调整分布</mark>。顺序反了，就是用 5% 的收益去对冲 95% 的混乱。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>食品标签解读与流行饮食法评估</h2>
-          <p class="lede">标签是食品对你透明的唯一渠道；饮食法评估则要用同一把尺子量所有流派。</p>
-          <table>
-            <caption class="caption">标签要素与读法</caption>
-            <thead><tr><th>要素</th><th>怎么读</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">配料表</th><td>按含量降序排列——前三位基本决定这个产品「是什么」</td></tr>
-              <tr><th scope="row">NRV%</th><td>营养素参考值百分比（以成人每日参考量估算）；钠和糖重点看</td></tr>
-              <tr><th scope="row">「0 蔗糖」</th><td>不等于无糖——可能含麦芽糖浆、果汁浓缩物等其它糖来源</td></tr>
-              <tr><th scope="row">份量陷阱</th><td>「每份」可能远小于你实际吃的量——先换算再横向比较</td></tr>
-            </tbody>
-          </table>
-          <ul>
-            <li><strong>生酮</strong>：极低碳水可短期降体重，对部分癫痫有临床应用（须医生指导）；长期依从性差，长期心血管影响证据尚有争议。</li>
-            <li><strong>间歇断食（16:8 等）</strong>：本质是把热量摄入窗口收窄；对代谢的额外「魔力」证据有限，但对夜宵型饮食者的结构性约束真实有效。</li>
-            <li><strong>地中海饮食</strong>：长期队列与随机对照试验证据最充分（如 PREDIMED 支持心血管获益），结构与可持续性俱佳——评估其它流派的参照系。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">三问</span>评估任何饮食法：能否满足蛋白质与微量营养素需求？能否长期执行？对你的健康状态是否安全（肾病、糖尿病、孕产期等人群请遵医嘱）？三问过不了，再流行也与你无关。</div>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">营养速记</span><button class="copy-btn" type="button">复制</button>· 三大宏量功能不可互替：蛋白修复、碳水供能、脂肪承载必需脂肪酸
-· 蛋白：普通成人约 1.0 g/kg，力量训练者常参考 1.2~2.0 g/kg
-· 碳水看「完整 vs 精制」，不必纠结热量本身
-· 反式脂肪是唯一要零容忍的脂类
-· 常见缺口：维生素 D、B12、铁、钙、碘
-· 补剂是查漏不是主食；与药物同用遵医嘱
-· TDEE = BMR × 活动系数；用体重趋势反推校准
-· 缺口温和（约 300~500 kcal）优于激进节食
-· 晨重看周平均，别比单日
-· 蛋白摊到 3~4 餐比集中一餐更利于合成
-· 合成窗口比传说宽，前后几小时都算数
-· 配料表按含量降序，前三位定性质
-· 「0 蔗糖」≠ 无糖；先看「每份」再换算
-· 任何饮食法过三关：营养够吗、能坚持吗、对你安全吗</div>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 8</span></div>
-          <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">记录 3 天饮食，算出蛋白质摄入（g/kg 体重）</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用公式估算 TDEE，再用 2 周体重趋势反推校准</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">把每日蛋白从 2 餐摊到 3~4 餐</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">挑 3 件常买食品读配料表，找出隐藏糖来源</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">对比现有饮食与地中海结构，改掉差距最大的一处</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">评估你试过的饮食法：过「三问」了吗</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">自查微量缺口：维生素 D / 铁 / 钙 / B12（有条件先检测再补）</label></div>
-            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">建立晨重周平均记录，坚持 4 周</label></div>
+          <h2><span class="sec-num">8</span>跨学科视角：营养学的三个邻近学科</h2>
+          <p class="lede">营养问题很少只是「营养」问题。把它放到化学、行为科学与流行病学的坐标系里，判断会稳健得多。</p>
+          <div class="grid-2">
+            <div class="card">
+              <h3>生物化学（化学计量与热力学）</h3>
+              <p>能量系数、ATP 产率、呼吸商、氮平衡，本质都是守恒律与化学计量的应用。掌握「物质与能量守恒」这条主线，就能看穿大多数伪营养学说的漏洞——它们往往偷偷打破了守恒。</p>
+            </div>
+            <div class="card">
+              <h3>行为科学（依从性与习惯）</h3>
+              <p>「最好的饮食是你能长期坚持的那一种」——这句流行语背后是行为科学。热量平衡决定方向，但真正决定成败的是依从性曲线：简化决策、环境设计、容错机制，往往比精确到克更重要。</p>
+            </div>
+            <div class="card">
+              <h3>流行病学（证据层级）</h3>
+              <p>观察性研究（队列）能发现关联但无法证明因果；随机对照试验（RCT）证据等级更高但成本高、周期长。读营养新闻时先问：这是队列还是 RCT？效应量多大？样本与人群适合我吗？</p>
+            </div>
+            <div class="card">
+              <h3>统计学（混杂与回归均值）</h3>
+              <p>「吃了 X 后体重下降」可能只是回归均值或安慰剂。个体差异大意味着小样本对照不可靠；识别混杂因素与统计噪声，是抵御「爆款饮食法」的第一道防线。</p>
+            </div>
           </div>
         </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>前沿与研究进展</h2>
+          <p class="lede">近年营养学的进展，多集中在「机制精细化」与「个体化」两条主线上——但离「精准营养」落地仍有距离。</p>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-era">机制与个体化</div>
+              <div class="tl-date">近十余年</div>
+              <p>餐后血糖反应的个体差异受到关注（据通行说法，有研究显示不同人对同一种食物的血糖响应差异显著），推动了「个体化营养」方向——但目前主要用于研究场景，家用设备与算法的可靠性仍在验证中。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">肠道菌群</div>
+              <div class="tl-date">当前热点</div>
+              <p>肠道微生物组与代谢、免疫的联系被大量探索；但因果方向、可干预性与长期效应尚存争议。菌群很可能是「重要中介」，而非「唯一开关」。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">时间营养学</div>
+              <div class="tl-date">近年</div>
+              <p>进食时间与生物钟（昼夜节律）的交互受到重视：同样的热量，晚进食的代谢影响可能不同。间歇断食的部分效应可能正是通过「进食窗口对齐生物钟」实现——但节律效应的独立贡献仍存争议。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">证据再评估</div>
+              <div class="tl-date">持续进行</div>
+              <p>对饱和脂肪、膳食胆固醇、钠的老建议不断被重新审视（例如对膳食胆固醇的严格限制已被普遍放松）。这提醒我们：营养建议会更新，应关注证据等级而非追热点。</p>
+            </div>
+          </div>
+          <div class="callout tip"><span class="callout-label">阅读原则</span>看到「最新研究」，先问三条：样本量与人群？是队列还是 RCT？效应量是否具有实际意义？绝大多数「颠覆性发现」最终被证明是噪声或过度解读。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>常见误区与边界条件</h2>
+          <p class="lede">营养误区通常来自「过度简化」与「群体外推」两大错误。识别它们，比记住更多数字更有价值。</p>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">误区</span>
+              <p>「热量相同，就等于完全一样」——忽略食物基质、纤维、加工度与动力学路径的差异。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">纠偏</span>
+              <p>热量是主导变量，但食物形态影响饱腹感、血糖曲线与依从性。总量与质量都要管。</p>
+            </div>
+          </div>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">误区</span>
+              <p>「某种食物/成分能直接决定胖瘦」（如「碳水是罪魁」「脂肪是元凶」）——把调节层当成开关层。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">纠偏</span>
+              <p>激素与代谢确实调控脂肪动员，但长期净变化仍由能量收支主导；饮食法通过不同路径达成同一守恒。</p>
+            </div>
+          </div>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">误区</span>
+              <p>把疾病人群的约束（肾病限蛋白、糖尿病控糖）直接套到健康人群身上。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">纠偏</span>
+              <p>分清「健康人群的预防建议」与「患病人群的治疗建议」，两者证据来源与安全边界不同。</p>
+            </div>
+          </div>
+          <table>
+            <caption class="caption">边界速查：谁不能套用通用建议</caption>
+            <thead><tr><th>人群</th><th>边界</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">慢性肾病</th><td>需限蛋白与部分矿物质，遵医嘱</td></tr>
+              <tr><th scope="row">糖尿病 / 血糖异常</th><td>碳水总量与分布需个体化，勿凭 GI 单一指标决策</td></tr>
+              <tr><th scope="row">孕产期 / 哺乳期</th><td>能量与微量营养素（如叶酸、铁）需求上移，遵医嘱</td></tr>
+              <tr><th scope="row">服用特定药物者</th><td>补剂可能与药物相互作用（如维生素 K 与抗凝药），须咨询</td></tr>
+              <tr><th scope="row">进食障碍史</th><td>称重/严格计算可能诱发问题，优先寻求专业支持</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">11</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">营养速记（含公式与边界）</span><button class="copy-btn" type="button">复制</button>· 能量系数：脂肪约 9、碳水与蛋白各约 4 kcal/g（Atwater 系数）
+· 能量系数 = 燃烧热 − 消化损耗 − 代谢排泄损失
+· 三大通道最终汇于电子传递链；差异在速率、是否需氧、副产物
+· 1 kg 脂肪组织 ≈ 7700 kcal（工程近似，真实非线性）
+· 无「蛋白仓库」：动用蛋白即分解功能组织
+· 蛋白：普通成人约 1.0 g/kg；力量训练者常参考 1.2–2.0 g/kg
+· 氮平衡 = 摄入氮 − 排出氮；蛋白(g) ≈ 氮(g) × 6.25
+· 单次蛋白约 0.25–0.4 g/kg 达平台 → 摊到 3–4 餐更优
+· 健康肾不惧高蛋白；肾病必须限蛋白（不可外推）
+· GI 测「升糖速度」；GL = GI × 碳水克数 / 100
+· GI 预测长期健康结局仍存争议；勿作唯一标尺
+· 胰岛素假说：激素是调节层，能量收支是主导变量
+· TDEE = BMR × 活动系数；用体重趋势反推校准
+· TEF：蛋白约 20–30%、碳水约 5–10%、脂肪约 0–3%
+· 缺口温和（约 300–500 kcal）优于激进节食
+· 减重曲线凸（先快后慢），每下降一个平台需重算
+· 晨重看周平均，别比单日；水分波动大于脂肪变化
+· 常见缺口：维生素 D、B12、铁、钙、碘
+· 铁的机制：血红素铁吸收高；维 C 促吸收、植酸/茶多酚抑制
+· 脂溶性维生素会蓄积，过量有害；补剂是查漏不是主食
+· 配料表按含量降序，前三位定性质；「0 蔗糖」≠ 无糖
+· 任何饮食法过三问：营养够吗、能坚持吗、对你安全吗</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">12</span>练习清单</h2>
+          <p class="lede">以下练习要求推导、验证或实现，而非简单记忆——做完你会拥有一套属于自己的、可校准的营养模型。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
+          <div class="checklist">
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：从 Atwater 系数出发，解释为什么脂肪的可用系数最接近其燃烧热，而蛋白最低（写出损耗项）</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">计算：把一周「理论减重速率 = 500/7700」与实测体重变化对比，解释差异来自哪些动态因素</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">实现自校准算法：用 2–3 周摄入记录与晨重周平均，反推真实 TDEE，并与公式值对比误差</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">氮平衡估算：记录 3 天饮食，用「蛋白 ≈ 氮 × 6.25」估算摄入氮，判断你是否处于正/负平衡</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">对比实验：同一份主食「单独吃」与「先菜后饭」两种顺序，记录餐后感受差异并给出机制解释</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用 GL 而非 GI 重算一份高 GI 食物（如西瓜）的实际血糖负荷，论证为何 GI 单用会误导</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">设计一份日食谱，使三问（营养够 / 能坚持 / 对你安全）同时满足，并标注每餐蛋白约 0.3 g/kg 的分配</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">挑 3 件常买食品，读取配料表与 NRV%，找出至少一个「隐藏糖」或「份量陷阱」，写出换算过程</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">证据分层：找一则营养新闻，判断其属于队列研究还是 RCT，评估效应量与是否适用于你</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">边界审查：对照「边界速查表」，判断自己或家人是否属于需个体化调整的人群，并列出需咨询医生的项</label></div>
+          </div>
+        </section>
+
       </main>
       <footer>
-        <p class="footnote">参考《中国居民膳食指南（2022）》与营养学通行证据整理；涉及疾病（糖尿病、肾病、孕产期等）请遵医嘱，本文不替代个体化营养治疗方案。</p>
+        <p class="footnote">参考《中国居民膳食指南（2022）》与营养学通行证据整理；Atwater 系数、GI/GL、氮平衡等为通行表述，细节数值可能随研究更新。涉及疾病（糖尿病、肾病、孕产期等）请遵医嘱，本文不替代个体化营养治疗方案。全文不引用外部链接，公式采用 Unicode 符号表示。</p>
       </footer>
     </div>
   </article>

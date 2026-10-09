@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>高效学习法进阶指南</h1>
-          <p class="report-intro__summary">学习科学的结论很反直觉：越「轻松」的学习往往越无效。这份指南拆解主动回忆、间隔重复、精细编码与元认知背后的原理，教你用更少的力气记住更久。</p>
+          <p class="report-intro__summary">学习科学的结论很反直觉：越「轻松」的学习往往越无效。这份指南不再罗列技巧，而是拆开记忆与遗忘的底层机制——遗忘曲线的指数模型、提取作为「重新编码」、间隔的最优调度、迁移为何依赖交错，以及这些结论在神经科学与内分泌层面的解释。</p>
           <div class="intro-meta">
             <span>领域：学习方法</span>
             <span>难度：进阶</span>
@@ -26,81 +26,187 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>两条底层原理</h2>
-          <p class="lede">所有高效学习法，都建立在这两条认知科学结论之上。</p>
+          <h2><span class="sec-num">1</span>两条底层原理：从「是什么」到「为什么」</h2>
+          <p class="lede">主动回忆、间隔重复、交错练习并不是零散技巧，它们都能追溯到同一个机制：记忆的强度取决于「提取时付出的努力」，而非「输入时的流畅感」。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>必要难度（Desirable Difficulty）</h4><p>提取信息越费力，记忆痕迹越深。轻松重读制造「熟悉错觉」，费力回忆才真正加固记忆。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>测试效应（Testing Effect）</h4><p>「考自己」比「再学一遍」记忆效果好得多——测试本身就是在学习，不只是检验。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>必要难度（Desirable Difficulty）</h4><p>提取信息越费力，记忆痕迹越深。轻松重读制造「熟悉错觉」——你能认出来，却未必能回忆出来。费力回忆才真正加固提取路径。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>测试效应（Testing Effect）</h4><p>「考自己」比「再学一遍」记忆效果好得多。关键在于：测试不只是检验，它本身就是一次强化学习——每次成功提取都会「重新编码」这条记忆。</p></div></div>
           </div>
-          <div class="callout tip"><span class="callout-label">结论</span>把学习从「输入」（看、听、划）转向「输出」（回忆、讲、写），是效率跃升的关键一跃。</div>
+          <p>把记忆强度 S 建模为随「成功提取次数 n」与「提取时的难度 d」递增的函数，是理解后续所有技巧的抓手：</p>
+          <div class="prompt-block"><span class="prompt-label">记忆强度的概念模型</span><button class="copy-btn" type="button">复制</button>记忆强度可简化为两个变量的函数：
+
+  S = S(n, d)
+    n = 成功提取的次数
+    d = 提取时的难度（＝接近遗忘的程度）
+
+为什么重读效果差：
+· 重读时 d 很小（信息「就在眼前」）
+· 提取难度低 → 对 S 的增量小 → 「熟悉但不牢固」
+
+为什么回忆/自测有效：
+· 回忆时 d 较大（信息不在眼前，需主动搜索）
+· 难度落在「能想起但费力」的区间 → 对 S 的增量最大
+
+推论：最佳学习点不是「学会了」，而是「快忘了」。</div>
+          <div class="callout warn"><span class="callout-label">误区预警</span>「必要难度」不等于「越难越好」。若难度高到完全想不起（提取失败），学习几乎不发生。有效区间是「困难但可成功」——这正是下一节遗忘曲线要量化的拐点。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>主动回忆与精细编码</h2>
-          <p class="lede">记住的关键不是「重复看」，而是「主动提取」+「建立联系」。</p>
-          <ul>
-            <li><strong>合书回忆</strong>：学完一段，合上资料默写要点，再对照查漏。</li>
-            <li><strong>精细编码</strong>：把新知识和你已有的知识「挂钩」——问自己「它像什么？和什么相反？为什么成立？」。</li>
-            <li><strong>生成效应</strong>：先自己尝试作答（哪怕猜错），再看答案，比直接看答案记得牢。</li>
-          </ul>
-        </section>
+          <h2><span class="sec-num">2</span>遗忘曲线的数学模型</h2>
+          <p class="lede">记忆不是「存进去就不动」，而是随时间衰减。Ebbinghaus 用无意义音节对自己的实验，给出了历史上第一条遗忘曲线。</p>
+          <p>遗忘曲线的通行近似是一条<strong>指数衰减</strong>（概念上用 <code>e</code> 的负指数，即每一单位时间遗忘固定比例）：</p>
+          <div class="prompt-block"><span class="prompt-label">遗忘曲线的指数模型</span><button class="copy-btn" type="button">复制</button>指数遗忘（单次学习后的保持率）：
 
-        <section>
-          <h2><span class="sec-num">3</span>间隔重复与遗忘曲线</h2>
-          <p class="lede">遗忘遵循指数规律，但每次「在快忘时复习」，遗忘速度都会变慢。</p>
+  R(t) = e^(−t / τ)
+    R = 保持率（还记得的概率，0~1）
+    t = 距上次学习的时间
+    τ = 记忆的时间常数（越大越慢忘）
+
+要点：
+· R(t) 连续下降，但对数坐标下近似直线 → 遗忘是「先快后慢」
+· 每次在 R 降到某个阈值以下「及时复习」，
+    会把时间常数 τ 拉长，使后续衰减变慢
+· 多次复习叠加 → τ 逐次增大 → 复习间隔可逐次拉长
+
+这就是「间隔重复」能指数级省力的原因：
+不是复习得更勤，而是让每次复习都发生在「快忘」的点。</div>
+          <p>关键洞察是：<strong>遗忘不是学习的失败，而是间隔调度的信号</strong>。复习太早（R 还很高）几乎无收益；复习太晚（R 已趋零）等于重学。理想时机落在 R 下降到临界值的瞬间。</p>
           <table>
-            <caption class="caption">间隔复习示例（简化）</caption>
+            <caption class="caption">间隔复习示例（简化，间隔随 τ 拉长而递增）</caption>
             <thead><tr><th>复习时机</th><th>目的</th></tr></thead>
             <tbody>
-              <tr><th scope="row">当天 / 24 小时后</th><td>巩固最初记忆，阻止快速遗忘</td></tr>
-              <tr><th scope="row">3 天后</th><td>拉长记忆保持期</td></tr>
-              <tr><th scope="row">7 天后</th><td>进一步稳固</td></tr>
-              <tr><th scope="row">30 天后</th><td>转入长期记忆</td></tr>
+              <tr><th scope="row">当天 / 24 小时后</th><td>阻止最初的快速遗忘，拉长 τ</td></tr>
+              <tr><th scope="row">3 天后</th><td>在保持率接近临界时复习，进一步拉长 τ</td></tr>
+              <tr><th scope="row">7 天后</th><td>巩固，使衰减显著变慢</td></tr>
+              <tr><th scope="row">30 天后</th><td>转入长期保持，达成本文档目标</td></tr>
             </tbody>
           </table>
-          <p>工具上，<strong>间隔重复软件（如 Anki）</strong>会根据你的遗忘情况自动安排复习时机；原理是「能想起就延后，想不起就提前」。</p>
+          <p>工具上，<strong>间隔重复软件（如 Anki）</strong>大致实现了这一思想：每次卡片复习后，根据你「想起还是忘记」自动调整下次出现的间隔——能想起就延后，想不起就提前，等价于在线估计每张卡片的 τ。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>费曼技巧与交错练习</h2>
+          <h2><span class="sec-num">3</span>主动回忆与精细编码：提取即重新编码</h2>
+          <p class="lede">「记住」不是把信息刻进脑子，而是把信息接进已有的网络。提取与编码，是同一枚硬币的两面。</p>
+          <ul>
+            <li><strong>合书回忆</strong>：学完一段，合上资料默写要点，再对照查漏。这一步强迫大脑从「识别」切换到「生成」——识别的门槛远低于生成，也正因如此，识别会高估掌握程度。</li>
+            <li><strong>精细编码</strong>：把新知识和你已有的知识「挂钩」——问自己「它像什么？和什么相反？为什么成立？」。加工越深（语义层面而非字面层面），提取线索越多。</li>
+            <li><strong>生成效应</strong>：先自己尝试作答（哪怕猜错），再看答案。生成过程本身建立了一条「产出路径」，比被动阅读多一条提取线索。</li>
+          </ul>
+          <p>把这三者统一起来看：它们都在增加<strong>提取线索</strong>（retrieval cues）的数量与多样性。线索越多，任何一条被触发就能拉出整段记忆，回忆概率随之上升。</p>
+          <div class="callout tip"><span class="callout-label">判断准则</span>区分「我认得出来」与「我能想起来」。前者是识别（recognition），后者是回忆（recall）。自测时务必用回忆题（盖住答案写出来），而非判断题（看着选项点头）。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>交错与变化练习：迁移为何依赖「选择」</h2>
+          <p class="lede">集中刷同类题（blocking）短期进步快，长期迁移差；交错练习（interleaving）短期更难，却练出「识别该用哪种方法」的能力。</p>
+          <p>机制在于：真实问题很少把「这题用方法 A」写在脸上。集中练习只训练「执行方法 A」；交错练习额外训练了<strong>判别</strong>——看到题目先判断属于哪一类，再调用相应方法。这条「选择」的技能，才是迁移的核心。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>费曼技巧</h4><p>用最朴素的语言把概念讲给「零基础的人」听，讲不清的地方就是知识盲区，回去补课再重讲。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>交错练习</h4><p>混合练习不同类型的题（而非集中刷同类），强迫大脑每次「识别该用哪种方法」，提升迁移能力。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>变化练习</h4><p>换场景、换材料、换角度练同一技能，避免「只在特定情境下会」。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>交错练习</h4><p>混合不同类型的问题（而非集中刷同类），强迫大脑每次「识别该用哪种方法」。短期正确率下降是正常代价，长期留存与迁移更高。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>变化练习</h4><p>换场景、换材料、换角度练同一技能，让提取线索不依赖单一情境，避免「只在特定环境里才会」。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>费曼技巧</h4><p>用最朴素的语言把概念讲给「零基础的人」听，讲不清的地方立刻暴露知识盲区，回去补课再重讲——本质是一次高难度的生成式提取。</p></div></div>
           </div>
+          <div class="callout warn"><span class="callout-label">边界条件</span>交错练习对<strong>已具备基本技能</strong>的学习者效果最佳。完全新手一上来就交错，可能因从未练熟单一方法而顾此失彼。合理顺序：先分块打基础，再交错练迁移。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>元认知：知道「自己不知道」</h2>
-          <p class="lede">多数人高估自己的掌握程度——这就是「学会了却考不出」的真相。</p>
-          <p>用「自我测验」校准判断：学完后立刻自测，而不是靠「我觉得懂了」。把「重读一遍」换成「默写/做题/讲解」，用客观结果代替主观感觉。睡眠也在学习中扮演关键角色——记忆在睡眠中被「巩固」，熬夜省下的时间往往要从记忆里加倍偿还。</p>
+          <h2><span class="sec-num">5</span>元认知与睡眠巩固：知道「自己不知道」</h2>
+          <p class="lede">多数人高估自己的掌握程度——这就是「学会了却考不出」的真相。校准元认知，是让前述所有方法真正生效的前提。</p>
+          <p>用「自我测验」校准判断：学完后立刻自测，而不是靠「我觉得懂了」。重读带来流畅感（fluency），大脑却把流畅误读为「已掌握」——这是<strong>流畅性错觉</strong>。把它换成默写、做题、讲解，用客观结果代替主观感觉。</p>
+          <h3>睡眠：记忆在夜里被「重放」</h3>
+          <p>睡眠不是学习的休止符。研究普遍认为，睡眠期间海马体会对新记忆进行<strong>重放</strong>并逐步转移到新皮层，实现巩固；深度睡眠（慢波睡眠）与快速眼动睡眠分别在巩固与整合中扮演角色。这给出一条实用的推论：<strong>熬夜换来的学习时间，往往要以记忆巩固的损失加倍偿还</strong>。</p>
+          <div class="callout tip"><span class="callout-label">操作建议</span>把难度最高的回忆练习放在睡前，利用随后的睡眠巩固；把新知识的学习与复习分散到多天，而不是考前一次性堆砌。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">学习速记</span><button class="copy-btn" type="button">复制</button>· 两条原理：必要难度、测试效应
-· 主动回忆 > 重复阅读；精细编码把新知挂钩旧知
-· 间隔重复：快忘时复习（24h / 3d / 7d / 30d）
-· 费曼 + 交错 + 变化练习
-· 用自测校准「元认知」，别信「我觉得会了」</div>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">学习科学的关键结论大多经历了几十年的重复检验，同时也存在真实争议。以下是主线脉络与几处未定之处。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">遗忘曲线</span><span class="tl-date">19 世纪末</span><p>Ebbinghaus 以自身为被试，用无意义音节系统测量记忆衰退，得到「先快后慢」的遗忘曲线，成为实验学习心理学的起点。</p></div>
+            <div class="tl-item"><span class="tl-era">间隔效应与测试效应</span><span class="tl-date">20 世纪</span><p>大量实验确认：分散学习优于集中学习（间隔效应）；提取练习优于重复学习（测试效应）。这两条是被反复验证的稳健结论。</p></div>
+            <div class="tl-item"><span class="tl-era">必要难度</span><span class="tl-date">约 1990s</span><p>Bjork 等人提出「必要难度」框架，指出「当下表现」与「长期学习」常常背离——越流畅的当下，往往意味着越差的长留。</p></div>
+            <div class="tl-item"><span class="tl-era">睡眠与记忆巩固</span><span class="tl-date">1990s–2000s</span><p>神经科学证实海马体重放与新皮层巩固的作用，把「睡觉也在学习」从比喻变成机制性发现。</p></div>
+            <div class="tl-item"><span class="tl-era">学习风格争议</span><span class="tl-date">持续至今</span><p>「视觉型/听觉型学习者」的说法广泛流行，但缺乏证据支持「按学习风格匹配教学能提升效果」。主流观点认为这是流传甚广的误区。</p></div>
+            <div class="tl-item"><span class="tl-era">检索练习与迁移</span><span class="tl-date">近十余年</span><p>研究焦点转向「如何让记忆在真实情境中可迁移」，包括交错与变化练习的边界条件、以及间隔调度算法的优化（间隔重复软件的调度策略即为应用）。</p></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">谨慎对待</span>上述为学界通行说法。具体效应量、最优间隔时长与个体差异随任务与人群而变，本指南不逐一断言精确数字；涉及具体研究时请以原始文献为准。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">学习不只是心理学问题。它同时是神经网络、内分泌与算法调度的交叉课题。</p>
+          <div class="grid-2">
+            <div class="card"><h4>学习法 ⟷ 神经科学</h4><p>长时程增强（LTP）——神经元连接在反复共同激活后增强——被广泛视为记忆的细胞基础，为「提取即强化」提供机制支撑。睡眠重放则解释巩固为何需要时间。</p></div>
+            <div class="card"><h4>学习法 ⟷ 内分泌与生理</h4><p>皮质醇（应激激素）水平、睡眠剥夺与昼夜节律都会影响记忆形成；长期高压与缺觉削弱巩固，是「健康习惯也是学习策略」的依据。</p></div>
+            <div class="card"><h4>学习法 ⟷ 概率论与最优化</h4><p>间隔重复本质是「在遗忘概率达到阈值时触发复习」的最优调度问题；软件用阈值与衰减模型在线估计每张卡片的复习时机。</p></div>
+            <div class="card"><h4>学习法 ⟷ 机器学习</h4><p>「间隔提取」与机器学习中的<strong>间隔训练/防遗忘</strong>思路相通：在可能遗忘时重现样本，可缓解模型对旧任务的遗忘（如持续学习中的回放）。</p></div>
+            <div class="card"><h4>学习法 ⟷ 逻辑学与认知偏差</h4><p>「流畅即掌握」是一种认知偏差（与可得性、过度自信同类）；元认知训练就是用客观检验对抗主观错觉。</p></div>
+            <div class="card"><h4>学习法 ⟷ 教育学设计</h4><p>把必要难度落地为课程设计：先分块建立基础技能，再交错安排练习，并用形成性评价（自测）替代「再看一遍」。</p></div>
+          </div>
+          <p>共同的结构是：<strong>「困难、延迟、分散」这三个看似降低效率的因素，同时出现在神经巩固、最优调度与抗遗忘算法中</strong>。它们不是巧合，而是「如何在有限资源下形成持久表征」的同一问题的不同表述。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">学习法是伪科学重灾区。以下说法「听起来很有道理」，却经不起证据检验，或只在窄条件下成立。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">✗ 误区说法</span><pre>「我是视觉型学习者，所以看书比听讲好。」</pre><div class="why">没有可靠证据表明「按学习风格匹配教学」能提升效果。更可能起作用的是内容本身（图示对空间类知识更有效），而非「你的风格」。与其贴标签，不如混用多种表征。</div></div>
+            <div class="side good"><span class="side-tag">✓ 边界意识</span><pre>「看内容选表征：空间关系用图，语言知识用文本。」</pre><div class="why">决策依据应是「知识与任务的性质」，而非「学习者的类型标签」。多种表征混合，通常优于单一通道。</div></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">其他常见误区</span></div>
+          <table>
+            <caption class="caption">「听起来对」但需限定条件的说法</caption>
+            <thead><tr><th>说法</th><th>问题所在</th><th>正确理解</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">「划重点/高亮＝有效学习」</th><td>高亮只增加识别线索，几乎不增加回忆强度，常沦为「假努力」</td><td>高亮后必须做提取（自测/默写），否则只是重读的变体</td></tr>
+              <tr><th scope="row">「重复阅读越多越好」</th><td>重读制造流畅性错觉，边际收益随次数迅速递减</td><td>把重读换成自测；复习次数不是目标，「在快忘时提取」才是</td></tr>
+              <tr><th scope="row">「越难越好（必要难度）</th><td>难度过高导致提取失败，学习几乎不发生</td><td>有效区间是「困难但可成功」；难度需随水平动态调整</td></tr>
+              <tr><th scope="row">「一心多用能提高效率」</th><td>任务切换有成本，并行处理会同时损害学习质量与速度</td><td>专注单任务；把「切换」留给休息间隔，而非学习过程</td></tr>
+              <tr><th scope="row">「突击一晚＝平时分散学」</th><td>集中学习短期效果好，长期保持远差，且牺牲睡眠巩固</td><td>分散到多天；考试型目标才勉强用集中，长期留应用间隔</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">学习速记</span><button class="copy-btn" type="button">复制</button>· 记忆强度 S = S(提取次数 n, 提取难度 d)
+· 两条原理：必要难度、测试效应（提取即重新编码）
+· 遗忘近似指数衰减 R(t) = e^(−t/τ)；复习的收益是「拉长 τ」
+· 最佳复习点＝「快忘了」的瞬间，而非「刚学完」
+· 间隔重复：24h / 3d / 7d / 30d（间隔逐次拉长）
+· 主动回忆 > 重复阅读：识别 ≠ 回忆，用回忆题自测
+· 精细编码：多挂钩旧知＝多条提取线索
+· 生成效应：先尝试作答（哪怕猜错）再看答案
+· 交错练习训练「选方法」，迁移依赖判别而非执行
+· 边界：先分块打基础，再交错练迁移
+· 费曼技巧＝高难度生成式提取，讲不清即盲区
+· 元认知：警惕「流畅性错觉」，用客观检验代替感觉
+· 睡眠＝巩固期，海马体重放；熬夜的账要加倍还
+· 多数人高估自己：「我觉得懂了」不可信
+· 学习风格说缺乏证据：「按类型匹配教学」不成立
+· 决策依据是「知识/任务性质」，不是「学习者标签」</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求你推导、验证或动手实现。每条都给出可检验的判据。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">学一段内容后合书默写，再对照查漏</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用精细编码：给新概念找一个「像什么」的类比</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">为一周后的自己排 3 次间隔复习</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用费曼技巧把一个概念讲给外行听</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">做一次交错练习（混合不同题型）</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">学完立刻自测一次，记录「我以为会 vs 实际会」的差距</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：由 R(t)=e^(−t/τ) 出发，说明「为什么复习能延长 τ」，并解释为何固定间隔复习的长期收益低于逐次拉长的间隔</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">实现：为一批 30 张卡片设计并手算一份复习时刻表（依 e^(−t/τ)，给定阈值），再用间隔重复软件对照你的安排，记录差异</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">验证：对同一份材料做「重读一遍」与「合书默写」的对照实验，24 小时后各测一次回忆率，验证测试效应</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">推导：用「提取线索数量」解释精细编码为何优于死记；给出一个「同一概念挂钩 ≥3 个旧知」的具体例子</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">实现：设计一组交错练习（混合 3 类题型），与传统集中刷题对照；分别记录「当日正确率」与「一周后正确率」，检验短期/长期背离</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">验证：用费曼技巧把一个概念讲给外行，标出所有「讲不清」的卡点，回去补课后再讲一次，记录卡点数量的下降</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">推导：从「流畅性错觉」出发，说明为什么「划重点」容易产生假学习；设计一个能对抗该错觉的自测流程</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">验证：连续一周记录「主观自评掌握度」与「次日自测得分」，画出两者的偏差，校准你的元认知</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">实现：设计一个「睡前回忆 + 次日复述」的小实验，比较有无睡前提取对次日保持的影响，并解释睡眠巩固的作用</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">推导：论证「学习风格说」为何难以成立——从「匹配假设应产生可测的交互效应」的角度，说明需要怎样的实验设计才能证伪它</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，基于认知心理学与学习科学的通行结论（测试效应、间隔效应、必要难度等）整理。</p>
+        <p class="footnote">原创交互式学习资料。原理部分依据认知心理学与学习科学的通行结论（测试效应、间隔效应、必要难度、遗忘曲线等）整理；记忆强度与遗忘的公式为便于理解的简化模型，非精确的心理测量方程；神经与内分泌部分（海马体重放、睡眠巩固、长时程增强）为学界通行表述，具体机制与效应量仍在研究中，涉及具体研究时请以原始文献为准。</p>
       </footer>
     </div>
   </article>

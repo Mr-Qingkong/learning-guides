@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>物理与机械进阶指南</h1>
-          <p class="report-intro__summary">从牛顿定律与动量守恒，到能量、简单机械、热力学与电磁学——这份指南用公式把「力如何改变世界」讲清楚，而不只是讲现象。</p>
+          <p class="report-intro__summary">从牛顿力学与动量守恒，到热力学定律、简谐振动、材料力学与机械传动——这份指南用推导和量级估算把「力如何改变世界」讲清楚，而不只是罗列现象。</p>
           <div class="intro-meta">
             <span>领域：物理 / 机械</span>
             <span>难度：进阶</span>
@@ -26,84 +26,237 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>牛顿定律与动量</h2>
+          <h2><span class="sec-num">1</span>牛顿力学：从受力到运动</h2>
+          <p class="lede">牛顿三定律的真正用法，是把「力」翻译成「加速度」，再用微分方程解出运动。</p>
           <div class="feature-list">
             <div class="feature"><div class="f-ico">1</div><div><h4>惯性定律</h4><p>不受外力时，物体保持静止或匀速直线运动——「惯性」是物体反抗改变运动状态的性质。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>F = ma</h4><p>力等于质量乘加速度：力是「改变运动状态」的原因。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>作用与反作用</h4><p>两个物体间的作用力与反作用力大小相等、方向相反。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>F = ma</h4><p>力是「改变运动状态」的原因。写成微分形式 F = m·d²x/dt²，给定初值与受力就能解出整个运动过程。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>作用与反作用</h4><p>两物体间的作用力与反作用力等大反向、作用在不同物体上——这是「动量守恒」的根基。</p></div></div>
           </div>
-          <div class="prompt-block"><span class="prompt-label">动量与冲量</span><button class="copy-btn" type="button">复制</button>动量 p = m × v（质量 × 速度）
-冲量 = F × Δt = 动量变化量
+          <div class="prompt-block"><span class="prompt-label">动量、冲量与守恒</span><button class="copy-btn" type="button">复制</button>动量 p = m × v（质量 × 速度）
+
+冲量-动量定理：F × Δt = Δp
+
+系统不受外力（或外力冲量可忽略）时：
+Σp 前 = Σp 后   （动量守恒）
 
 安全气囊原理：延长碰撞时间 Δt，
-在相同动量变化下，减小冲击力 F。</div>
+在相同的 Δp 下，减小平均冲击力 F。</div>
+          <p>动量守恒是一条独立的守恒律，即使过程复杂（碰撞、爆炸、反冲）也能直接给出初末状态关系，无需知道力的细节。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>能量与功</h2>
-          <p class="lede">能量守恒是物理学最深刻的规律：能量不会凭空产生或消失。</p>
-          <div class="prompt-block"><span class="prompt-label">核心公式</span><button class="copy-btn" type="button">复制</button>功 W = F × s（力 × 沿力方向的位移）
+          <h2><span class="sec-num">2</span>能量与功：守恒与转化</h2>
+          <p class="lede">能量守恒是物理学最深刻的规律：能量不会凭空产生或消失，只会从一种形式转化为另一种。</p>
+          <div class="prompt-block"><span class="prompt-label">核心公式</span><button class="copy-btn" type="button">复制</button>功 W = F · s · cosθ（力 × 位移 × 夹角余弦）
 动能 Ek = ½mv²
 重力势能 Ep = mgh
 机械能 = 动能 + 势能（无摩擦时守恒）
 
-功率 P = W / t（做功的快慢）</div>
-          <p>从高处落下的物体：势能不断转化为动能，总机械能守恒；落地后因摩擦耗散为内能（热）。「能量转化」而非「能量产生」，是理解一切动力机械的出发点。</p>
+功率 P = W / t = F · v
+
+动能定理：合力做功 = 动能变化  W合 = ΔEk</div>
+          <p>从高处落下的物体：势能不断转化为动能，总机械能守恒；有摩擦时，耗散的部分转化为内能（热），机械能减少但总能量依旧守恒。「能量转化」而非「能量产生」，是理解一切动力机械的出发点。</p>
+          <div class="callout tip"><span class="callout-label">量级思维</span>估算一个 1 kg 物体从 1 m 高处落下：Ep = mgh ≈ 1×9.8×1 ≈ 10 J，落地速度由 ½mv² ≈ 10 J 得 v ≈ 4.5 m/s。这类「先算能量、再反解速度」的做法，比逐步积分更方便。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>简单机械：省力不省功</h2>
-          <p class="lede">杠杆、滑轮、斜面，本质都是「省力但费距离」——机械不能「创造功」。</p>
+          <h2><span class="sec-num">3</span>热力学定律</h2>
+          <p class="lede">热力学四大定律，把「能量、方向、极限」三件事讲清楚了。</p>
+          <table>
+            <caption class="caption">热力学定律概览</caption>
+            <thead><tr><th>定律</th><th>内容</th><th>推论</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">第零定律</th><td>热平衡具有传递性</td><td>定义了「温度」这一可测量</td></tr>
+              <tr><th scope="row">第一定律</th><td>ΔU = Q − W（内能变化 = 吸热 − 对外做功）</td><td>能量守恒的热学表述</td></tr>
+              <tr><th scope="row">第二定律</th><td>孤立系统熵不减；热不能自发从冷到热</td><td>规定了过程方向，给出效率上限</td></tr>
+              <tr><th scope="row">第三定律</th><td>绝对零度下完美晶体熵趋于零</td><td>熵有绝对基准</td></tr>
+            </tbody>
+          </table>
+          <p>第二定律最有工程意义：它说明热机不可能把热全部变成功。<strong>卡诺效率</strong>给出了以温度为上限的极限：</p>
+          <div class="prompt-block"><span class="prompt-label">热机效率上限（卡诺）</span><button class="copy-btn" type="button">复制</button>η_max = 1 − Tc / Th
+
+（Tc 为低温热源温度，Th 为高温热源温度，
+  均用绝对温标 K）
+
+意义：
+· 冷的越冷、热的越热，效率上限越高
+· 实际热机因摩擦与不可逆过程，效率低于此值
+· 100% 效率只有 Th → ∞ 或 Tc → 0 才可能，现实不可达</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>简谐振动与机械波</h2>
+          <p class="lede">只要回复力与位移成正比（F = −kx），系统就做简谐振动——这是从弹簧、单摆到分子振动、交流电路都通用的模型。</p>
+          <div class="prompt-block"><span class="prompt-label">简谐振动的核心关系</span><button class="copy-btn" type="button">复制</button>回复力：F = − k x（胡克定律，负号表示指向平衡位置）
+
+由 F = ma 得运动方程：
+  a = − (k/m) x  →  满足 x(t) = A·cos(ωt + φ)
+
+角频率 ω = √(k/m)
+周期 T = 2π / ω = 2π·√(m/k)
+频率 f = 1 / T
+
+位移最大时速度为零；过平衡位置时速度最大。</div>
+          <p>简谐振动的「周期与振幅无关」，这一等时性正是它的实用价值：无论摆动多大（小角度下）单摆周期基本不变，因此可用来计时。振动在介质中传播即形成<strong>波</strong>，满足 v = λf（波速 = 波长 × 频率）。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>材料力学：应力、应变与杨氏模量</h2>
+          <p class="lede">结构会不会变形或断裂，取决于「单位面积上的力」与「相对变形量」之间的关系。</p>
+          <div class="prompt-block"><span class="prompt-label">应力与应变</span><button class="copy-btn" type="button">复制</button>应力 σ = F / A（力 / 截面积，单位 Pa）
+
+应变 ε = ΔL / L（变形量 / 原长，无量纲）
+
+胡克定律（弹性范围内）：
+  σ = E · ε
+
+杨氏模量 E = σ / ε  （材料的「刚度」，单位 Pa）
+
+E 越大，同样应力下变形越小（越不易拉长）。
+注意：E 是材料属性，与尺寸无关。</div>
+          <p>在<strong>弹性极限</strong>内卸载后材料恢复原状；超过屈服点则发生塑性变形；继续加载至强度极限后断裂。设计时通常把工作应力控制在弹性范围内，并预留安全系数。</p>
+          <div class="callout tip"><span class="callout-label">工程直觉</span>由 σ=F/A 可知：同样的拉力下，截面积 A 越小应力越大。因此「细杆更容易被拉断」不是玄学，而是分母变小导致 σ 上升的直接结果。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>机械传动：扭矩、转速与功率</h2>
+          <p class="lede">齿轮、皮带、杠杆，本质都是「用转速换扭矩」的转换器；它们遵守同一条能量守恒底线。</p>
+          <div class="prompt-block"><span class="prompt-label">传动关系</span><button class="copy-btn" type="button">复制</button>旋转功率：P = τ · ω（扭矩 × 角速度）
+         （ω = 2πn / 60，n 为每分钟转数 rpm）
+
+齿轮传动比：i = n1 / n2 = z2 / z1
+（z 为齿数；转速与齿数成反比）
+
+因此：τ2 / τ1 = i （扭矩与传动比成正比）
+
+能量守恒视角：忽略损耗时
+  P1 = P2  ⇒ 转速降为 1/i，扭矩升为 i 倍。
+「减速增扭」与「增速减扭」是一枚硬币的两面。</div>
           <table>
             <caption class="caption">三种简单机械</caption>
             <thead><tr><th>机械</th><th>原理</th><th>效果</th><th>例子</th></tr></thead>
             <tbody>
               <tr><th scope="row">杠杆</th><td>动力×动力臂 = 阻力×阻力臂</td><td>动力臂越长越省力</td><td>撬棍、剪刀</td></tr>
               <tr><th scope="row">滑轮（组）</th><td>动滑轮把力分散到多股绳子</td><td>股数越多越省力</td><td>起重机、晾衣架</td></tr>
-              <tr><th scope="row">斜面</th><td>把竖直提升变成沿斜面推</td><td>越缓越省力、路程越长</td><td>盘山公路、坡道</td></tr>
+              <tr><th scope="row">斜面/螺纹</th><td>把竖直提升变成沿斜面推</td><td>越缓越省力、路程越长</td><td>盘山公路、千斤顶</td></tr>
             </tbody>
           </table>
-          <p>省力机械的代价是「费距离」：省了力，就得多走距离，二者乘积（功）不变。这就是「省力不省功」的机械原理，也是机械效率 &lt; 100% 的根本原因（摩擦损耗）。</p>
+          <p>省力机械的代价是「费距离」或「降转速」：省了力，就得多走距离，二者乘积（功/功率）不变。这就是「省力不省功」，也是机械效率 &lt; 100% 的根本原因（摩擦与发热损耗）。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>热力学与电磁学基础</h2>
+          <h2><span class="sec-num">7</span>前沿进展：从经典到现代物理</h2>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-era">经典体系</div>
+              <div class="tl-date">17–19 世纪</div>
+              <p>牛顿力学、热力学与麦克斯韦电磁学陆续建立，形成「经典物理」的宏伟大厦，也奠定了机械工程的理论基础。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">两大革命</div>
+              <div class="tl-date">20 世纪初</div>
+              <p>相对论（爱因斯坦）与量子力学（普朗克、玻尔、海森堡、薛定谔等）分别修正了「高速」与「微观」两个边界，经典物理被确认为低速宏观下的极限情形。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">连续介质与计算力学</div>
+              <div class="tl-date">20 世纪中叶起</div>
+              <p>有限元等方法把应力-应变分析搬上计算机，使复杂结构的强度、振动与疲劳预测成为工程常规。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">非线性与复杂系统</div>
+              <div class="tl-date">近数十年</div>
+              <p>混沌、非线性振动、软物质与超材料等方向拓展了经典力学的边界；「确定性系统也能不可长期预测」改变了人们对机械世界的直觉。</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>跨学科视角</h2>
+          <div class="grid-2">
+            <div class="card">
+              <h3>数学</h3>
+              <p>牛顿力学本质是微分方程；简谐振动对应线性二阶方程，其解为三角函数，这套「建模—求解」范式通用。</p>
+            </div>
+            <div class="card">
+              <h3>化学</h3>
+              <p>分子间的振动可近似为简谐/非谐振动，红外光谱吸收峰正对应这些振动模式，是「分子指纹」的来源。</p>
+            </div>
+            <div class="card">
+              <h3>生物力学</h3>
+              <p>骨骼、肌肉与血管都遵守应力-应变与流体力学规律；「材料刚度与几何尺寸」的权衡直接决定生物结构形态。</p>
+            </div>
+            <div class="card">
+              <h3>信息与控制</h3>
+              <p>振动系统、反馈回路与稳定性分析，与控制工程同源；「共振」是机械与电子系统都要防范的风险。</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>常见误区与边界</h2>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">常见误区</span>
+              <p>「运动需要力来维持」——错，匀速运动不需要净力，力改变的是运动状态。</p>
+              <p>「作用力与反作用力会相互抵消」——它们作用在不同物体上，不能抵消。</p>
+              <p>「效率可以做到 100%」——受第二定律与摩擦限制，热机效率有卡诺上限。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">更稳的理解</span>
+              <p>F=ma 是「净外力」与加速度的因果关系；无净力 → 匀速度。</p>
+              <p>动量守恒与能量守恒是分析碰撞/传动的首选工具。</p>
+              <p>机械只能转换力与速度的分配，不能凭空创造功；效率总小于 1。</p>
+            </div>
+          </div>
           <table>
-            <caption class="caption">两个基础领域</caption>
-            <thead><tr><th>领域</th><th>核心概念</th></tr></thead>
+            <caption class="caption">边界清单</caption>
+            <thead><tr><th>议题</th><th>可以说</th><th>不宜说</th></tr></thead>
             <tbody>
-              <tr><th scope="row">热力学</th><td>内能、热量传递（传导/对流/辐射）、热机效率；能量「降级」为不可利用的热</td></tr>
-              <tr><th scope="row">电学</th><td>欧姆定律 I = U/R（电流 = 电压 ÷ 电阻）；电功率 P = UI</td></tr>
+              <tr><th scope="row">简谐近似</th><td>小位移下近似成立，周期近似与振幅无关</td><td>「任何振动都严格简谐」</td></tr>
+              <tr><th scope="row">杨氏模量</th><td>是材料属性，与尺寸无关</td><td>「粗杆的 E 更大」</td></tr>
+              <tr><th scope="row">传动</th><td>减速可增扭，功率基本守恒</td><td>「齿轮组能放大功率」</td></tr>
+              <tr><th scope="row">力学适用范围</th><td>低速宏观下极精确</td><td>「牛顿力学适用于一切尺度」</td></tr>
             </tbody>
           </table>
-          <p>欧姆定律是电路分析的基石：电压是「推力」、电流是「流量」、电阻是「阻碍」。串并联电路中，电流、电压、电阻的关系都从这条定律推出。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">物理机械速记</span><button class="copy-btn" type="button">复制</button>· 牛顿第二定律 F=ma；动量 p=mv
-· 能量：动能 ½mv²、势能 mgh；W=Fs、P=W/t
-· 简单机械：省力必费距离，省力不省功
-· 杠杆：动力×动力臂 = 阻力×阻力臂
-· 欧姆定律 I=U/R；功率 P=UI</div>
+          <h2><span class="sec-num">10</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">物理机械速记</span><button class="copy-btn" type="button">复制</button>· 牛顿第二定律 F=ma（F 为净外力）；动量 p=mv
+· 冲量-动量定理：F·Δt = Δp；无外力时动量守恒
+· 功 W=Fs·cosθ；动能 ½mv²；势能 mgh；P=W/t=Fv
+· 动能定理：W合 = ΔEk
+· 热一律：ΔU = Q − W；热二律：熵不减、给定方向
+· 卡诺效率上限：η_max = 1 − Tc/Th（绝对温标）
+· 简谐：F=−kx；ω=√(k/m)；T=2π√(m/k)
+· 波速 v = λf
+· 应力 σ=F/A；应变 ε=ΔL/L；σ=E·ε
+· 杨氏模量 E=σ/ε，为材料属性
+· 旋转功率 P=τ·ω（ω 用 rad/s）
+· 传动比 i=n1/n2=z2/z1；扭矩 τ∝i
+· 省力必费距离/降转速；机械效率 &lt; 100%</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">11</span>练习清单</h2>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用 F=ma 解释「为什么重车更难加速」</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">算：2kg 物体以 3m/s 运动，动能是多少</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">解释「安全气囊如何减小冲击力」</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用杠杆公式说明撬棍如何省力</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">解释「简单机械为什么省力不省功」</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用欧姆定律算一个简单电路</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：由 F=−kx 与 F=ma 推出简谐振动角频率 ω=√(k/m)，并说明周期与振幅无关</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">计算：2 kg 物体以 3 m/s 运动，求动能；再用动能定理求使它停止所需的做功</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">估算：用能量守恒估算 1 kg 物体从 1 m 高处落地的速度（g≈9.8 m/s²）</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">验证：给定某杆的 F、A、ΔL、L，算出应力 σ、应变 ε 与杨氏模量 E</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">建模：设计一组齿轮（齿数已知），求传动比、输出转速与输出扭矩</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">计算：由 P=τω 与转速 rpm，反求传动轴所需扭矩</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">推理：判断为何热机效率不能达到 100%，用卡诺公式与第二定律各解释一次</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">辨析：分析一维完全非弹性碰撞的反冲问题，用动量守恒求解</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">综合：说明「省力不省功」在杠杆与齿轮中分别如何体现，并写出能量守恒的验证式</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，基于经典力学、热力学与电磁学的通行知识整理。</p>
+        <p class="footnote">原创交互式学习资料，基于经典力学、热力学、振动理论、材料力学与机械传动的通行知识整理。公式采用常用近似表达，实际工程需结合具体工况与安全系数。</p>
       </footer>
     </div>
   </article>

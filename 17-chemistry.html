@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>化学进阶指南</h1>
-          <p class="report-intro__summary">从电子排布到化学键极性，从元素周期律到摩尔计算——这份指南带你进入化学的「规律层」，理解物质为什么会这样反应。</p>
+          <p class="report-intro__summary">从波函数与轨道出发，解释化学键为何形成；用吉布斯自由能判断反应能否自发；用阿伦尼乌斯方程理解温度为何能加速反应——这份指南把化学从「背规律」升级为「推规律」。</p>
           <div class="intro-meta">
             <span>领域：化学</span>
             <span>难度：进阶</span>
@@ -26,78 +26,234 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>电子排布与价电子</h2>
-          <p class="lede">原子的化学性质，几乎完全由「最外层的价电子」决定。</p>
-          <p>电子按「能层（壳层）」分布，每层可容纳的电子数遵循 2n²（n 为层数）。<strong>最外层电子（价电子）</strong>决定了原子如何与其他原子结合：金属倾向于「失去」价电子，非金属倾向于「得到」或「共享」。最外层满 8 电子（八隅体）通常最稳定，这是理解一切化学键的钥匙。</p>
+          <h2><span class="sec-num">1</span>量子化学基础：波函数与轨道</h2>
+          <p class="lede">化学键的本质是电子的量子行为。要理解「为什么原子能结合」，必须回到描述电子的波函数。</p>
+          <p>在量子力学中，电子状态由<strong>波函数 ψ</strong> 描述，|ψ|² 给出在某处找到电子的概率密度（这就是「电子云」的含义）。求解薛定谔方程  <code>Ĥψ = Eψ</code>  得到的允许状态，就是<strong>原子轨道</strong>；每个轨道由四个量子数标记：</p>
+          <table>
+            <caption class="caption">四个量子数</caption>
+            <thead><tr><th>量子数</th><th>符号</th><th>决定</th><th>取值</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">主量子数</th><td>n</td><td>能层（大致能量与大小）</td><td>1, 2, 3, …</td></tr>
+              <tr><th scope="row">角量子数</th><td>l</td><td>轨道形状（s/p/d）</td><td>0 … n−1</td></tr>
+              <tr><th scope="row">磁量子数</th><td>m</td><td>轨道取向</td><td>−l … +l</td></tr>
+              <tr><th scope="row">自旋量子数</th><td>mₛ</td><td>电子自旋方向</td><td>+½ 或 −½</td></tr>
+            </tbody>
+          </table>
+          <p>三个空间轨道可由泡利不相容原理配合自旋容纳至多 2 个电子，因此一个 s 亚层容 2 个、p 亚层容 6 个、d 亚层容 10 个——这正是「每层 2n²」的来源：2n² 是<strong>亚层容量之和</strong>，而非独立规律。</p>
+          <div class="prompt-block"><span class="prompt-label">由波函数看化学键</span><button class="copy-btn" type="button">复制</button>两原子靠近时，原子轨道线性组合为分子轨道（LCAO）：
+· 同相叠加 → 成键轨道（能量降低，电子云在两核间富集）
+· 反相叠加 → 反键轨道（能量升高，两核间有节面）
+
+电子优先填入能量更低的成键轨道，
+体系总能量下降 → 形成稳定化学键。
+键级 ≈ （成键电子数 − 反键电子数）/ 2</div>
+          <div class="callout tip"><span class="callout-label">要点</span>「键」不是一根棍子，而是「电子在核间区域高概率出现，从而把两个带正电的核遮蔽、吸引在一起」的结果。键级越高，键通常越强、越短。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>元素周期律</h2>
-          <p class="lede">周期表不是「表格」，而是「规律地图」：元素性质随原子序数呈周期性变化。</p>
+          <h2><span class="sec-num">2</span>电子排布与元素周期律</h2>
+          <p class="lede">周期表不是「表格」，而是「规律地图」：元素性质随原子序数呈周期性变化，根源在电子排布的周期性。</p>
+          <p>电子按能级由低到高填充（能量最低原理），同一亚层内先单占后成对（洪特规则），并遵循泡利不相容原理。填充到 s/p/d/f 亚层的顺序，使得<strong>最外层电子（价电子）</strong>呈现周期性重复——这就是周期律的微观来源。</p>
           <table>
             <caption class="caption">周期表的规律</caption>
-            <thead><tr><th>方向</th><th>趋势</th></tr></thead>
+            <thead><tr><th>方向</th><th>趋势</th><th>原因</th></tr></thead>
             <tbody>
-              <tr><th scope="row">同族（纵列）</th><td>价电子数相同 → 化学性质相似</td></tr>
-              <tr><th scope="row">同周期（横排）</th><td>从左到右：金属性减弱、非金属性增强</td></tr>
-              <tr><th scope="row">族编号</th><td>主族元素 = 价电子数（如第 IA 族都是 1 个价电子）</td></tr>
+              <tr><th scope="row">同族（纵列）</th><td>化学性质相似</td><td>价电子数相同</td></tr>
+              <tr><th scope="row">同周期（横排）</th><td>金属性减弱、非金属性增强</td><td>核电荷增大，同层电子受吸引增强</td></tr>
+              <tr><th scope="row">原子半径</th><td>同周期间左→右减小，同族上→下增大</td><td>有效核电荷与能层数的竞争</td></tr>
             </tbody>
           </table>
-          <p>稀有气体（第 18 族）最外层已满，几乎不反应；碱金属（第 1 族）最外层只有 1 个电子，极易失去，化学性质极活泼——这就是「位置决定性质」。</p>
+          <p>稀有气体最外层已满、电离能极高，几乎不反应；碱金属最外层仅 1 个电子、易失去，化学性质极活泼——这就是「位置决定性质」。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>化学键：从离子到分子间力</h2>
+          <h2><span class="sec-num">3</span>化学键与分子间作用力</h2>
           <table>
             <caption class="caption">化学键与分子间作用力</caption>
-            <thead><tr><th>类型</th><th>形成方式</th><th>强度</th><th>例子</th></tr></thead>
+            <thead><tr><th>类型</th><th>形成方式</th><th>相对强度</th><th>例子</th></tr></thead>
             <tbody>
-              <tr><th scope="row">离子键</th><td>电子转移（金属+非金属）</td><td>强</td><td>NaCl</td></tr>
-              <tr><th scope="row">共价键（非极性）</th><td>电子对等共享</td><td>强</td><td>H₂、O₂</td></tr>
-              <tr><th scope="row">共价键（极性）</th><td>电子对偏向一方</td><td>强</td><td>H₂O（H–O）</td></tr>
+              <tr><th scope="row">离子键</th><td>电子转移（金属+非金属）</td><td>强（晶格能高）</td><td>NaCl</td></tr>
+              <tr><th scope="row">非极性共价键</th><td>电子对等共享</td><td>强</td><td>H₂、O₂</td></tr>
+              <tr><th scope="row">极性共价键</th><td>电子对偏向电负性大的一方</td><td>强</td><td>H₂O（H–O）</td></tr>
               <tr><th scope="row">金属键</th><td>自由电子「海」</td><td>较强</td><td>铁、铜</td></tr>
-              <tr><th scope="row">分子间作用力</th><td>分子间的静电引力</td><td>弱</td><td>冰中 H₂O 之间</td></tr>
+              <tr><th scope="row">氢键</th><td>H 与 N/O/F 间的定向吸引</td><td>弱但重要</td><td>冰、DNA 碱基配对</td></tr>
+              <tr><th scope="row">范德华力</th><td>瞬时/诱导偶极的静电吸引</td><td>弱</td><td>稀有气体液化、烷烃</td></tr>
             </tbody>
           </table>
-          <p>极性键源于「电负性差」：不同原子吸引电子的能力不同，共享电子对偏向电负性大的一侧，形成「部分正负电荷」。水分子的极性，正是它成为「万能溶剂」的原因。</p>
+          <p>极性键源于<strong>电负性差</strong>：不同原子吸引电子能力不同，共享电子对偏向电负性大的一侧，形成部分正负电荷。水分子的极性使它既能形成氢键网络，又是「万能溶剂」——离子与极性分子易溶于其中。</p>
+          <div class="callout warn"><span class="callout-label">易混点</span>分子间作用力（氢键、范德华力）远弱于<strong>分子内</strong>的共价键。熔化/汽化通常只需克服分子间力，而不拆开共价键——这解释了为什么水沸点虽高，分解为氢氧却需要极高能量。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>摩尔：化学计量的桥梁</h2>
-          <div class="prompt-block"><span class="prompt-label">摩尔计算</span><button class="copy-btn" type="button">复制</button>1 mol ≈ 6.02 × 10²³ 个粒子（阿伏伽德罗常数）
+          <h2><span class="sec-num">4</span>化学热力学：吉布斯自由能 ΔG</h2>
+          <p class="lede">「反应能不能自发」不是看放热与否，而是看吉布斯自由能是否降低。</p>
+          <div class="prompt-block"><span class="prompt-label">吉布斯自由能与自发性</span><button class="copy-btn" type="button">复制</button>ΔG = ΔH − T·ΔS
 
-摩尔数 n = 质量 m ÷ 摩尔质量 M
+ΔG &lt; 0：自发（放能）
+ΔG = 0：平衡
+ΔG &gt; 0：非自发（需外界做功）
 
-例：18 g 水（H₂O，M≈18 g/mol）
-n = 18 ÷ 18 = 1 mol，即约 6.02×10²³ 个水分子</div>
-          <p>「摩尔」把「看不见的粒子数量」和「称得出的质量」连起来，是化学计量、配平方程式的基础。反应按「物质的量（mol）」的比例进行，而非质量比例。</p>
+ΔG° = − R·T·ln K      （R 为气体常数，K 为平衡常数）
+⇒ K &gt; 1 对应 ΔG° &lt; 0，平衡更偏向产物</div>
+          <p>ΔH 是焓变（放热为负），ΔS 是熵变（混乱度增加为正）。两者常「反号」——放热的反应往往减少混乱度（ΔH&lt;0 但 ΔS&lt;0），于是温度 T 成了决定胜负的裁判：</p>
+          <table>
+            <caption class="caption">ΔH 与 ΔS 的符号组合</caption>
+            <thead><tr><th>ΔH</th><th>ΔS</th><th>自发性</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">负（放热）</th><td>正（更无序）</td><td>任何温度都自发</td></tr>
+              <tr><th scope="row">正（吸热）</th><td>负（更有序）</td><td>任何温度都非自发</td></tr>
+              <tr><th scope="row">负</th><td>负</td><td>低温自发、高温非自发</td></tr>
+              <tr><th scope="row">正</th><td>正</td><td>高温自发、低温非自发</td></tr>
+            </tbody>
+          </table>
+          <p>由此可得「转变温度」：令 ΔG=0，得 T = ΔH/ΔS。这正是许多吸热反应（如某些分解、溶解）需加热才能进行的热力学原因。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">化学进阶速记</span><button class="copy-btn" type="button">复制</button>· 价电子决定化学性质；八隅体最稳定
-· 周期律：同族相似、同周期金属性递减
-· 键：离子(转移)、共价(共享，分极性)、金属(电子海)、分子间力(弱)
-· 极性 = 电负性差；水因极性成为万能溶剂
-· 摩尔：n = m/M；1 mol ≈ 6.02×10²³</div>
+          <h2><span class="sec-num">5</span>化学动力学：阿伦尼乌斯方程</h2>
+          <p class="lede">热力学告诉你「能否发生」，动力学告诉你「多快发生」——两者是两条独立的问题。</p>
+          <p>反应要发生，分子碰撞必须具有足够能量越过<strong>活化能 Ea</strong> 的势垒。温度升高使分子平均动能增大，能越过势垒的比例随之急剧上升。</p>
+          <div class="prompt-block"><span class="prompt-label">阿伦尼乌斯方程</span><button class="copy-btn" type="button">复制</button>k = A · exp( −Ea / (R·T) )
+
+取对数：
+ln k = ln A − Ea / (R·T)
+
+意义：
+· Ea 越大，反应对温度越敏感
+· 由 ln k 对 1/T 作图，斜率 = −Ea/R
+  → 可用实验数据求活化能</div>
+          <p>这一「指数关系」解释了为什么温度每升高约 10 ℃，许多反应速率常数会提高数倍。催化剂的作用则是<strong>提供一条活化能更低的路径</strong>，它改变速率但不改变 ΔG（不改变终态能量）。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">6</span>电化学：氧化还原与电势</h2>
+          <p class="lede">把氧化还原反应拆到两个电极上分别进行，就能把化学能转化为电能（原电池）或用电能驱动反应（电解）。</p>
+          <p>氧化 = 失电子（升价），还原 = 得电子（降价）。在原电池中，氧化发生在负极、还原发生在正极，电子经外电路流动做功。</p>
+          <div class="prompt-block"><span class="prompt-label">电极电势与反应方向</span><button class="copy-btn" type="button">复制</button>标准电池电势：
+E°cell = E°(正极，还原) − E°(负极，还原)
+
+与自由能的关系：
+ΔG° = − n · F · E°
+
+（n 为转移电子数，F 为法拉第常数）
+
+⇒ E° &gt; 0 时 ΔG° &lt; 0，电池反应自发。
+弛豫到平衡时 E → 0，对应 ΔG = 0。</div>
+          <p>电解则是「反向操作」：外加电压超过分解电压时，非自发反应被强制进行。电镀、电解水、充放电电池都建立在这套关系上。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>前沿进展：从量子化学到计算化学</h2>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-era">量子化学奠基</div>
+              <div class="tl-date">1920 年代</div>
+              <p>海森堡、薛定谔等人建立量子力学后，化学迅速被「量子化」：价键理论（海特勒–伦敦）与分子轨道理论随后发展，首次从第一性原理解释共价键。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">计算化学</div>
+              <div class="tl-date">20 世纪后半叶</div>
+              <p>密度泛函理论（DFT）等方法让「用计算机解分子」成为可能，DFT 因兼顾精度与效率而广泛用于材料、药物与催化研究。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">反应动力学与机理</div>
+              <div class="tl-date">持续发展</div>
+              <p>从过渡态理论到飞秒化学（利用超快激光追踪反应瞬间），让「反应怎么一步步发生」从推测走向直接观测。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">绿色与能源化学</div>
+              <div class="tl-date">近年</div>
+              <p>电催化、人工光合、电池与储能材料成为热点；设计高活性、高选择性的催化剂，本质是调控反应路径与活化能。</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>跨学科视角</h2>
+          <div class="grid-2">
+            <div class="card">
+              <h3>物理</h3>
+              <p>化学键、光谱与反应速率都根植于量子力学与统计力学；「电子云」正是 |ψ|² 的图像。</p>
+            </div>
+            <div class="card">
+              <h3>生物</h3>
+              <p>酶催化 = 大幅降低活化能的生物版；ATP 供能 = 耦合非自发反应到自发反应之上的自由能账本。</p>
+            </div>
+            <div class="card">
+              <h3>材料与工程</h3>
+              <p>能带、掺杂与表面催化，是「化学键理论」在固体尺度上的延伸，直接决定半导体与催化剂性能。</p>
+            </div>
+            <div class="card">
+              <h3>数学 / 计算</h3>
+              <p>求解电子结构是高维数值问题；近似方法与算法效率，决定了能否在合理时间内算出分子性质。</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>常见误区与边界</h2>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">常见误区</span>
+              <p>「放热反应一定自发」——错，还要看熵变与温度，判断应看 ΔG。</p>
+              <p>「催化剂能提高产率」——催化剂加快速率、缩短到达平衡的时间，但不改变平衡位置与 ΔG。</p>
+              <p>「电子轨道是确定的轨迹」——轨道是概率分布，不是电子绕核的「跑道」。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">更稳的理解</span>
+              <p>自发性由 ΔG=ΔH−TΔS 决定，温度可改变方向。</p>
+              <p>热力学管「能否」，动力学管「快慢」，二者独立。</p>
+              <p>轨道是波函数解给出的概率云；键级可由成键/反键电子数估算。</p>
+            </div>
+          </div>
+          <table>
+            <caption class="caption">边界清单</caption>
+            <thead><tr><th>议题</th><th>可以说</th><th>不宜说</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">自发性</th><td>ΔG&lt;0 时自发</td><td>「放热必然发生」</td></tr>
+              <tr><th scope="row">催化剂</th><td>降低活化能、加快速率</td><td>「提高转化率上限」</td></tr>
+              <tr><th scope="row">周期律</th><td>性质随价电子呈周期变化</td><td>「周期表只是分类工具」</td></tr>
+              <tr><th scope="row">轨道</th><td>概率意义下的电子分布</td><td>「电子沿固定轨道绕行」</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">化学进阶速记</span><button class="copy-btn" type="button">复制</button>· 薛定谔方程 Ĥψ = Eψ；|ψ|² 为概率密度
+· 四量子数：n（能层）、l（形状）、m（取向）、mₛ（自旋）
+· 亚层容量：s=2、p=6、d=10 → 每层 2n²
+· 分子轨道：成键（同相）降能、反键（反相）升能；键级=(成键−反键)/2
+· 周期律源于价电子排布的周期性
+· 电负性差 → 极性共价键
+· 分子间力（氢键/范德华）&lt;&lt; 分子内共价键
+· 吉布斯：ΔG = ΔH − TΔS；ΔG&lt;0 自发
+· 平衡：ΔG° = −R·T·ln K
+· 转变温度：T = ΔH/ΔS
+· 阿伦尼乌斯：k = A·exp(−Ea/RT)；ln k 对 1/T 斜率 −Ea/R
+· 电化学：ΔG° = −n·F·E°；E°&gt;0 时电池自发
+· 催化剂只降活化能，不改 ΔG 与平衡</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">11</span>练习清单</h2>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">解释「价电子如何决定化学性质」</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">说明同族元素为何性质相似</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">区分离子键、极性共价键、非极性共价键</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">解释「水为什么是极性分子」</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">算：44 g 二氧化碳（CO₂）是多少摩尔</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用周期律预测钠和氯的化学性质</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：由四个量子数的取值范围，推出 s/p/d 亚层容量与「每层 2n²」</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">建模：用 LCAO 说明同相与反相叠加分别产生何种分子轨道，并据此估算 O₂ 的键级</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">计算：已知 ΔH 与 ΔS，求使 ΔG=0 的转变温度，并判断高于/低于该温度时是否自发</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">验证：由两组不同温度下的 k 值，用 ln k 对 1/T 作图求活化能 Ea</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">计算：由 E°cell 与转移电子数 n，用 ΔG°=−nFE° 求该电池反应的自由能变</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">推理：判断一个 ΔH&lt;0、ΔS&lt;0 的反应在高温下是否仍自发，并说明原因</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">计算：摩尔计算——求 44 g CO₂ 的物质的量，并按方程式推算所需 O₂ 的量</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">辨析：写一段文字，说明催化剂为何不改变平衡产率，却能让反应更快达到平衡</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">综合：给定电负性数据，预测某二元化合物键的极性与分子整体偶极方向</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，基于化学基础理论整理。</p>
+        <p class="footnote">原创交互式学习资料，基于量子化学、化学热力学、动力学与电化学的通行知识整理。公式采用常用近似表达，具体数值随条件变化。</p>
       </footer>
     </div>
   </article>

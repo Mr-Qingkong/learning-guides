@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>个人理财进阶指南</h1>
-          <p class="report-intro__summary">理财的核心公式只有两个：复利决定「能涨多快」，风险决定「会不会亏光」。这份指南讲复利计算、资产类别、分散化与行为偏差，帮你建立理性的金钱框架。</p>
+          <p class="report-intro__summary">理财的所有结论都能从少数几个式子推出来：货币时间价值决定「值多少」，费雪方程决定「真实购买力」，组合方差决定「波动能否被摊掉」，久期决定「对利率有多敏感」。本指南把这些式子推导一遍，再用行为金融与前沿研究解释「为什么懂了仍会亏」，并给出本科读者可自证的练习。</p>
           <div class="intro-meta">
             <span>领域：财务</span>
             <span>难度：进阶</span>
@@ -26,89 +26,298 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>复利：最重要的金融概念</h2>
-          <p class="lede">复利是「利滚利」，时间越长，威力越大。</p>
-          <div class="prompt-block"><span class="prompt-label">复利公式</span><button class="copy-btn" type="button">复制</button>终值 FV = PV × (1 + r)^n
-  PV = 本金，r = 每期收益率，n = 期数
+          <h2><span class="sec-num">1</span>货币时间价值：所有定价公式的源头</h2>
+          <p class="lede">「今天的 100 元比明年的 100 元值钱」不是常识顺口溜，而是一条可推导的等价关系：只要存在一个正的利率，把未来现金流按利率折算回今天，就能让不同时点的钱变得可比。</p>
+          <p>单期情形的推导只需一步：今天投入 <code>PV</code>，按利率 <code>r</code> 计息一期得到 <code>FV = PV × (1 + r)</code>；反解即得折现公式。把它迭代 <code>n</code> 期，得到复利与折现这一对互逆公式：</p>
+          <div class="prompt-block"><span class="prompt-label">复利与折现（互逆）</span><button class="copy-btn" type="button">复制</button>终值（复利）：  FV = PV × (1 + r)^n
+折现（现值）：  PV = FV / (1 + r)^n = FV × (1 + r)^(−n)
 
-72 法则：本金翻倍所需年数 ≈ 72 ÷ 年化收益率(%)</div>
+· (1 + r)^n 称为复利因子，(1 + r)^(−n) 称为折现因子
+· 年化 r 与期数 n 必须同频：r 用月利率时 n 要用月数
+· 连续复利：FV = PV × e^(r·n)（把「每期计息一次」推到极限）
+
+等价年化（APR ↔ EAR）：
+  APR = 名义年利率（单利口径），m = 每年计息次数
+  EAR = (1 + APR/m)^m − 1
+  m → ∞ 时 EAR → e^APR − 1（连续复利）</div>
+          <p>这里已经出现全书最重要的复利性质：<strong>复利是收益率的指数函数，对时间和利率都呈指数敏感</strong>。对 <code>FV = PV(1+r)^n</code> 取对数得 <code>ln FV = ln PV + n·ln(1+r)</code>，于是「翻倍」条件 <code>FV/PV = 2</code> 化为 <code>n = ln2 / ln(1+r) ≈ 0.693 / r</code>。这就是<strong>72 法则</strong>的近亲，常用形式 <code>n ≈ 72 / (100r%)</code>。两者的误差来源可精确估算：</p>
+          <div class="prompt-block"><span class="prompt-label">72 法则的精度来源</span><button class="copy-btn" type="button">复制</button>精确翻倍年数：n* = ln2 / ln(1 + r)
+小 r 时 ln(1+r) ≈ r，故 n* ≈ 0.693 / r
+
+72 法则用 72/100 代替 0.693：在 r ≈ 8% 时误差最小
+  r = 2% → n* ≈ 35.0 年，72 法则给 36 年（偏大）
+  r = 8% → n* ≈ 9.01 年，72 法则给 9.0 年（几乎无误差）
+  r = 12% → n* ≈ 6.12 年，72 法则给 6.0 年（偏小）
+
+结论：72 法则在 6%–10% 区间最准；高利率时应用
+     n* ≈ 0.693/r 而非 72/(100r)</div>
+          <p>把「一次性投入」换成「每期等额投入」<code>C</code>，用等比数列求和即可得到<strong>年金终值</strong>与<strong>年金现值</strong>（这是定投、还房贷、养老金计算的共同底座）：</p>
+          <div class="prompt-block"><span class="prompt-label">年金公式（等比数列求和）</span><button class="copy-btn" type="button">复制</button>期末定投 n 期、每期 C，期利率 r：
+  终值 FV_annuity = C × [(1 + r)^n − 1] / r
+  现值 PV_annuity = C × [1 − (1 + r)^(−n)] / r
+
+永续年金（n → ∞）：
+  PV_perpetuity = C / r               （戈登增长模型：C/(r − g)）
+
+推导要点：把每期现金流各自折现再求和，得到一个公比
+  为 (1+r)^(−1) 的等比数列，套用求和公式即得。</div>
           <table>
-            <caption class="caption">每月定投 1000 元、不同年化的终值</caption>
+            <caption class="caption">每月定投 1000 元、不同年化下的终值（期末投入，约数，万元）</caption>
             <thead><tr><th>年化</th><th>10 年</th><th>20 年</th><th>30 年</th></tr></thead>
             <tbody>
-              <tr><th scope="row">3%</th><td>约 14 万</td><td>约 33 万</td><td>约 58 万</td></tr>
-              <tr><th scope="row">5%</th><td>约 15.5 万</td><td>约 41 万</td><td>约 83 万</td></tr>
-              <tr><th scope="row">7%</th><td>约 17 万</td><td>约 52 万</td><td>约 122 万</td></tr>
+              <tr><th scope="row">3%</th><td>约 14.0</td><td>约 32.9</td><td>约 58.3</td></tr>
+              <tr><th scope="row">5%</th><td>约 15.5</td><td>约 41.1</td><td>约 83.2</td></tr>
+              <tr><th scope="row">7%</th><td>约 17.3</td><td>约 52.1</td><td>约 122.0</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">要点</span>复利的关键变量是「时间」和「收益率」：早开始 10 年，比后面多投一倍更有效。</div>
+          <p>表中数字用上面的年金终值公式即可复算。注意 3% 与 7% 差 4 个百分点，30 年后的终值差一倍以上——这正是复利对 <code>r</code> 的指数敏感性的直接体现，也是「费率」为什么重要：管理费吃掉 1% 的收益率，等价于吃掉终值的相当大一块。</p>
+          <div class="callout tip"><span class="callout-label">推导优先</span>不要背理财公式，而要记住它们的来源只有两条：<strong>折现因子 (1+r)^(−n)</strong> 和<strong>等比数列求和</strong>。房贷月供、养老金缺口、期权定价的离散形式，本质都是这两条的组合。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>风险与收益：资产类别</h2>
-          <p class="lede">「高收益低风险」在绝大多数情况下是骗局。理解每类资产的风险收益特征，才能理性配置。</p>
+          <h2><span class="sec-num">2</span>名义利率、实际利率与费雪方程</h2>
+          <p class="lede">「年化 3%」是名义数字，你真正拿到的是扣除通胀后的购买力变化。把两者区分开，是理财从玄学变成算术的第一步。</p>
+          <p>设名义年利率为 <code>i</code>，年通胀率为 <code>π</code>，实际利率为 <code>r</code>。推导的关键是「口径一致」：一单位货币在年末的名义价值是 <code>(1+i)</code>，而物价水平变为 <code>(1+π)</code>，于是实际购买力倍数等于两者之比：</p>
+          <div class="prompt-block"><span class="prompt-label">费雪方程的精确形式与近似</span><button class="copy-btn" type="button">复制</button>精确定义： 1 + r = (1 + i) / (1 + π)
+解得：       r = (i − π) / (1 + π)
+
+当 π 较小时（|π| &lt; 10%），分母 ≈ 1，得到近似的费雪方程：
+            r ≈ i − π
+误差量级：约等于 π·(i − π)，即二阶小量
+  例：i = 8%，π = 6% → 精确 r = 2/1.06 ≈ 1.887%，
+      近似 r ≈ 2%，绝对误差约 0.11 个百分点
+
+由此得到两个实践判据：
+· 名义正收益 ≠ 实际正收益（i &gt; 0 但 i &lt; π 时实际为负）
+· 现金的「风险」不是波动，而是长期被通胀确定性侵蚀</div>
+          <p>把这个结论代入上一节的复利公式会得到一个反直觉结果：<strong>在通胀环境下，「时间」对现金是负杠杆</strong>。若 <code>i = 0</code>、<code>π = 3%</code>，则实际利率 <code>r ≈ −2.91%</code>，30 年后 100 万现金的实际购买力只剩 <code>100 × (1−0.0291)^30 ≈ 41 万</code>。反过来，若投资实际收益 <code>r = 4%</code>，同样的 30 年会变成约 3.24 倍。这解释了为什么长期资产配置的核心问题不是「赚多少」，而是「跑赢通胀多少」。</p>
+          <div class="callout warn"><span class="callout-label">边界</span>费雪方程是「事后恒等式」，不是因果模型。通胀与名义利率之间存在双向反馈（央行反应函数、预期通胀），所以「加息必然推高实际利率」并不成立——当名义利率上调幅度小于通胀预期上升幅度时，实际利率反而下降。使用该式时务必标明数据口径与时间窗口。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>风险的可度量化：方差、CAPM 与组合的数学</h2>
+          <p class="lede">「高风险高收益」是结论，不是解释。真正的机制是：承担<strong>无法分散掉的</strong>风险才被定价，而分散之所以有效，来自协方差项的数学结构。</p>
+          <h3>把风险写成标准差</h3>
+          <p>用随机变量 <code>R</code> 表示收益率，期望 <code>E[R] = μ</code>，方差 <code>Var(R) = E[(R − μ)²] = σ²</code>，标准差 <code>σ = √σ²</code>。标准差与收益率同量纲（都是百分比），因此常被当作「波动」的度量：它刻画结果围绕均值的离散程度，而不是「会不会亏」的严格概率。夏普比率把「单位风险的超额收益」量化：</p>
+          <div class="prompt-block"><span class="prompt-label">风险调整后收益</span><button class="copy-btn" type="button">复制</button>夏普比率（Sharpe ratio）：
+  S = ( E[R_p] − R_f ) / σ_p
+  R_f = 无风险利率（通常取短期国债收益率）
+
+· 分母是组合超额收益的标准差（总风险）
+· 数值越高，说明单位波动换来的超额收益越多
+· 局限：用标准差度量风险隐含「收益近似正态、投资者只厌恶波动」
+  对偏态、厚尾（极端暴跌）资产会高估其性价比</div>
+          <h3>两资产组合方差：为什么「鸡蛋别放一个篮子」是数学</h3>
+          <p>设两个资产权重 <code>w₁ + w₂ = 1</code>、波动 <code>σ₁, σ₂</code>、相关系数 <code>ρ ∈ [−1, 1]</code>。用方差的双线性性质展开：</p>
+          <div class="prompt-block"><span class="prompt-label">组合方差与 N 资产推广</span><button class="copy-btn" type="button">复制</button>两资产：
+  σ_p² = w₁²σ₁² + w₂²σ₂² + 2·w₁·w₂·ρ·σ₁·σ₂
+
+N 资产（矩阵形式）：
+  σ_p² = wᵗ Σ w = Σ_i Σ_j w_i w_j σ_i σ_j ρ_ij
+
+等权、等方差、同相关系数的简化情形（w_i = 1/N，σ_i = σ）：
+  σ_p² = σ²/N + (1 − 1/N)·ρ·σ²
+        ↑ 可分散部分        ↑ 不可分散的系统性部分
+
+N → ∞ 时：σ_p² → ρ·σ²，即 σ_p → σ√ρ
+· ρ = 0 时，极限波动为 0：风险可被几乎完全摊平
+· ρ = 1 时，σ_p = σ：分散毫无用处</div>
+          <p>这个式子是整份指南中最值得动手推导的一处。它给出的核心洞见是：<strong>分散化只能消除「非系统性风险」，剩下的下限由平均相关系数 ρ 决定</strong>。现实中股票之间 ρ 常为正（同受宏观周期驱动），因此 σ√ρ 是一个不可再降低的风险地板——这就是「系统性风险」的数学定义。同时它也说明为什么在危机中分散常「失效」：极端行情下 ρ 会向 1 收敛，地板抬升。</p>
+          <h3>CAPM：把「被定价的风险」写成一条直线</h3>
+          <p>既然只有不可分散的风险应获得补偿，那么补偿应正比于资产对「市场组合」波动的敏感度。定义 <code>βᵢ = Cov(Rᵢ, R_m) / Var(R_m)</code>，即<strong>只取资产与市场共变的那部分波动</strong>（把非系统性风险在协方差中被平均掉），得到：</p>
+          <div class="prompt-block"><span class="prompt-label">CAPM 与 β 的分解</span><button class="copy-btn" type="button">复制</button>资本市场线（CML，刻画有效组合）：E[R_p] = R_f + [(E[R_m] − R_f)/σ_m]·σ_p
+证券市场线（SML，刻画单个资产）：E[R_i] = R_f + β_i·(E[R_m] − R_f)
+
+β 的含义与取值范围：
+  β = 1 → 与市场同步；β = 2 → 市场涨 1%，平均涨 2%（波动加倍）
+  β = 0 → 与市场无关；β &lt; 0 → 对冲属性
+  (E[R_m] − R_f) 称为市场风险溢价（equity risk premium）</div>
+          <p>CAPM 是一个「均衡定价」模型：它假设投资者同质、可无风险借贷、市场无摩擦。这些假设在现实中都被违反，因此它的价值不在于精确预测收益，而在于提供一个<strong>可检验、可解释的基准</strong>：任何主动策略的收益，都应先扣掉「承担了多大 β」这个解释项，剩下的才算「α」（真实超额能力）。这也解释了为什么评价基金必须做<strong>风险调整</strong>——牛市里高 β 基金赚得多，不代表管理人更聪明。</p>
+          <div class="callout tip"><span class="callout-label">可检验性</span>若把某个市场或策略的横截面收益对 β 做回归，理论上截距应等于 R_f、斜率应等于市场风险溢价。实证中这条「证券市场线」往往过于平坦（低 β 资产平均收益偏高），这被称为「低波动异象」，是 CAPM 最主要的经验挑战之一。据通行说法，这一偏差在多个市场与多段时期被反复观察到，但对其成因（杠杆约束、彩票偏好、估计误差）尚无统一结论。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>资产类别与久期：债券为何会被利率「伤害」</h2>
+          <p class="lede">上一节解释了股票型资产的风险结构，本节处理另一条主线：债券的价格波动不来自盈利预期，而来自利率变动，其敏感度有一个可计算的量——久期。</p>
           <table>
-            <caption class="caption">常见资产类别（风险由低到高）</caption>
-            <thead><tr><th>资产</th><th>典型风险</th><th>典型收益特征</th></tr></thead>
+            <caption class="caption">常见资产类别的风险收益结构</caption>
+            <thead><tr><th>资产</th><th>收益来源</th><th>主要风险</th><th>典型波动量级</th></tr></thead>
             <tbody>
-              <tr><th scope="row">现金/活期</th><td>极低</td><td>几乎无收益，被通胀侵蚀</td></tr>
-              <tr><th scope="row">债券/货基</th><td>较低</td><td>稳健但收益有限</td></tr>
-              <tr><th scope="row">股票/指数基金</th><td>中高，波动大</td><td>长期收益较高，短期可能大幅回撤</td></tr>
-              <tr><th scope="row">加密货币等</th><td>极高，波动剧烈</td><td>极高不确定，可能归零</td></tr>
+              <tr><th scope="row">现金 / 活期</th><td>存款利率</td><td>通胀侵蚀（实际利率为负）</td><td>≈0（名义）</td></tr>
+              <tr><th scope="row">债券 / 货币基金</th><td>票息 + 资本利得</td><td>利率风险、信用风险、久期风险</td><td>低至中（随久期放大）</td></tr>
+              <tr><th scope="row">股票 / 宽基指数基金</th><td>盈利增长 + 估值变动 + 分红</td><td>系统性风险（β）、回撤</td><td>中高（年化 15% 量级）</td></tr>
+              <tr><th scope="row">加密资产等</th><td>供需与叙事</td><td>极高波动、可能归零、流动性风险</td><td>极高</td></tr>
             </tbody>
           </table>
-          <p>原则：<strong>用「能承受亏多久」决定仓位</strong>，而不是「能赚多少」。短期要用的钱不进高风险资产。</p>
+          <p>债券的价格与市场利率反向变动，原因同样来自折现：债券价格就是未来票息与本金按其到期收益率 <code>y</code> 折现的现值。<code>y</code> 上升，折现因子下降，价格下降。敏感度可被精确定义为一个一阶导数：</p>
+          <div class="prompt-block"><span class="prompt-label">久期与凸性</span><button class="copy-btn" type="button">复制</button>麦考利久期（现金流到期时间的加权平均，权重为现值占比）：
+  D_Mac = Σ [ t·CF_t/(1+y)^t ] / P
+
+修正久期：D_mod = D_Mac / (1 + y)
+  含义：利率上升 1 个百分点，价格约下降 D_mod %
+
+价格变化的二阶近似（含凸性 C）：
+  ΔP/P ≈ −D_mod·Δy + ½·C·(Δy)²
+
+数值直观（修正久期 D_mod = 7 的债券）：
+  Δy = +1% → ΔP/P ≈ −7%
+  Δy = +2% → ΔP/P ≈ −14%（凸性会略微缓和下跌）</div>
+          <p>久期把「债券有多怕加息」变成一个可直接比较的数字。这也解释了为什么「短债基金」与「长债基金」在加息周期中的表现差异巨大：久期是其倍数级差异的来源。对个人理财而言，久期的实务意义是<strong>用久期匹配负债</strong>——若两年后要用钱，就该持有久期约两年的资产，让「价格风险」与「再投资风险」相互抵消（免疫策略的基本思想）。</p>
+          <div class="callout warn"><span class="callout-label">风险提示</span>本指南所有公式与算例均为教学内容，用于说明机制，<strong>不构成任何投资建议</strong>。真实市场的收益率分布存在厚尾与制度性突变，任何模型都只能作为思考框架。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>分散化：免费的午餐</h2>
-          <p class="lede">「不要把所有鸡蛋放在一个篮子里」是数学，不是鸡汤。</p>
-          <ul>
-            <li><strong>资产分散</strong>：股票、债券、现金按风险承受度搭配，降低整体波动。</li>
-            <li><strong>标的分​​散</strong>：买入指数基金（一篮子股票）而非押注单只个股，避免「个股暴雷」。</li>
-            <li><strong>时间分散</strong>：定投摊薄成本，避免「一把梭在最高点」。</li>
-          </ul>
-          <div class="callout warn"><span class="callout-label">风险提示</span>分散化降低「非系统性风险」，但不能消除「系统性风险」（如整体市场下跌）。本文仅为科普，不构成投资建议。</div>
-        </section>
+          <h2><span class="sec-num">5</span>行为金融：为什么会「懂了仍会亏」</h2>
+          <p class="lede">上面的模型都建立在「理性人」假设上，然而真实的亏损大多发生在假设失效的地方。行为金融把心理学偏差写成可检验的效用函数与决策规则。</p>
+          <p>最基础的两条来自前景理论（Kahneman 与 Tversky，1979）：一是<strong>参照点依赖</strong>，人们评估的不是财富绝对水平，而是相对某个参照点（买入价）的得失；二是<strong>损失厌恶</strong>，同等金额的损失带来的痛苦约为等额收益愉悦的 2–2.5 倍（这一系数是实验估计的典型量级，随情境变化）。把这两条写成价值函数：</p>
+          <div class="prompt-block"><span class="prompt-label">损失厌恶如何导致「卖赢守亏」</span><button class="copy-btn" type="button">复制</button>价值函数（示意）：v(x) ≈ x^α (x ≥ 0)；v(x) ≈ −λ(−x)^β (x &lt; 0)
+  α, β 常取 &lt; 1（边际递减）；λ ≈ 2 ~ 2.5（损失厌恶系数）
 
-        <section>
-          <h2><span class="sec-num">4</span>行为偏差：投资最大的敌人是你自己</h2>
+离散化的直觉算例（λ = 2.5）：
+  赚 1000 元的效用 ≈ +1.00
+  亏 1000 元的效用 ≈ −2.50
+  → 要「抵消」一次亏损，需要约 2.5 倍的收益
+
+行为后果（处置效应，disposition effect）：
+  · 盈利头寸急于落袋（锁定「确定的快乐」）
+  · 亏损头寸长期死扛（回避「确认痛苦」）
+  · 结果：卖出赢家、留住输家，组合质量持续劣化</div>
+          <p>行为偏差并非「不理性」的同义词，而是<strong>系统性、可预测、且在某些环境下有适应价值</strong>的决策模式。把它们列表化，并配上能阻断它们的结构性对策：</p>
           <table>
-            <caption class="caption">常见理财行为偏差</caption>
-            <thead><tr><th>偏差</th><th>表现</th><th>对策</th></tr></thead>
+            <caption class="caption">常见行为偏差：机制、后果与对策</caption>
+            <thead><tr><th>偏差</th><th>机制</th><th>典型后果</th><th>结构对策</th></tr></thead>
             <tbody>
-              <tr><th scope="row">追涨杀跌</th><td>涨时买、跌时卖，高买低卖</td><td>定投 + 长期持有</td></tr>
-              <tr><th scope="row">损失厌恶</th><td>亏损时死扛、小赚就跑</td><td>设好规则，事前决定买卖条件</td></tr>
-              <tr><th scope="row">从众效应</th><td>别人买什么我买什么</td><td>独立判断，理解标的再投</td></tr>
-              <tr><th scope="row">过度自信</th><td>频繁交易、押注单一标的</td><td>用长期数据说话，降低换手</td></tr>
+              <tr><th scope="row">损失厌恶 / 处置效应</th><td>损失效用约为收益的 2–2.5 倍</td><td>卖赢守亏、频繁查看账户</td><td>降低查看频率；事前设定再平衡规则</td></tr>
+              <tr><th scope="row">过度自信</th><td>高估自身信息精度、低估不确定性</td><td>过度交易、押注集中</td><td>强制分散；用「费前 vs 费后」收益对照</td></tr>
+              <tr><th scope="row">确认偏误</th><td>偏搜支持既有观点的信息</td><td>忽视基本面恶化的信号</td><td>主动写出「与我判断相反的最强论据」</td></tr>
+              <tr><th scope="row">近因效应 / 外推</th><td>把近期表现外推为长期趋势</td><td>追涨杀跌、牛市末期入场</td><td>用长期年化而非近期涨幅做判断</td></tr>
+              <tr><th scope="row">锚定效应</th><td>以初始价（买价、原价）为参照</td><td>「还没回本所以不卖」</td><td>以资产当前内在价值而非成本价决策</td></tr>
+              <tr><th scope="row">从众 / 羊群效应</th><td>把他人行为当信号</td><td>在泡沫顶点集中入场</td><td>独立规则化定投，屏蔽社群噪音</td></tr>
+            </tbody>
+          </table>
+          <p>这里的关键推论是：<strong>对策应当是结构性的，而非意志力性的</strong>。既然偏差是系统性的，那么最有效的防御是「事前承诺 + 自动化」——定投、自动再平衡、资产配置比例的白纸黑字，都是为了剥夺自己在情绪高点临场决策的权力。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">个人理财的学术底座在过去六十年里从「资产定价」向「行为与家庭金融」延伸，以下是几条主线。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">组合理论与资产定价</span><span class="tl-date">1950s–1960s</span><p>均值—方差组合选择框架与资本资产定价模型（CAPM）先后建立，把「风险—收益」从直觉变成可优化的数学问题；市场有效性假说同期提出，成为此后所有争论的基准。</p></div>
+            <div class="tl-item"><span class="tl-era">期权定价与无套利</span><span class="tl-date">1973</span><p>布莱克—斯科尔斯期权定价模型与「无套利定价」思想，确立了「用可复制组合给衍生品定价」这一方法，也把折现因子与随机过程引入主流金融实践。</p></div>
+            <div class="tl-item"><span class="tl-era">行为金融的崛起</span><span class="tl-date">1979 起</span><p>前景理论把心理学引入经济学核心；此后大量实证工作识别出市场中的可预测性异象，对「完全理性」假设构成系统性挑战。</p></div>
+            <div class="tl-item"><span class="tl-era">因子投资与横截面收益</span><span class="tl-date">1990s–2010s</span><p>除市场 β 之外，价值、规模、动量、盈利等因子被提出用于解释横截面收益差异。争论点仍在：这些因子是真风险补偿、错误定价，还是数据挖掘的产物——近年因「因子动物园」过多而引发的可复现性讨论，是这一领域最活跃的分歧。</p></div>
+            <div class="tl-item"><span class="tl-era">低成本被动化与默认选项</span><span class="tl-date">2000s 至今</span><p>指数化投资规模快速增长，学术界与实践界共同强调「费率对长期终值的侵蚀」；同时以「默认自动加入」为特征的养老金计划设计（行为经济学中的助推思路）在多国被采用，成为把研究直接转化为制度的典型案例。</p></div>
+            <div class="tl-item"><span class="tl-era">家庭金融与金融素养</span><span class="tl-date">近年</span><p>研究重心转向家庭层面的负债、住房、保险与退休储蓄决策；大量跨国调查显示金融素养普遍偏低，且与财务脆弱性相关。分歧在于：提高素养能否真正改变行为，还是结构（默认选项、产品设计）更有效。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类结论</span>看到「某因子年化跑赢市场 X%」时，先问四件事：是否扣除交易成本与税费、样本期是否覆盖该因子被发现之后（发现后的表现常衰减）、是否有幸存者偏差、以及能否在另一个市场复现。学术结论与可交易策略之间，通常隔着交易成本、容量与税负三重摩擦。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">理财不是财务专业的私产，它同时是概率论、心理学、信息论与制度设计的交叉地带。</p>
+          <div class="grid-2">
+            <div class="card"><h4>概率论与随机过程</h4><p>收益率是随机变量，组合是随机变量的线性组合，方差的双线性性质撑起了整个分散化理论；连续复利与布朗运动是期权定价的语言。</p></div>
+            <div class="card"><h4>统计学与因果推断</h4><p>「因子有效」是一个统计假设，需要样本外验证、多重比较校正与置信区间；把相关性当因果是金融实证中最常见的错误。</p></div>
+            <div class="card"><h4>认知心理学</h4><p>前景理论、锚定与可得性启发直接解释了「追涨杀跌」「卖赢守亏」的形成路径，行为金融是这两门学科的结合部。</p></div>
+            <div class="card"><h4>信息论</h4><p>分散化可被读作「降低组合结果的信息熵（不确定性）」；把资金集中在单一标的，等价于把大量概率质量压在单一结局上。</p></div>
+            <div class="card"><h4>博弈论</h4><p>市场收益是「他人行为的函数」：套利机会会因被套利而消失，因此超额收益必然伴随「为什么别人不来抢」的解释成本（限量套利）。</p></div>
+            <div class="card"><h4>制度与行为公共政策</h4><p>默认自动加入、信息披露、冷静期等设计，把偏差研究转化为政策工具；理财的最终约束往往不是数学而是制度与税费。</p></div>
+          </div>
+          <p>把这些放一起，会浮现同一条主线：<strong>在不确定条件下，用有限的资源在时间上做分配决策</strong>。这与时间管理、精力管理共享完全相同的数学结构（期望价值/成本的排序问题），只是把「时间预算」换成了「资金预算」，把「耗散」换成了「费率与税负」。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「72 法则适用于所有收益率」
+
+「分散化可以消除风险」
+
+「过去三年涨得好，未来也会好」
+
+「长期一定赚钱，所以不用管配置」
+
+「理财就是选对产品」</pre><div class="why">问题：把近似公式当精确定理，把系统性风险误认为可消除，把近期表现外推为长期趋势，把「长期向上」当作免于回撤的保证，并把全部注意力放在选品而忽略费率、税费与仓位结构。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>72 法则在 6%–10% 区间最准，
+高低利率分别用 0.693/r 与 72/(100r)
+
+分散只消除非系统性风险，
+剩余波动下限为 σ√ρ
+
+用长期年化与滚动窗口看分布，
+并假设最差情形会发生
+
+长期向上伴随深度回撤，
+仓位要能扛住回撤而非只算平均
+
+先管费率、税费与配置比例，
+再谈选品</pre><div class="why">要点：把每个结论还原到它的假设与量纲。凡是「一定」「消除」「必然」，先找它的边界条件。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>工具 / 结论</th><th>有效边界</th><th>失效或需修正的场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">复利公式（名义收益）</th><td>收益率稳定、期间无大规模现金流</td><td>高通胀期须改用实际收益率；有追加/提取时须用现金流加权收益</td></tr>
+              <tr><th scope="row">72 法则</th><td>年化 6%–10% 的近似</td><td>极高或极低收益率时误差增大</td></tr>
+              <tr><th scope="row">CAPM / β</th><td>大样本、流动性好的市场组合</td><td>小盘、私募、加密等流动性差资产；危机期相关性骤变</td></tr>
+              <tr><th scope="row">久期近似</th><td>利率小幅变动（&lt;1–2 个百分点）</td><td>大幅变动或高凸性债券须用二阶项或全价重算</td></tr>
+              <tr><th scope="row">夏普比率</th><td>收益近似对称、投资者只厌恶波动</td><td>厚尾、偏态、强流动性风险的资产会高估其性价比</td></tr>
+              <tr><th scope="row">历史回测结论</th><td>用于理解机制与量级</td><td>不可直接外推为未来收益；须做样本外与多重比较检验</td></tr>
             </tbody>
           </table>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">理财速记</span><button class="copy-btn" type="button">复制</button>· 复利：FV = PV×(1+r)^n；72 法则算翻倍
-· 风险与收益对等，短期要用的钱不进高风险
-· 分散：资产 + 标的 + 时间三维分散，指数基金是捷径
-· 防偏差：定投、长期、事前定规则、不追热点</div>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">个人理财核心公式速记</span><button class="copy-btn" type="button">复制</button>【时间价值】
+· FV = PV(1+r)^n ；PV = FV(1+r)^(−n)（两式互逆）
+· 年金终值 = C[(1+r)^n − 1]/r ；年金现值 = C[1 − (1+r)^(−n)]/r
+· 永续年金现值 = C/r ；戈登增长 = C/(r − g)
+· 翻倍年数 n* = ln2/ln(1+r) ≈ 0.693/r ；72 法则在 6%–10% 最准
+· EAR = (1 + APR/m)^m − 1 ；连续复利 e^APR − 1
+【真实购买力】
+· 精确 1 + r = (1 + i)/(1 + π) ；近似 r ≈ i − π
+· 名义正收益 ≠ 实际正收益；现金的长期风险是通胀
+【风险与收益】
+· 收益率同量纲度量：σ = √Var(R) ；夏普 S = (E[R] − R_f)/σ
+· 两资产 σ_p² = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρσ₁σ₂
+· 等权简化 σ_p² = σ²/N + (1 − 1/N)ρσ² ；N→∞ 时 σ_p → σ√ρ
+· 分散只去掉非系统性风险；ρ=1 时分散无效
+· CAPM：E[R_i] = R_f + β_i(E[R_m] − R_f) ；β = Cov(R_i,R_m)/Var(R_m)
+· 主动收益 = β 解释的部分 + α；评价基金须做风险调整
+【债券】
+· 修正久期 D_mod = D_Mac/(1+y) ；Δy 上升 1% → 价格约跌 D_mod %
+· 二阶近似 ΔP/P ≈ −D_mod·Δy + ½C(Δy)²
+· 用久期匹配负债期限，可让价格风险与再投资风险相抵
+【行为】
+· 前景理论：参照点依赖 + 损失厌恶（λ ≈ 2 ~ 2.5）
+· 处置效应 = 卖赢守亏；对策是自动化与事前承诺
+· 对策优先选「结构性」：定投、再平衡规则、降低查看频率
+【执行】
+· 应急金 = 3–6 个月必要支出；短期要用的钱不进高风险资产
+· 先控费率、税费与仓位，再谈选品；回测结论不可直接外推</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求推导、复算或实现，产出可检验的数字与结论，而非「读过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用复利公式算一笔：月投 2000、年化 6%、20 年后是多少</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用 72 法则估算年化 6% 时本金翻倍要几年</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">算清自己的 3-6 个月应急金目标</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">按风险承受度列一个「现金/债券/股票」配置比例</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">识别一次自己或身边人的「追涨杀跌」行为</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">设置自动定投并坚持 3 个月</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">手推年金终值公式：把每期定投的终值写成等比数列并求和，验证 FV = C[(1+r)^n − 1]/r；用 r=0.5%/月、n=240 复算「月投 2000、年化 6%、20 年」的结果</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">对比复利近似：对 r = 2%、6%、10%、20% 分别计算精确翻倍年数 ln2/ln(1+r) 与 72 法则结果，画出误差随 r 变化的趋势并解释为什么会这样</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用精确费雪方程计算：给定 i = 8%、π = 6%，求精确实际利率与近似值之差；再算「零利率 + 3% 通胀」下，100 万现金在 30 年后的实际购买力</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">推导等权组合方差简化式 σ_p² = σ²/N + (1 − 1/N)ρσ²。取 σ=20%、ρ=0.3，分别计算 N = 1、5、10、50 时的 σ_p，指出 N 到多少之后继续增加已几乎无用</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">估算某只基金或宽基指数的 β：取日/周收益率对市场指数做线性回归，写出斜率与 R²，并说明 R² 低意味着什么</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">计算债券的修正久期：构造一个 3 年期、年付息、票面 100 的债券，按 y = 4% 求其麦考利久期与修正久期，再验证 Δy = +1% 时用久期估算的价格跌幅与实际重算值的偏差</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">写一个脚本比较「期末投入」与「期初投入」的定投差异（n=120），给出两者的比率并解释差异来自哪里</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">用长期年化数据说明「外推偏差」：取一段 10 年的资产收益序列，分别计算「整段年化」与「全部 3 年滚动区间年化」的分布，指出最差滚动区间的年化值</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">为自己的账户写一份「事前承诺书」：设定目标权重、再平衡触发阈值（如偏离 ±5%）与执行频率，并说明它如何阻断损失厌恶与近因效应</label></div>
           </div>
         </section>
       </main>
-
       <footer>
-        <p class="footnote">原创交互式学习资料，仅作科普，不构成投资建议；复利数据为简化示意。</p>
+        <p class="footnote">原创交互式学习资料，仅作科普，<strong>不构成投资建议</strong>。公式部分为金融数学的标准结果（货币时间价值、费雪方程、均值—方差组合理论、资本资产定价模型、久期与凸性），读者可自行推导复算；行为金融部分参考前景理论的参照点依赖与损失厌恶框架（Kahneman 与 Tversky，1979），其中损失厌恶系数为实验估计的典型量级，随情境与个体差异而变。文中金额与百分比均为教学算例，四舍五入到便于手算的精度；「低波动异象」「因子有效性」等表述涉及尚在争论的实证问题，已在正文中标注争议状态。真实市场存在厚尾、制度性突变与税费摩擦，任何模型只应作为思考框架而非预测工具。</p>
       </footer>
     </div>
   </article>

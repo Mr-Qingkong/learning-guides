@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>职业规划指南</title>
+  <title>职业规划进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,116 +13,213 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>职业规划指南</h1>
-          <p class="report-intro__summary">职业规划不是一次性选对行业，而是持续积累可迁移的职业资本，让每个选择都能放大下一个选择。这份指南讲职业选择三环、行业与公司研究方法、T 型技能组合、职业资本积累与跳槽时机，以及中期转型的低风险路径。</p>
+          <h1>职业规划进阶指南</h1>
+          <p class="report-intro__summary">职业规划不是一次性选对赛道，而是在不确定下持续做「期望值最大化」的系列决策。本指南把职业资本写成可贴现的存量，把关系统数与复利写进公式，用实物期权看待跳槽与转型，并连接劳动经济学、金融估值与复杂系统视角，让每一步选择都能被推导、被验证。</p>
           <div class="intro-meta">
-            <span>领域：职场 · 沟通</span>
+            <span>领域：职场 · 规划</span>
             <span>难度：进阶</span>
           </div>
         </div>
       </div>
     </header>
+
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>职业选择三环：能力、兴趣、市场价值</h2>
-          <p class="lede">长期值得做的工作落在三个圆的交集：你擅长的、你热爱的、有人愿意付钱的。交集太小是常态，所以策略比热情重要。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>能力环</h4><p>做得比多数人好的事——被需要时，别人第一个想到你。它给你立足点。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>兴趣环</h4><p>不给钱也愿意琢磨的事。它决定你能在一条路上走多少年。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>市场价值环</h4><p>有人愿意为它付钱——缺了这一环，前两环只是爱好。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>交集策略</h4><p>以「能力 × 市场」为骨架先立足，用「兴趣」为方向缓慢移动；别在没有任何一环支撑时裸辞追梦。</p></div></div>
-          </div>
-          <p>别把热情当起点。Cal Newport 在《优秀到不能被忽视》中的论断值得记住：<strong>激情往往是精通的结果，而不是前提</strong>——先在能立足的地方做深，热情会随胜任感一起生长。三环评估应每年做一次，因为三环都在动：能力在长、市场在变、兴趣在迁移。</p>
+          <h2><span class="sec-num">1</span>把职业规划写成一道决策问题</h2>
+          <p class="lede">职业规划听起来是叙事，本质是决策：在信息不完备、收益延迟、路径依赖的条件下，如何选择使长期期望效用最大的动作序列。</p>
+          <p>先给一个可推导的骨架。把职业选择看成有限期贴现决策：</p>
+          <div class="prompt-block"><span class="prompt-label">职业决策的形式化</span><button class="copy-btn" type="button">复制</button>目标：max E[ Σ_t γ^t · U(action_t, state_t) ]
+  γ ∈ (0,1) 为贴现因子，代表你对未来的耐心（γ 越大越长期主义）
+约束：action_t 只能从当前可达集 A(state_t) 中选取
+状态转移：state_{t+1} = f(state_t, action_t, 随机冲击 ε_t)
+
+关键推论：
+1. 早期决策的价值不在「当下收益」，而在它把 A 放大到多大
+2. 收益延迟 ⇒ 短视会被系统性地惩罚（γ^t 衰减）
+3. 路径依赖 ⇒ 错了要付「改道成本」，所以留可逆性本身就是收益</div>
+          <p>这个式子的第一个推论最反直觉：<strong>初入职场，优先选择「可达集增长最快」的动作，而不是「当期回报最高」的动作</strong>。一份薪资高但把你锁进窄技能的工作，会把 A(state) 越做越小；一份薪资平但让你接触核心业务与关键人的工作，会把 A 越做越大。第二个推论解释了为什么「因为累了想歇一歇」的裸辞常被系统性惩罚——它同时降低了 γ 的可持续性与当期 state。</p>
+          <p>把它和单一指标对比：多数人的实际决策函数是 max U(薪资)，是上式的一个极其退化的特例。退化不是错，但要意识到你扔掉了可达集、贴现与路径依赖三项。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>行业与公司研究方法</h2>
-          <p class="lede">选错赛道的代价大于努力不足。研究的目的不是成为分析师，而是回答三个问题：行业在上升还是成熟、钱从哪来、谁是赢家。</p>
+          <h2><span class="sec-num">2</span>职业资本：把「本事」写成可贴现的存量</h2>
+          <p class="lede">「职业资本」不是修辞，它可以像资产一样被定义、被计量、被折旧。</p>
+          <p>沿金融估值思路，把个人价值写成未来现金流的贴现：</p>
+          <div class="prompt-block"><span class="prompt-label">个人价值贴现模型（示意）</span><button class="copy-btn" type="button">复制</button>V = Σ_{t=1}^{N} CF_t / (1 + r)^t
+  CF_t = 技能资本 × 市场系数 × 人际杠杆
+  r    = 不确定性 + 机会成本（越高说明环境越不确定）
+
+职业资本存量 K 的三元分解（近似可加）：
+K ≈ K_skill + K_relation + K_reputation
+· K_skill     ：稀缺且有人愿单独付费的手艺
+· K_relation  ：愿意为你背书的人的数量 × 背书强度
+· K_reputation：你不在场时，他人对你的默认评价
+
+复利近似：K_{t+1} = K_t · (1 + g) − δ·K_t
+  g = 学习与机会带来的增长率，δ = 技能折旧（技术过时）</div>
+          <p>这里有两个机制层结论。其一，<strong>K_reputation 是 K_skill 的杠杆，而非其替代品</strong>：声誉决定你的技能被谁看见、以什么价格被看见；没有技能支撑的声誉会快速折价。其二，δ（折旧率）在技术行业显著为正——这意味着「停止输入」本身就是负增长，不是「保持不变」。把 δ 显式写出来，能破除「我现在挺稳」的幻觉：稳的只是分子，分母的 (1+r)^t 一直在动。</p>
+          <p>一个可操作的判据：判断某段经历是否在积累资本，问一句——<strong>它是否同时抬高了 K_skill 与 K_relation 中的至少一个，且折旧速度慢于我的学习速度</strong>？若两者皆否，这段经历即便体面，也只是消耗时间。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>能力、兴趣、市场的三环交集：一个可解的优化</h2>
+          <p class="lede">三环图常被画成一碗鸡汤，其实它可以被写成一个带约束的优化问题——而这立刻暴露出它的真实难点。</p>
+          <p>设某岗位坐标为 x，定义三个打分函数 A(x)（能力匹配）、I(x)（兴趣匹配）、M(x)（市场价值），三者均归一化到 [0,1]：</p>
+          <div class="prompt-block"><span class="prompt-label">三环交集的优化形式</span><button class="copy-btn" type="button">复制</button>max_x  W = A(x)^α · I(x)^β · M(x)^γ
+  取对数：ln W = α·ln A + β·ln I + γ·ln M
+  α, β, γ 为你的个人权重（须满足 α+β+γ = 1）
+
+为什么用乘积而非加权和？
+· 乘积形式下，任一因子趋近 0 则整体趋近 0 ——「三环交集」的数学含义
+· 加权和允许用高 M 补偿低 A，乘积不允许：这更符合现实（你无法
+  靠「市场好」弥补「完全不胜任」）
+
+动态：三个函数都随时间漂移 ⇒ 三环评估须定期重算，不是一劳永逸</div>
+          <p>对数形式让性质更清晰：<strong>W 对每个因子的弹性等于其权重 α、β、γ</strong>。这给出一个可计算的操作——如果你判断当前 A=0.4、I=0.9、M=0.8，且权重为 (1/3,1/3,1/3)，那么把能力从 0.4 提到 0.6（提升 50%）对 W 的拉动，远大于把兴趣从 0.9 提到 1.0。也就是说，<strong>优化应该优先补最短板的那一环，而不是继续堆砌已经很高的那一环</strong>——这正是乘积形式与「跟着热情走」的直觉相冲突、却更正确的地方。</p>
+          <p>但也要诚实标注边界：α、β、γ 无法被客观测定，它们是价值判断，会随人生阶段变化。模型的用处不是替你算出答案，而是逼你说清楚——<strong>你此刻把多少权重给了市场，多少给了兴趣</strong>。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>跳槽与转型：用实物期权而非「逃离」来定价</h2>
+          <p class="lede">跳槽不是一次买卖，而是一次对「新信息」的支付。用期权思维定价，能把「该不该动」从情绪问题变回成本收益问题。</p>
+          <p>金融里，<strong>实物期权</strong>指在不确定环境下，保留未来行动权利的价值。一次跳槽或转型，本质是花一笔期权费，去购买一组未来的可能性：</p>
+          <div class="prompt-block"><span class="prompt-label">跳槽的期权定价思路</span><button class="copy-btn" type="button">复制</button>动作价值 ≈ 内在价值(确定部分) + 期权价值(不确定部分)
+· 内在价值 = 薪资差 + 职级差的贴现（可算、可谈）
+· 期权价值 = 新平台带来的可达集扩张 × 不确定性
+  —— 环境越不确定、上行空间越大，期权价值越高
+
+对比「留下」：
+· 留下的内在价值 = 现有总包
+· 留下的期权价值 = 内部晋升与转岗的可能性
+
+决策规则（示意）：当且仅当 新 = 内在 + 期权 > 留 = 内在 + 期权 时才动
+沉没成本（已付出的年限、已攒的股票）不进入上式</div>
+          <p>期权视角能解释两个反直觉现象。第一，<strong>高不确定性反而可能抬高一次机会的价值</strong>——只要下行有底（可回退、底薪可接受）、上行很大，它就是一个值得买的「看涨期权」；而一个平稳但天花板低的机会，看似安全，其实是没有期权的。第二，<strong>沉没成本必须被剔除</strong>：已经投入的五年不是「留下的理由」，它只影响你的情绪，不影响未来的边际收益。这正是行为经济学中「沉没成本谬误」的机械表述。</p>
+          <p>把四个经典跳槽信号（学习曲线平了、外部溢价持续、核心业务边缘化、职责与头衔倒挂）重新读一遍——它们都可以翻译成期权语言：学习曲线平 = 留下的期权价值趋零；外部溢价持续 = 市场给了你一张更贵的看涨期权。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>低风险转型：相邻迁移的最小变量原则</h2>
+          <p class="lede">转型失败的主因不是能力不足，而是想一次换掉太多变量，导致「匹配成本」超出买方意愿。</p>
+          <p>把一次转型拆成四个二元变量：行业、职能、平台、城市。距离可定义为变动变量数：</p>
+          <div class="prompt-block"><span class="prompt-label">相邻迁移的距离度量</span><button class="copy-btn" type="button">复制</button>转型距离 d = 变动的变量数 / 4
+· d = 0.25（只换一个）→ 相邻迁移，成功率高
+· d ≥ 0.75（换三个以上）→ 几乎等于重头开始，风险陡增
+
+匹配成本 由 买方学习成本 L(d) 决定：
+高能力信号在旧领域有效，在新领域需要重新验证 ⇒ L 随 d 上升
+⇒ 雇主愿意给的溢价随 d 下降，你的议价力随 d 下降
+
+低风险路径：用「一次只换一个变量」把 d 压到 0.25，
+并用可迁移能力（结构化表达 / 数据判断 / 项目化执行）搭桥</div>
+          <p>机制很清楚：<strong>雇主只为「已被证明过的部分」付价</strong>。d 越大，你过去所有的证明越难映射到新岗位，买方要承担的学习成本 L 越高，付你的溢价越低——于是「跨度大 + 断粮久」成为转型失败的组合拳。把 d 压到最小，等于把你的历史证据最大化地保留下来。</p>
+          <div class="callout tip"><span class="callout-label">转型三步（可验证）</span>1）用内部项目或副业做一次小规模试水，用真实交付（而非想象）验证兴趣环与能力环；2）按目标岗位的 JD 做逐项差距分析，结构化补齐作品集与关键经历；3）先在小圈子被看见（声誉资本），再用它撬动第一份跨界信任。每一步都以「是否获得新证据」为验收标准。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">职业规划过去被视为软技能，近二十年逐渐被劳动经济学、网络科学与机器学习当作可测量对象研究。</p>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-era">1970s</div><div class="tl-date">信号与人力资本</div><div>Spence 提出劳动市场信号模型，把学历等文凭看作向雇主传递不可观测能力的高成本信号；Becker 等发展人力资本理论，把技能视为可投资、会折旧的资本。这一范式奠定了「职业资本可积累、可投资」的学术基础。</div></div>
+            <div class="tl-item"><div class="tl-era">2000s</div><div class="tl-date">网络与机会结构</div><div>社会网络研究（如 Granovetter 关于弱关系强度的经典工作被反复验证与再讨论）指出：职业机会更多来自「弱关系」而非密友圈——弱关系跨越不同信息圈层，能带来非重复信息。这为「经营人际资本」提供了机制解释，而非人脉焦虑。</div></div>
+            <div class="tl-item"><div class="tl-era">2010s</div><div class="tl-date">技能可迁移性量化</div><div>劳动力市场大数据研究开始用职位与技能共现网络量化「技能之间的距离」，使得「相邻迁移」从经验说法变成可计算的距离度量。有研究指出，职业转换成功率与技能重叠度高度相关。</div></div>
+            <div class="tl-item"><div class="tl-era">2020s</div><div class="tl-date">技能半衰期与再培训</div><div>主流观点认为技术技能的「半衰期」在缩短，终身学习的紧迫性上升；同时 AI 对任务的替代研究（以任务而非职业为单位的分析框架）提示：受影响的是「任务」，职业可分解重构。这支持了「以任务/技能为单位做规划，而非以头衔为单位」。</div></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">审慎提示</span>上述结论多为研究框架与主流观点，具体数字（如技能半衰期年限、转换成功率）在不同样本与方法下差异较大，不应作为精确预测使用；引用时宜标注「视样本与口径而定」。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <div class="grid-2">
+            <div class="card"><h4>劳动经济学</h4><p>把职业看作人力资本的投资组合：技能是可生息资产，会折旧、可再培训；教育是前期投入，回报以后续现金流兑现。核心洞见是「投资视角」：每一次学习都是支出，问的是回报率与回收期，而非「喜不喜欢」。</p></div>
+            <div class="card"><h4>金融学</h4><p>贴现、期权、风险敞口。用 V = Σ CF/(1+r)^t 理解个人价值，用实物期权理解跳槽的「保留选择权」价值，用分散化理解不要把全部声誉押在单一平台。注意类比有边界：个人价值不能像股票一样自由交易。</p></div>
+            <div class="card"><h4>网络科学</h4><p>机会沿网络流动而非均匀分布。弱关系提供非重复信息，结构洞（跨越两个未连通群体的位置）带来信息优势。启示：人际资本的收益来自「连接不同圈层」，而非在同一圈层里加深重复连接。</p></div>
+            <div class="card"><h4>行为经济学</h4><p>沉没成本谬误让人因已投入而留下；损失厌恶让人高估改变的短期损失、低估长期收益；现时偏误（present bias）压低贴现因子 γ。这些偏差系统性使决策偏离公式——识别它们本身就是规划能力的一部分。</p></div>
+            <div class="card"><h4>复杂系统 / 路径依赖</h4><p>职业是路径依赖系统：早期的小选择会通过反馈放大，形成锁定。它既有坏消息（错过窗口难回头），也有好消息（早做对一件复利的事，收益被放大）。关键是识别「锁定」何时发生，留出可逆性。</p></div>
+            <div class="card"><h4>发展心理学</h4><p>职业身份不是一次成型，而是在探索—承诺的循环中建构（如 Super 的职业发展理论）。这提示「试错」不是失败，而是身份建构的必要机制——与「一次选对」的焦虑形成对照。</p></div>
+          </div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">模型越干净，越容易被误用。下面把最容易踩的几处边界说清楚。</p>
+          <div class="compare">
+            <div class="side bad">
+              <div class="side-tag">误区</div>
+              <ul>
+                <li><strong>把三环当成一次选对：</strong>认为存在一个完美交集的「命中注定岗位」，找不到就焦虑。</li>
+                <li><strong>把贴现率当成常数：</strong>用别人的 γ 替自己决策，忽略人生阶段差异。</li>
+                <li><strong>用薪资单指标做决策：</strong>忽略可达集、期权价值与折旧。</li>
+                <li><strong>跟着热情裸辞追梦：</strong>在 A 或 M 任一环为零时启动，乘积直接归零。</li>
+                <li><strong>跳槽被沉没成本绑架：</strong>「都待五年了」成为不动的理由。</li>
+              </ul>
+            </div>
+            <div class="side good">
+              <div class="side-tag">正确姿势</div>
+              <ul>
+                <li><strong>把三环当动态优化：</strong>定期重算 α、β、γ 与 A、I、M，把它当作测量工具，而非命运判决。</li>
+                <li><strong>显式设定自己的 γ 与 r：</strong>写下你此刻的耐心与不确定性水平，让它可见、可讨论。</li>
+                <li><strong>用多目标决策：</strong>薪资是内在价值，机会是期权价值，二者分开定价。</li>
+                <li><strong>先补最短板：</strong>乘积形式下，提升最弱一环的边际收益最高。</li>
+                <li><strong>剔除沉没成本：</strong>只看未来的边际收益与风险敞口。</li>
+              </ul>
+            </div>
+          </div>
           <table>
-            <caption class="caption">三层研究框架</caption>
-            <thead><tr><th>研究层次</th><th>看什么</th><th>信息来源</th></tr></thead>
+            <caption class="caption">边界条件对照表</caption>
+            <thead><tr><th>结论</th><th>成立条件</th><th>失效场景</th></tr></thead>
             <tbody>
-              <tr><th scope="row">行业</th><td>增速与周期、政策、价值链哪端最赚钱</td><td>券商研报、上市公司年报、招股书</td></tr>
-              <tr><th scope="row">公司</th><td>商业模式、现金流、组织口碑</td><td>财报、离职员工访谈、竞品对比</td></tr>
-              <tr><th scope="row">岗位</th><td>汇报线、离核心业务的距离、晋升样本</td><td>职级体系、职业社区履历轨迹、面试反问</td></tr>
+              <tr><th scope="row">优先扩大可达集</th><td>初入职场、技能与声誉尚未成型、下行有底</td><td>经济下行、基本生活无保障时，现金流优先</td></tr>
+              <tr><th scope="row">相邻迁移最稳</th><td>市场正常、目标岗位确实看重可迁移能力</td><td>行业整体收缩，任何 d 都难匹配</td></tr>
+              <tr><th scope="row">跟弱关系寻机会</th><td>你已有可被转述的能力与作品</td><td>能力未成型时，弱关系只是无效应酬</td></tr>
+              <tr><th scope="row">长期主义（高 γ）</th><td>有缓冲资金、环境可预期</td><td>生存压力大时，短视是理性而非缺陷</td></tr>
+              <tr><th scope="row">以任务为单位规划</th><td>技术快速变化、职业可被重新组合</td><td>强执照 / 强资历壁垒行业，头衔本身即门槛</td></tr>
             </tbody>
           </table>
-          <p>一个诚实的判断方法：看头部公司近三年在扩什么岗位、砍什么岗位。资本与招聘的<mark class="key">行为</mark>比新闻稿诚实——扩张的方向，就是行业的方向。</p>
-          <div class="callout tip"><span class="callout-label">反问清单</span>面试是双向尽调。至少准备三个问题：这个岗位是新增还是补员、近一年怎么产生？团队里晋升最快的人做对了什么？如果业务收缩一半，这个岗位会受到什么影响？</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">3</span>T 型技能组合与可迁移能力</h2>
-          <p class="lede">只有一竖是工具人，只有一横是万金油——T 型组合的议价权来自「深度带来宽度」。</p>
-          <p>T 型人才的说法经由 IDEO 的 Tim Brown 等人广为人知：<strong>一竖</strong>是某个领域做到「别人主动来问你」的深度，<strong>一横</strong>是懂业务、懂设计、懂协作语言的广度。深度决定你的不可替代性，宽度决定你能撬动的协作规模。先竖后横——没有一竖，一横只是浅尝辄止。</p>
-          <ul>
-            <li><strong>结构化表达</strong>：把复杂问题压缩成「一行结论 + 三层证据」。任何岗位都稀缺。</li>
-            <li><strong>数据判断</strong>：不一定会建模，但要能判断一个数字可不可信、口径对不对。</li>
-            <li><strong>项目化执行</strong>：拆解、排期、跟进、复盘——把事情办成的通用协议，跨行业通用。</li>
-            <li><strong>关系建立</strong>：让跨部门的人愿意与你协作，本质是可靠的交付记录加上清晰的沟通。</li>
-          </ul>
-          <p>迁移的顺序很重要：换行业或换职能时，先迁移能力与关系，头衔最后再追——市场为新头衔付的溢价，永远低于为已证明能力付的溢价。</p>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">职业规划速查</span><button class="copy-btn" type="button">复制</button>· 职业规划 = 不确定下的贴现决策：max E[Σ γ^t·U]
+· 早期优先「扩大可达集」，而非当期收益最高
+· 职业资本 K ≈ 技能 + 人际 + 声誉，是可贴现的存量
+· 声誉是技能的杠杆，不是替代品
+· 技术技能有折旧 δ：停止输入 = 负增长，不是不变
+· 三环用乘积 W = A^α·I^β·M^γ：任一环为 0，整体为 0
+· 乘积形式下，优先补最短板那一环
+· α、β、γ 是价值判断，每年重算一次
+· 跳槽定价 = 内在价值 + 期权价值，不是纯薪资差
+· 高不确定性 + 下行有底 = 值得买的看涨期权
+· 沉没成本不进入决策：只看未来边际收益
+· 学习曲线平 / 外部溢价持续 = 留下的期权价值趋零
+· 转型用相邻迁移：一次只换一个变量，d 压到 0.25
+· 雇主只为「已被证明的部分」付价，先攒证据再动
+· 弱关系带来非重复信息，跨圈层连接 > 同圈层加深
+· 现时偏误压低 γ，识破它本身就是规划能力
+· 留可逆性：路径依赖意味着改道有成本，别把自己锁死
+· 每年做一件「会留在身上」的事，让增量连成复利</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">4</span>职业资本积累与跳槽时机</h2>
-          <p class="lede">Cal Newport 把让你稀缺的技能、关系与声誉统称为职业资本（career capital）——它是你所有职业选项的本金。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>技能资本</h4><p>稀缺且有用的手艺。判断标准只有一个：是否有人愿意为它单独付钱。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>人际资本</h4><p>知道你在做什么、且愿意为你背书的人。经营方式是持续可见的交付，不是饭局。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>声誉资本</h4><p>你不在场时别人对你的描述。上限由最好的项目决定，下限由最差的项目决定。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>复利结构</h4><p>声誉带来机会，机会磨砺技能，技能再沉淀声誉——启动这个飞轮的起点，是几件过硬的交付。</p></div></div>
-          </div>
-          <table>
-            <caption class="caption">四个跳槽时机信号</caption>
-            <thead><tr><th>信号</th><th>含义</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">学习曲线平了 12 个月</th><td>该学的已学完，环境不再供给新挑战</td></tr>
-              <tr><th scope="row">外部溢价持续高于内部调薪</th><td>市场对你的定价与公司的定价拉开</td></tr>
-              <tr><th scope="row">核心业务被边缘化</th><td>所在模块连续两次不进公司优先级</td></tr>
-              <tr><th scope="row">职责与头衔长期倒挂</th><td>干核心的活，拿配角的回报</td></tr>
-            </tbody>
-          </table>
-          <p>跳槽的最优解不是「逃离」，而是「带着新技能去新平台」：先在内部把下一份工作需要的技能攒到手，再跳——空窗期的焦虑与降薪，多数来自顺序做反了。</p>
-        </section>
-        <section>
-          <h2><span class="sec-num">5</span>职业中期转型与长期主义</h2>
-          <p class="lede">转型失败的常见原因不是能力不够，而是想一次完成——跨度太大、断粮太久。路径比勇气重要。</p>
-          <p>中期转型的低风险路径是<strong>相邻迁移</strong>：一次只换一个变量（行业、职能、平台、城市之一），用可迁移能力当桥。技术转产品经理，复用的是行业理解；甲方转乙方，复用的是业务纵深——变量越少，买方为你付的「学习成本」越低。</p>
-          <div class="callout tip"><span class="callout-label">转型三步</span>1）内部项目或副业试水，验证兴趣环与能力环是否成立；2）结构性补齐短板：作品集、证书、关键经历，缺什么补什么；3）用声誉资本撬第一份「跨界信任」——雇主只会为你已被证明过的部分付钱，所以转型前先在小圈子里被看见。</div>
-          <p>长期主义不是口号，是复利结构：每年至少做一件「会留在身上」的事——一项新技能、一群可背书的人、一个拿得出手的交付。十年后拉开差距的从来不是某次跳槽的运气，而是这些增量是否连成了复利曲线。</p>
-        </section>
-        <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">职业规划速记</span><button class="copy-btn" type="button">复制</button>· 职业三环：能力、兴趣、市场价值，交集才立得住
-· 以「能力 × 市场」立足，用「兴趣」定向缓慢移动
-· 激情常是精通的结果：先做深，热情随胜任感生长
-· 行业研究看研报 / 年报 / 招股书，跟着招聘与资本走
-· 面试是双向尽调：岗位怎么产生、晋升靠什么、收缩时怎么办
-· T 型：一竖给不可替代性，一横撬协作规模，先竖后横
-· 可迁移能力：结构化表达、数据判断、项目化执行
-· 换赛道先迁移能力与关系，头衔最后再追
-· 职业资本 = 技能 + 人际 + 声誉，是所有选项的本金
-· 声誉下限由你交付过的最差项目决定
-· 跳槽信号：学习曲线平 12 个月、外部溢价持续、核心边缘化
-· 先攒够新技能再跳平台，别靠裸辞倒逼
-· 转型用相邻迁移：一次只换一个变量
-· 复利成长：每年做一件「会留在身上」的事</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">画自己的三环图：每环列 5 项，标出当前交集</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">研究一个目标行业：读一份研报 + 一份头部公司年报</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">为下次面试准备 3 个双向尽调问题</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">画出自己的 T 型画像：写下「一竖」与「一横」现状</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">盘点职业资本：可被单独付费的技能、愿意背书你的人</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">对照跳槽信号清单，给当前岗位逐条打分</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">设计一条相邻迁移路线：下一步只换一个变量</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">写出你的决策函数：max 什么？当前是否退化成「只看薪资」？</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">给当前岗位估一笔贴现账：估 CF、r、δ，算出它三年后的现值区间</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">量化三环：为 A、I、M 各打 [0,1] 分并写出理由，用乘积算出 W，找出最短板</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">显式写下你的 α、β、γ 权重，并说明为什么这样分配（须自证）</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用期权框架给「留下 vs 跳槽」各算内在价值与期权价值，给出结论与假设</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">盘点职业资本三元：列出可单独付费的技能、愿背书你的人、你不在场时的评价</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">列出三项你怀疑是沉没成本却影响了决策的因素，逐条剔除后重算</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">设计一条 d=0.25 的相邻迁移路线，做目标岗位 JD 的逐项差距分析</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">做一次弱关系盘点：找出三个跨圈层联系人，写清你能提供的非重复信息</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">设置一年后的复算提醒：更新三环得分、权重、γ 与 K 的增长率</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">原创交互式学习资料，基于职业资本理论（Cal Newport《优秀到不能被忽视》）与通行职业规划方法整理。</p>
+        <p class="footnote">原创交互式学习资料，综合职业资本理论（Cal Newport 相关论述）、信号与人力资本理论（Spence、Becker 框架）及贴现 / 实物期权等通行分析工具整理；模型为启发式示意，具体参数需结合个人情境设定。</p>
       </footer>
     </div>
   </article>

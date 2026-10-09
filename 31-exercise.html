@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>运动科学指南</title>
+  <title>运动科学深度进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>运动科学指南</h1>
-          <p class="report-intro__summary">训练不是「流汗越多越好」，而是给身体下达精确的「适应指令」。本指南从三大供能系统与力量/耐力的不同适应讲起，落到渐进超负荷、周期化、恢复机制与一周模板——把训练从凭感觉升级为有依据的工程。</p>
+          <h1>运动科学深度进阶指南</h1>
+          <p class="report-intro__summary">训练不是「流汗越多越好」，而是给身体下达精确的「适应指令」。本指南把三大供能系统的功率与容量写成可比较的量表，用 ATP 产率说明为什么强度决定燃料选择；再把心率区间、VO₂max、TRIMP 与训练冲量、体积—强度模型、超量恢复逐一量化，最后落到周期化、恢复与损伤预防的工程权衡。</p>
           <div class="intro-meta">
             <span>领域：自我管理</span>
             <span>难度：进阶</span>
@@ -25,122 +25,308 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>三大供能系统</h2>
-          <p class="lede">所有运动都是三个供能系统的混合输出——比例由强度决定，而不是项目名称。</p>
+          <h2><span class="sec-num">1</span>供能系统：用功率与容量建立可比量表</h2>
+          <p class="lede">所有运动都是三个供能系统的混合输出——比例由强度决定，而不是项目名称。理解这一点，需要先看清 ATP 的「即时产量」与「总储量」是两个不同的量。</p>
+          <p>肌肉收缩的唯一直接燃料是 ATP，但肌内 ATP 储量极小，仅够全力维持数秒。因此三大系统的作用是<strong>在不同时间尺度上再生 ATP</strong>。它们可以用两个指标统一比较：<strong>峰值功率</strong>（单位时间 ATP 再生速率，决定能多猛）与<strong>总容量</strong>（能供多久）。</p>
           <table>
-            <caption class="caption">供能系统对比</caption>
-            <thead><tr><th>系统</th><th>底物</th><th>供能时长</th><th>典型场景</th></tr></thead>
+            <caption class="caption">三大供能系统：底物、时间尺度与 ATP 产率</caption>
+            <thead><tr><th>系统</th><th>底物</th><th>时间尺度</th><th>ATP 再生速率（量级）</th><th>每分子底物的 ATP 净产量</th></tr></thead>
             <tbody>
-              <tr><th scope="row">磷酸原（ATP-CP）</th><td>储存在肌肉内的 ATP 与磷酸肌酸</th><td>全力约 6~10 秒</td><td>冲刺、举重、跳跃</td></tr>
-              <tr><th scope="row">糖酵解（无氧）</th><td>肌糖原（无需氧气参与）</th><td>约 10 秒~2 分钟</td><td>400 米跑、高强度间歇</td></tr>
-              <tr><th scope="row">有氧氧化</th><td>糖与脂肪（伴随氧气）</td><td>分钟到小时级</td><td>长跑、骑行、日常活动</td></tr>
+              <tr><th scope="row">磷酸原（ATP-CP）</th><td>肌内 ATP + 磷酸肌酸（PCr）</td><td>全力约 6–10 秒</td><td>最高（常被引为约 10–15 mmol ATP·kg⁻¹·s⁻¹ 量级）</td><td>每分子 PCr 约 1 个 ATP（无净糖酵解参与）</td></tr>
+              <tr><th scope="row">糖酵解（无氧）</th><td>肌糖原 / 葡萄糖（不需氧）</td><td>约 10 秒 – 2 分钟</td><td>中等</td><td>每分子葡萄糖净约 2 个 ATP（糖原起点约 3 个）</td></tr>
+              <tr><th scope="row">有氧氧化</th><td>糖与脂肪（需氧）</td><td>分钟到小时级</td><td>最低（单位时间）</td><td>每分子葡萄糖约 30–32 个 ATP；每分子软脂酸约 100+ 个 ATP</td></tr>
             </tbody>
           </table>
-          <p>三系统<strong>永远同时工作</strong>，只是权重不同：强度越高，磷酸原与糖酵解占比越大；时间越长，有氧占比越大。这就是为什么「练什么」要先问「练哪个系统」。</p>
-          <div class="callout tip"><span class="callout-label">纠偏</span>乳酸不是「疲劳毒素」——它是可再利用的燃料（乳酸穿梭）。真正的疲劳来自氢离子堆积、兴奋-收缩耦联受阻等多重因素。练后拉伸「排乳酸」是流行说法，乳酸在运动后早已被代谢。</div>
+          <div class="prompt-block"><span class="prompt-label">为什么强度决定燃料（功率—容量权衡）</span><button class="copy-btn" type="button">复制</button>设某系统可输出的峰值功率为 P_max，总能量储量为 E_total。
+则该系统能维持该功率的时间上限：t_max ≈ E_total / P_max
+
+三个系统的参数近似关系（量级）：
+· 磷酸原：P_max 极高，E_total 极小   → t_max 数秒
+· 糖酵解：P_max 中等，E_total 中等   → t_max 数十秒至 2 分钟
+· 有氧：  P_max 最低，E_total 极大   → t_max 可达数小时
+
+关键推论：任意时刻的供能「比例」由需求功率决定。
+当需求功率 &gt; 有氧的 P_max 时，缺口必须由无氧系统补足——
+这就是「强度越高，无氧占比越大」的数学表述。
+
+延伸：同一个人，跑 100 m（约 10 s）与跑 42 km（约 4 h）时，
+需求功率差约两个数量级，因此燃料选择几乎完全不同。
+
+糖酵解的「高 ATP 速率」代价：每分子葡萄糖仅得 2 个 ATP，
+即单位 ATP 的底物消耗约为有氧的 15 倍——
+这解释了为什么高强度下糖原耗竭极快。</div>
+          <p>这里有一个常见的混淆需要澄清：有氧系统「单位时间产 ATP 慢」，但它「单位底物的 ATP 产出高」。所以低强度长时间运动时，脂肪能被持续利用而不至于把糖原烧尽；高强度时即使有氧系统全开也来不及，必须动用无氧通路。</p>
+          <div class="callout tip"><span class="callout-label">纠偏</span>乳酸不是「疲劳毒素」——它是可再利用的燃料（乳酸穿梭：在肌肉、心脏等组织间被氧化或再合成葡萄糖）。真正的疲劳来自多重因素：氢离子堆积导致 pH 下降、无机磷累积影响收缩、钙离子处理能力下降、以及中枢的神经驱动下调。练后拉伸「排乳酸」是流行说法；乳酸在运动后数十分钟内已被代谢或清除。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>力量与有氧的不同适应</h2>
-          <p class="lede">不同刺激触发不同「改建工程」——你练什么，身体就改建什么。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>力量：先神经后肌肉</h4><p>前几周的力量增长主要来自神经适应（募集率、协同协调），之后肌肥大才成为主角；机械张力是触发肥大的关键信号。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>耐力：线粒体与心肺</h4><p>有氧训练提升线粒体密度、毛细血管网与每搏输出量——外在标志是同样配速下心率越来越低。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>干扰效应</h4><p>大体积耐力训练与大体积力量训练叠加时，耐力信号可能削弱肥大信号。普通人的训练量远达不到担心程度，按目标排优先级即可。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>可逆性</h4><p>停训 2~4 周即可见明显退步：心肺能力降得快，力量相对保留更久——这也是「停练重启要降档」的原因。</p></div></div>
-          </div>
-          <p><mark class="key">特异性原则</mark>是总纲：想提高深蹲就深蹲，想跑得快就练跑。辅助动作与交叉训练是补充，不是替代。</p>
+          <h2><span class="sec-num">2</span>心率区间与 VO₂max：把「强度」变成可测的数</h2>
+          <p class="lede">「跑得轻松」「跑得吃力」无法指导训练剂量。要给出处方，必须先把强度转成可测量的量——心率与摄氧量是两个通用标尺。</p>
+          <h3>最大心率估算及其误差</h3>
+          <p>最广为人知的估算是 <strong>HR_max ≈ 220 − 年龄</strong>。它出现于通俗文献中，其来源常被追溯到一个并未正式发表的观察（据通行说法源于 1970 年代一行拟合）。关键问题是：</p>
+          <div class="prompt-block"><span class="prompt-label">最大心率估算的误差分析</span><button class="copy-btn" type="button">复制</button>HR_max ≈ 220 − 年龄
+
+个体标准差：据运动生理学通行表述，该公式的个体标准差约在 ±10–12 次/分
+→ 30 岁的人，公式给 190，但真实 HR_max 可能在约 165–215 之间
+
+误差的传染（这是关键工程问题）：
+若目标区间按 HR_max 的百分比定义，例如「70% HR_max」
+  30 岁：0.70 × 190 = 133 次/分
+  若此人真实 HR_max = 205：0.70 × 205 = 144 次/分
+  → 偏差约 11 次/分 ≈ 一个完整心率区间的宽度
+
+∴ 对训练精度要求高的人，HR_max 相关的百分比区间误差会被放大
+  更稳健的做法：用「储备心率法」或直接实测
+
+储备心率法（Karvonen 思路）：
+  目标心率 = 静息心率 + 强度% × (HR_max − 静息心率)
+  它把个体静息水平纳入，通常比纯 %HR_max 更贴近实际</div>
+  <p><strong>心率区间</strong>的划分有多种体系，常见做法是把强度切成 5 区（Z1 恢复 / Z2 有氧基础 / Z3 节奏 / Z4 阈值 / Z5 最大）。需要警惕的是各体系的边界定义并不统一——有的按 %HR_max、有的按 %HRR（储备心率）、有的按乳酸阈或通气阈划分。跨体系比较数值时容易误读。</p>
+  <h3>VO₂max：有氧能力的核心指标</h3>
+  <p>VO₂max（最大摄氧量）定义为单位时间能摄取并利用的最大氧量，常以 mL·kg⁻¹·min⁻¹ 表示（相对值，便于跨体重比较）。它可分解为两个因子的乘积：</p>
+  <div class="prompt-block"><span class="prompt-label">Fick 方程：VO₂max 的机制分解</span><button class="copy-btn" type="button">复制</button>Fick 方程：VO₂ = Q × (CaO₂ − CvO₂)
+
+其中：
+· Q      = 心输出量 = 心率 × 每搏输出量       （单位 L/min）
+· CaO₂   = 动脉血氧含量
+· CvO₂   = 静脉血氧含量
+· 差值 (a−v) 反映外周组织对氧的提取能力
+
+∴ VO₂max ≈ 心输出量上限 × 动静脉氧差上限
+
+训练如何抬高上界（分层）：
+· 心脏层面：每搏输出量上升（心室容积与收缩力改善）→ 抬高 Q
+· 血液层面：血红蛋白总量可增加 → 抬高 CaO₂
+· 肌肉层面：线粒体密度与毛细血管密度上升 → 抬高 (a−v) 差
+
+推论：耐力训练的早期提升多来自「中心」因素（心输出量），
+  长期则越来越依赖「外周」因素（肌肉的氧化能力）。
+  这就是为什么有人「心肺感觉变好但配速提升不显著」——
+  两端的适应速度不同步。</div>
+  <p>日常可用的替代指标：<strong>乳酸阈 / 通气阈</strong>（可持续较长时间的强度上限）、<strong>最大摄氧速度</strong>（VO₂max 对应配速）与<strong>心率漂移</strong>（同配速下心率随时间上升，反映热与脱水影响）。对业余训练者，阈值附近的训练价值通常高于追逐 VO₂max 数字本身。</p>
+  <div class="callout warn"><span class="callout-label">边界</span>可穿戴设备的心率读数在稳态中低强度下较可靠，但在高强度、短间隔、剧烈变向时误差明显增大（光电容积法受运动伪影与佩戴松紧影响）。VO₂max 的腕表估算基于心率与配速关系的经验模型，个体误差可能较大，不宜当作医疗级指标。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>渐进超负荷与周期化</h2>
-          <p class="lede">身体只对「略超当前能力」的刺激产生适应；周期化是渐进超负荷的长期排版。</p>
-          <ul>
-            <li><strong>超负荷六变量</strong>：重量、次数、组数、密度（组间休息长短）、动作幅度、频率——加重量只是其中一条路，常被高估。</li>
-            <li><strong>渐进方式</strong>：新手可每周线性加重；中高级改为波动周期（轻-中-重交替），给恢复留出呼吸空间。</li>
-            <li><strong>周期化三层</strong>：宏观（年度目标）、中观（4~12 周的积累-强化-减量）、微观（一周内的强弱势日分布）。</li>
-            <li><strong>减量周（Deload）</strong>：主动安排的轻负荷周——疲劳消散、表现反弹。它是计划的一部分，不是偷懒。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">平台期</span>多数平台期的原因不是练得不够狠，而是恢复不足或渐进太猛。进步曲线是「刺激 × 恢复」的乘积——任何一项趋零，乘积归零。</div>
+          <h2><span class="sec-num">3</span>训练负荷的量化：从「练了多久」到训练冲量与超量恢复</h2>
+          <p class="lede">「这周练了 5 小时」几乎不含信息量。负荷是可量化的：剂量 = 强度 × 时间，但两者都不是线性相加的。</p>
+          <h3>训练冲量（TRIMP）</h3>
+          <p>TRIMP（training impulse）的核心思想是把心率区间转化为加权时长再加总，从而得到一个单一数字。Banister 提出的早期模型用<strong>指数加权</strong>处理强度：</p>
+  <div class="prompt-block"><span class="prompt-label">TRIMP 的两种常见形式</span><button class="copy-btn" type="button">复制</button>形式一（Banister 风格，适用于有氧区间）
+  TRIMP = 时长(分钟) × ΔHR × 0.64 × e^(1.92 × ΔHR)
+  其中 ΔHR = (HR_运动 − HR_静息) / (HR_max − HR_静息)   ∈ [0,1]
+
+  为什么用指数？因为生理代价随强度非线性上升：
+  ΔHR = 0.6 时，0.64·e^(1.92×0.6) ≈ 2.0
+  ΔHR = 0.8 时，0.64·e^(1.92×0.8) ≈ 2.96
+  → 强度提升 1/3，单位时间负荷提升约 1.5 倍
+
+形式二（区间加权法，便于手工计算）
+  TRIMP = Σ (某区间时长 × 该区间权重)
+  常见权重设置：Z1=1, Z2=2, Z3=3, Z4=4, Z5=5
+
+关键用途：把不同形态的训练折算到同一标尺
+  → 才能回答「这周总量比上周多了多少」「是否已经过载」</div>
+  <h3>急性负荷、慢性负荷与负荷比</h3>
+  <p>把 TRIMP 按天累加，可定义两个滑动窗口指标：</p>
+  <ul>
+    <li><strong>急性负荷（ATL）</strong>：通常取 7 天滑动平均，代表近期疲劳。</li>
+    <li><strong>慢性负荷（CTL）</strong>：通常取 28 天滑动平均，代表已建立的体能基础。</li>
+    <li><strong>负荷比 ACWR = ATL / CTL</strong>：据通行说法，训练领域的经验区间常被引在约 0.8–1.3；显著高于某范围通常与伤病风险上升相关联。必须强调：这类阈值来自观察性研究，因果性存在争论，且不同运动项目的最优区间差异很大，不宜当作硬性红线。</li>
+  </ul>
+  <h3>超量恢复与适应的时间结构</h3>
+  <p>训练本身使能力<strong>暂时下降</strong>（疲劳 + 微损伤），恢复期内身体在修复时略微「超建」（超量恢复），使能力超过原水平。适应就发生在这条「下降—回升—超建」的曲线上。</p>
+  <div class="prompt-block"><span class="prompt-label">超量恢复的两种时序与叠加</span><button class="copy-btn" type="button">复制</button>单次训练后：
+  能力(t)：先降 → 回升至基线 → 略超基线（超量恢复窗口）
+  下次训练的理想时机 ≈ 落在「超量恢复窗口」内
+
+两种错误：
+· 间隔过短（在未恢复时再练）→ 能力持续下沉 = 过度训练
+· 间隔过长（窗口滑过）→ 每次回到基线，长期无累积
+
+叠加模型（为什么周期化必要）：
+  连续训练使每次的起始基线抬升，
+  但恢复需求也同步抬升——两曲线最终会相交
+  → 必须靠「减量周」把疲劳清空，让被掩盖的适应显形
+
+工程类比：这是「应力—恢复—强化」的循环，
+  与材料疲劳、以及药理学中的「剂量—效应—耐受」结构同源。</div>
+  <div class="callout tip"><span class="callout-label">实操</span>评估恢复的简单信号优先级：<strong>晨起静息心率</strong>（连续多日升高提示未恢复）、睡眠质量、训练热情、持续酸痛。这些主观与低成本指标往往比可穿戴设备的单一分数更有信息量，因为你可以结合情境判断。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>恢复机制</h2>
-          <p class="lede">训练撕开缺口，恢复完成适应——你变强的过程发生在训练之外。</p>
-          <table>
-            <caption class="caption">恢复要素与实操</caption>
-            <thead><tr><th>要素</th><th>作用</th><th>实操要点</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">睡眠</th><td>激素分泌、组织修复、技能巩固</td><td>优先级最高的恢复手段；睡眠不足同时削弱力量与耐力表现</td></tr>
-              <tr><th scope="row">营养</th><td>修复原料（蛋白质）与能量补充（碳水）</td><td>训练前后有碳水和蛋白质即可；「合成窗口」比早年认为的宽</td></tr>
-              <tr><th scope="row">主动恢复</th><td>低强度活动促进血流</td><td>散步、骑车、游泳，保持「能正常对话」的强度</td></tr>
-              <tr><th scope="row">筋膜放松 / 拉伸</th><td>短期改善主观酸痛与活动度</td><td>证据支持有限但主观放松价值存在；别指望它「排出乳酸」</td></tr>
-            </tbody>
-          </table>
-          <p>评估恢复的简单信号：<strong>晨起静息心率</strong>是否持续升高、睡眠质量、训练热情、持续酸痛。这些主观指标比多数可穿戴设备更直接、更便宜。</p>
-          <div class="callout tip"><span class="callout-label">边界</span>如有伤病、慢性疾病或心血管风险因素，请先就医评估，并在医生或专业教练指导下安排训练计划。</div>
-        </section>
+          <h2><span class="sec-num">4</span>力量训练的建模：体积—强度—频率三轴</h2>
+          <p class="lede">力量训练的核心可被形式化为三个可调参数，理解它们的耦合关系，比记住某个「最佳组数」更有用。</p>
+          <div class="prompt-block"><span class="prompt-label">体积—强度—频率的三轴模型</span><button class="copy-btn" type="button">复制</button>三个基本量（定义需先统一）：
+· 强度 I：通常以 %1RM 衡量（最大重复重量）
+· 体积 V：常用「有效组数」计（如 每组 ≥ 一定次数的正式组）
+  或用 体积负荷 = 组数 × 次数 × 重量（kg）
+· 频率 f：同一肌群每周训练次数
 
-        <section>
-          <h2><span class="sec-num">5</span>损伤预防与一周训练模板</h2>
-          <p class="lede">不受伤本身就是最快的进步——预防的优先级高于任何训练计划。</p>
-          <ul>
-            <li><strong>负荷管理</strong>：每周总量增幅控制在约 10% 以内（经验法则）；疼痛出现即减量，而不是硬顶过去。</li>
-            <li><strong>热身结构</strong>：动态热身 5~10 分钟（激活 + 活动度）；静态拉伸留给训练之后。</li>
-            <li><strong>弱链补强</strong>：肩袖、下背、膝周、踝是常见损伤地带——小重量加固训练换大重量安全。</li>
-            <li><strong>技术优先</strong>：动作质量下降即结束该组——变形的最后一次是损伤高发时刻，宁停不凑。</li>
-          </ul>
-          <table>
-            <caption class="caption">一周训练安排模板（可按目标调整）</caption>
-            <thead><tr><th>日</th><th>内容</th><th>时长</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">周一</th><td>下肢力量（深蹲模式为主）</td><td>45~60 分钟</td></tr>
-              <tr><th scope="row">周二</th><td>匀速有氧 + 核心训练</td><td>30~40 分钟</td></tr>
-              <tr><th scope="row">周三</th><td>上肢力量（推 / 拉平衡）</td><td>45~60 分钟</td></tr>
-              <tr><th scope="row">周四</th><td>主动恢复或完全休息</td><td>散步或休息</td></tr>
-              <tr><th scope="row">周五</th><td>全身力量或第二次下肢</td><td>约 45 分钟</td></tr>
-              <tr><th scope="row">周六</th><td>间歇有氧（强度起伏）</td><td>20~30 分钟</td></tr>
-              <tr><th scope="row">周日</th><td>完全休息 / 筋膜放松</td><td>—</td></tr>
-            </tbody>
-          </table>
-          <div class="callout tip"><span class="callout-label">红线</span>疼痛是信号不是勋章。持续数天不退、影响日常活动的疼痛，应就医检查而不是坚持训练——带伤训练的「坚持」往往换来更长的强制停训。</div>
-        </section>
+关系：周体积负荷 ≈ f × 每次组数 × 次数 × 重量
 
-        <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">运动科学速记</span><button class="copy-btn" type="button">复制</button>· 供能三系统：磷酸原（10 秒内）、糖酵解（2 分钟内）、有氧（持久）
-· 强度决定供能比例，项目名称说了不算
-· 乳酸是燃料不是毒；疲劳另有原因
-· 力量：先神经适应，后肌肥大；机械张力是信号
-· 耐力：线粒体密度 + 每搏输出量
-· 特异性：练什么，就适应什么
-· 超负荷六变量：重量 / 次数 / 组数 / 密度 / 幅度 / 频率
-· 周期化三层：宏 - 中 - 微；减量周是计划的一部分
-· 恢复优先级：睡眠 &gt; 营养 &gt; 主动恢复 &gt; 放松工具
-· 每周总量增幅约 10% 以内，疼痛出现即减量
-· 动态热身在前，静态拉伸在后
-· 动作变形的那一次 = 高危时刻，宁停不凑
-· 平台期先查恢复，再查训练量
-· 疼痛是信号不是勋章，该就医就就医</div>
-        </section>
+强度—次数关系（近似）：
+  %1RM 与可完成次数大致呈反向关系
+  约 90%1RM → 3–5 次；约 80% → 8–12 次；约 65% → 15–20 次
+  （个体差异大，且受肌群、动作模式影响）
 
-        <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 8</span></div>
-          <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">记录一周训练，为每个环节标注主要供能系统</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">本周对一个大动作做小幅渐进（+小重量或 +1 次）</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">排一个 4 周小周期，把第 4 周设为减量周</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">固定睡眠时间两周，观察晨起心率与训练表现变化</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">给最弱环节补两次小重量加固训练（肩 / 膝 / 腰任选）</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">按模板试排自己的一周，并保留至少一个完全休息日</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">建立恢复自查：晨脉、睡眠、酸痛三项记录两周</label></div>
-            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">出现持续疼痛时，48 小时内决定减量或就医</label></div>
-          </div>
-        </section>
+关键判据：机械张力是触发肌肥大的主要信号之一，
+  而足够的张力量级通常需要训练量落在足够接近力竭的区间
+  → 「每组还剩 2–3 次力竭」是常用的强度管理做法（保留次数 RIR）
+
+体积—反应关系不是单调的：
+  · 极低体积 → 刺激不足，无适应
+  · 中等体积 → 收益快速增长（多数人的甜点区）
+  · 过高体积 → 收益递减，恢复成本超线性上升
+  → 存在一个「因人而异的最优体积」，且随训练年龄上升而上升
+
+∴ 「多做总比少做好」是错的：
+  边际收益递减 + 边际恢复成本递增 = 存在最优解</div>
+  <p>关于「肌肉不会变成脂肪」这类说法需要澄清机制：肌细胞与脂肪细胞是<strong>不同类型</strong>的组织，不能相互转化。停训时肌肉因缺乏机械张力信号而萎缩（肌蛋白合成/分解平衡向分解倾斜），脂肪因能量盈余而堆积，两者是同时发生的两个独立过程，视觉上像「变成了脂肪」。</p>
+  <h3>力量增长的时序：先神经后肌肉</h3>
+  <div class="feature-list">
+    <div class="feature"><div class="f-ico">1</div><div><h4>神经适应期</h4><p>最初数周力量增长主要来自神经因素：运动单位募集率提升、同步化改善、拮抗肌协调下降。此期肌肉横截面积变化有限，因此「力量涨得比肌肉快」。</p></div></div>
+    <div class="feature"><div class="f-ico">2</div><div><h4>肌肥大期</h4><p>此后肌纤维横截面积增长成为主要来源。肌肥大涉及肌原纤维蛋白合成上升与卫星细胞参与的肌核补充，过程以周为单位而非以次为单位。</p></div></div>
+    <div class="feature"><div class="f-ico">3</div><div><h4>肌腱与结缔组织</h4><p>这些组织的适应速度慢于肌肉，是「力量涨了但容易受伤」的常见原因。这解释了为什么训练量增幅需要保守。</p></div></div>
+  </div>
+  <div class="callout warn"><span class="callout-label">边界</span>体积—反应曲线的最优位置高度个体化，且受睡眠、营养、训练年龄、动作选择影响；文献中报告的「最佳组数」只能作为起点假设，须用自身体验与记录校准。</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">5</span>有氧与无氧的交互：干扰效应与特异性</h2>
+  <p class="lede">力量与耐力可以同时训练，但两条信号通路存在竞争——理解竞争点，才能安排合理的优先级。</p>
+  <p><strong>干扰效应</strong>（interference effect）指在同一训练周期内，大剂量耐力训练可能削弱力量与肌肥大收益。机制解释涉及两类信号在细胞层面的相互抑制（常被引用的说法是 AMPK 通路与 mTOR 通路的相互抑制），以及恢复资源与神经疲劳的竞争。</p>
+  <table>
+    <caption class="caption">减少干扰的排布策略与代价</caption>
+    <thead><tr><th>策略</th><th>做法</th><th>收益</th><th>代价 / 局限</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">分日训练</th><td>力量日与耐力日分开</td><td>信号冲突最小</td><td>需要更多训练日</td></tr>
+      <tr><th scope="row">分时段训练</th><td>同日但间隔 6 小时以上</td><td>减少急性相互干扰</td><td>依从性下降，时间成本高</td></tr>
+      <tr><th scope="row">力量优先</th><td>同日训练时先力量后有氧</td><td>保护力量表现</td><td>有氧质量可能被牺牲</td></tr>
+      <tr><th scope="row">低强度有氧</th><td>用 Z1–Z2 完成有氧量</td><td>干扰小，恢复负担低</td><td>有氧刺激强度不足</td></tr>
+    </tbody>
+  </table>
+  <p><mark class="key">特异性原则</mark>是总纲：适应高度针对刺激的类型、强度区间、动作模式与关节角度。想提高深蹲就深蹲，想跑得快就练跑。交叉训练（游泳、骑行）可作补充以降低关节冲击，但它是补充，不是替代——自行车上的心肺能力不能直接迁移为跑姿下的经济性。</p>
+  <p><strong>可逆性</strong>：停训后心肺能力下降相对快（数周内可测到明显变化），力量相对保留更久。这就是「停练重启必须降档」的依据：若按停训前的负荷直接回归，受伤与崩溃风险显著上升。常用回归策略是从停训前负荷的约 50%–70% 起步，再按周小幅递增。</p>
+</section>
+
+<section>
+  <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+  <p class="lede">运动科学近二十年的进展，把「练多少」从经验法则推向可测量与可建模，但仍有多处边界未清。</p>
+  <div class="timeline">
+    <div class="tl-item"><span class="tl-era">训练负荷模型化</span><span class="tl-date">Banister 等, 1970s–1990s</span><p>提出以心率加权（TRIMP）量化训练冲量，并为「剂量—反应」建模。这是现代负荷监控的方法学起点。</p></div>
+    <div class="tl-item"><span class="tl-era">极化训练与阈值训练之争</span><span class="tl-date">2000s 至今</span><p>对精英耐力运动员训练的统计显示「低强度占大头 + 少量高强度」的极化分布较常见。但针对不同水平与项目，阈值训练（中间强度占比更高）同样有成功案例，争论在于最优分布是否随训练水平变化。</p></div>
+    <div class="tl-item"><span class="tl-era">负荷比（ACWR）争议</span><span class="tl-date">2010s</span><p>「急性/慢性负荷比」在大众与职业运动中被广泛采用，但多项研究指出其统计学基础存在循环性问题（急性负荷本身就是慢性负荷的组成部分），据此过分精确地设定阈值缺乏依据。宜作趋势参考，不宜作硬性规则。</p></div>
+    <div class="tl-item"><span class="tl-era">肌肥大的体积—反应关系</span><span class="tl-date">2010s–2020s</span><p>多项系统综述与元分析比较不同组数条件，普遍支持「体积与肥大存在正相关但收益递减」的图像；有观点进一步提出剂量—反应曲线在高体积段仍可能上升，这一点仍在争论中，且研究多集中在短期、年轻受训男性。</p></div>
+    <div class="tl-item"><span class="tl-era">线粒体适应与信号通路</span><span class="tl-date">2000s–2010s</span><p>耐力训练提升线粒体含量与氧化能力，机制涉及 PGC-1α 等在转录调控中的枢纽作用。AMPK 与 mTOR 通路的相互抑制是干扰效应的常用解释框架，但定量关系与个体差异仍有较大不确定性。</p></div>
+    <div class="tl-item"><span class="tl-era">可穿戴与个体化</span><span class="tl-date">2010s 至今</span><p>腕表与胸带把心率、心率变异性（HRV）等指标日常化。HRV 引导训练在部分研究中显示可改善适应性指标，但最佳算法与阈值未有共识；数据质量在剧烈运动中仍是主要限制。</p></div>
+  </div>
+  <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到「X 训练法提升 Y%」，先问：受试者是训练新手还是精英（新手几乎对任何合理刺激都有反应）？干预持续多久（8 周结论难以外推到 2 年）？测量的替代终点是什么（肌肉横截面积？还是力量表现？）？</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">7</span>跨学科视角</h2>
+  <div class="grid-2">
+    <div class="card"><h4>生理学</h4><p>能量代谢通路、心肺动力学、肌肉收缩机制构成全部训练理论的底层。所有「训练法」最终都要还原为对特定生理通路的刺激剂量。</p></div>
+    <div class="card"><h4>生物化学与分子生物学</h4><p>ATP 产率、糖酵解与氧化磷酸化的化学计量、信号通路（AMPK/mTOR）的相互调节，解释了为什么强度与体积要分开管理。</p></div>
+    <div class="card"><h4>控制论与系统辨识</h4><p>「训练—恢复—适应」是典型的带延迟反馈系统。超量恢复的时间常数接近一阶系统响应，可与控制系统中的阶跃响应类比。</p></div>
+    <div class="card"><h4>统计学与流行病学</h4><p>ACWR 的循环性问题是典型的统计学陷阱（比值中分子分母相关）；负荷—伤病关系的因果判定需要前瞻性设计与混杂控制。</p></div>
+    <div class="card"><h4>物理学（力学）</h4><p>力量是力，功率 = 力 × 速度；做功、功率、弹性势能（肌腱的弹性能回弹）解释了下蹲跳与跳跃表现的差异。</p></div>
+    <div class="card"><h4>睡眠医学与内分泌</h4><p>睡眠不足会影响生长激素分泌、糖代谢与主观疲劳；恢复质量是训练适应能否兑现的约束条件。</p></div>
+  </div>
+  <p>共同结构是：<strong>施加可测量的应力 → 系统在恢复中做出结构性响应 → 用反馈决定下一次应力</strong>。这与工程中的疲劳管理、组织管理中的负荷调度在结构上同源。</p>
+</section>
+
+<section>
+  <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+  <div class="compare">
+    <div class="side bad"><span class="side-tag">常见误区</span><pre>「流汗多 = 练到位」
+
+「220 − 年龄 就是我的最大心率」
+
+「拉伸能排乳酸、防受伤」
+
+「肌肉不练会变成脂肪」
+
+「有氧一定掉肌肉，所以别做有氧」
+
+「负荷比 1.3 是绝对红线」</pre><div class="why">问题：把相关当作因果、把群体均值当作个体参数、把观察性阈值当作硬约束。流汗量主要反映热调节与个体差异；220−年龄 的个体误差可达一整个区间；拉伸不排乳酸，对预防损伤的独立作用证据薄弱；肌与脂肪是不同组织，不能互变；有氧与力量的冲突取决于剂量与排布，而非「类型」；ACWR 存在统计学上的循环性问题。</div></div>
+    <div class="side good"><span class="side-tag">更准确的表述</span><pre>用实测或储备心率法确定强度区间，
+不用单一公式外推
+
+滞后指标（晨脉、睡眠、酸痛）优先于即时感觉
+
+拉伸用于活动度，不指望它预防全部损伤
+
+停训导致萎缩 + 盈余导致增脂，
+是同时发生的两个过程
+
+干扰效应取决于剂量与排布，
+优先目标先排，低强度有氧可共存
+
+负荷比用作趋势参考，不当作硬性红线</pre><div class="why">要点：把训练当成带反馈的控制问题——参数要个体化标定，规则要标注适用边界。</div></div>
+  </div>
+  <table>
+    <caption class="caption">方法适用边界速查</caption>
+    <thead><tr><th>方法 / 主张</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">区间心率训练</th><td>稳态有氧、长距离课</td><td>短间隔、冲刺、变向类训练（心率滞后且噪声大）</td></tr>
+      <tr><th scope="row">%HR_max 区间</th><td>粗略安排、入门参考</td><td>需要精确处方时——改用储备心率法或实测</td></tr>
+      <tr><th scope="row">线性渐进加量</th><td>训练新手、动作学习期</td><td>中高级训练者（易撞平台与过载）</td></tr>
+      <tr><th scope="row">每周总量增幅约 10%</th><td>跑步等重复性负荷项目的经验起点</td><td>力量训练、复训回归（须降档而非递增）</td></tr>
+      <tr><th scope="row">ACWR 负荷比</th><td>大周期趋势监控</td><td>作为精确阈值或个体伤病预测——证据不足</td></tr>
+      <tr><th scope="row">静息心率监控恢复</th><td>连续多日的趋势观察</td><td>单日波动（受咖啡因、情绪、睡眠影响）</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><span class="callout-label">边界</span>如有伤病、慢性疾病或心血管风险因素，请先就医评估，并在医生或专业教练指导下安排计划。疼痛是信号不是勋章：持续数天不退、影响日常活动的疼痛应就医检查，而不是「顶着练过去」。</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">9</span>速查卡</h2>
+  <div class="prompt-block"><span class="prompt-label">运动科学速记</span><button class="copy-btn" type="button">复制</button>· ATP 是唯一直接燃料，三大系统在其时间尺度上再生 ATP
+· 功率—容量权衡：t_max ≈ E_total / P_max，强度决定燃料比例
+· 磷酸原：全力约 6–10 s，功率最高、储量极小
+· 糖酵解：约 10 s – 2 min，每分子葡萄糖仅净得约 2 ATP（底物效率低）
+· 有氧：时间尺最长，每分子葡萄糖约 30–32 ATP，脂肪约 100+
+· 乳酸是燃料不是毒；疲劳源于 H⁺ 堆积、Pi、Ca²⁺ 处理等多重因素
+· HR_max ≈ 220 − 年龄 的个体标准差可达 ±10–12 次/分，误差会传染到区间
+· 更稳健：储备心率法（静息 + 强度% × (HR_max − 静息)）
+· Fick：VO₂ = 心输出量 × 动静脉氧差；早期提升偏「中心」，长期偏「外周」
+· 阈值附近训练的实用价值常高于追逐 VO₂max 数字
+· TRIMP = 时长 × ΔHR × 0.64 × e^(1.92 × ΔHR)，指数项体现非线性
+· ATL 约 7 天、CTL 约 28 天；ACWR = ATL/CTL 作趋势参考，非硬红线
+· 超量恢复：先降后升略超基线；太密致过载，太疏无累积
+· 减量周的作用是清空疲劳，让被掩盖的适应显形
+· 力量三轴：强度（%1RM）× 体积（组数）× 频率
+· 体积—反应曲线非单调：收益递减 + 恢复成本超线性 → 存在最优体积
+· 先神经适应，后肌肥大；肌腱与结缔组织适应更慢
+· 干扰效应取决于剂量与排布；优先目标先排，低强度有氧可共存
+· 特异性：练什么适应什么；交叉训练是补充不是替代
+· 停训回归从原负荷约 50%–70% 起步，按周小幅递增
+· 恢复优先级：睡眠 &gt; 营养 &gt; 主动恢复 &gt; 放松工具</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">10</span>练习清单</h2>
+  <p class="lede">以下练习要求测量、推导或建模，须给出数据与结论。</p>
+  <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
+  <div class="checklist">
+    <div class="check-item"><input type="checkbox" id="c1"><label for="c1">记录一周训练，为每个环节标注主要供能系统，并用 t_max ≈ E_total / P_max 说明「为什么这个环节必须换系统」；指出至少一处你原以为是有氧但实际以无氧为主的片段</label></div>
+    <div class="check-item"><input type="checkbox" id="c2"><label for="c2">分别用「220 − 年龄」与「储备心率法」计算你的三个目标心率区间，对比两套数字的差异，并解释为何储备心率法通常更贴近实际</label></div>
+    <div class="check-item"><input type="checkbox" id="c3"><label for="c3">手算一次训练课的 TRIMP：把课程按区间切分，分别用指数形式（ΔHR × 0.64 × e^(1.92×ΔHR)）与区间加权形式（Z1=1…Z5=5）各算一遍，对比两者结果的比值并解释差异来源</label></div>
+    <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用四周记录计算自己的 ATL（7 天均值）、CTL（28 天均值）与 ACWR，画出日序列曲线；找出 ACWR 最高的三天，回看那三天前后的伤病或不适记录，并说明这类分析为何不构成因果证据</label></div>
+    <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用 Fick 方程分解自己的 VO₂max：估算静息与最大状态下的心率、每搏输出量与动静脉氧差，说明哪一项是你的主要瓶颈，并给出针对性训练方向</label></div>
+    <div class="check-item"><input type="checkbox" id="c6"><label for="c6">为一个动作建立体积—负荷记录表（组数 × 次数 × 重量），连续 6 周每周小幅递增，同时记录主观恢复评分；在第 4 周安排一次减量周，比较第 3 周与第 5 周的表现差异</label></div>
+    <div class="check-item"><input type="checkbox" id="c7"><label for="c7">设计一次「力量 + 有氧同日 vs 分日」的自身对照实验（各 2 周），用同一动作的力量表现与同配速心率作为指标，给出你对干扰效应的个人结论与局限</label></div>
+    <div class="check-item"><input type="checkbox" id="c8"><label for="c8">建立恢复自查表：晨脉、睡眠时长与质量、酸痛、训练热情，连续记录三周；标注至少两次「指标变差但主观感觉良好」的日子，说明主观感觉为何不可靠</label></div>
+    <div class="check-item"><input type="checkbox" id="c9"><label for="c9">查一项关于肌肉肥大的系统综述或元分析，写出其纳入研究数、干预时长范围、体积定义方式与主要结论，并指出至少两条你无法据此为个人处方的原因</label></div>
+    <div class="check-item"><input type="checkbox" id="c10"><label for="c10">模拟一次停训回归：假设你停训 4 周，写出体能下降的量级估计、回归首两周的负荷安排（含百分比），以及判断「可以加量」的具体量化判据</label></div>
+  </div>
+</section>
       </main>
+
       <footer>
-        <p class="footnote">基于运动生理学通行结论（供能系统、超负荷与适应、干扰效应等）整理；个体差异大，伤病与慢性病人群请遵医嘱并咨询专业教练。</p>
+        <p class="footnote">机制部分参考运动生理学通行结论（三大供能系统与 ATP 产率、功率—容量关系、Fick 方程、超量恢复）与训练科学的常见建模框架（Banister 的 TRIMP 思路、ATL/CTL/ACWR 的通行表述、体积—强度—频率三轴模型、干扰效应与 AMPK/mTOR 框架）。需注意：TRIMP 指数形式为按公开描述的再表述，不同文献系数略有差异；ACWR 存在统计学上的循环性问题，其阈值不构成因果红线；肌肉肥大体积—反应曲线的高体积段仍有争论；220 − 年龄 的误差范围、心率区间边界定义在不同体系中并不统一。个体差异大，伤病与慢性病人群请遵医嘱并咨询专业教练。所有数值为量级估计，具体结论请以原始文献为准。</p>
       </footer>
     </div>
   </article>

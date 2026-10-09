@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>经济学思维指南</title>
+  <title>经济学思维进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>经济学思维指南</h1>
-          <p class="report-intro__summary">经济学不是教你怎么赚钱，而是教你一套看世界的思维方式：人们如何在资源稀缺的条件下做选择，价格如何传递信息，以及市场何时有效、何时失灵。这份指南从微观到宏观，串起供需、边际、外部性、博弈论与经济周期五条主线。</p>
+          <h1>经济学思维进阶指南</h1>
+          <p class="report-intro__summary">经济学不是教你怎么赚钱，而是给你一套把「选择」写成可求解问题的语言。本指南把结论还原到机制层：从效用最大化推出需求定律，从拉格朗日条件推出弹性与定价公式，从边际条件推出利润与外部性的最优解，并一路连接到行为经济学、机制设计与信息经济学的前沿争议。</p>
           <div class="intro-meta">
             <span>领域：人文 · 社会</span>
             <span>难度：进阶</span>
@@ -25,142 +25,265 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>供需与价格机制</h2>
-          <p class="lede">亚当·斯密在《国富论》（1776）中用"看不见的手"形容市场自发协调的力量——价格就是这只手的信号灯。</p>
+          <h2><span class="sec-num">1</span>消费者理论：需求曲线是推导出来的，不是假设的</h2>
+          <p class="lede">教科书写「需求曲线向下倾斜」，但这不是公理。它可以从偏好公理严格推出来——推导过程本身就是经济学方法的缩影。</p>
+          <h3>从偏好到效用函数</h3>
+          <p>设消费者的偏好满足三条公理：<strong>完备性</strong>（任意两个商品束可比）、<strong>传递性</strong>（A≻B 且 B≻C 则 A≻C）、<strong>单调性</strong>（多比少好）。在满足这些公理且偏好连续的条件下，存在效用函数 u(x₁, x₂) 表示该偏好（这是 Debreu 的存在性结论）。消费者在预算约束 p₁x₁ + p₂x₂ ≤ m 下最大化效用：</p>
+          <div class="prompt-block"><span class="prompt-label">效用最大化的拉格朗日条件</span><button class="copy-btn" type="button">复制</button>max u(x₁, x₂)  s.t.  p₁x₁ + p₂x₂ = m
+L = u(x₁, x₂) + λ(m − p₁x₁ − p₂x₂)
+一阶条件：∂u/∂x₁ = λp₁ ， ∂u/∂x₂ = λp₂
+相除消去 λ： (∂u/∂x₁) / (∂u/∂x₂) = p₁ / p₂
+
+读法：边际替代率 MRS = MU₁/MU₂ 必须等于价格比。
+λ 的经济含义是「收入的边际效用」，即多给 1 元能增加多少效用。</div>
+          <h3>需求定律从何而来</h3>
+          <p>把上面的解写成 x₁*(p₁, p₂, m)，再对 p₁ 求偏导，可分解为两个效应：<strong>替代效应</strong>（相对价格变化，恒为负）与<strong>收入效应</strong>（实际购买力变化，对正常品为负）。两者同向，故 ∂x₁*/∂p₁ &lt; 0 —— 这就是需求定律的完整来源。对<strong>吉芬品</strong>（收入效应极大且反向），两项抵消可致斜率转正，这是需求定律的边界条件而非反例。</p>
+          <h3>弹性与定价：把微积分变成企业决策</h3>
+          <div class="prompt-block"><span class="prompt-label">弹性与边际收益恒等式</span><button class="copy-btn" type="button">复制</button>需求价格弹性 ε = −(dQ/dP)·(P/Q)   （取正值便于讨论）
+
+边际收益与弹性的恒等式：  MR = P(1 − 1/ε)
+
+企业利润 π = P(Q)·Q − C(Q)，对 Q 求导令其为零：
+dπ/dQ = MR − MC = 0  ⇒  MR = MC
+代入恒等式：  P(1 − 1/ε) = MC  ⇒  P/MC = ε/(ε − 1)  （勒纳指数定价）
+
+结论：ε 越大（越敏感）加成越小；ε ≤ 1 时 MR ≤ 0，理性企业不会在
+该区间定价（涨价反使总收入下降）——这解释了为什么必需品弹性小时
+涨价能增收，而奢侈品弹性大时只能靠规模。</div>
           <table>
-            <caption class="caption">供需变动对均衡的影响</caption>
-            <thead><tr><th>变动方向</th><th>供给</th><th>需求</th><th>均衡价格</th><th>均衡数量</th></tr></thead>
+            <caption class="caption">从公理到结论：消费者理论的一条推导链</caption>
+            <thead><tr><th>层次</th><th>内容</th><th>推出什么</th></tr></thead>
             <tbody>
-              <tr><th scope="row">需求增加</th><td>不变</td><td>右移</td><td>上升</td><td>增加</td></tr>
-              <tr><th scope="row">需求减少</th><td>不变</td><td>左移</td><td>下降</td><td>减少</td></tr>
-              <tr><th scope="row">供给增加</th><td>右移</td><td>不变</td><td>下降</td><td>增加</td></tr>
-              <tr><th scope="row">供给减少</th><td>左移</td><td>不变</td><td>上升</td><td>减少</td></tr>
+              <tr><th scope="row">公理</th><td>完备/传递/单调/凸性</td><td>效用函数存在，无差异曲线凸向原点</td></tr>
+              <tr><th scope="row">约束最优化</th><td>拉格朗日一阶条件</td><td>MRS = p₁/p₂（最优选择的内点条件）</td></tr>
+              <tr><th scope="row">比较静态</th><td>Slutsky 分解</td><td>替代效应 + 收入效应 → 需求定律</td></tr>
+              <tr><th scope="row">加总到行业</th><td>个体需求水平加总</td><td>市场需求曲线；弹性由份额加权</td></tr>
             </tbody>
           </table>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>需求定律</h4><p>价格上升时需求量下降，价格下降时需求量上升——其他条件不变。斜率为负的需求曲线是经济学的基石之一。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>供给定律</h4><p>价格上升时供给量上升，价格下降时供给量下降。成本递增导致供给曲线向上倾斜。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>均衡价格</h4><p>供给量等于需求量时的价格。市场通过价格调整消除过剩或短缺，向均衡收敛。</p></div></div>
+          <div class="callout tip"><span class="callout-label">方法论要点</span>「需求曲线向下」是<strong>推导结论</strong>，其成立依赖偏好凸性与收入效应不压倒替代效应。经济学家之所以强调「其他条件不变」（ceteris paribus），是因为比较静态分析必须固定其他参数——这不是回避复杂性，而是让因果可控。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">2</span>生产者与市场结构：边际条件给出最优规模</h2>
+          <p class="lede">「利润最大化在 MR = MC」是被广泛背诵的结论。它的推导很短，但它的边界条件（何时停产、何时进入退出）才是决策关键。</p>
+          <h3>成本函数的结构</h3>
+          <p>设总成本 C(Q) = FC + VC(Q)，则 AC = C/Q，MC = dC/dQ。把 AC 对 Q 求导：</p>
+          <div class="prompt-block"><span class="prompt-label">平均成本与边际成本的关系</span><button class="copy-btn" type="button">复制</button>d(AC)/dQ = (MC − AC)/Q
+
+推导：d(C/Q)/dQ = (C'·Q − C)/Q² = (MC − AC)/Q
+
+推论：
+· MC &lt; AC 时 AC 下降（边际低于平均，平均被拉低）
+· MC &gt; AC 时 AC 上升
+· MC = AC 处 AC 取最小值 —— 这就是「效率规模」Q*eff
+· 短期因固定成本存在，AC 呈 U 形，故 MC 从下方穿过 AC 最低点</div>
+          <h3>最优产量与停产条件</h3>
+          <div class="prompt-block"><span class="prompt-label">短期最优与停产点的两段决策</span><button class="copy-btn" type="button">复制</button>第一段：产量选择 —— max π(Q) = P·Q − C(Q)
+  一阶条件 P = MC(Q*)（完全竞争下 MR = P）
+  二阶条件需 MC 递增（否则是极小值）
+
+第二段：停产判断 —— 比较 P 与 AVC 最低点
+  若 P ≥ AVC_min ：即使亏损也应生产
+     （收入覆盖可变成本，且部分覆盖固定成本）
+  若 P &lt; AVC_min ：停产，损失仅为固定成本
+
+关键：固定成本是沉没成本，不进入停产决策 —— 这正是
+「沉没成本不影响决策」在厂商理论中的严格表述。</div>
+          <table>
+            <caption class="caption">市场结构：从价格接受者到价格制定者</caption>
+            <thead><tr><th>结构</th><th>定价权力</th><th>长期利润</th><th>效率（相对竞争）</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">完全竞争</th><td>无（P = MR）</td><td>零（自由进入）</td><td>P = MC，总剩余最大</td></tr>
+              <tr><th scope="row">垄断竞争</th><td>产品差异化带来有限权力</td><td>零（进入消除超额利润）</td><td>存在过剩产能与加成</td></tr>
+              <tr><th scope="row">寡头</th><td>策略性依赖（古诺/伯特兰）</td><td>可正（进入壁垒）</td><td>结果介于竞争与垄断之间</td></tr>
+              <tr><th scope="row">垄断</th><td>强（MR = MC &lt; P）</td><td>可持续</td><td>无谓损失 DWL = ½·ΔP·ΔQ（线性需求近似）</td></tr>
+            </tbody>
+          </table>
+          <p>垄断的社会成本可用无谓损失量化：线性需求下 DWL 近似为三角形面积 ½ × (P_m − MC) × (Q_c − Q_m)。这也解释了为什么反垄断的经济学目标通常不是「惩罚大企业」，而是<mark class="key">恢复价格与边际成本的一致性</mark>。</p>
+          <div class="callout warn"><span class="callout-label">边界条件</span>「MR = MC」要求企业能选择产量且价格可知；对具有规模报酬递增、自然垄断特征的行业（电网、自来水），边际成本定价会导致亏损，此时「平均成本定价」或「两部定价」才是现实解——理论最优与制度可行之间存在张力。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>福利与外部性：把「失灵」写成可解的方程</h2>
+          <p class="lede">市场失灵不是道德判断，而是「私人最优 ≠ 社会最优」的数学事实。把它写成目标函数，纠正手段（税、产权、配额）就都能推导出来。</p>
+          <h3>社会最优与庇古税的推导</h3>
+          <div class="prompt-block"><span class="prompt-label">负外部性的最优纠正</span><button class="copy-btn" type="button">复制</button>设产量 Q 的私人收益记为 P(Q)（需求曲线），
+私人成本 MPC(Q)，边际外部损害 MED(Q)。
+
+私人决策：max P(Q)·Q −  ∫MPC dQ  ⇒  P = MPC
+社会最优：max P(Q)·Q − ∫(MPC + MED) dQ  ⇒  P = MPC + MED
+
+两者之差 = MED(Q*) —— 庇古税的税率
+  最优税率 t* = MED(Q*) ，此时私人把外部成本内生进决策
+
+若采用总量配额（Cap-and-Trade）：
+  设总量上限为 Ē，则许可证价格自动等于 MED(Q*)（在完全竞争
+  的许可证市场中）—— 税定价格、配额定数量，两者在对
+  确定性假设下等价。</div>
+          <h3>科斯定理与其前提</h3>
+          <p>科斯（Coase, 1960）指出：若<strong>产权清晰</strong>且<strong>交易成本为零</strong>，私人协商可达到有效结果，且与产权初始分配无关（分配只影响财富）。这个定理常被误读为「政府不该管」。准确表述是：科斯定理的价值在于把注意力从「谁对谁错」转向「交易成本卡在哪里」——现实中交易成本为正，因此产权界定、法律程序、谈判规模（人数越多越难达成）成为核心变量。</p>
+          <table>
+            <caption class="caption">市场失灵的四种类型与对应机制</caption>
+            <thead><tr><th>失灵类型</th><th>机制（为什么私人最优偏离社会最优）</th><th>典型工具</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">外部性</th><td>成本/收益未计入决策者目标函数</td><td>庇古税、补贴、排放交易、产权界定</td></tr>
+              <tr><th scope="row">公共物品</th><td>非排他导致搭便车，私人供给激励趋零</td><td>税收筹资、公共提供、俱乐部机制</td></tr>
+              <tr><th scope="row">信息不对称</th><td>信号不可验证导致逆向选择/道德风险</td><td>强制披露、认证、信号投资、激励契约</td></tr>
+              <tr><th scope="row">市场势力</th><td>MR &lt; P 使产量低于社会最优</td><td>反垄断、价格管制、竞争政策</td></tr>
+            </tbody>
+          </table>
+          <p>阿克洛夫（Akerlof, 1970）的柠檬市场模型给出了逆向选择的机制链：设好车价值 H、坏车价值 L，买家无法区分，只愿出<mark class="key">期望价格</mark>——若坏车占比为 q，则报价 P = q·L + (1−q)·H。当 q 升高，P 下降，卖掉好车的卖方退出，q 进一步升高……这个正反馈最终可能使市场只剩坏车甚至崩溃。教育证书、品牌、保修正是为了把不可验证的质量<strong>转化为可验证的信号</strong>而存在。</p>
+          <div class="callout tip"><span class="callout-label">跨到机制设计</span>逆向选择的解药之一是「让类型自己暴露」。设计一组合约（如保险的免赔额档位），使高风险的投保人自愿选择低保障档、低风险者选择高保障档，从而达成<strong>分离均衡</strong>。这正是机制设计（Mechanism Design）的核心思路：不问「谁是什么类型」，而是设计规则让类型在激励下自动显形。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>博弈论：均衡的推导与精炼</h2>
+          <p class="lede">纳什均衡是「无人有单方面偏离动机」的配置。但把它解出来需要区分占优、迭代删除、纯策略与混合策略——每一步都有严格的推理顺序。</p>
+          <h3>从占优到纳什：求解路径</h3>
+          <div class="prompt-block"><span class="prompt-label">纳什均衡的定义与求解层次</span><button class="copy-btn" type="button">复制</button>定义（纯策略）：策略组合 (s₁*, s₂*) 是纳什均衡，当且仅当
+  对任意 s₁： u₁(s₁*, s₂*) ≥ u₁(s₁, s₂*)
+  对任意 s₂： u₂(s₁*, s₂*) ≥ u₂(s₁*, s₂)
+即：给定对手策略，任何一方都无法通过单方面改变提高收益。
+
+求解层次（由强到弱）：
+1. 严格占优策略：无论对手怎么选都最优 → 一定进入均衡
+2. 迭代删除严格劣策略（IESDS）：逐步剔除永不最优的策略
+3. 纯策略纳什均衡：用「最优反应」划线法找交点
+4. 混合策略纳什均衡（纳什 1950 存在性定理）：
+   有限博弈必有（可能混合的）纳什均衡
+   求法：令对手在两策略间无差异，反解自己的混合概率</div>
+          <table>
+            <caption class="caption">囚徒困境：个体理性 vs 集体效率</caption>
+            <thead><tr><th>（甲 \ 乙）</th><th>乙沉默</th><th>乙坦白</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">甲沉默</th><td>各 −1（帕累托最优）</td><td>甲 −5，乙 0</td></tr>
+              <tr><th scope="row">甲坦白</th><td>甲 0，乙 −5</td><td>各 −3（纳什均衡，但非最优）</td></tr>
+            </tbody>
+          </table>
+          <p>囚徒困境的深刻之处在于：<strong>（坦白，坦白）是唯一的纳什均衡，但（沉默，沉默）对双方都更好</strong>。这不是「算错了」，而是揭示了个体理性与集体效率的结构性冲突。解决路径有三：把一次性博弈变成<strong>重复博弈</strong>（未来惩罚可支撑合作）、引入<strong>外部强制执行</strong>（契约、法律）、或改变<strong>收益结构</strong>（声誉、惩罚机制）。</p>
+          <h3>序贯博弈与逆向归纳</h3>
+          <div class="prompt-block"><span class="prompt-label">逆向归纳与承诺的价值</span><button class="copy-btn" type="button">复制</button>序贯博弈用博弈树表示，求解用逆向归纳（backward induction）：
+  从最后一个决策节点开始，倒推每个节点上的最优选择，
+  直到根节点 —— 得到子博弈完美纳什均衡（SPNE）。
+
+承诺机制为何有效：主动缩减自己的选择集，改变对手的预期。
+例：进入博弈中，在位者若能让「打价格战」变得可信
+   （如提前投资过剩产能 = 沉没成本），
+   潜在进入者就会选择不进入 —— 于是证据优势反客为主。
+
+这解释了一个悖论：限制自己的自由，反而能获得策略优势。</div>
+          <p>阿克塞尔罗德（Axelrod, 1984）的计算机锦标赛给出一个经验结论：在重复囚徒困境中，「以牙还牙」（tit-for-tat，首轮合作、之后模仿对手上一轮）表现优异，其有效性来自四个特征——<mark class="key">善良（不先背叛）、可激怒（会报复）、宽容（对方合作即恢复合作）、清晰（可被对手识别）</mark>。这是「合作如何在自利者之间演化」的机制解释，而非道德主张。</p>
+          <div class="callout warn"><span class="callout-label">边界条件</span>纳什均衡不要求唯一，也不保证帕累托最优。当存在多个均衡时（协调博弈），历史、惯例与「焦点」（Schelling 的 focal point）决定实际落点——此时「效率」不是唯一判据，<strong>预期协调</strong>本身成为关键变量。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>前沿与研究进展</h2>
+          <p class="lede">近三十年经济学最重要的变化，是从「假设人是理性的」转向「研究激励与信息如何塑造结果」，并大量引入实验与因果推断。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">不完全信息与机制设计</span><span class="tl-date">1970s–2000s</span><p>从 Akerlof 的逆向选择、Spence 的信号、Stiglitz–Rothschild 的筛选，到 Myerson、Maskin、Hurwicz 建立的机制设计框架——核心问题是：在信息分散且不可验证时，如何设计规则使自利主体的行为达成社会目标。「显示原理」表明任何机制的结果都可由一个「讲真话」的直接机制实现。该方向于 2007 年获诺贝尔经济学奖。</p></div>
+            <div class="tl-item"><span class="tl-era">行为经济学的崛起</span><span class="tl-date">1970s 起，2010s 主流化</span><p>Kahneman 与 Tversky 的前景理论（1979）指出人对损失的敏感高于等量收益，且概率判断系统性偏离贝叶斯。此后「助推」（nudge）被用于政策设计（默认选项、储蓄自动加入）。需注意：部分经典效应在大样本重复检验中效应量缩小，行为经济学的可复制性争议仍活跃。</p></div>
+            <div class="tl-item"><span class="tl-era">因果推断革命</span><span class="tl-date">1990s 至今</span><p>把「相关 vs 因果」从口号变成工具：随机对照试验、工具变量（IV）、双重差分（DID）、断点回归（RDD）。Angrist、Imbens、Card 因自然实验方法获 2021 年诺奖。这使经济学从「理论+回归」转向「识别策略」——一个结论的可信度越来越取决于识别设计而非模型拟合。</p></div>
+            <div class="tl-item"><span class="tl-era">市场设计</span><span class="tl-date">1990s 至今</span><p>把博弈论用于真实市场配置：Roth 的肾脏配对交换、学校择校的延迟接受算法（Gale–Shapley）、频谱拍卖。这类「反向工程」实践让经济学家直接参与制度设计，也催生了「市场设计」这一应用分支。</p></div>
+            <div class="tl-item"><span class="tl-era">复杂网络与信息经济</span><span class="tl-date">2000s 至今</span><p>平台经济、双边市场、算法定价成为研究焦点。议题包括：网络效应与赢者通吃、数据作为生产要素、算法合谋的可能性。争议点在于「平台是否系统性地降低消费者福利」——证据因市场而异，尚无统一结论，宜审慎表述。</p></div>
           </div>
-          <div class="callout tip"><span class="callout-label">弹性</span>需求的价格弹性衡量需求量对价格变化的敏感度。必需品弹性低（如食盐），奢侈品弹性高（如旅游）。弹性决定了涨价能否增加收入：弹性大于1时涨价反而减收。</div>
-          <p>价格机制的真正威力不在定价，而在<mark class="key">传递信息</mark>：某商品涨价，等于告诉生产者"这里有人需要更多"——分散决策由此自发协调。哈耶克在《知识在社会中的运用》（1945）中对此有经典论述。</p>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到一个「经济效应」结论，先问三件事：识别策略是什么（是否有对照）？样本代表哪类主体？结论在多大程度上依赖未观测假设（如平行趋势、排他性约束）？因果推断的价值不在「证明因果」，而在<strong>把假设摆在明处</strong>。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>边际思维与机会成本</h2>
-          <p class="lede">阿尔弗雷德·马歇尔在《经济学原理》（1890）中把"边际"概念引入经济学，从此决策的核心不再是"要不要做"，而是"多做一单位值不值得"。</p>
-          <ul>
-            <li><strong>边际效用递减</strong>：每多消费一单位商品，获得的额外满足感递减。第一碗饭最香，第四碗已撑——这是消费者均衡的基础。</li>
-            <li><strong>边际成本（MC）</strong>：多生产一单位产品所需的额外成本。短期中边际成本通常先降后升，呈U形。</li>
-            <li><strong>边际收益（MR）</strong>：多卖一单位产品获得的额外收入。竞争市场中边际收益等于价格。</li>
-            <li><strong>利润最大化原则</strong>：当 MR = MC 时利润最大。这不是猜测——是多做一单位赚的钱恰好等于多花的钱。</li>
-          </ul>
-          <table>
-            <caption class="caption">沉没成本与机会成本的对比</caption>
-            <thead><tr><th>概念</th><th>定义</th><th>决策含义</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">沉没成本</th><td>已经发生且无法收回的支出</td><td>不应影响未来决策——但人很难做到</td></tr>
-              <tr><th scope="row">机会成本</th><td>放弃的最佳替代选项的价值</td><td>是决策的真实成本，会计成本只是其一部分</td></tr>
-              <tr><th scope="row">边际成本</th><td>多做一单位的额外成本</td><td>决定"要不要再多做一步"</td></tr>
-            </tbody>
-          </table>
-          <p>机会成本是经济学最反直觉又最实用的概念。读研的机会成本不是学费，而是<mark class="key">这三年放弃的工作收入</mark>——加上学费，才是真实的总成本。同样，自己做一件事"省钱"的幻觉，往往源于忽略了时间的价值。</p>
-          <div class="callout tip"><span class="callout-label">实用公式</span>当面临"继续还是放弃"的纠结时，问自己一个问题：如果我现在从零开始，还会选择这个吗？如果答案是"不会"，沉没成本就该被忽略——过去的投入不构成继续的理由。</div>
+          <h2><span class="sec-num">6</span>跨学科视角</h2>
+          <p class="lede">现代经济学的语言与多个学科深度互嵌：与统计共享识别逻辑，与计算机共享算法，与心理学共享实验，与演化生物学共享博弈。</p>
+          <div class="grid-2">
+            <div class="card"><h4>统计学与计量</h4><p>弹性、显著性、置信区间本质是统计推断；因果识别（IV/DID/RDD）与统计学的混杂控制同源。经济学的实证结论强度，取决于识别设计而非 R²。</p></div>
+            <div class="card"><h4>计算机科学与算法</h4><p>市场设计大量使用匹配算法与拍卖算法；算法定价、推荐系统改变市场结构。经济学为算法提供「激励相容」的约束，算法为经济学提供可执行的机制。</p></div>
+            <div class="card"><h4>心理学与神经科学</h4><p>前景理论、损失厌恶来自心理实验；神经经济学用 fMRI 研究决策的生理基础。行为经济学把「理性人」替换为「有限理性、有限自利、有限自制」的画像。</p></div>
+            <div class="card"><h4>演化生物学</h4><p>重复博弈、互惠利他、信号理论在生物学中有平行发展（如孔雀尾羽 = 昂贵的信号）。「合作如何演化」是两学科共同的方程。</p></div>
+            <div class="card"><h4>运筹学与最优化</h4><p>消费者效用最大化、厂商成本最小化是约束最优化问题；拉格朗日乘子、KKT 条件是共同工具。「影子价格」即拉格朗日乘子的经济学命名。</p></div>
+            <div class="card"><h4>法律与制度经济学</h4><p>科斯定理把产权与交易成本推到中心；契约不完全性、公司治理都属制度经济学。法律规则的经济分析（如汉德公式 B &lt; P·L）把责任判定转成期望成本比较。</p></div>
+          </div>
+          <p>把这些放在一起会看到一个共同结构：<mark class="key">约束下的最优化 + 信息约束 + 激励相容</mark>。这正是「经济学思维」可迁移到任何资源分配场景的原因。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">3</span>市场失灵与政府角色</h2>
-          <p class="lede">看不见的手并非万能。当市场无法有效配置资源时，就出现"市场失灵"——而政府的介入本身也可能"政府失灵"。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>外部性</h4><p>经济活动对第三方产生了未被价格反映的影响。污染是负外部性的经典案例——工厂排污的成本由河流下游承担，不进入工厂的成本核算。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>公共物品</h4><p>具有非排他性和非竞争性的物品，如国防、灯塔。市场无法有效供给——因为没人能被排除在使用之外，"搭便车"问题导致私人不愿提供。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>信息不对称</h4><p>买卖双方信息不平等。阿克洛夫在《柠檬市场》（1970）中分析了二手车市场：买家无法区分好车和坏车，导致出价偏低，好车退出——逆向选择使市场萎缩甚至崩溃。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>垄断</h4><p>单一卖方有能力限制产量抬高价格，造成无谓损失（deadweight loss）——社会总福利低于完全竞争时的水平。</p></div></div>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「需求曲线一定向下」——所以任何涨价都会减少销量
+
+「MR = MC 适用于所有企业」
+
+「科斯定理说明政府不用管市场」
+
+「价格由供需决定，与人有关的一切都算不清」
+
+「经济学假设人是理性的，所以它脱离现实」</pre><div class="why">问题：把在特定前提下的推导结论当成无条件规律。吉芬品、自然垄断、交易成本为正、理性人假设的可放宽性，都在原理论中已被处理——误区来自只记结论不记前提。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>需求定律在偏好凸性 + 收入效应不压倒替代效应时成立
+
+MR = MC 是内点最优条件；还需检查停产点与参与约束
+
+科斯定理的前提是产权清晰 + 交易成本为零 —— 现实两者都难满足
+
+价格机制依赖「信息分散」，但信息本身也受不对称约束
+
+理性假设是「模型起点」，行为经济学正是对它做系统修正</pre><div class="why">要点：经济学的结论永远是「在给定假设下，可推出什么」。识别的关键在于显式写出假设并检查它是否被满足。</div></div>
           </div>
           <table>
-            <caption class="caption">政府应对市场失灵的工具</caption>
-            <thead><tr><th>失灵类型</th><th>政策工具</th><th>典型例子</th></tr></thead>
+            <caption class="caption">模型适用边界速查</caption>
+            <thead><tr><th>模型/概念</th><th>适用前提</th><th>失效或需修正的场景</th></tr></thead>
             <tbody>
-              <tr><th scope="row">负外部性</th><td>庇古税、排放交易</td><td>碳税、碳配额交易</td></tr>
-              <tr><th scope="row">公共物品</th><td>财政提供、税收筹资</td><td>国防、基础研究、公共道路</td></tr>
-              <tr><th scope="row">信息不对称</th><td>强制信息披露、质量标准</td><td>食品标签、强制保险</td></tr>
-              <tr><th scope="row">垄断</th><td>反垄断法、价格管制</td><td>拆分、限制并购</td></tr>
+              <tr><th scope="row">完全竞争</th><td>众多小厂商、同质产品、自由进出</td><td>存在规模报酬、网络效应、进入壁垒时</td></tr>
+              <tr><th scope="row">需求定律</th><td>偏好凸、正常品、其他条件不变</td><td>吉芬品、炫耀性消费（凡勃伦品）</td></tr>
+              <tr><th scope="row">纳什均衡</th><td>参与者理性、收益函数彼此已知</td><td>多重均衡（需焦点）、学习与有限理性</td></tr>
+              <tr><th scope="row">庇古税</th><td>外部损害可度量、无扭曲性副作用</td><td>损害不可测、税收本身扭曲时需权衡（次优理论）</td></tr>
+              <tr><th scope="row">弹性定价</th><td>需求曲线可估计、竞争者不反应</td><td>寡头相互依赖、价格战风险</td></tr>
             </tbody>
           </table>
-          <p>科斯定理指出：如果产权清晰且交易成本为零，私人谈判可以解决外部性——不需要政府介入。但现实中交易成本很少为零，所以产权界定和制度设计仍然是关键。</p>
+          <div class="callout warn"><span class="callout-label">次优理论提醒</span>当一个市场存在扭曲时，纠正另一个市场的扭曲未必提高福利——这是「次优理论」（theory of the second best）的核心。它是对「哪里失灵就补哪里」的直觉的重要边界条件。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">4</span>博弈论与策略思维</h2>
-          <p class="lede">当你的最优选择取决于别人的选择时，博弈论就登场了。约翰·纳什证明：在非合作博弈中，存在一种均衡——每个人在给定他人策略时无法单方面改善。</p>
-          <table>
-            <caption class="caption">经典博弈模型</caption>
-            <thead><tr><th>博弈</th><th>困境</th><th>启示</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">囚徒困境</th><td>个体理性导致集体非理性</td><td>合作难以自发维持，需要重复博弈或外部约束</td></tr>
-              <tr><th scope="row">公地悲剧</th><td>公共资源被过度使用</td><td>产权清晰或集体管理才能可持续</td></tr>
-              <tr><th scope="row">协调博弈</th><td>多人均衡共存，先发者锁定</th><td>技术标准之争往往由协调博弈解释</td></tr>
-            </tbody>
-          </table>
-          <p>纳什均衡的核心直觉是：<mark class="key">没有任何人有单方面偏离的动机</mark>。它不一定是帕累托最优——囚徒困境中双方都坦白是纳什均衡，但双方都沉默对两人都更好。这揭示了一个深刻的张力：个体理性与集体效率可以系统性地冲突。</p>
-          <div class="callout tip"><span class="callout-label">重复博弈</span>在一次性囚徒困境中，背叛是最优策略。但当博弈重复进行且未来足够重要时，合作可以成为均衡——罗伯特·阿克塞尔罗德在《合作的进化》（1984）中用计算机锦标赛证明，"以牙还牙"（tit-for-tat）策略在重复博弈中表现优异。</div>
-          <ul>
-            <li><strong>占优策略</strong>：无论对手怎么做，某策略都是最优——如囚徒困境中的"坦白"。</li>
-            <li><strong>序贯博弈</strong>：一方先行动，另一方后应对——可用博弈树分析，倒推法求解。</li>
-            <li><strong>承诺机制</strong>：主动限制自己的选项以改变对手预期——如"破釜沉舟"。</li>
-          </ul>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">经济学进阶速记</span><button class="copy-btn" type="button">复制</button>· 效用最大化的内点条件： MRS = MU₁/MU₂ = p₁/p₂；λ = 收入边际效用
+· 需求定律来自 Slutsky 分解（替代效应 + 收入效应），非公理
+· 吉芬品是需求定律的边界条件（收入效应压倒替代效应）
+· 弹性 ε = −(dQ/dP)(P/Q)；恒等式 MR = P(1 − 1/ε)
+· 利润最大化： MR = MC；勒纳指数 P/MC = ε/(ε − 1)
+· d(AC)/dQ = (MC − AC)/Q ⇒ MC 从下方穿过 AC 最低点
+· 停产判断看 P 与 AVC_min： P ≥ AVC_min 即亏损也应生产
+· 沉没成本不进决策 —— 在厂商理论中的严格版本就是停产条件
+· 垄断无谓损失 DWL ≈ ½·(P_m − MC)·(Q_c − Q_m)
+· 庇古税最优税率 t* = MED(Q*)；税定价格、配额定数量
+· 科斯定理前提：产权清晰 + 交易成本为零；现实需问「卡在哪」
+· 逆向选择（柠檬市场）：期望定价 → 好车退出 → 市场可能崩溃
+· 信号：把不可验证的质量转为可验证的付出（教育、品牌、保修）
+· 纳什均衡：无人能单方面改善；不保证唯一、不保证最优
+· 有限博弈必有（混合策略）纳什均衡 —— Nash 存在性定理
+· 逆向归纳 ⇒ 子博弈完美均衡；承诺 = 主动减少自己的选项
+· 以牙还牙四特征：善良、可激怒、宽容、清晰
+· 机制设计「显示原理」：任何机制结果可由一个讲真话的直接机制实现
+· 因果识别四工具： RCT / IV / DID / RDD
+· 次优理论：已有扭曲时，另一处纠偏未必改善总福利</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>宏观经济周期</h2>
-          <p class="lede">凯恩斯在《就业、利息和货币通论》（1936）中打破了古典经济学"市场总是自动出清"的假设，奠定了宏观经济学的基础。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>GDP</h4><p>一个经济体在一定时期内生产的所有最终产品和服务的市场价值总和——衡量经济规模的基本指标。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>通货膨胀</h4><p>一般物价水平持续上升，货币购买力下降。温和通胀（2%–3%）被认为是经济润滑剂，恶性通胀则摧毁信用体系。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>失业</h4><p>自然失业率由摩擦性失业和结构性失业构成。周期性失业则来自经济衰退——凯恩斯认为有效需求不足是主因。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>菲利普斯曲线</h4><p>短期内通胀与失业之间存在此消彼长的关系——但长期中这条曲线趋于垂直，无法用通胀永久换取低失业。</p></div></div>
-          </div>
-          <table>
-            <caption class="caption">经济周期的四个阶段</caption>
-            <thead><tr><th>阶段</th><th>特征</th><th>典型政策</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">扩张</th><td>GDP增长、就业改善、投资活跃</td><td>逐步收紧，防范过热</td></tr>
-              <tr><th scope="row">顶峰</th><td>资源充分利用、通胀压力上升</td><td>加息、减少财政支出</td></tr>
-              <tr><th scope="row">衰退</th><td>GDP收缩、失业上升、信心下降</td><td>降息、增加财政支出</td></tr>
-              <tr><th scope="row">谷底</th><td>产出最低、开始企稳</td><td>维持宽松，等待复苏</td></tr>
-            </tbody>
-          </table>
-          <p>财政政策与货币政策是宏观调控的两大工具。财政政策通过政府支出和税收直接影响总需求；货币政策通过利率和货币供给间接影响投资与消费。两者的<mark class="key">时滞</mark>是实际操作中的核心难题——从识别问题到政策生效，往往已过半年以上。</p>
-          <div class="callout tip"><span class="callout-label">长期与短期</span>宏观经济学最重要的区分：短期内价格（尤其是工资）有粘性，需求决定产出；长期内价格调整完毕，供给决定产出。大多数政策争论的本质，是"现在该用短期视角还是长期视角"。</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">经济学思维速记</span><button class="copy-btn" type="button">复制</button>· 价格是信息载体：涨跌在传递供需信号（哈耶克）
-· 需求定律：价格升 → 需求量降；供给定律：价格升 → 供给量升
-· 弹性决定涨价能否增收：弹性 > 1 时涨价反而减收
-· 边际思维：决策看"多做一单位值不值"，利润最大化在 MR = MC
-· 机会成本 = 放弃的最佳替代选项，是真实成本
-· 沉没成本不应影响未来决策
-· 市场失灵四类：外部性、公共物品、信息不对称、垄断
-· 庇古税纠正负外部性，科斯定理依赖低交易成本
-· 纳什均衡：无人能单方面改善，个体理性 ≠ 集体效率
-· 重复博弈中合作可自发维持（以牙还牙）
-· 凯恩斯：短期需求不足导致失业，财政/货币政策调节总需求
-· 菲利普斯曲线：短期通胀换就业，长期曲线趋垂直
-· 宏观调控有时滞，从识别到生效常超半年</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <p class="lede">以下练习要求产出可检验的推导或结论，而非「看过即完成」。数值请用真实或可说明来源的数据。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用供需框架分析一个真实涨价事件：画出供给和需求各发生了什么变动</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">计算一次个人决策的机会成本（如考研 vs 工作），列出所有放弃的替代选项</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">找一个身边的外部性案例，分析它属于正还是负外部性，并提出一种纠正方案</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用囚徒困境框架分析一个"个体理性导致集体非理性"的真实场景</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">查看一国最新 GDP、通胀率与失业率数据，判断经济大致处于周期哪个阶段</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">识别一次"沉没成本谬误"：你或身边人在什么决策中被已发生的投入绑架</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">选一件商品估算其需求弹性，判断涨价会增加还是减少总收入</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用柯布-道格拉斯效用 u = x₁^α · x₂^(1−α) 推导需求函数 x₁* = αm/p₁，写出拉格朗日一阶条件的每一步</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">给定需求 Q = 100 − 2P 与 MC = 20，分别求完全竞争与垄断下的 P、Q，并计算无谓损失 DWL</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">从 MR = P(1 − 1/ε) 出发，推导为何 ε ≤ 1 时理性企业不会在该区间定价，并用一个真实商品判断其 ε 大致范围</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">写出成本函数 C(Q) = 100 + 5Q² 的 AC、MC，求出 AC 最低点，并判断价格 P = 30 时是否应停产</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">为一项负外部性（如工厂排放）设定 MPC、MED 函数，求社会最优产量与庇古税率，并与私人最优对比</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用猎鹿博弈或协调博弈构造一个「多重均衡」案例，说明焦点（focal point）如何决定实际落点</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">构造一个 2×2 博弈，求解其混合策略纳什均衡（令对手无差异反解概率），并验证</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">用柠檬市场模型：设好车价值 20、坏车价值 5，坏车占比 q 从 0 升到 1，写出买家最高出价 P(q) 并找出市场崩溃的临界 q</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">选一篇使用 DID 或 RDD 的经济学实证论文，写出其识别假设、对照构造与至少一条局限</label></div>
           </div>
         </section>
       </main>
+
       <footer>
-        <p class="footnote">原创交互式学习资料，基于经典经济学理论整理，引用包括 Adam Smith《国富论》、Alfred Marshall《经济学原理》、Hayek《知识在社会中的运用》、John Nash 纳什均衡理论、Keynes《通论》及 Akerlof 柠檬市场等。</p>
+        <p class="footnote">原创交互式学习资料。机制与推导部分基于微观经济学的标准框架：效用最大化与 Slutsky 分解、成本函数与市场结构理论、庇古税与科斯定理、纳什均衡与逆向归纳。史实与文献引用包括 Akerlof 的柠檬市场分析（1970）、Coase 关于社会成本问题的论述（1960）、Nash 的均衡存在性工作（1950）、Axelrod 关于重复博弈合作的计算机锦标赛（1984）、Kahneman 与 Tversky 的前景理论（1979），以及机制设计与因果推断领域的诺奖级工作（2007、2021）。需注意：行为经济学的部分经典效应在大样本重复检验中效应量存在争议，正文已就此标注；平台经济与算法定价的福利结论尚无统一意见。所有数值为示例或量级估计，具体结论请以原始文献为准。</p>
       </footer>
     </div>
   </article>

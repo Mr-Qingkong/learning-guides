@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>求职与面试指南</title>
+  <title>求职与面试进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>求职与面试指南</h1>
-          <p class="report-intro__summary">求职的本质是一场匹配度证明：你不需要「优秀给所有人看」，只需让一个具体岗位相信你能解决它的问题。这份指南讲简历的论证写法、STAR 行为面试、技术面试分层准备、薪酬谈判要点，以及面试官视角下的复盘与跟进。</p>
+          <h1>求职与面试进阶指南</h1>
+          <p class="report-intro__summary">求职是一场带噪声的信号博弈：候选人发送关于能力的信号，招聘方在有限时间与不确定条件下做筛选决策。这份指南把简历、行为面试、技术面试与谈薪还原到信号理论、心理测量与决策科学的机制层——讲清有效信号的四要素、行为面试的构念效度、系统设计的估算方法，以及总包结构的量化比较。</p>
           <div class="intro-meta">
             <span>领域：职场 · 沟通</span>
             <span>难度：进阶</span>
@@ -24,35 +24,58 @@
     </header>
     <div class="page__content">
       <main>
+
         <section>
-          <h2><span class="sec-num">1</span>简历的本质：匹配度证明而非经历清单</h2>
+          <h2><span class="sec-num">1</span>求职作为信号博弈：有效信号的四要素</h2>
+          <p class="lede">招聘方无法直接观测你的能力，只能观测你发出的信号。理解「什么信号有效」，比背诵话术重要得多。</p>
+          <p>把求职形式化：招聘方想估计你的真实能力 θ，但只能观测到一堆信号 s₁, s₂, …（学历、经历、面试表现、作品）。这不是一道「谁更优秀」的题，而是一道<strong>在噪声条件下估计 θ 的题</strong>。信号理论（Spence 的劳动市场信号模型，1973）指出：只有<strong>成本与能力负相关</strong>的信号才具有区分力——能力强的人获得该信号的成本更低，因而更愿意发出。名校学历、开源项目、硬核作品集之所以有效，正因为它们的获取成本对高能力者更低。</p>
+          <div class="prompt-block"><span class="prompt-label">有效信号的四个条件</span><button class="copy-btn" type="button">复制</button>1. 可观测：招聘方能在短时间内看到并理解
+2. 难伪造：造假成本高，或可被交叉验证（细节追问、代码复现）
+3. 与岗位相关：能映射到该岗位的关键要求（非泛泛的「优秀」）
+4. 有区分度：高低能力者获取成本差异大（人人都有 ≠ 信号）
+
+反例：自我评价「学习能力强」→ 成本为零、不可验证、无区分度
+正例：「重构对账模块，错误率 0.8% → 0.05%，附代码与压测数据」
+
+信噪比视角：你的每一句话都在把 θ 的估计向某个方向拉；
+  真正削弱说服力的不是「不够强」，而是「信号太散」——
+  招聘方从你的材料里提取不出一条清晰的结论</div>
+          <p>这个模型解释了三个常见困惑：<strong>其一</strong>，为什么「堆砌所有经历」反而更差——噪声稀释了信号；<strong>其二</strong>，为什么「量化结果」有效——数字更难伪造且区分度高；<strong>其三</strong>，为什么面试官爱追问细节——细节是交叉验证伪造成本的手段。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">2</span>简历的结构：反向工程 JD 与信息密度</h2>
           <p class="lede">简历不是经历的账本，而是针对一份 JD 的论证文——论点只有一个：「我能胜任这个岗位」。</p>
+          <p>把 JD 拆成 5~8 个关键要求，等价于识别出招聘方的<strong>效用函数</strong>；简历的每条经历都应对应证明其中一个要求，其余皆可删。这是「提高匹配信号密度」的操作：在有限的阅读窗口（HR 初筛通常极短）内，让可提取的有效信息最大化。</p>
           <div class="feature-list">
             <div class="feature"><div class="f-ico">1</div><div><h4>反向工程 JD</h4><p>把职位描述拆成 5~8 个关键要求，简历每一条经历都应对应证明其中一个——其余皆可删。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>动词 + 对象 + 量化结果</h4><p>「重构支付对账模块，对账错误率从 0.8% 降到 0.05%」——三个要素缺一个，说服力掉一档。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>关键词与初筛</h4><p>ATS（申请人追踪系统）与 HR 快筛都靠关键词匹配，术语要与 JD 用语对齐——但别堆砌到不可读。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>动词 + 对象 + 量化结果</h4><p>「重构支付对账模块，对账错误率从 0.8% 降到 0.05%」——三个要素缺一个，说服力掉一档。数字提供区分度，动词提供可验证的动作。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>关键词与初筛</h4><p>ATS（申请人追踪系统）与 HR 快筛都靠关键词匹配，术语要与 JD 用语对齐——但别堆砌到不可读（噪声会掩盖信号）。</p></div></div>
             <div class="feature"><div class="f-ico">4</div><div><h4>砍掉不相关的辉煌</h4><p>与岗位无关的经历会稀释匹配信号——简历的敌人不是「短」，是「散」。</p></div></div>
           </div>
-          <div class="callout tip"><span class="callout-label">检验法</span>把简历给一个不了解你的同事看 30 秒，请他复述「这个人擅长什么」。如果复述不出一句话结论，这份简历还没写完。</div>
+          <div class="callout tip"><span class="callout-label">检验法</span>把简历给一个不了解你的同事看 30 秒，请他复述「这个人擅长什么」。如果复述不出一句话结论，这份简历还没写完——这相当于测「信号可提取性」。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>行为面试与 STAR 法则</h2>
-          <p class="lede">「讲一次你处理冲突的经历」——行为面试的假设是：过去的行为是未来表现的最佳预测。STAR 是组织答案的骨架。</p>
+          <h2><span class="sec-num">3</span>行为面试的测量学：STAR 与结构化面试</h2>
+          <p class="lede">「讲一次你处理冲突的经历」——行为面试的假设是：过去的行为是未来表现的最佳预测。这条假设有明确的心理学基础，也有明确的失效条件。</p>
+          <p>行为面试源自 20 世纪 70 年代 DEC（数字设备公司）的实践，其理论支柱是<strong>行为一致性</strong>假设：个体在过去情境中表现出的行为，在相似未来情境中会重现。结构化面试（预先设定问题、统一的评分锚点、多面试官独立评分）被广泛认为比非结构化面试具有更高的预测效度——这是人事选拔领域较稳定的结论（非结构化面试像「聊天」，结构化面试像「测量」）。</p>
           <table>
             <caption class="caption">STAR 四要素与常见错误</caption>
             <thead><tr><th>要素</th><th>要回答什么</th><th>常见错误</th></tr></thead>
             <tbody>
-              <tr><th scope="row">情境（S）</th><td>何时何地、什么团队、什么约束</td><td>铺垫超过三分之一</td></tr>
-              <tr><th scope="row">任务（T）</th><td>你个人承担的目标与职责边界</td><td>只讲「我们」，不讲「我」</td></tr>
-              <tr><th scope="row">行动（A）</th><td>你采取的关键步骤与当时的取舍</td><td>平铺直叙，没有决策点</td></tr>
-              <tr><th scope="row">结果（R）</th><td>量化结果 + 从中学到什么</td><td>无数字、无复盘</td></tr>
+              <tr><th scope="row">情境（S）</th><td>何时何地、什么团队、什么约束</td><td>铺垫超过三分之一（信息密度低）</td></tr>
+              <tr><th scope="row">任务（T）</th><td>你个人承担的目标与职责边界</td><td>只讲「我们」，不讲「我」（无法归因到个人）</td></tr>
+              <tr><th scope="row">行动（A）</th><td>你采取的关键步骤与当时的取舍</td><td>平铺直叙，没有决策点（看不出判断力）</td></tr>
+              <tr><th scope="row">结果（R）</th><td>量化结果 + 从中学到什么</td><td>无数字、无复盘（区分度低）</td></tr>
             </tbody>
           </table>
-          <p>STAR 源自 20 世纪 70 年代 DEC（数字设备公司）的行为面试实践。准备的关键是建<strong>故事库</strong>：按能力维度（冲突、失败、领导、创新、跨部门）各备 1~2 个故事，一个故事可复用于多个维度，每个故事都练到能脱口说出数字。</p>
-          <div class="callout tip"><span class="callout-label">细节即可信</span>面试官的细节追问（「当时你具体做了什么」「对方怎么回应」）是验伪工具：编造的故事会在第三层细节处崩塌。故事必须真实且亲历——细节密度本身就是可信度。</div>
+          <p>准备的关键是建<strong>故事库</strong>：按能力维度（冲突、失败、领导、创新、跨部门）各备 1~2 个故事，一个故事可复用于多个维度，每个故事都练到能脱口说出数字。用心理测量的术语：每个故事是一个「行为样本」，多个样本共同估计你的能力构念；样本太少（只有一个故事）则估计方差大。</p>
+          <div class="callout warn"><span class="callout-label">效度边界</span>行为一致性假设并非处处成立：跨情境的行为一致性取决于情境相似度与行为的「特质性」。因此 STAR 更适合预测<strong>与过去情形相似</strong>的工作行为，对高度新颖、跨领域迁移的任务预测力会下降。此外，自我报告式回忆存在记忆偏差与自我美化——这正是面试官用细节追问做交叉验证的原因。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">3</span>技术面试准备法：分层</h2>
+          <h2><span class="sec-num">4</span>技术面试准备法：分层与复杂度门槛</h2>
           <p class="lede">技术面试是分层漏斗：基础筛下限，项目看深度，系统设计看上限——每层的准备方法不同。</p>
           <div class="feature-list">
             <div class="feature"><div class="f-ico">1</div><div><h4>基础层</h4><p>语言与框架核心概念、复杂度、常见数据结构。目标不是背题，而是概念之间能互相解释——追问两轮才见真伪。</p></div></div>
@@ -60,22 +83,39 @@
             <div class="feature"><div class="f-ico">3</div><div><h4>系统设计层</h4><p>按需求 → 容量估算 → API → 数据模型 → 演化的流程走，边画边讲瓶颈与取舍。评估的是协作建模的过程，不是唯一答案。</p></div></div>
             <div class="feature"><div class="f-ico">4</div><div><h4>表达层</h4><p>出声思考（think aloud）。面试官无法给沉默加分——把思路说出来，卡住时说出卡在哪里，比假装流畅更有分。</p></div></div>
           </div>
-          <p>模拟是唯一捷径：计时做题、请真人打断、复盘卡壳点。面试的紧张多半来自「未知题型」——模拟的次数越多，未知的面积越小。</p>
+          <p>基础层的复杂度门槛是硬性的，先把它讲清：设输入规模为 n，常见量级按增长排序为 O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ)。面试中「从暴力解一步步优化到目标复杂度」是标准演示路径——它同时暴露了你<strong>是否理解复杂度来源</strong>，而不只是记住结论。</p>
+          <p>系统设计层的核心是容量估算（back-of-the-envelope）。例如估算每日 1 亿次请求的 QPS：假设读写比 10:1，则约 1 亿 / 86400 s ≈ 1157 QPS 均值，峰值按 3~5 倍计约 3.5k~6k QPS；再据此推缓存命中率与存储规模。这类估算的价值不在精确，而在<strong>用数量级校验设计是否合理</strong>。</p>
+          <div class="callout tip"><span class="callout-label">练习判据</span>模拟是唯一捷径：计时做题、请真人打断、复盘卡壳点。面试的紧张多半来自「未知题型」——模拟的次数越多，未知的面积越小。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">4</span>薪酬谈判要点</h2>
-          <p class="lede">谈薪发生在拿到 offer 之后——那几天你的谈判力是全程最高的，别浪费在「不好意思」上。</p>
+          <h2><span class="sec-num">5</span>薪酬谈判：总包的量化比较</h2>
+          <p class="lede">谈薪发生在拿到 offer 之后——那几天你的谈判力是全程最高的（此时你是唯一候选人），别浪费在「不好意思」上。</p>
+          <p>薪酬谈判与谈判指南同源：BATNA 是其他 offer，保留价是你的底线。其特殊性在于总包是多维度的，可比较的维度多于一个数字。</p>
+          <table>
+            <caption class="caption">总包结构：可交换的维度</caption>
+            <thead><tr><th>构成</th><th>确定性</th><th>谈判难度 / 备注</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">基本工资 base</th><td>高（合同固定）</td><td>最难谈但影响最持久（决定后续调薪基数）</td></tr>
+              <tr><th scope="row">绩效奖金</th><td>中（依赖考核）</td><td>需问清目标倍数与达成历史</td></tr>
+              <tr><th scope="row">股票 / 期权</th><td>低（依赖股价与归属）</td><td>需要折现与估值，注意归属期（vesting）</td></tr>
+              <tr><th scope="row">签字费</th><td>高（一次性）</td><td>常用来弥补差价的「灵活预算」，相对好谈</td></tr>
+              <tr><th scope="row">调薪周期 / 职级</th><td>中</td><td>影响长期曲线，价值可能高于当期差价</td></tr>
+            </tbody>
+          </table>
+          <p>把总包折算成<strong>可比现值</strong>是量化关键。设第 t 年总包为 C_t，贴现率为 r，期望在岗 N 年，则总包现值为 PV = Σ_{t=1}^{N} C_t / (1+r)^t。对有归属期的股票，还需要考虑归属时间表（如 4 年分期）带来的折价与股价波动风险——一块「面值 20 万」的期权，若归属 4 年且存在折扣，其当期可比价值往往远低于 20 万。</p>
           <ul>
             <li><strong>流程早期不报数</strong>：被问期望时回应「想先了解职责全貌与薪酬结构」；必须报时给区间，并锚定在区间顶部。</li>
             <li><strong>用市场数据说话</strong>：薪资报告、同岗位样本、多个 offer 的对比，比「我觉得我值」有说服力。</li>
-            <li><strong>谈总包结构</strong>：base、绩效、股票 / 期权、签字费、调薪周期——可交换的维度多于一个数字。</li>
+            <li><strong>用总包现值比较</strong>：别只比 base，把股票按归属折现、签字费按一次性计入后比较 PV。</li>
             <li><strong>offer 坦率竞争</strong>：如实告知「手上还有其他选择」，让数字替你谈判，而不是用情绪。</li>
             <li><strong>一切落在书面</strong>：口头承诺不算数，入职前逐条确认条款细节。</li>
           </ul>
           <div class="callout tip"><span class="callout-label">心态</span>谈薪不是对抗，是帮对方内部完成论证：HR 加价不需要喜欢你，只需要向预算方证明你值这个价——你的工作是供给证据（量化成果、稀缺技能、其他 offer）。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>面试官视角与复盘跟进</h2>
+          <h2><span class="sec-num">6</span>面试官视角与复盘跟进</h2>
           <p class="lede">面试官在评估三件事：能不能干活、能不能协作、会不会很快走。想清楚这三点，一半的紧张会消失。</p>
           <table>
             <caption class="caption">面试官的三维评估</caption>
@@ -86,42 +126,109 @@
               <tr><th scope="row">动机与稳定性</th><td>为什么离开、为什么选我们</td><td>讲成长逻辑，不讲抱怨与委屈</td></tr>
             </tbody>
           </table>
-          <p>跟进不是客套：24 小时内的感谢信里，最有价值的部分是<mark class="key">补充一个面试中没讲透的论点</mark>——让面试官在委员会讨论你时，手里多一份弹药。复盘要趁热：每场面试后 30 分钟内记录每个问题、你的回答、卡壳处，建立个人题库。未通过的面试是最诚实的免费诊断——问出真实原因（能力、匹配度还是薪资），比自我猜测有用得多。</p>
+          <p>从决策科学看，招聘是典型的<strong>带噪声的决策</strong>：面试官要综合多个弱信号（每场面试的评分、内部推荐、笔试）形成判断。这意味着两件事：<mark class="key">其一，单次表现不被看好不代表能力被否定，而是估计方差大；其二，任何能降低你能力估计方差的额外证据都有边际价值</mark>——这正是「跟进补充论点」的机制。</p>
+          <p>跟进不是客套：24 小时内的感谢信里，最有价值的部分是补充一个面试中没讲透的论点——让面试官在委员会讨论你时，手里多一份弹药。复盘要趁热：每场面试后 30 分钟内记录每个问题、你的回答、卡壳处，建立个人题库。未通过的面试是最诚实的免费诊断——问出真实原因（能力、匹配度还是薪资），比自我猜测有用得多。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">求职面试速记</span><button class="copy-btn" type="button">复制</button>· 简历 = 匹配度证明：JD 拆 5~8 个要求，逐条给证据
+          <h2><span class="sec-num">7</span>前沿与研究进展</h2>
+          <p class="lede">招聘与面试近五十年从「直觉判断」走向「可测量的选拔科学」，以下几条是主干。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">劳动市场信号理论</span><span class="tl-date">Spence, 1973</span><p>提出教育等信号之所以有用，是因为其获取成本与能力负相关；为「为什么简历要讲可验证的结果」提供了理论基础。</p></div>
+            <div class="tl-item"><span class="tl-era">行为面试实践</span><span class="tl-date">DEC 等企业, 约 1970s</span><p>STAR 框架成形，把面试从「闲聊式考察」转为「按能力维度取样过去行为」。</p></div>
+            <div class="tl-item"><span class="tl-era">结构化面试与预测效度</span><span class="tl-date">1990s 综合研究</span><p>多项元分析与综述指出：结构化面试、工作样本测试、认知能力测试的预测效度普遍高于非结构化面试与简历直觉判断——是选拔领域较稳定的结论。</p></div>
+            <div class="tl-item"><span class="tl-era">申请人追踪系统（ATS）</span><span class="tl-date">2000s 至今</span><p>关键词匹配成为初筛主流，带来「过度优化简历」与「误筛合格者」的新问题；争议在于自动化筛选是否会放大系统性偏差。</p></div>
+            <div class="tl-item"><span class="tl-era">算法筛选与公平性</span><span class="tl-date">2010s 至今</span><p>机器学习辅助筛选被广泛尝试，但对训练数据偏差、可解释性与合规性的质疑持续存在，效果结论不统一，属开放争议。</p></div>
+            <div class="tl-item"><span class="tl-era">远程与异步面试</span><span class="tl-date">2020 前后起</span><p>视频面试、录播面试、编程评测平台的普及改变了信号类型（更依赖可记录、可复核的产出），也带来新的公平性讨论。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到「某面试法预测效度 0.5X」的数字，先问：测的是哪类岗位绩效、样本是否代表性、效度系数是否区分了「相关性」与「因果」、能否在新样本上复现。选拔研究的情境依赖性很强。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>跨学科视角</h2>
+          <p class="lede">求职不是一个孤立技巧，它与多个学科共享同一套形式语言。</p>
+          <div class="grid-2">
+            <div class="card"><h4>信息经济学 / 信号理论</h4><p>信号成本与能力的相关性决定其区分力；解释了学历、作品集、可验证结果的筛选价值。</p></div>
+            <div class="card"><h4>心理测量学</h4><p>信度（稳定性）与效度（测的是不是想测的）、构念与行为取样，解释了为什么结构化面试优于直觉判断。</p></div>
+            <div class="card"><h4>决策科学</h4><p>带噪声条件下的估计、多信号融合、面试官评分的方差——解释了「单场表现」与「能力」之间的差距。</p></div>
+            <div class="card"><h4>行为经济学</h4><p>损失厌恶与锚定作用于薪酬谈判；损失厌恶使「没拿到 offer」被放大为确定损失。</p></div>
+            <div class="card"><h4>计算机科学</h4><p>复杂度分析与容量估算（QPS、存储、缓存命中）是系统设计面试的可计算内核。</p></div>
+            <div class="card"><h4>金融数学</h4><p>把总包折算成现值 PV（含股票折现与归属时间表），使不同 offer 可比较。</p></div>
+          </div>
+          <p>把这些放一起看，会发现一个共同结构：<strong>信号发送 + 噪声估计 + 量化比较 + 决策校正</strong>。这正是「求职」的通用形态，也是它能迁移到融资路演、招投标等场景的原因。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「简历越全越好，把经历都写上」
+「面试要表现得完美，不能暴露短板」
+「STAR 可以套用编造的故事」
+「谈薪就是讨价还价，别太较真」
+「算法筛简历一定客观」</pre><div class="why">问题：信号会被噪声稀释；掩饰短板会在细节追问处崩塌；编造的故事经不起第三层细节；低估谈薪等于放弃全程最高谈判力；自动化筛选会继承训练数据的偏差。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>围绕 JD 的 5~8 个要求做匹配证明，
+无关经历果断删
+真实、亲历、有数字的故事最可信；
+不知道就说不知道
+把单场面试当作噪声估计，
+用跟进与复盘降低估计方差
+用总包现值 PV 与 BATNA 谈，而非情绪
+算法筛选是工具，仍需人工复核</pre><div class="why">要点：求职是双向的估计过程。判断一个动作是否值得做，看它是否提高了你能力信号的<strong>可提取性与可信度</strong>，而不是看它是否让材料更「丰富」。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">STAR</th><td>行为题、能力有可回忆的实例</td><td>全新领域任务（无相似过去经验）、假设性问题</td></tr>
+              <tr><th scope="row">关键词优化</th><td>ATS 初筛、术语对齐</td><td>堆砌导致不可读或与实际能力不符</td></tr>
+              <tr><th scope="row">先报价 / 不报数</th><td>信息充分、有多 offer 时</td><td>不清楚市场价、无备选时宜先了解结构</td></tr>
+              <tr><th scope="row">总包现值比较</th><td>多个 offer、含股票/签字费时</td><td>归属与波动难以估值时，需做区间敏感性分析</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">求职面试速记</span><button class="copy-btn" type="button">复制</button>· 求职 = 信号博弈；有效信号四要素：可观测、难伪造、相关、有区分度
+· 简历 = 匹配度证明：JD 拆 5~8 个要求，逐条给证据
 · 经历三要素：动词 + 对象 + 量化结果，缺一掉档
-· 行为面试的假设：过去的行为预测未来表现
+· 简历的敌人不是「短」，是「散」——噪声稀释信号
+· 行为面试的假设：过去行为预测未来表现（有情境边界）
+· 结构化面试的预测效度高于非结构化（选拔领域较稳定结论）
 · STAR：情境铺垫要短、行动讲「我」、结果带数字
-· 细节追问是验伪工具：故事必须真实且亲历
-· 建 6~9 个故事库：冲突、失败、领导、跨部门各备一
-· 技术面试分层：基础筛下限，项目看深度，系统设计看上限
-· 技术选型讲权衡（trade-off），不堆名词
-· 系统设计流程：需求 → 估算 → API → 数据模型 → 演化
+· 细节追问是交叉验证：故事必须真实且亲历
+· 复杂度量级：O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ)
+· 系统设计：需求 → 容量估算 → API → 数据模型 → 演化
+· 容量估算：QPS ≈ 日请求 / 86400，峰值按 3~5 倍计
 · 出声思考：沉默无法得分，卡壳就说出卡在哪
 · 谈薪在拿 offer 后筹码最高：早期不报数，报就锚顶部
-· 谈总包结构、要书面确认，口头承诺不算数
+· 总包比现值：PV = Σ Cₜ/(1+r)ᵗ，股票按归属与风险折价
 · 面试官三问：能干活吗、能协作吗、会很快走吗
 · 面后 24 小时跟进补充论点 + 30 分钟复盘建题库</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 8</span></div>
+          <h2><span class="sec-num">11</span>练习清单</h2>
+          <p class="lede">以下练习要求给出可核验的结论或产物，而不是「做过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">选一个目标 JD，反向拆出 5~8 个关键要求</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">按要求重写简历，为每条经历补上量化结果</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">写 3 个 STAR 故事：冲突、失败、领导各一个</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">把每个故事练到「数字」与第三层细节级别</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">做一次计时的技术模拟面试，练习出声思考</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">收集薪酬数据，写下自己的区间与总包底线</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">复盘最近一次面试，建立个人题库</label></div>
-            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">给一次近期面试补发 24 小时内的跟进邮件</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">选一个目标 JD，反向拆出 5~8 个关键要求，并为每条匹配一段可验证证据</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">按要求重写简历，逐条检验是否符合信号四要素（可观测/难伪造/相关/有区分度）</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">写 3 个 STAR 故事（冲突、失败、领导各一），标注每个故事对应哪些能力维度</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">把每个故事练到「数字 + 第三层细节」级别，并找一人做细节追问压力测试</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">对一道算法题写出从暴力解到目标复杂度的优化路径，说明每一步复杂度变化的原因</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">为一套系统设计题做容量估算：由日请求量推导 QPS（均值与峰值）、存储与缓存规模</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">做一次计时的技术模拟面试，练习出声思考并复盘卡壳点</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">收集薪酬数据，把两个以上 offer 折算成总包现值 PV，写清假设与敏感性区间</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">复盘最近一次面试：按三维评估（胜任/协作/稳定）自评并建立个人题库</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">查阅一项结构化面试或信号理论研究，写出其方法、结论与至少一条局限</label></div>
           </div>
         </section>
+
       </main>
       <footer>
-        <p class="footnote">原创交互式学习资料，基于行为面试（STAR 法则，源于 DEC 面试实践）、ATS 招聘流程与通行求职谈判方法整理。</p>
+        <p class="footnote">原创交互式学习资料。机制部分参考 Spence 的劳动市场信号理论（1973）、行为面试（STAR 框架，源于 DEC 的面试实践）与人事选拔中「结构化面试预测效度优于非结构化」的通行综合结论；技术部分参考复杂度分析与系统设计容量估算方法；薪酬部分参考总包折现与 BATNA 谈判框架。需注意：算法筛选的公平性与有效性结论尚不统一，行为一致性假说存在情境边界，本指南已在正文标注。所有数值为量级估计，具体结论请以原始文献为准。</p>
       </footer>
     </div>
   </article>

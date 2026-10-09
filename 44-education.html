@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>教育学基础指南</title>
+  <title>教育学思维进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>教育学基础指南</h1>
-          <p class="report-intro__summary">教育不是「灌输」，而是「点燃」。从行为主义到建构主义、从布卢姆分类到维果茨基最近发展区，本指南梳理教育学的核心理论框架，帮助你在教学设计和自我学习中做出更有依据的决策。</p>
+          <h1>教育学思维进阶指南</h1>
+          <p class="report-intro__summary">教育不是"灌输"，而是"点燃"。本指南不停留在"记住三大学派"的层次，而是把学习结论还原到机制层：条件反射如何被强化塑造、ZPD 如何被形式化为"能力差"、遗忘曲线为何是负指数、形成性评价为何能提升整体成绩。读完你应能自己推导教学决策，而非套用口号。</p>
           <div class="intro-meta">
             <span>领域：人文 · 社会</span>
             <span>难度：进阶</span>
@@ -25,70 +25,87 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>学习理论三大学派</h2>
-          <p class="lede">学习是什么？三大理论流派给出了截然不同的回答——行为主义看「刺激-反应」，认知主义看「内部信息加工」，建构主义看「主动意义建构」。</p>
+          <h2><span class="sec-num">1</span>学习理论三大学派：从结论到机制</h2>
+          <p class="lede">学习理论的分歧不在"要不要教"，而在"变化的载体是什么"。行为主义把载体放在可观测的行为上，认知主义放在内部的表征结构上，建构主义放在主体与环境的交互中。理解这一分歧，才能理解为什么同一堂课的教法会截然不同。</p>
+          <div class="prompt-block"><span class="prompt-label">操作性条件反射的强化动力学</span><button class="copy-btn" type="button">复制</button>设某行为的发生概率为 P，强化（奖励/消退）在其后跟进。
+  · 正强化：行为后给予愉快刺激 → P 上升
+  · 负强化：行为后撤除厌恶刺激 → P 上升
+  · 惩罚：行为后给予厌恶刺激 → P 下降（但只压制、不塑造新行为）
+斯金纳提出的"强化程式"决定 P 的上升曲线：
+  · 固定比率 FR：每 n 次给一次 → 反应率稳定、停顿明显
+  · 可变比率 VR：平均每 n 次给一次 → 反应率最高、最难消退
+  · 可变间隔 VI：平均每 t 时间给一次 → 反应率平稳
+关键结论：可变程式（VR）产生的行为最抗消退——这正是"老虎机"和"抽卡"机制的心理基础，也是分散练习优于集中突击的一个来源。</div>
           <table>
             <caption class="caption">三大学习理论学派对比</caption>
             <thead><tr><th>维度</th><th>行为主义</th><th>认知主义</th><th>建构主义</th></tr></thead>
             <tbody>
-              <tr><th scope="row">核心主张</th><td>学习是行为的变化，源于刺激与反应的联结</td><td>学习是内部认知结构的重组与信息加工</td><td>学习是学习者主动建构意义的过程</td></tr>
+              <tr><th scope="row">变化的载体</th><td>可观测行为</td><td>内部认知结构</td><td>主体-环境交互</td></tr>
+              <tr><th scope="row">核心机制</th><td>刺激-反应-强化联结</td><td>信息加工与图式重组</td><td>主动意义建构</td></tr>
               <tr><th scope="row">代表人物</th><td>巴甫洛夫、斯金纳、桑代克</td><td>皮亚杰、奥苏贝尔、加涅</td><td>维果茨基、布鲁纳、杜威</td></tr>
-              <tr><th scope="row">教学隐喻</th><td>塑形：通过强化改变行为</td><td>编码：帮助信息有效存储与提取</td><td>脚手架：在社交互动中搭建理解</td></tr>
+              <tr><th scope="row">教学隐喻</th><td>塑形</td><td>编码</td><td>脚手架</td></tr>
               <tr><th scope="row">适用场景</th><td>技能训练、行为矫正</td><td>概念教学、知识结构化</td><td>探究学习、问题解决</td></tr>
             </tbody>
           </table>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>行为主义：强化是钥匙</h4><p>斯金纳的操作性条件反射揭示了正强化、负强化与惩罚对行为的塑造作用。程序教学和计算机辅助教学的最早灵感就来自这里——小步递进、即时反馈。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>认知主义：大脑不是黑箱</h4><p>皮亚杰的认知发展理论提出「同化」与「顺应」两种机制：新信息要么被纳入已有图式，要么改变图式本身。学习是认知结构不断重组的过程。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>建构主义：知识是被「造」出来的</h4><p>维果茨基强调社会文化互动在学习中的核心地位，知识不是从外部「接收」的，而是学习者在与他人协作中主动建构的。项目式学习和协作学习都根植于此。</p></div></div>
-          </div>
+          <p>三者的<strong>统一视角</strong>是：行为主义解释"如何建立稳定的技能回路"，认知主义解释"信息如何被组织以降低提取成本"，建构主义解释"新知识如何与既有经验建立意义联结"。一个成熟的学习者会同时调用三者——背单词用间隔强化，学概念用结构化编码，做项目用意义建构。</p>
+          <div class="callout tip"><span class="callout-label">洞察</span>把"学生记不住"简单归因于"不努力"，是把机制问题误当成动机问题。更可能的机制是：编码方式不当（认知主义）或意义联结缺失（建构主义）。</div>
         </section>
         <section>
-          <h2><span class="sec-num">2</span>教育目的与全人发展</h2>
-          <p class="lede">杜威说「教育即生活，学校即社会」——教育的目的不是传递知识碎片，而是培养能持续成长的完整的人。</p>
+          <h2><span class="sec-num">2</span>认知发展与社会建构：ZPD 的形式化</h2>
+          <p class="lede">皮亚杰从个体内部解释认知如何发展，维果茨基从社会互动解释认知如何被"共同建构"。两者并非对立，而是同一过程的两个切面：个体通过与他人的协作，把外部的能力内化为内部的结构。</p>
+          <div class="prompt-block"><span class="prompt-label">同化-顺应的形式化与 ZPD</span><button class="copy-btn" type="button">复制</button>设学习者已有认知图式为 S，新经验为 X。
+  · 同化：若 X 可被 S 解释 ⇒ S 吸收 X，X 进入既有结构。形式化：S ∪ {X} 内部一致
+  · 顺应：若 X 与 S 矛盾 ⇒ 必须重构 S 为 S'，使 X 可被解释。形式化：S' ⊨ X 且 S' 内部一致
+  · 平衡化：同化与顺应反复交替，达到新的稳态 ⇒ 认知发展
+维果茨基的最近发展区（ZPD）可形式化为：
+  · 令 L_actual = 独立解决问题的能力上限
+  · 令 L_potential = 在更有能力者协助下的能力上限
+  · ZPD = L_potential − L_actual
+教学的目标区间是 ZPD 内部：
+  · 任务难度 &lt; L_actual ⇒ 无聊（无成长）
+  · L_actual ≤ 难度 ≤ L_potential ⇒ 最佳学习区（需脚手架）
+  · 难度 &gt; L_potential ⇒ 挫败（无法达成）
+脚手架的本质：通过外部协助暂时抬高 L_potential，任务完成后撤除，使 L_actual 上移。
+  · 若撤除过快：能力未内化，退回到 L_actual
+  · 若撤除过慢：产生依赖，L_actual 无法上移</div>
+          <p>这一推导给出了自学的一条硬规则：<mark class="key">把任务难度校准在 L_actual 与 L_potential 之间，并为每次跨越准备一个可撤除的脚手架</mark>——导师、范例、拆解后的子任务都算脚手架。互联网时代稀缺的不是资源，而是精准的 ZPD 定位能力。</p>
+          <div class="callout warn"><span class="callout-label">常见误读</span>"最近发展区"常被误读成"稍微难一点就行"。真正的关键在于"有人/有脚手架协助"这一条件——没有协助的难题不属于 ZPD，只是挫败区。</div>
+        </section>
+        <section>
+          <h2><span class="sec-num">3</span>记忆机制与遗忘曲线：量化推导</h2>
+          <p class="lede">"背了又忘"不是意志力问题，而是记忆的自然衰减规律。理解遗忘的数学形式，就能推导出为什么间隔重复优于集中突击。</p>
+          <div class="prompt-block"><span class="prompt-label">遗忘曲线与间隔重复</span><button class="copy-btn" type="button">复制</button>艾宾浩斯（Ebbinghaus）的遗忘曲线可用负指数近似：
+  R(t) = e^(−t / S)
+  其中 R = 记忆保持率，t = 距上次学习的时间，S = 记忆强度（稳定度）
+推导要点：
+  · t = 0 ⇒ R = 1（刚学完保持完整）
+  · t = S ⇒ R = e^(−1) ≈ 0.37（约衰减到 37%）
+  · t → ∞ ⇒ R → 0
+复合复习的效应：每次成功复习使 S 增大（S₁ &lt; S₂ &lt; S₃ …），
+从而延长保持时间。设第 k 次复习后强度为 S_k，则下次复习的最佳时机约为：
+  t*_k ≈ S_k · ln(1 / R_target)
+  （R_target 是希望维持的最低保持率，如 90% ⇒ ln(1/0.9) ≈ 0.105）
+关键推论：
+  · 复习间隔应随 S 增大而拉长 ⇒ 1 天 → 3 天 → 7 天 → 16 天 …（近似几何增长）
+  · 临近遗忘临界点复习，比"刚学完立刻重看"更有效 ⇒ 提取困难度越大，记忆强化越强（desirable difficulty）
+  · 集中突击（cramming）只提升短期 R，不显著增大 S ⇒ 考后快速遗忘</div>
+          <p>这条推导直接解释了两个现象：（1）<strong>睡前复习更牢</strong>——睡眠期间干扰少，利于巩固；（2）<strong>合上书自测优于反复阅读</strong>——主动提取（retrieval practice）比被动重读更能增大 S。学习的真正指标不是"当下看懂"，而是"离开后还能提取"。</p>
           <table>
-            <caption class="caption">两种教育目的观</caption>
-            <thead><tr><th>维度</th><th>外在目的论</th><th>内在目的论</th></tr></thead>
+            <caption class="caption">集中学习 vs 间隔学习</caption>
+            <thead><tr><th>维度</th><th>集中学习（Massed）</th><th>间隔学习（Spaced）</th></tr></thead>
             <tbody>
-              <tr><th scope="row">核心主张</th><td>教育为未来生活或社会需求做准备</td><td>教育过程本身即是目的，成长即学习</td></tr>
-              <tr><th scope="row">代表</th><td>斯宾塞「为完满生活做准备」</td><td>杜威「教育即生长」</td></tr>
-              <tr><th scope="row">风险</th><td>忽视当下体验，学习变成苦差事</td><td>可能忽视系统性知识的传承</td></tr>
+              <tr><th scope="row">短期表现</th><td>高（当下熟悉感强）</td><td>略低（感觉"没学透"）</td></tr>
+              <tr><th scope="row">长期保持</th><td>低（S 增大小）</td><td>高（S 显著增大）</td></tr>
+              <tr><th scope="row">迁移能力</th><td>弱</td><td>强</td></tr>
             </tbody>
           </table>
-          <p>杜威在《民主主义与教育》（1916）中提出的<strong>经验学习</strong>思想影响深远：真正的学习来自「做」与「反思」的结合——单纯动手不反思只是忙碌，单纯反思不行动只是空想。</p>
-          <ul>
-            <li><strong>全人发展</strong>：教育的目标涵盖认知、情感、社会性、身体和审美多个维度，而非仅追求考试成绩。</li>
-            <li><strong>经验连续性</strong>：杜威提出，每一次经验都既来自过去经验，又塑造未来经验的方向——好的教育经验应该促进进一步成长。</li>
-            <li><strong>做中学</strong>：不是否定书本知识，而是强调知识必须与真实经验建立联结才有意义。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">洞察</span>当学生问「学这个有什么用」，不是在挑战权威，而是在追问经验连续性——断裂的学习无法迁移到真实生活。</div>
         </section>
         <section>
-          <h2><span class="sec-num">3</span>课程设计与评价</h2>
-          <p class="lede">布鲁纳的「螺旋式课程」指出：任何学科都可以用某种诚实有效的方式教给任何发展阶段的任何儿童——关键是表征方式的转换。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>三种表征</h4><p>布鲁纳提出知识的三个表征层次：动作表征（动手做）、图像表征（用图形理解）、符号表征（用抽象符号）。同一概念可以先在动作层引入，再螺旋上升至符号层。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>螺旋式课程</h4><p>核心概念在不同年级反复出现，每次都加深一层。小学用积木学分数，中学用符号推导比例，大学学测度论——概念在螺旋中不断深化。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>形成性 vs 总结性评价</h4><p>形成性评价（过程中进行）为学习提供反馈、调整教学；总结性评价（结束时进行）判定学习成果。两者互补，不可互相替代。</p></div></div>
-          </div>
-          <table>
-            <caption class="caption">课程评价的两类取向</caption>
-            <thead><tr><th>维度</th><th>形成性评价</th><th>总结性评价</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">时机</th><td>教学过程中</td><td>教学单元或学期结束后</td></tr>
-              <tr><th scope="row">目的</th><td>诊断问题、改进教学</td><td>评定等级、判定达标</td></tr>
-              <tr><th scope="row">典型形式</th><td>课堂提问、随堂测验、同伴反馈</td><td>期末考试、毕业论文、标准化考试</td></tr>
-              <tr><th scope="row">反馈方向</th><td>面向学习（assessment for learning）</td><td>对学习的评价（assessment of learning）</td></tr>
-            </tbody>
-          </table>
-          <div class="callout tip"><span class="callout-label">实践</span>好的课程设计「以终为始」：先定学习目标（学生应能做什么），再定评价标准（怎样算做到了），最后设计教学活动——这是 Wiggins 与 McTighe 的「逆向设计」思路。</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">4</span>布卢姆教育目标分类</h2>
-          <p class="lede">布卢姆分类学是教育目标设计的通用语法：从「记住」到「创造」，六个认知层次帮你判断自己到底在学哪一层。</p>
+          <h2><span class="sec-num">4</span>教育目标与评价：从布卢姆到逆向设计</h2>
+          <p class="lede">教育目标分类学提供了"教到什么层次"的坐标系，评价理论提供了"如何判断是否达到"的检验工具。两者结合，就是"以终为始"的逆向设计。</p>
           <table>
             <caption class="caption">布卢姆分类学（1956 原版 → 2001 修订版）</caption>
-            <thead><tr><th>层次</th><th>原版（1956）</th><th>修订版（2001, Anderson & Krathwohl）</th><th>典型动词</th></tr></thead>
+            <thead><tr><th>层次</th><th>原版（1956）</th><th>修订版（2001）</th><th>典型动词</th></tr></thead>
             <tbody>
               <tr><th scope="row">1</th><td>知识 Knowledge</td><td>记忆 Remember</td><td>识别、列举、回忆</td></tr>
               <tr><th scope="row">2</th><td>理解 Comprehension</td><td>理解 Understand</td><td>解释、概括、比较</td></tr>
@@ -98,61 +115,113 @@
               <tr><th scope="row">6</th><td>评价 Evaluation</td><td>创造 Create</td><td>设计、建构、规划</td></tr>
             </tbody>
           </table>
-          <ul>
-            <li><strong>认知层次递进</strong>：低层是高层的基石——无法「记忆」概念就谈不上「分析」，没有「理解」就无法「应用」。但高层目标能反过来促进低层目标的巩固。</li>
-            <li><strong>修订版的关键变化</strong>：2001 年 Anderson 和 Krathwohl 将名词改为动词，把「综合」提升到最高层「创造」，把「评价」下调至第五层——强调创造是认知活动的顶峰。</li>
-            <li><strong>分类学也包含情感与动作领域</strong>：布卢姆团队实际上分了认知、情感、动作技能三个领域，但认知领域使用最广，另外两个由 Krathwohl（情感）和 Simpson（动作技能）后续完成。</li>
-          </ul>
-          <p>用修订版分类学写学习目标：<mark class="key">动词（认知层次）+ 内容（学科知识）+ 条件 + 标准</mark>，例如「学生能在 30 分钟内（条件）用自己的话概括（理解层次）一篇议论文的核心论点（内容），至少覆盖三个要点（标准）」。</p>
+          <div class="prompt-block"><span class="prompt-label">目标与评价的对齐（逆向设计）</span><button class="copy-btn" type="button">复制</button>目标与评价必须共享同一"动词-内容"结构，否则出现"教应用、考记忆"的错位。
+对齐检查表（3 步）：
+  步骤 1｜定目标：用"动词（层次）+ 内容 + 条件 + 标准"写
+     例：能在 30 分钟内（条件）独立设计（创造层）一个受控实验（内容），
+         且变量控制无明显错误（标准）
+  步骤 2｜定证据：问"什么样的表现能证明达到了这个层次"
+     若目标含"设计"，则评价必须是开放任务，而非选择题
+  步骤 3｜定活动：设计让学生"练到那个动词"的活动
+一致性判据：活动动词 ⊇ 目标动词 ⊇ 评价动词（三者不可降级）
+评价的两类取向：
+  · 形成性（assessment for learning）：过程内进行，反馈调整教学
+  · 总结性（assessment of learning）：结束时进行，判定是否达标
+一个重要不等式（黑箱/可见学习视角）：
+  反馈的信息量取决于"实际表现"与"目标标准"的差距是否被清晰暴露
+  ⇒ 越能暴露差距的评价，越有教学价值</div>
+          <p>用修订版分类学写目标时，最容易犯的错误是<strong>目标写"创造"、评价却只考"记忆"</strong>。对齐的硬标准是：三处动词的层次不可出现降级——这是教学设计的第一性检查。</p>
         </section>
         <section>
-          <h2><span class="sec-num">5</span>终身学习与自我教育</h2>
-          <p class="lede">诺尔斯的成人教育学（Andragogy）指出：成人学习与儿童学习有本质差异——成人是问题导向、经验驱动、自我引导的。</p>
+          <h2><span class="sec-num">5</span>前沿与研究进展</h2>
+          <p class="lede">近二十年的学习科学研究，正把教育从"经验艺术"推向"循证实践"。以下为学界较有共识的几条主线，具体结论仍在持续检验中。</p>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-era">1990s 末</div><div class="tl-date">可见学习与效应量</div><p>Hattie 等学者尝试用元分析把教育干预的效应量（Cohen's d 一类指标）汇总比较，主张关注"以证据为基础的高影响因素"，如反馈、师生关系、清晰目标。该框架受到方法论层面的持续批评，但"用效应量比较干预"已成为循证教育的通用语言。</p></div>
+            <div class="tl-item"><div class="tl-era">2000s</div><div class="tl-date">提取练习与间隔效应的推广</div><p>Roediger、Karpicke 等关于测试效应（testing effect）的实验，使"以测促学"被广泛接受。核心发现：主动提取比重复阅读更能促进长期保持，且提取困难度与记忆增益相关。</p></div>
+            <div class="tl-item"><div class="tl-era">2010s</div><div class="tl-date">认知负荷与多媒体学习</div><p>Sweller 等的认知负荷理论指出工作记忆容量有限，教学设计应减少无关负荷（extraneous load）、优化相关负荷。这一视角至今仍是课件与在线课程设计的主流框架。</p></div>
+            <div class="tl-item"><div class="tl-era">2010s 起</div><div class="tl-date">教育神经科学与学习分析</div><p>脑成像技术被用于研究阅读、数学与第二语言加工的神经基础；学习分析（learning analytics）用学习行为数据做预警与个性化推荐。研究者普遍强调"神经科学结论不能简单直接迁移到课堂"，避免过度解读。</p></div>
+            <div class="tl-item"><div class="tl-era">2020s</div><div class="tl-date">生成式 AI 与教学重构</div><p>大语言模型进入教学场景，带来个性化辅导与即时反馈的新可能，也带来"外包思考"的风险。学界尚在讨论其对批判性思维与迁移能力的中长期影响，结论未定。</p></div>
+            <div class="tl-item"><div class="tl-era">2020s</div><div class="tl-date">元认知与自我调节学习</div><p>Zimmerman 等的自我调节学习模型被反复验证：计划-监控-反思的循环是自主学习能力的核心。大量研究指向"教会学生如何学"比"多教内容"在长期收益上更显著。</p></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">审慎提示</span>教育研究多为现场实验，样本、情境与效应量差异很大，单一研究的结论不宜直接当成普适规律。上述条目是"研究主线"，而非定论。</div>
+        </section>
+        <section>
+          <h2><span class="sec-num">6</span>跨学科视角</h2>
+          <p class="lede">"如何学习"从来不是教育学的独角戏。心理学给机制，脑科学给约束，统计学给判据，社会学给情境——把这几面镜子叠起来，才能看清学习的全貌。</p>
+          <div class="grid-2">
+            <div class="card"><h3>教育学 × 心理学</h3><p>动机理论（自我决定论：自主、胜任、归属三大需求）解释"为什么有的学生越学越有劲"。当学习满足胜任感与自主感时，内在动机会增强，外在奖励的过度使用反而可能侵蚀内在动机。</p></div>
+            <div class="card"><h3>教育学 × 神经科学</h3><p>睡眠与巩固、情绪与记忆、突触可塑性为"为何间隔、为何要睡足"提供生理层面的解释。但要注意：从神经机制到教学建议存在"解释鸿沟"，不能直接推导课堂做法。</p></div>
+            <div class="card"><h3>教育学 × 统计学</h3><p>教育评价天然是测量问题：信度与效度、分数的不确定度、效应量。不懂统计，就容易把"教学波动"误读为"教学效果"，把"相关"误读为"因果"。</p></div>
+            <div class="card"><h3>教育学 × 社会学</h3><p>教育同时是筛选与再生产机制。家庭背景、社会资本如何影响学业成就，是布迪厄等社会学研究的核心议题。理解这一视角，能避免把教育不平等简单归因于个体努力。</p></div>
+            <div class="card"><h3>教育学 × 认知科学</h3><p>专家-新手研究揭示了"组块化"与"图式"的作用：专家的优势不在记忆容量，而在结构化的知识组块。这解释了为何"练习-反馈-再练习"能加速专长形成。</p></div>
+            <div class="card"><h3>教育学 × 经济学</h3><p>教育被视为人力资本投资，用收益率、机会成本分析受教育决策。"早期干预的回报率较高"是这一视角下有影响力的观察，但具体数值与情境高度相关，需谨慎引用。</p></div>
+          </div>
+        </section>
+        <section>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">教育学是最容易被口号化的领域之一。识别常见误区的关键，是回到"结论成立需要哪些前提条件"。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">误区</span><h4>"学习风格决定教法"</h4><p>把学生分为"视觉型/听觉型/动觉型"并按类型定制教法，是流行但缺乏稳定证据支撑的做法。多数实验未发现"匹配学习风格能提升成绩"的效应。教学更应依据内容性质与任务难度选择表征方式，而非依据自我标签。</p></div>
+            <div class="side good"><span class="side-tag">替代视角</span><h4>多通道呈现 + 难度适配</h4><p>研究更支持"用多种表征重复同一核心概念"（如同时给图与文字，但要避免通道超载），以及"依据 ZPD 调整难度"。表征选择应由内容与认知负荷决定，而非由学习风格决定。</p></div>
+          </div>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">误区</span><h4>"建构主义 = 完全放手让学生自己探索"</h4><p>把建构主义简化为"取消指导"，容易导致低效探索与概念错误固化。纯粹的发现学习在初学者身上常常低效甚至有害。</p></div>
+            <div class="side good"><span class="side-tag">边界条件</span><h4>脚手架是前提</h4><p>建构主义有效的前提是有脚手架：教师提供范例、提示、结构化任务。研究普遍显示，对新手而言"有指导的探究"优于"无指导的探究"。</p></div>
+          </div>
+          <h4>几条易被忽略的边界条件</h4>
           <table>
-            <caption class="caption">诺尔斯成人学习 vs 儿童学习</caption>
-            <thead><tr><th>维度</th><th>儿童学习（Pedagogy）</th><th>成人学习（Andragogy）</th></tr></thead>
+            <caption class="caption">常见结论的适用边界</caption>
+            <thead><tr><th>流行结论</th><th>成立前提</th><th>易失效情境</th></tr></thead>
             <tbody>
-              <tr><th scope="row">学习动机</th><td>外部驱动（家长、教师要求）</td><td>内在需求（解决实际问题）</td></tr>
-              <tr><th scope="row">经验作用</th><td>经验有限，以教师传授为主</td><td>经验是核心学习资源，同伴互教</td></tr>
-              <tr><th scope="row">学习方向</th><td>学科为中心，按大纲推进</td><td>问题为中心，按任务组织</td></tr>
-              <tr><th scope="row">时间安排</th><td>全日制在校，学习是主业</td><td>边工作边学习，时间碎片化</td></tr>
+              <tr><th scope="row">间隔重复提升保持</th><td>有充足的复习周期、目标为长期保持</td><td>考前突击的短期应试场景</td></tr>
+              <tr><th scope="row">反馈促进学习</th><td>反馈指向差距、及时、可执行</td><td>反馈仅给分数或泛泛表扬</td></tr>
+              <tr><th scope="row">内在动机优于外在奖励</th><td>任务本身有胜任感与自主感</td><td>机械性、低兴趣的重复训练</td></tr>
+              <tr><th scope="row">小组协作提升学习</th><td>任务互依、个体问责明确</td><td>搭便车、责任不清的"伪协作"</td></tr>
             </tbody>
           </table>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>自我引导学习</h4><p>成人需要参与诊断自身学习需求、设定目标、设计学习路径和评价学习效果——这被称为「自我引导学习」（Self-Directed Learning），诺尔斯认为它是成人学习的核心特征。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>最近发展区</h4><p>维果茨基提出：每个学习者都有一个「已经能独立完成」的水平和一个「在帮助下才能完成」的水平，两者之间的差距就是最近发展区（ZPD）。好的教学应该瞄准 ZPD——太难则受挫，太易则无聊。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>终身学习的支架</h4><p>把 ZPD 与成人学习结合：自学时主动寻找「脚手架」——导师、同伴、结构化课程——帮助跨越当前能力边界，然后在掌握后撤除脚手架，进入下一个 ZPD。</p></div></div>
-          </div>
-          <div class="callout tip"><span class="callout-label">行动</span>自我教育的关键不是资源稀缺（互联网时代资源过剩），而是精准定位自己的 ZPD，然后找到恰好的脚手架——不盲目挑战超出能力上限的目标，也不在舒适区原地踏步。</div>
+          <div class="callout warn"><span class="callout-label">判据</span>遇到任何"教育方法"的宣称，先问三句：结论来自什么证据？适用什么条件下的学习者？反例（边界）在哪里？</div>
         </section>
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">教育学速记</span><button class="copy-btn" type="button">复制</button>· 三大学派：行为主义=刺激-反应，认知主义=信息加工，建构主义=主动建构
-· 杜威：教育即生长，做中学，经验连续性
-· 布鲁纳：螺旋式课程，三种表征（动作→图像→符号）
-· 布卢姆分类（2001修订）：记忆→理解→应用→分析→评价→创造
-· 维果茨基：最近发展区 ZPD = 独立水平与帮助水平的差距
-· 诺尔斯成人学习：问题导向、经验驱动、自我引导
-· 形成性评价面向学习，总结性评价评定结果
-· 逆向设计：先定目标，再定评价，最后定教学活动
-· 脚手架在 ZPD 内搭建，掌握后撤除</div>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <p class="lede">把机制、公式与边界条件压缩成一张可随身自查的卡片。</p>
+          <div class="prompt-block"><span class="prompt-label">教育学速记</span><button class="copy-btn" type="button">复制</button>· 三大学派载体：行为主义=行为，认知主义=内部结构，建构主义=主-环交互
+· 强化程式：可变比率 VR 反应最强、最抗消退
+· 惩罚只压制行为，不塑造新行为
+· 皮亚杰：同化（X 被 S 解释）与顺应（S 重构为 S'）交替 ⇒ 平衡化
+· ZPD = L_potential − L_actual；任务须落在区间内，并配可撤除脚手架
+· 遗忘曲线：R(t) = e^(−t/S)，S 随每次复习增大
+· 复习间隔应随 S 拉长：1→3→7→16 天（近似几何增长）
+· 主动提取 &gt; 被动重读；合书自测优于反复阅读
+· 布卢姆（2001）：记忆→理解→应用→分析→评价→创造
+· 逆向设计：先目标，再证据（评价），后活动
+· 对齐判据：活动动词 ⊇ 目标动词 ⊇ 评价动词，不可降级
+· 形成性面向学习，总结性评定结果；两者互补
+· 认知负荷：降低无关负荷，优化相关负荷
+· 学习风格（视觉/听觉型）匹配教法缺乏稳定证据支撑
+· 建构主义有效前提是有脚手架；新手宜有指导的探究
+· 反馈有效前提：指向差距、及时、可执行
+· 自我调节学习：计划-监控-反思循环
+· 教育研究多为现场实验，单一结论勿当普适规律</div>
         </section>
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <p class="lede">以下练习要求"推导与迁移"，而非"复述概念"。逐条完成，逐条打勾。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用行为主义、认知主义、建构主义三种视角分析自己学习一项新技能的全过程</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">写一个学习目标，确保包含布卢姆修订版的动词层次和具体达标标准</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">找一个正在学的概念，设计它在动作、图像、符号三种表征层次的教学路径</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">诊断自己的「最近发展区」，列出当前独立能做的和需要帮助才能做的各三项</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">把一个学习目标按逆向设计拆解为目标→评价标准→教学活动三步</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">对比自己最近一次的「形成性」和「总结性」评价体验，分析哪种反馈更有效</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用诺尔斯成人学习四特征检视自己的自学计划，找出不符合成人学习假设的设计</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">选一项你在学的技能，用"可变程式能增强抗消退"解释：为什么你的某个学习习惯容易被中断，另一个却稳定保持？给出改进方案的机制依据</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">写出你自己的 L_actual 与 L_potential 各三项，判定某项任务是否落在 ZPD 内，并说明你需要什么脚手架、何时撤除</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用 R(t)=e^(−t/S) 估算：若某知识在 3 天后保持率降到约 37%，你应把首次复习安排在何时？给出计算过程</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">设计一份间隔复习计划，用 1→3→7→16 天的几何增长节奏安排一个月的复习，并说明为何不是均匀间隔</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用修订版布卢姆分类给同一主题写三个不同层次的目标（理解/分析/创造），并检查目标动词与评价方式是否对齐</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">找一个你正在用的学习方法（如做思维导图、反复抄写），用认知负荷理论分析它降低/增加了哪一类负荷，是否有更优替代</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用"活动动词 ⊇ 目标动词 ⊇ 评价动词"检查一门你上过的课，找出动词降级的具体环节并说明后果</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">针对"学习风格决定教法"这一流行说法，构造一个反例情境，说明在什么条件下按风格匹配反而可能降低效率</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">选一条本指南中的前沿结论（如测试效应），写出它的成立前提、可能失效的情境，并说明你会如何验证它在你自己身上是否成立</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">内容综合自 Bloom (1956) 及 Anderson & Krathwohl (2001) 的教育目标分类学、Vygotsky 最近发展区理论、Dewey《民主主义与教育》(1916)、Bruner 螺旋式课程理论及 Knowles 成人学习理论，建议对照原典阅读。</p>
+        <p class="footnote">内容综合自 Bloom (1956) 及 Anderson &amp; Krathwohl (2001) 教育目标分类学、Vygotsky 最近发展区理论、Dewey《民主主义与教育》、Bruner 螺旋式课程、Knowles 成人学习理论、Ebbinghaus 遗忘曲线研究，以及 Hattie、Roediger/Karpicke、Sweller、Zimmerman 等在学习科学与认知负荷方面的研究主线。前沿部分为学界研究方向的概括性描述，具体数值与结论仍需对照原始文献并审慎评估其适用边界。</p>
       </footer>
     </div>
   </article>

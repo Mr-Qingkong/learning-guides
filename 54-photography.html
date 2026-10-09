@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>摄影入门指南</title>
+  <title>摄影进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>摄影入门指南</h1>
-          <p class="report-intro__summary">摄影是用光来绘画。掌握曝光三角是技术骨架，理解构图法则是表达语言，感受光线与影调决定画面情绪。这份指南覆盖光圈/快门/ISO 的协同关系、构图法则、光线质量、焦距与镜头语言，以及后期色彩管理——从按下快门到输出成片的全链路。</p>
+          <h1>摄影进阶指南</h1>
+          <p class="report-intro__summary">把摄影从「记住参数」升级为「理解成像链」。本指南从曝光为什么可互换、景深为何与传感器尺寸有关、人眼为何会觉得长焦在「压缩」，一步步还原到物理与知觉机制；再延伸到计算摄影、色彩科学与图像伦理等跨学科视角，最后落到可自测的高阶练习。</p>
           <div class="intro-meta">
             <span>领域：艺术 · 美学</span>
             <span>难度：进阶</span>
@@ -25,110 +25,182 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>曝光三角：光圈、快门、ISO</h2>
-          <p class="lede">曝光是照片的物理基础。光圈、快门、ISO 三者如同一个水龙头的三个阀门——调任何一个都会改变总进光量，同时带来各自的副作用。</p>
+          <h2><span class="sec-num">1</span>曝光的物理机制：为什么三要素可以互换（原理推导）</h2>
+          <p class="lede">曝光不是「调亮调暗」旋钮的组合，而是传感器在时间与孔径两个维度上收到的光子总数的结果。理解这条物理链，互易律就不再需要背。</p>
+          <p>曝光的本质是：传感器每单位面积收到的<strong>光子数</strong>。控制它的只有两件事——孔径开多大、快门开多久。ISO 并不增加光子，它只是在读出信号后对信号做放大（增益）。这一区分至关重要：它解释了为何 ISO 提亮的画面会变噪——因为它<strong>同时放大了光子带来的随机涨落</strong>。</p>
+          <div class="prompt-block"><span class="prompt-label">推导链：曝光三要素各自改变什么</span><button class="copy-btn" type="button">复制</button>推导链：曝光 = 进光量 × 增益
+· 曝光量 E ∝（光圈孔径面积）×（快门时间）
+   孔径面积 ∝ 1 /（f 值）²   → f 值每 ×√2，面积减半（差一档）
+   例：f/2.8 → f/4，面积变为 1/2，进光少一档
+· 快门时间每 ×2 或 ÷2，即差一档
+· 一档 = 进光量 ×2 或 ÷2（互为互换，即互易律）
+· ISO 是「读出增益」，不改变进光量，只改变信号放大倍数
+   → 提高 ISO 会放大噪声（信噪比下降），并非凭空增光
+· 结论：互易律之所以成立，是因为光圈与快门都能「翻倍/减半」</div>
           <table>
             <caption class="caption">曝光三角参数对照</caption>
-            <thead><tr><th>参数</th><th>控制</th><th>增大（更亮）的副作用</th><th>减小（更暗）的副作用</th></tr></thead>
+            <thead><tr><th>参数</th><th>物理控制</th><th>增大的视觉后果</th><th>减小的视觉后果</th></tr></thead>
             <tbody>
-              <tr><th scope="row">光圈（f 值）</th><td>镜头通光孔径</td><td>景深变浅，背景虚化</td><td>景深变大，前后清晰</td></tr>
-              <tr><th scope="row">快门速度</th><td>传感器受光时间</td><td>运动模糊，手抖风险</td><td>凝固瞬间，需更大光圈或 ISO</td></tr>
-              <tr><th scope="row">ISO（感光度）</th><td>传感器信号增益</td><td>噪点增多，动态范围下降</td><td>画面干净，但需更多光</td></tr>
+              <tr><th scope="row">光圈（f 值）</th><td>镜头通光孔径面积</td><td>景深变浅，背景虚化</td><td>景深变大，前后清晰</td></tr>
+              <tr><th scope="row">快门速度</th><td>传感器受光时长</td><td>运动模糊、手抖</td><td>凝固瞬间，需更大光圈或更高 ISO</td></tr>
+              <tr><th scope="row">ISO（感光度）</th><td>信号读出增益</td><td>噪点增多、动态范围下降</td><td>画面干净，但需更多进光</td></tr>
             </tbody>
           </table>
-          <p>光圈用 <mark class="key">f 值</mark> 表示，数值越大孔径越小：f/1.4 是大光圈（浅景深），f/16 是小光圈（大景深）。景深（depth of field）是指画面中可接受的清晰范围——人像常用 f/1.8 至 f/2.8 虚化背景，风景常用 f/8 至 f/11 保证前后清晰。</p>
-          <div class="callout tip"><span class="callout-label">互易律</span>曝光三要素之间存在互换关系：减少一档光圈（f/2.8→f/4），可以放慢一档快门（1/250→1/125）或提高一档 ISO（200→400）来补偿。理解互易律，就能在「冻结运动」「虚化背景」「画面干净」之间做主动取舍，而不是被动接受相机自动选的结果。</div>
+          <div class="callout tip"><span class="callout-label">一档到底是多少</span>f 值是<strong>「数值越大、孔越小」</strong>，因为它是「焦距 ÷ 孔径」的比值。完整档位序列 1.4、2、2.8、4、5.6、8、11、16——每步相差约 √2，面积则差一倍。记住「√2 一档」，就能心算任意组合下的等价曝光。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>构图法则</h2>
-          <p class="lede">构图是引导观众视线的语法。法则不是铁律，但在理解为何打破之前，先学会用它们。</p>
+          <h2><span class="sec-num">2</span>模糊圈与景深：被忽略的成像机制（原理推导）</h2>
+          <p class="lede">「大光圈虚化」只是现象，背后是「模糊圈」的几何。理解它，你才能解释为什么手机和全画幅虚化不同、为什么微距特别容易虚。</p>
+          <p>一个物点在理想情况下成像为一个点；但若它不在精确焦平面上，它在传感器上就变成一个<strong>小圆盘</strong>，叫模糊圈（circle of confusion）。当模糊圈的直径小于某个阈（通常与传感器像素间距、观看条件有关）时，我们仍认为它是「清晰的」。景深，就是所有模糊圈都小于该阈的那段物距范围。</p>
+          <div class="prompt-block"><span class="prompt-label">推导链：哪些变量会改变景深</span><button class="copy-btn" type="button">复制</button>推导链：景深受四个变量影响
+1. 光圈：孔越大 → 模糊圈越大 → 景深越浅
+2. 焦距：焦距越长 → 同样物距下放大率越高、越浅
+3. 物距：相机离主体越近 → 景深越浅（微距极浅的原因）
+4. 传感器尺寸：越大 → 同视角需更长焦距或用更小实际光圈
+   → 在「同构图、同 f 值」下，大底通常景深更浅
+· 重要：虚化量与「光圈物理孔径」=/焦距÷f 值有关
+  → 长焦 f/2.8 的孔径，比广角 f/2.8 大得多，虚化更强
+· 实践含义：想虚化 → 近、长、开大光圈；想全清 → 远、广、收小光圈</div>
+          <div class="callout warn"><span class="callout-label">衍射：另一端的限制</span>光圈并非越小越清晰。孔径小到一定程度后，光的衍射会让模糊圈重新变大——这就是衍射极限。因此「收光圈求全清晰」是有<strong>最优点的</strong>：多数镜头在中等光圈（常在中段）锐度最好，过小反而变软。这与「f/16 一定比 f/8 更清晰」的直觉相反。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>焦距与透视：是镜头在「压缩」，还是你走远了？</h2>
+          <p class="lede">「长焦压缩空间、广角夸张空间」是常见说法，但它容易误导——真正决定透视的是距离，镜头的角色是让你从不同距离拍摄时依然能取得想要的构图。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>三分法（Rule of Thirds）</h4><p>将画面横竖各三等分，把主体放在四条线的交叉点上。比正中央构图更有张力，也更适合人眼扫描习惯。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>引导线</h4><p>利用道路、河流、栏杆、阴影等线条将视线引向主体或画面深处。线条是视觉的轨道。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>前景与层次</h4><p>在主体前方安排一个前景元素，画面就有了前景—中景—背景的三层纵深，从平面变成空间。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>框架内框架</h4><p>用门框、窗户、树枝等自然或人造框架包围主体，压缩视线焦点，同时增加画面的层次感。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>透视由距离决定</h4><p>近大远小的程度只取决于相机到前后景的相对距离。透视是「看的位置」的属性，不是镜头的属性。若你站在原地不动、只改变焦距再裁剪，透视其实不变。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>焦距改变的是「你要站多远」</h4><p>想让人像装满画面：广角迫使你凑近（于是鼻子变大、空间被夸张）；长焦迫使你退远（于是五官被压平、背景被拉近）。所谓「镜头压缩」，本质是<strong>用长焦时你被迫退到了远处</strong>。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>视角与注视的心理学</h4><p>50mm 接近人眼视角，画面「透明」、不带修饰；广角带来临场与压迫；长焦带来凝视与抽取感。换焦距不是换「放大倍率」，是换<strong>一种与世界的距离关系</strong>。</p></div></div>
           </div>
-          <p>构图的核心目的不是填满画面，而是<mark class="key">控制视觉重量</mark>——明亮、锐利、大面积的元素重，暗淡、模糊、小巧的元素轻。好的构图让视觉重量在画面中分布均衡而不呆板。</p>
-          <p>摄影教育中常引用绘画的构图传统：三分法源自 John Thomas Smith 在 1797 年的论述，后被广泛简化为「九宫格」。它之所以有效，是因为人眼天然倾向在偏离中心的区域停留更久——居中构图对眼睛来说太容易，反而少了参与感。</p>
-        </section>
-        <section>
-          <h2><span class="sec-num">3</span>光线与影调</h2>
-          <p class="lede">摄影一词源自希腊语 phos（光）与 graphé（绘画），光是唯一介质。理解光的方向、质量和色温，比升级器材重要得多。</p>
-          <ul>
-            <li><strong>顺光</strong>：光从相机方向照向主体，色彩饱和但缺乏立体感，适合记录性拍摄。</li>
-            <li><strong>侧光</strong>：光从侧面来，产生明暗对比，最能表现质感和体积——人像和静物的首选。</li>
-            <li><strong>逆光</strong>：光从主体背后来，可制造轮廓光或剪影，氛围最强但曝光最难控制。</li>
-            <li><strong>顶光</strong>：正午阳光，眼窝和鼻下产生浓重阴影，一般避免用于人像。</li>
-          </ul>
-          <p><mark class="key">黄金时段</mark>（golden hour）指日出后和日落前约一小时的低角度阳光，色温暖、光线柔、阴影长，是风光和人像摄影师最珍惜的时段。与之相对的 <mark class="key">蓝调时段</mark>（blue hour）是日出前和日落后天光尚亮、天空呈深蓝色的短暂时段，适合城市夜景和情绪画面。</p>
-          <div class="callout tip"><span class="callout-label">区域曝光系统</span>美国风光摄影师 Ansel Adams 与 Fred Archer 在 1940 年代发展出区域曝光系统（Zone System），将画面从纯黑（Zone 0）到纯白（Zone X）分为十一个灰度区，摄影师通过测光和曝光控制，确保关键细节落在期望的灰度区。虽然是针对胶片设计的，但其核心思想——<strong>预想最终影调，反推曝光策略</strong>——在数码时代依然适用：先用眼睛判断场景的动态范围，再决定保留高光还是保留暗部。</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">4</span>焦距与镜头语言</h2>
-          <p class="lede">焦距不只是「能拍多远」——它决定透视感、空间压缩和观看心理。换镜头，本质上是换一种看世界的方式。</p>
           <table>
-            <caption class="caption">常见焦距段与画面效果</caption>
+            <caption class="caption">常见焦距段与画面效果（全画幅等效视角）</caption>
             <thead><tr><th>焦距段</th><th>视角</th><th>透视特点</th><th>典型用途</th></tr></thead>
             <tbody>
-              <tr><th scope="row">广角（14-35mm）</th><td>宽广</td><td>近大远小夸张，空间感强</td><td>风光、建筑、室内</td></tr>
+              <tr><th scope="row">广角（14-35mm）</th><td>宽广</td><td>需靠近拍摄，近大远小被夸张</td><td>风光、建筑、室内</td></tr>
               <tr><th scope="row">标准（35-85mm）</th><td>接近人眼</td><td>透视自然，变形小</td><td>纪实、街拍、人像</td></tr>
-              <tr><th scope="row">中长焦（85-135mm）</th><td>较窄</td><td>空间压缩，背景拉近</td><td>人像、特写</td></tr>
-              <tr><th scope="row">长焦（200mm+）</th><td>很窄</td><td>强烈压缩，前后景贴拢</td><td>体育、野生动物</td></tr>
+              <tr><th scope="row">中长焦（85-135mm）</th><td>较窄</td><td>需退远，前后景被拉近</td><td>人像、特写</td></tr>
+              <tr><th scope="row">长焦（200mm+）</th><td>很窄</td><td>强压缩，前后景几乎贴拢</td><td>体育、野生动物</td></tr>
             </tbody>
           </table>
-          <p>焦距对画面的影响远不止「放大缩小」。<mark class="key">空间压缩</mark>是长焦镜头最独特的语言：用 200mm 拍远处山脉，前山与后山看起来几乎贴在一起；用 24mm 拍同样的山，前后距离会被夸张。这种透视差异不是镜头的缺陷，而是镜头的表达。</p>
-          <p>50mm 标准镜头之所以被称为「大师镜头」，是因为它的透视接近人眼，画面不带修饰感——Henri Cartier-Bresson 用 50mm 贯穿一生的街头摄影，正是利用标准镜头的<mark class="key">透明性</mark>：观众不会注意到镜头的存在，只看到画面本身。</p>
+          <div class="callout tip"><span class="callout-label">一个可验证的实验</span>固定相机位置不变，先用广角拍一张、再换长焦拍一张，然后把广角那张裁到与长焦相同的取景。你会发现两张的<strong>透视基本一致</strong>——这直接证明压缩感来自「长焦迫使你退远」，而非镜头本身在「压缩」。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>后期与色彩管理</h2>
-          <p class="lede">后期不是修补，而是从传感器数据中提取你按下快门时看到的画面。色彩管理确保你修的色和别人看到的色一致。</p>
-          <p><strong>RAW 与 JPEG</strong> 的根本区别：JPEG 是相机内部处理后的成品——白平衡、对比度、锐度、色彩风格已固化，后期空间极小；RAW 是传感器的原始数据包，白平衡、曝光、色彩几乎无损可调。<mark class="key">拍 RAW</mark> 意味着你保留了后期最大的自由度，代价是文件体积大、需要软件处理才能查看。</p>
-          <div class="callout warn"><span class="callout-label">注意</span>RAW 不是万能。过曝到高光截断（像素信息全白为零）或欠曝到暗部截断（信息全黑为无），原始数据也无法恢复——曝光准确始终是第一步。后期只能调整已有的数据，不能凭空创造不存在的细节。</div>
+          <h2><span class="sec-num">4</span>光线、影调与区域曝光</h2>
+          <p class="lede">光是唯一介质。理解光的方向、质量与色温，比升级器材重要得多；而区域曝光提供了一套把「看到的」翻译成「拍到的」的方法。</p>
+          <ul>
+            <li><strong>顺光</strong>：光从相机方向来，色彩饱和但缺乏立体感，适合记录。</li>
+            <li><strong>侧光</strong>：从侧面来，产生明暗对比，最能表现质感与体积。</li>
+            <li><strong>逆光</strong>：从主体背后来，可制造轮廓光或剪影，氛围强但曝光难。</li>
+            <li><strong>顶光</strong>：正午阳光，眼窝与鼻下阴影浓重，一般避免用于人像。</li>
+          </ul>
+          <p><mark class="key">黄金时段</mark>是日出后、日落前约一小时的低角度阳光，暖、柔、影长；<mark class="key">蓝调时段</mark>是天光尚亮、天空呈深蓝的短暂窗口，适合城市夜景。两者都是「光的角度与色温」这一物理条件造成的，而非风格偏好。</p>
+          <div class="callout tip"><span class="callout-label">区域曝光系统</span>Ansel Adams 与 Fred Archer 在 1940 年代发展的区域曝光系统，把画面从纯黑到纯白划为若干灰度区，摄影师先<strong>预想</strong>关键部位应落在哪个灰度，再反过来决定测光与曝光（必要时配合显影调整）。数码时代其核心思想依然适用：先判断场景动态范围，再决定保住高光还是保住暗部——因为传感器的动态范围是有限的。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>传感器、色彩与后期：数据从哪来、能改到什么程度</h2>
+          <p class="lede">后期不是「修补」，而是从传感器数据中提取你按下快门时想要的那幅画。理解数据边界，就不会幻想「后期万能」。</p>
+          <p><strong>RAW 与 JPEG</strong> 的根本区别：JPEG 是相机内部处理后的成品——白平衡、对比、锐度、色彩风格已固化，后期空间小；RAW 是传感器的原始数据，白平衡、曝光、色彩几乎无损可调。<mark class="key">拍 RAW</mark> 换来后期最大自由度，代价是体积大、需软件处理。</p>
+          <div class="callout warn"><span class="callout-label">数据的硬边界</span>RAW 不是万能。一旦高光<strong>截断</strong>（像素值顶到上限）或暗部<strong>截断</strong>（低到读出噪声淹没），原始数据也无法恢复——信息已经不存在了。后期只能调整已有的数据，不能凭空创造细节。因此「曝光准确」始终是第一步。</div>
           <table>
             <caption class="caption">常见色彩空间对比</caption>
             <thead><tr><th>色彩空间</th><th>色域范围</th><th>适用场景</th></tr></thead>
             <tbody>
-              <tr><th scope="row">sRGB</th><td>较小，覆盖多数显示器和网络</td><td>网络分享、手机浏览</td></tr>
-              <tr><th scope="row">Adobe RGB</th><td>较大，青绿色区域更广</td><td>印刷、专业输出</td></tr>
-              <tr><th scope="row">ProPhoto RGB</th><td>最大，接近传感器原生</th><td>后期存档、宽色域工作流</td></tr>
+              <tr><th scope="row">sRGB</th><td>较小，覆盖多数显示器与网络</td><td>网络分享、手机浏览</td></tr>
+              <tr><th scope="row">Adobe RGB</th><td>较大，青绿区域更广</td><td>印刷、专业输出</td></tr>
+              <tr><th scope="row">ProPhoto RGB</th><td>最大，接近传感器原生</td><td>后期存档、宽色域工作流</td></tr>
             </tbody>
           </table>
-          <p>色彩空间（color space）定义了红绿蓝三个原色的精确坐标，决定了设备能显示多少种颜色。如果用 Adobe RGB 编辑后直接导出 sRGB 用于网络，颜色会被压缩映射，可能出现偏色——正确做法是<mark class="key">编辑用宽色域，输出按用途转换</mark>，并在软件中启用色彩管理（软打样）来预览目标设备的效果。</p>
+          <p>色彩空间定义了红绿蓝原色的精确坐标，决定了设备能表示多少颜色。用宽色域编辑后直接导出为窄色域，会发生压缩映射、可能偏色——正确做法是<mark class="key">编辑用宽色域，输出按用途转换</mark>，并启用软打样预览目标设备效果。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">摄影速记</span><button class="copy-btn" type="button">复制</button>· 曝光三角：光圈管景深、快门管运动、ISO 管噪点
-· 互易律：减一档光圈 = 慢一档快门 = 提一档 ISO
-· 大光圈 f/1.4-2.8 浅景深虚化，小光圈 f/8-11 大景深清晰
-· 三分法：主体放交叉点，比居中更有张力
-· 引导线引视线，前景造纵深，框架内框架聚焦
-· 构图核心是控制视觉重量的分布
-· 光的方向：顺光平、侧光立、逆光氛围强
-· 黄金时段拍暖调，蓝调时段拍冷调
-· Adams 区域曝光：预想影调，反推曝光
-· 焦距决定透视：广角夸张距离，长焦压缩空间
-· 50mm 接近人眼透视，画面透明不带修饰
-· 拍 RAW 留最大后期自由度，JPEG 是成品
-· 曝光截断（纯白/纯黑）的数据无法恢复
-· sRGB 用于网络，Adobe RGB 用于印刷
-· 编辑用宽色域，输出按用途转换色彩空间</div>
+          <h2><span class="sec-num">6</span>前沿与跨学科：计算摄影正在改写「摄影」的定义</h2>
+          <p class="lede">手机摄影的崛起不是「小传感器奇迹」，而是算法接管了传统光学的部分职责。这条路线正在改变摄影的技术基础，也带来新的争议。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">区域曝光系统</span><span class="tl-date">1940s</span><p>Adams 等把「所见」与「所得」之间的转换系统化，首次给出了可操作的影调控制方法论。</p></div>
+            <div class="tl-item"><span class="tl-era">数码相机普及</span><span class="tl-date">1990s–2000s</span><p>传感器替代胶片，RAW 工作流使后期从暗房走向计算机，色彩管理成为标准环节。</p></div>
+            <div class="tl-item"><span class="tl-era">计算摄影兴起</span><span class="tl-date">2010s 起</span><p>多帧合成、HDR、夜景降噪、人像虚化等由算法完成——多张短曝光合成可等效获得更长的「曝光」，用计算换取传统光学的效果。</p></div>
+            <div class="tl-item"><span class="tl-era">AI 增强与生成</span><span class="tl-date">近年</span><p>去噪、超分、语义化修图乃至生成式补全进入工作流。它提升了效率，也模糊了「拍摄」与「生成」的界限。关于标注与伦理的讨论仍在进行，尚无统一规范。</p></div>
+          </div>
+          <div class="grid-2">
+            <div class="card"><h4>光学 × 景深</h4><p>模糊圈、衍射极限等光学概念，为「为什么过小光圈反而变软」「为什么手机虚化难自然」提供了物理解释。</p></div>
+            <div class="card"><h4>信号处理 × 降噪</h4><p>多帧对齐叠加能显著提升信噪比，这是手机夜景优于单张拍摄的根本原因——用计算换取了进光时间。</p></div>
+            <div class="card"><h4>色彩科学 × 显示</h4><p>色域、白点、色调映射等概念决定了「你修的色」与「别人看到的色」是否一致，是跨设备一致性的技术基础。</p></div>
+            <div class="card"><h4>知觉心理学 × 影调</h4><p>人眼对亮度是非线性感知的（近似对数），这正是影调曲线与「感知均匀」色彩空间背后的依据。</p></div>
+            <div class="card"><h4>计算机视觉 × 成像</h4><p>多帧合成、深度估计、语义分割等技术彼此支撑，构成了手机摄影「一片多算」的能力基础。</p></div>
+            <div class="card"><h4>图像伦理 × 真实性</h4><p>当生成式修图可无痕增删内容，「纪实摄影的边界在哪里」成为持续争论的问题——技术能力与行业规范并不总是同步。</p></div>
+          </div>
         </section>
+
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">参数不是越多越好，规则也不是越守越对。分清机制与偏好，才能做主动取舍。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">误解</span><pre>「ISO 越高画质越差，
+所以 ISO 越低越好；
+光圈越小越清晰；
+长焦会压缩空间。」</pre><p class="why">把三条经验当成绝对规律，忽略了它们各自成立的条件与代价。</p></div>
+            <div class="side good"><span class="side-tag">更准确</span><pre>「ISO 是增益，代价是信噪比——
+但欠曝后强行拉回同样损画质。
+光圈过小会因衍射变软，有最优点。
+透视由距离决定，镜头只是工具。」</pre><p class="why">理解每条规则背后的机制与代价，才能在具体场景中权衡。</p></div>
+          </div>
+          <table>
+            <caption class="caption">六个典型误区及其边界条件</caption>
+            <thead><tr><th>误区</th><th>为什么错</th><th>成立/失效的边界</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">ISO 越低画质一定越好</th><td>噪声与信噪比有关，欠曝后拉回同样损失画质</td><td>在保证正确曝光的前提下，低 ISO 才更优</td></tr>
+              <tr><th scope="row">光圈越小越清晰</th><td>过小光圈受衍射限制而变软</td><td>多数镜头有最佳光圈（常在中段），并非 f 值越大越好</td></tr>
+              <tr><th scope="row">长焦会压缩空间</th><td>透视由拍摄距离决定，非镜头属性</td><td>远距离拍摄自然透视较平；原地裁切不改变透视</td></tr>
+              <tr><th scope="row">三分法构图最优</th><td>它是启发式，不是最优解</td><td>极简、对称或需表达中心压迫感时，居中更合适</td></tr>
+              <tr><th scope="row">后期可以拯救废片</th><td>截断的数据无法恢复</td><td>轻微欠曝/过曝可救，严重截断不可救</td></tr>
+              <tr><th scope="row">像素越高画质越好</th><td>画质取决于传感器面积、镜头与算法</td><td>高像素有助于裁剪，但小底高像素可能噪声更多</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">摄影进阶速记</span><button class="copy-btn" type="button">复制</button>· 曝光本质：单位面积收到的光子数；由孔径面积与快门时间决定
+· 光圈面积 ∝ 1/f²；f 值每 ×√2，进光差一档（f 越大孔越小）
+· 完整档位：1.4 / 2 / 2.8 / 4 / 5.6 / 8 / 11 / 16
+· 互易律：一档光圈 = 一档快门 = 一档 ISO（进光 ×2 或 ÷2）
+· ISO 是读出增益，不增光，提亮同时放大噪声
+· 景深四变量：光圈、焦距、物距、传感器尺寸
+· 想虚化：近、长焦、大光圈；想全清：远、广角、收小光圈
+· 衍射极限：光圈过小反而变软，存在最佳光圈
+· 透视由距离决定，不由镜头；长焦的「压缩」来自你退远了
+· 50mm≈人眼视角，画面「透明」不带修饰
+· 光的方向：顺光平、侧光立、逆光氛围强、顶光慎用人像
+· 黄金时段暖柔影长；蓝调时段冷调宜夜景
+· 区域曝光：预想影调，反推曝光（先判断动态范围）
+· RAW 保留最大后期自由度；截断（纯白/纯黑）的数据无法恢复
+· 色彩空间：sRGB 上网、Adobe RGB 印刷、ProPhoto 存档
+· 编辑用宽色域，输出按用途转换；启用软打样预览</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用同一场景分别用 f/2 和 f/11 各拍一张，观察景深差异</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用三分法和居中构图各拍同一主体，对比视觉张力</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">在黄金时段和正午各拍一张人像，对比光线质量</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用广角和长焦拍同一远景，对比空间压缩感</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用 RAW 拍一张有意欠曝的照片，后期拉回暗部</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">将照片分别导出 sRGB 和 Adobe RGB，在网页上对比色彩</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用区域曝光法思路，预想一张黑白照片的影调分布后拍摄</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导并验证：f/2.8→f/4 与 1/250→1/125 为何是等价曝光（用面积计算说明）</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用「模糊圈」解释：为什么微距摄影的景深特别浅</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用同一角度分别拍 f/8 与 f/22，找出你镜头的最优光圈并说明衍射的影响</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">完成「原地换焦距再裁切」实验，用证据说明透视由距离而非镜头决定</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">对比「提高 ISO」与「后期拉亮」两种方案，分析各自对画质的影响</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用区域曝光思路，预写一张高反差黑白照片各区灰度分布，再拍摄验证</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">在同一场景分别用 sRGB 与 Adobe RGB 工作流输出，在网页端对比并解释差异</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">找一张「算法虚化」的手机人像，指出它在边缘/发丝处的破绽并解释原因</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">就「计算摄影生成的画面还算不算摄影」写一段有立场的论述，至少给出一支持一反对的理由</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">用曝光三要素设计三套「同亮度、不同效果」的参数组合，并说明各自服务的意图</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">原创交互式学习资料，基于曝光三角理论、Ansel Adams 区域曝光系统及通行摄影教学体系整理。</p>
+        <p class="footnote">基于曝光与景深的通行光学原理（光圈面积与 f 值平方关系、模糊圈与衍射极限）、Ansel Adams 与 Fred Archer 区域曝光系统、色彩管理通行知识及计算摄影的公开技术概述整理。涉及前沿技术方向的表述为概括性说明，具体实现与规范仍在演进，请以原始资料为准。</p>
       </footer>
     </div>
   </article>

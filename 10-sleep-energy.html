@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>睡眠与精力管理进阶指南</h1>
-          <p class="report-intro__summary">睡眠不是「关灯」，而是一套被睡眠周期、昼夜节律和激素精密调控的生理程序。这份指南讲睡眠阶段、节律、咖啡因与酒精的影响，以及如何科学应对失眠。</p>
+          <p class="report-intro__summary">睡眠不是「关灯」，而是一套被睡眠周期、昼夜节律与激素精密调控的生理程序。这份指南把「睡眠债」「咖啡因半衰期」「为什么熬夜越熬越清醒」拆成可推演的模型：双过程模型、腺苷动力学、睡眠债累积方程与 CBT-I 的机制。读懂模型，你就不再需要一份被别人背下来的「作息清单」。</p>
           <div class="intro-meta">
             <span>领域：健康</span>
             <span>难度：进阶</span>
@@ -26,80 +26,224 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>睡眠的周期与阶段</h2>
-          <p class="lede">一晚睡眠由约 4–6 个「睡眠周期」组成，每个周期约 90 分钟。</p>
+          <h2><span class="sec-num">1</span>睡眠结构的生理学：阶段、周期与「因诊断而生」的指标</h2>
+          <p class="lede">一晚睡眠由 4–6 个「睡眠周期」组成，每周期约 90 分钟。但周期不是时钟，而是脑电、眼动与肌张力三套信号共同切分出的生理状态序列。</p>
+          <p>睡眠分期最初依赖<strong>多导睡眠图</strong>（polysomnography, PSG）：同时记录脑电（EEG）、眼电（EOG）、肌电（EMG）。旧标准（Rechtschaffen &amp; Kales, 1968）把非快速眼动睡眠分为 N1–N4，2007 年美国睡眠医学会（AASM）修订标准把深睡 N3 与 N4 合并为 N3。这套「标准会改」的事实本身很重要：<strong>分期是人为划定的诊断窗口，而非睡眠的天然刻度</strong>。</p>
           <table>
-            <caption class="caption">睡眠阶段</caption>
-            <thead><tr><th>阶段</th><th>特征</th><th>作用</th></tr></thead>
+            <caption class="caption">睡眠阶段：特征与主要功能（功能性描述多来自关联研究，因果强度不一）</caption>
+            <thead><tr><th>阶段</th><th>脑电 / 生理特征</th><th>整夜占比</th><th>主要功能假说</th></tr></thead>
             <tbody>
-              <tr><th scope="row">非REM 1（浅睡）</th><td>刚入睡，易醒</td><td>过渡</td></tr>
-              <tr><th scope="row">非REM 2（浅睡）</th><td>心率体温下降</td><td>占整晚约一半</td></tr>
-              <tr><th scope="row">非REM 3（深睡）</th><td>最难唤醒</td><td>身体修复、生长激素分泌</td></tr>
-              <tr><th scope="row">REM（快速眼动）</th><td>做梦、脑活跃</td><td>记忆巩固、情绪调节</td></tr>
+              <tr><th scope="row">N1（浅睡）</th><td>α 波衰减、θ 波出现，易醒</td><td>约 5%</td><td>入睡过渡</td></tr>
+              <tr><th scope="row">N2（浅睡）</th><td>纺锤波与 K 复合波，心率体温下降</td><td>约 45–55%</td><td>睡眠巩固、运动记忆</td></tr>
+              <tr><th scope="row">N3（深睡 / 慢波）</th><td>高幅 δ 波，最难唤醒</td><td>前半夜为主</td><td>生长激素分泌、身体修复、陈述性记忆</td></tr>
+              <tr><th scope="row">REM（快速眼动）</th><td>脑电近似清醒、骨骼肌张力近乎消失</td><td>后半夜为主</td><td>情绪调节、程序性记忆</td></tr>
             </tbody>
           </table>
-          <p>深睡集中在前半夜、REM 集中在后半夜。所以「睡得够」还不够，还得「睡得全」——熬夜压缩的往往是后半夜宝贵的 REM。</p>
+          <p>关键机制：<strong>深睡集中在前半夜、REM 集中在后半夜</strong>，这是两个独立驱动力（下文 Process S 与昼夜节律）互相耦合的结果。因此「睡得短」与「睡得晚」的代价并不相同——熬夜压缩的往往是后半夜更宝贵的 REM 与最后一个周期的深睡。</p>
+          <div class="callout tip"><span class="callout-label">量化视角</span>「睡眠效率」= 实际睡着时间 / 卧床时间。健康成人的参考下限约 85%；CBT-I 的卧床压缩就以此为调节目标（见第 4 节）。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>昼夜节律与激素</h2>
-          <p class="lede">你的身体有一台约 24 小时的「生物钟」，由光照校准。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>褪黑素</h4><p>天黑后分泌、促进入睡；强光（尤其蓝光）会抑制它。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>皮质醇</h4><p>清晨升高，帮你醒来、提供警觉；长期熬夜会打乱它的节律。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>光照校准</h4><p>晨光最强力地把生物钟「拨回」到正常节奏。</p></div></div>
-          </div>
-          <div class="callout tip"><span class="callout-label">实用建议</span>固定起床时间 + 早晨见光，是稳定生物钟最有效的两步，比睡前吃药更根本。</div>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">3</span>咖啡因与酒精：睡眠的两大敌人</h2>
-          <table>
-            <caption class="caption">影响睡眠的物质</caption>
-            <thead><tr><th>物质</th><th>作用机制</th><th>建议</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">咖啡因</th><td>阻断腺苷（困意信号），半衰期约 5–6 小时</td><td>下午 2 点后尽量不摄入</td></tr>
-              <tr><th scope="row">酒精</th><td>让人「更快睡着」但破坏深睡与 REM</td><td>睡前 3 小时内避免</td></tr>
-              <tr><th scope="row">尼古丁</th><td>兴奋剂，缩短总睡眠</td><td>睡前避免</td></tr>
-            </tbody>
-          </table>
-          <p>「睡前喝酒助眠」是常见误区——酒精让你「昏睡」，却偷走让你真正恢复的深睡和 REM，醒来更累。</p>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">4</span>睡眠债务与失眠</h2>
-          <p class="lede">睡眠债可以「部分偿还」，但无法靠周末一次性补回来。</p>
+          <h2><span class="sec-num">2</span>为什么困：双过程模型（Process S 与 Process C）</h2>
+          <p class="lede">「困」不是单一变量，而是两个相互独立的驱动力之和。这就是 Borbély 于 1982 年提出的<strong>双过程模型</strong>，睡眠科学中少有的、经受住数十年检验的定量框架。</p>
+          <p>两个过程分别是：</p>
           <ul>
-            <li><strong>睡眠债</strong>：长期少睡会累积「债」，靠周末补觉只能还一部分，且会进一步打乱节律。</li>
-            <li><strong>失眠的认知行为疗法（CBT-I）</strong>：限制卧床时间、只在困时上床、建立「床=睡觉」的联结、改变对失眠的灾难化认知——这是目前失眠的一线非药物疗法。</li>
-            <li><strong>午睡</strong>：20 分钟内最佳，避免进入深睡导致醒来更昏沉。</li>
+            <li><strong>Process S（稳态睡眠压力，homeostatic）</strong>：清醒时持续攀升、睡眠时指数衰减。生理底物主要是腺苷在基底前脑等区域累积，抑制促觉醒神经元。</li>
+            <li><strong>Process C（昼夜节律，circadian）</strong>：由视交叉上核（SCN）驱动的约 24.2 小时内生节律，独立于你睡了多久。</li>
           </ul>
+          <p>困意（sleep propensity）可近似为两者的叠加。用两个常微分方程刻画其结构：</p>
+          <div class="prompt-block"><span class="prompt-label">双过程模型（结构式，单位任意）</span><button class="copy-btn" type="button">复制</button>Process S（清醒时累积、睡眠时清除）：
+  dS/dt = +a          （清醒，a &gt; 0，线性上爬）
+  dS/dt = −b · S      （睡眠，指数衰减，b &gt; 0）
+  ⇒ 睡眠中 S(t) = S₀ · e^(−b·t)，还原度 ≈ 1 − e^(−b·t)
+
+Process C（昼夜节律，近正弦）：
+  C(t) = A · cos( 2π(t−φ)/τ ) + C₀，其中 τ ≈ 24.2 h，φ 为相位
+
+困意 ≈ S + C（叠加，而非相乘）
+
+落地推论：
+  · 醒来时刻由 C 的相位（生物钟）决定，而非「睡够了没」
+  · 熬夜越晚越清醒，是因为 C 正处上升段，抵消了部分 S
+  · 午后低谷 ≈ 12:00–16:00，是 C 的下降相 + 餐后叠加</div>
+          <p>这个模型解释了两个常见困惑：<strong>①「熬夜越熬越精神」</strong>——凌晨后段 Process C 开始回升，暂时压过持续累积的 S；一旦天亮后 C 继续升高而 S 也达到极高，你在上午补觉时反而难以深睡。<strong>②「倒时差为何这么难受」</strong>——S 与 C 的相位错位，两个信号不再协调，身体的「睡眠窗口」与实际作息打架，需要数天才能重新对齐（每日相位前移/后移通常只有约 1–1.5 小时的极限）。</p>
+          <div class="callout warn"><span class="callout-label">误区</span>「只要睡够 8 小时，几点睡都行」忽略了 Process C：在生物钟的白天窗口里睡觉，REM 比例、深睡质量都会下降。睡眠的「时长」与「相位」是两个必须同时满足的约束。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">睡眠速记</span><button class="copy-btn" type="button">复制</button>· 睡眠周期约 90 分钟；深睡在前半夜，REM 在后半夜
-· 褪黑素促睡、皮质醇促醒，光照校准生物钟
-· 咖啡因半衰期 5–6 小时；酒精破坏深睡与 REM
-· 固定起床 + 晨光最有效；失眠首选 CBT-I</div>
+          <h2><span class="sec-num">3</span>咖啡因动力学：不只是「半衰期 5–6 小时」</h2>
+          <p class="lede">「咖啡因半衰期约 5–6 小时」只是计算的起点。要知道「现在喝的咖啡几点失效」，需要把它当成一个药代动力学问题来做。</p>
+          <p>咖啡因的作用机制是<strong>竞争性拮抗腺苷受体</strong>（主要是 A1 与 A2A 亚型）：它与腺苷争夺受体位点，却不激活受体，因此<strong>只是屏蔽困意信号，并不清除 Process S 的腺苷</strong>。这是「咖啡因不还睡眠债」的机制层解释。</p>
+          <p>咖啡因在体内近似一级消除动力学（固定比例/单位时间被代谢），因此血药浓度按指数衰减：</p>
+          <div class="prompt-block"><span class="prompt-label">咖啡因血药浓度衰减与半衰期</span><button class="copy-btn" type="button">复制</button>一级消除：C(t) = C₀ · (½)^(t / t½)
+
+健康成人 t½ 约 5–6 小时（个体差异大，受肝酶 CYP1A2 活性、
+口服避孕药、孕期、吸烟显著影响；孕期可延长至约 15 小时）
+
+举例：下午 15:00 喝一杯约 100 mg 咖啡因（C₀ = 100 mg），t½ = 5 h
+  · 20:00（t = 5 h）→ 仍剩 50 mg
+  · 23:00（t = 8 h）→ 100 × (½)^(8/5) ≈ 100 × 0.330 ≈ 33 mg
+  · 第二天 01:00（t = 10 h）→ 100 × (½)^2 = 25 mg
+
+反推「睡前残留 ≤ 多少算安全」：很多研究者取 ≤ 半杯咖啡量级（约 30–50 mg）
+  ⇒ 要留出 ≈ 2–3 个半衰期 ≈ 10–18 小时
+
+剂量换算：一杯 8 oz 手冲 / 美式 ≈ 95–165 mg；一份意式浓缩 ≈ 63 mg；
+  一杯红茶 ≈ 40–70 mg；一罐可乐 ≈ 34 mg（均为量级估计）</div>
+          <p><strong>关键权衡</strong>：咖啡因对「入睡潜伏期」和「总睡眠时间」的损害随残留剂量单调恶化，但个体对「主观效果」的感知与客观残留剂量并不同步——很多人「喝完照样睡」指的是睡着快，而非睡眠结构没被破坏（研究一致发现咖啡因会减少慢波睡眠、降低睡眠效率）。</p>
+          <p>另有一个自证式陷阱：咖啡因提高警觉的效应在长期使用者中部分被<strong>耐受性</strong>抵消，此时停用会因腺苷受体上调而戒断性头痛、嗜睡——于是人误以为「我离不开咖啡」，实为受体密度的适应。</p>
+          <div class="callout tip"><span class="callout-label">可自测的规则</span>算一下你的「咖啡因截止时刻」：用你最后一次摄入的时间 + 约 2 个半衰期（≈10–12 h）。若这个时刻落在睡前，就应当前移摄入时间或减量。这是可验证的规则，胜过「下午 2 点后别喝」这类一刀切口号。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">4</span>睡眠债的累积模型与 CBT-I 的机制</h2>
+          <p class="lede">「睡眠债」是一个被滥用的比喻。把它写成可推演的模型后，你会发现：债可以借、可以部分偿还，但偿还效率高度依赖偿还的时机与结构。</p>
+          <p>把「欠债」定义为与实际睡眠需求（个体昼夜需求，多数成人约 7–9 小时）的累积缺口，可写成一个简单累积式：</p>
+          <div class="prompt-block"><span class="prompt-label">睡眠债累积与偿还模型</span><button class="copy-btn" type="button">复制</button>累积债务：Debt(n) = Σ [ D_need − D_actual(i) ]，i = 1..n（单位：小时）
+
+· D_need ≈ 7–9 h/晚（个体差异真实存在，且有遗传成分）
+· 缺口为正则累积、为负（超睡）则以极低效率偿还
+· 偿还效率 &lt; 1：补觉存在「收益递减」，且深度/REM 的比例
+  由 Process C 相位决定 —— 白天补觉的「有效偿还率」更低
+
+后果的边际性：债务影响不是线性的，认知（尤其警觉、
+  持续注意）在债务较低时对缺口最敏感（前期下降最快），
+  随后进入一段「看起来适应了」的平台期 —— 但生理指标
+  （如某些激素、炎症标志）仍在恶化。主观感受因此不可靠。
+
+偿还的正确姿势：
+  1) 「短补 + 提前睡」优于「周末一次睡到中午」（后者进一步错位 Process C）
+  2) 午睡 ≤ 20 min（停在 N1/N2，避免进入 N3 后醒来昏沉）
+  3) 用固定起床时间锚定相位，让债务在数晚内自然摊平</div>
+          <p>这就解释了一个反直觉现象：<strong>周末补觉后周一反而更累</strong>——睡眠被「社交时差」（social jet lag，作息相位在周末后移、工作日后又前移）反复拉扯，抵消了补觉收益。</p>
+          <h3>CBT-I：失眠的一线非药物疗法及其机制</h3>
+          <p>失眠的认知行为疗法（CBT-I）被主流指南列为慢性失眠的一线治疗（效果与药物相当或更优，且无依赖与戒断）。它不是「放松技巧」的堆砌，而是一组针对特定维持机制的干预：</p>
+          <div class="feature-list">
+            <div class="feature"><div class="f-ico">1</div><div><h4>刺激控制</h4><p>只在困时上床、躺 20 分钟睡不着就离床。机制是重建「床 → 睡眠」的<strong>条件反射</strong>，切断「床 → 焦虑性清醒」的错误联结（经典条件化）。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>睡眠限制</h4><p>先用较短的卧床窗口（贴近真实睡眠时长）制造轻度睡眠剥夺、抬高 Process S，压缩「躺床上清醒」的时间，再把卧床时间逐步延长。这是用稳态压力做杠杆。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>认知重构</h4><p>处理对失眠的灾难化信念（「今晚睡不好明天就完了」）。这类担忧本身是<strong>唤醒源</strong>，形成「失眠 → 焦虑 → 更失眠」的正反馈，认知干预切断这个回路。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>睡眠卫生与放松</h4><p>光照、咖啡因、运动时机等调节项，以及渐进肌肉放松、呼吸训练等降低生理唤醒。它们是辅助，而非核心——单独做睡眠卫生的疗效显著弱于完整 CBT-I。</p></div></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">边界</span>CBT-I 对慢性失眠证据充分，但并非万能：由睡眠呼吸暂停（打鼾+白天嗜睡）、不宁腿、严重精神障碍或药物导致的失眠，需要先处理原发病。把一切都归因于「习惯不好」是常见误判。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>咖啡因之外的物质与行为杠杆</h2>
+          <p class="lede">除了咖啡因，还有几个常被误用的杠杆：酒精、尼古丁、运动与光照。它们的机制各不相同，效果方向也常常相反。</p>
+          <table>
+            <caption class="caption">影响睡眠的物质与行为（机制与建议；具体效应量因个体而异）</caption>
+            <thead><tr><th>因素</th><th>作用机制</th><th>要点</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">酒精</th><td>增强 GABA 能抑制、缩短入睡潜伏期；但抑制 REM、后半程出现「反跳性觉醒」</td><td>让你更快「昏睡」，却偷走后半夜的 REM 与整体睡眠质量，醒来更累</td></tr>
+              <tr><th scope="row">尼古丁</th><td>作用于 nAChR，属兴奋剂，缩短总睡眠、增加觉醒</td><td>戒烟期短期睡眠更差，属常见但可过渡的现象</td></tr>
+              <tr><th scope="row">运动</th><td>急性提升核心体温与交感兴奋；长期改善睡眠质量与情绪</td><td>高强运动距睡前过近会推迟入睡；规律的中等强度运动是稳定器</td></tr>
+              <tr><th scope="row">光照</th><td>经 ipRGC 感光细胞 → SCN，是重置 Process C 相位的最强授时因子（Zeitgeber）</td><td>晨光相位前移、晚间强光（尤其蓝光）相位后移；适度使用</td></tr>
+              <tr><th scope="row">进食时机</th><td>晚近进食影响核心体温与代谢节律</td><td>睡前大量进食可能增加反流与觉醒；具体阈值个体差异大</td></tr>
+            </tbody>
+          </table>
+          <div class="callout tip"><span class="callout-label">优先级</span>如果只能改一件事，改<strong>固定起床时间 + 早晨见光</strong>。因为它直接锁定 Process C 的相位，而相位稳定后，Process S 与困意信号才能重新协调——这比任何助眠补剂都更根本。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">睡眠科学近二十年从「描述现象」走向「机制与因果」，以下几条主线值得追踪。标注了哪些结论已验证、哪些仍有争议。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">双过程模型</span><span class="tl-date">Borbély, 1982</span><p>用 Process S 与 Process C 的叠加解释睡眠-觉醒调节，是本领域少见的、经受住数十年检验的定量框架，至今仍是理解「困意」的基础模型。</p></div>
+            <div class="tl-item"><span class="tl-era">腺苷与促觉醒通路</span><span class="tl-date">1990s–2000s</span><p>确认腺苷在基底前脑累积抑制促觉醒神经元；食欲素（orexin）系统的发现被用于解释发作性睡病，并催生相关药物。这是「睡眠不仅仅是疲劳」的神经化学基础。</p></div>
+            <div class="tl-item"><span class="tl-era">睡眠与记忆巩固</span><span class="tl-date">2000s 至今</span><p>大量研究支持睡眠（尤其慢波与 REM）参与陈述性与程序性记忆的巩固；「靶向记忆再激活」（在慢波睡眠中给予关联线索）是近年热点，但效应量与可推广性仍在讨论。</p></div>
+            <div class="tl-item"><span class="tl-era">类淋巴系统与大脑清除</span><span class="tl-date">2010s</span><p>有研究提出「类淋巴系统」（glymphatic）在睡眠期间清除代谢废物（如 β-淀粉样蛋白）效率更高，为睡眠与神经退行性疾病的联系提供了候选机制。该机制在人体的证据强度与测量方法仍有争议，宜表述为「有影响力的假说」。</p></div>
+            <div class="tl-item"><span class="tl-era">数字 CBT-I 与大样本证据</span><span class="tl-date">2010s 至今</span><p>CBT-I 被主流指南列为慢性失眠一线治疗；近年的随机对照试验与系统综述支持其效果可媲美或优于药物、且无依赖。基于 App 的数字化 CBT-I 扩大了可及性，但其依从性与长期维持仍是研究重点。</p></div>
+            <div class="tl-item"><span class="tl-era">生物钟的分子机制与授时</span><span class="tl-date">2017 诺奖</span><p>昼夜节律的分子机制研究（period 等基因的负反馈环路）获 2017 年诺贝尔生理学或医学奖，把「生物钟」从行为学概念落到了分子层面，也支撑了「光照授时」这一干预的科学性。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到「睡眠不足导致 X」的标题，先分清是<strong>相关性观察</strong>还是<strong>随机干预</strong>：观测研究无法排除第三变量（如压力、疾病）同时影响睡眠与 Y；而睡眠剥夺实验可以建立短期因果，却未必外推到长期。本指南对争议项均标注了状态。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">睡眠与精力不是孤立的健康话题，它与多个学科共享同一套模型语言。</p>
+          <div class="grid-2">
+            <div class="card"><h4>神经科学</h4><p>脑电（EEG）频段、促觉醒/促睡眠核团的相互抑制、腺苷与食欲素系统——这是「困意」的硬件层解释。</p></div>
+            <div class="card"><h4>内分泌学</h4><p>皮质醇的晨峰、生长激素在深睡的脉冲式分泌、褪黑素的暗相分泌，共同构成睡眠-激素的双向调节。</p></div>
+            <div class="card"><h4>药代动力学</h4><p>咖啡因半衰期与一级消除是典型的 PK 问题；「几点失效」可以直接用 C(t)=C₀·(½)^(t/t½) 计算。</p></div>
+            <div class="card"><h4>动力系统与控制论</h4><p>双过程模型本质是两个振子/累积器的耦合；相位对齐就是「锁相」，时差就是解耦与再同步。</p></div>
+            <div class="card"><h4>行为心理学</h4><p>CBT-I 的刺激控制是经典条件化、认知重构是信念-情绪回路干预，都可以用学习理论的语言精确描述。</p></div>
+            <div class="card"><h4>流行病学与统计</h4><p>睡眠与代谢/心血管/认知的关联多来自大样本队列；区分观察关联与因果，是判断结论可靠性的关键。</p></div>
+          </div>
+          <p>把它们放一起看，一个共同结构浮现：<strong>周期性驱动 + 累积状态 + 相位对齐</strong>。这也是为什么「倒时差」可以用和「稳定作息」完全相同的语言来描述——都是让两个过程重新协调。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「睡前喝酒助眠」
+「只要睡够 8 小时，几点睡都行」
+「咖啡因 5 小时就代谢完了」
+「周末多睡能一次还清睡眠债」
+「午睡越久越补」
+「失眠就该躺着努力睡」</pre><div class="why">问题：这些都忽略了机制。酒精抑制 REM 并引发后半夜反跳觉醒；Process C 让「何时睡」与「睡多久」同等重要；半衰期 5–6 小时意味着要留 2–3 个半衰期才基本清除；睡眠债偿还效率 &lt; 1 且依赖相位；午睡超过 20 分钟易进入深睡导致「睡醒更困」；「努力入睡」本身是唤醒源，会强化失眠的条件化。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>固定起床 + 晨光，锚定生物钟相位
+咖啡因截止 = 末次摄入 + ≈2 个半衰期
+补觉用「短补 + 提前睡」，避免周末大睡
+午睡 ≤ 20 min，停在浅睡
+睡不着就离床，重建「床=睡」联结（CBT-I）</pre><div class="why">要点：机制一旦清楚，对策就是可计算、可自测的。「困」是 S 与 C 的叠加，「债」是累积缺口，「失眠」往往是维持它的错误条件反射——改机制，而不是硬扛。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">固定起床 + 晨光</th><td>多数作息紊乱、轻度相位延迟</td><td>需先排除睡眠呼吸暂停等原发病；倒班工作需专门方案</td></tr>
+              <tr><th scope="row">午睡 20 分钟</th><td>午后低谷、睡眠债轻度累积</td><td>严重失眠者（可能进一步降低夜间 Process S）</td></tr>
+              <tr><th scope="row">咖啡因截止</th><td>入睡困难、浅睡多</td><td>个体代谢差异大；孕期/服药者半衰期显著延长</td></tr>
+              <tr><th scope="row">CBT-I</th><td>慢性失眠（一线）</td><td>呼吸暂停、不宁腿、重症精神障碍等需先治原发病</td></tr>
+              <tr><th scope="row">褪黑素补剂</th><td>倒时差、相位前移的辅助</td><td>非「万能助眠药」，剂量与时机讲究，长期证据有限</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">睡眠与精力速记</span><button class="copy-btn" type="button">复制</button>· 睡眠周期约 90 分钟；一晚 4–6 个周期
+· 深睡在前半夜、REM 在后半夜；睡得短与睡得晚代价不同
+· 分期是诊断窗口（旧 N1–4 → 2007 起 N3），不是天然刻度
+· 困意 ≈ Process S（腺苷累积）+ Process C（昼夜节律）
+· Process S：清醒线性上爬，睡眠指数衰减 S=S₀·e^(−b·t)
+· Process C：约 24.2 h 内节律，由 SCN 驱动、光照授时
+· 「熬夜越熬越清醒」= C 的回升暂时抵消 S
+· 咖啡因 = 竞争性拮抗腺苷受体，只屏蔽困意、不还债
+· 一级消除：C(t)=C₀·(½)^(t/t½)；t½ 约 5–6 h（个体差异大）
+· 咖啡因截止 ≈ 末次摄入 + 2 个半衰期（≈10–12 h）
+· 睡眠债 = Σ(需求 − 实际)；偿还效率 &lt; 1，且依赖相位
+· 「短补 + 提前睡」优于「周末一次睡到中午」
+· 午睡 ≤ 20 min，停在 N1/N2，避免深睡后昏沉
+· CBT-I 四支柱：刺激控制、睡眠限制、认知重构、睡眠卫生
+· 刺激控制 = 重建「床 → 睡」条件反射，切断失眠正反馈
+· 最强杠杆：固定起床时间 + 晨光，锁定相位
+· 失眠一线是 CBT-I（效果≈或优于药物、无依赖）
+· 先排除原发病：呼吸暂停、不宁腿、精神障碍
+· 观察性关联 ≠ 因果；引用时注明证据类型</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求产出可检验的证据或推导，而非「做过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">设定固定起床时间并连续坚持 5 天</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">起床后接触 10 分钟自然光</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">把咖啡因摄入提前到下午 2 点前</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">睡前 3 小时停止饮酒</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">建立 30 分钟睡前仪式并坚持一周</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">记录一周睡眠，标出深睡/REM 的大致分布</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用 C(t)=C₀·(½)^(t/t½) 计算你今日最后一杯咖啡的残留量：分别按 t½=5 h 与 t½=6 h 求睡前（23:00）残留，并判断是否需要前移摄入时间</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">画出你自己的「困意双过程图」：横轴为 24 h，分别画 S（假定清醒线性上升、睡眠指数衰减）与 C（正弦），标出你的主观困倦时刻，检验模型是否解释你的低谷</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">连续记录 5 晚睡眠（卧床时间、估计入睡时刻、夜醒次数），计算每晚「睡眠效率」，并与 85% 参考线比较</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用 Debt(n)=Σ(需求−实际) 估算你本周的睡眠债（需求取 7.5 h/晚），再设计一个「短补+提前睡」的偿还方案并说明它为何优于周末大睡</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">做一次为期 5 天的「固定起床 + 晨光 15 分钟」实验，记录入睡时刻与晨间警觉度，指出相位是否前移</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">禁酒实验：选择 3 个「饮酒助眠」的夜晚与 3 个不饮酒夜晚，对比入睡潜伏期与次日上午状态，写出与「酒精抑制 REM」机制的吻合/矛盾之处</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">为一次「睡不着」的夜晚实施刺激控制：躺 20 分钟未睡着即离床、做低唤醒活动，记录并解释它对条件反射的干预原理</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">查证一项睡眠研究（如 Borbély 双过程模型的原始论文，或 2017 年诺贝尔奖的昼夜节律机制工作），写出其核心结论、证据类型（观察/干预）与至少一条局限</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">自评是否需就医：对照呼吸暂停（打鼾+白天嗜睡）、不宁腿、持续&gt;3 个月且影响日间功能的失眠，写出你的判断依据与下一步</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，基于睡眠科学与昼夜节律的通行结论整理。</p>
+        <p class="footnote">原创交互式学习资料。机制部分参考 Borbély 的双过程模型（1982）与睡眠分期的 AASM 修订标准（2007）；腺苷/食欲素与记忆巩固部分参考睡眠神经科学的通行结论；CBT-I 作为慢性失眠一线治疗的定位参考主流临床指南。咖啡因半衰期、睡眠需求时长等数值为量级估计，个体差异显著，具体请以原始文献与专业医疗建议为准。争议状态已标注：「类淋巴系统清除」与「靶向记忆再激活」宜视为有影响力的假说，而非定论；睡眠与代谢/心血管的关联多来自观察性队列，不能直接解读为因果。本指南不构成医疗建议，持续睡眠问题请咨询专业医生。</p>
       </footer>
     </div>
   </article>

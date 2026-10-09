@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>大模型应用与智能体指南</h1>
-          <p class="report-intro__summary">大模型应用的本质，是在「概率补全机器」周围搭一套可控的工程系统：管住输入（提示与检索）、管住输出（评测与结构化）、管住行为（工具与护栏）。本指南覆盖 Token 经济学、提示模式、RAG、智能体设计与幻觉治理。</p>
+          <p class="report-intro__summary">大模型应用的本质，是在「下一 token 概率预测器」周围搭一套可控的工程系统。本指南先拆开它的数学内核——自注意力 QKV 的代数形式与 O(n²d) 复杂度、位置编码、上下文窗口的代价结构——再把它装回系统：RAG 的检索流水线、微调与提示的取舍、以 ReAct 为代表的智能体循环、以及幻觉的机制成因与治理边界。</p>
           <div class="intro-meta">
             <span>领域：科技 · AI</span>
             <span>难度：进阶</span>
@@ -25,123 +25,312 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>Token 与上下文窗口的经济学</h2>
-          <p class="lede">模型的「货币」是 token：计费、限流、上下文长度全都按它结算。</p>
-          <ul>
-            <li><strong>Token 是子词单元</strong>：不是「字」也不是「词」，按 BPE 一类算法切分；英文一个常见词约 1~2 个 token，一个汉字通常约 1~2 个 token，取决于分词器。</li>
-            <li><strong>计费结构</strong>：成本 = 输入 token 单价 × 输入量 + 输出 token 单价 × 输出量，输出通常比输入贵数倍——限制输出长度比砍输入更省。</li>
-            <li><strong>上下文窗口</strong>：单次请求能容纳的 token 总量（如 128K）。「长上下文」不等于免费：标准自注意力的计算量随序列长度平方增长，且缓存的历史越长，延迟与费用越高。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">注意</span>长上下文里模型对信息的利用并不均匀——放在中间的关键材料更容易被忽略（lost in the middle 现象）。重要指令放最前、关键材料放最后，是最便宜的可靠性优化。</div>
+          <h2><span class="sec-num">1</span>语言模型的数学形态：从条件概率到 Transformer</h2>
+          <p class="lede">自回归语言模型只做一件事：给定前文，预测下一个 token 的概率分布。所有能力与缺陷都从这个目标里长出来。</p>
+          <p>把序列 w<sub>1..n</sub> 的联合概率按链式法则分解，模型的训练目标就是最大化它的对数似然，等价于最小化交叉熵：</p>
+          <div class="prompt-block"><span class="prompt-label">自回归目标与困惑度</span><button class="copy-btn" type="button">复制</button>P(w_1..w_n) = Π_t P(w_t | w_1..w_{t-1})
+
+训练目标（最小化）：
+  L = −(1/n) Σ_t log P_θ( w_t | w_&lt;t )
+
+困惑度（Perplexity）：
+  PPL = exp(L) = exp(平均负对数似然)
+  · PPL 可读作「模型在每一步平均纠结于多少个等可能的候选」
+  · PPL 越低越好，但它是「建模质量」而非「任务质量」</div>
+  <p>关键推论：模型学到的是<strong>「什么文本更可能」</strong>，而不是「什么为真」。流畅（高概率续写）与正确（事实）之间没有必然联系——这是后文幻觉讨论的数学根源。训练目标是局部 token 预测，而事实一致性是全局约束，两者天然错位。</p>
+  <p>现代大模型用 Transformer 作为骨干。输入 token 先经嵌入矩阵变为向量，加位置信息，再穿过若干层「多头自注意力 + 前馈网络」的残差块，最后投影回词表维度输出 logits，过 softmax 得概率。</p>
+  <div class="callout tip"><span class="callout-label">锚点</span>记住三件事：目标是条件概率、结构是 Transformer、推理是自回归采样。提示工程、RAG、智能体都是围绕这三点的工程补丁。</div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">2</span>自注意力：QKV 的代数形式与 O(n²d) 复杂度</h2>
+          <p class="lede">注意力是一个可微的软检索：每个位置发出一个查询，去所有位置里按相似度加权取回信息。它的代价藏在 n² 里。</p>
+          <div class="prompt-block"><span class="prompt-label">缩放点积注意力（Scaled Dot-Product Attention）</span><button class="copy-btn" type="button">复制</button>输入：X ∈ R^(n×d)   （n 个 token，每个 d 维）
+投影矩阵：W_Q, W_K, W_V ∈ R^(d×d_k)
+
+Q = X W_Q   （Query：我要找什么）
+K = X W_K   （Key：我是什么标签）
+V = X W_V   （Value：我携带的内容）
+
+Attention(Q,K,V) = softmax( Q Kᵀ / √d_k ) V
+
+逐项拆解：
+  · S = Q Kᵀ ∈ R^(n×n)     每对 (i,j) 的相似度矩阵（n² 个元素）
+  · 除以 √d_k：防止点积随维度增大而方差膨胀，使 softmax 不致饱和
+  · softmax 按行归一化 → 权重矩阵 A（每行和为 1）
+  · A V 是按权重对 V 的加权平均
+
+复杂度：
+  · 计算注意力矩阵 O(n² d)      ← 瓶颈
+  · 存储注意力矩阵 O(n²)        ← 显存瓶颈
+  · 多头：h 个独立子空间并行，拼接后再投影，代价 ≈ h ×（单头代价）
+  · 序列翻倍 → 注意力计算量变约 4 倍</div>
+  <p>多头注意力的意义：不同头可以学到不同的关系（局部相邻、指代、语法依存），相当于在多个子空间并行做软检索。这解释了为什么大模型既能做长距离引用，又能捕捉局部搭配。</p>
+  <p>O(n²) 是所有「长上下文」问题的物理根源：把窗口从 4K 扩到 128K，注意力计算量增长 (128/4)² = 1024 倍。工程上的三条应对路线是：<strong>稀疏/滑窗注意力</strong>（只算局部与少数全局位置）、<strong>线性注意力近似</strong>（用核函数把 softmax 解耦为可结合的形式，降到 O(n)）、<strong>精确优化</strong>（如 FlashAttention 一族通过分块与重计算降低显存并在 GPU 上更快，但不改变 O(n²) 的渐进复杂度）。</p>
+  <table>
+    <caption class="caption">注意力复杂度与工程取舍</caption>
+    <thead><tr><th>方案</th><th>渐进复杂度</th><th>代价 / 适用</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">标准自注意力</th><td>时间 O(n²d)，显存 O(n²)</td><td>短序列质量最优，长序列显存墙</td></tr>
+      <tr><th scope="row">滑窗 / 稀疏</th><td>O(n·w·d)，w 为窗口</td><td>牺牲部分全局依赖，长文本可扩展</td></tr>
+      <tr><th scope="row">线性 / 核近似</th><td>O(n·d²)</td><td>长序列高效，但表达力与实现细节仍有争议</td></tr>
+      <tr><th scope="row">KV 缓存</th><td>推理解码单步 O(n·d)</td><td>用显存换延迟，是长上下文服务的基本手段</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><span class="callout-label">澄清</span>「长上下文」不等于「免费吃下全书」。注意力是二次成本，缓存随对话增长，且信息利用并不均匀——见下一节。</div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">3</span>位置编码、上下文窗口与 Token 经济学</h2>
+          <p class="lede">注意力本身对顺序无感（是置换等变的），顺序信息必须显式注入；窗口长度、费用与延迟三者由同一套参数耦合决定。</p>
+          <p>因为 softmax(QK<sup>T</sup>)V 对输入行做置换时结果同样置换，模型无法区分「猫追老鼠」与「老鼠追猫」。位置编码就是补上这一信息。主流有两条路线：</p>
+  <div class="prompt-block"><span class="prompt-label">位置编码的两条路线</span><button class="copy-btn" type="button">复制</button>① 正弦/余弦绝对位置编码（原始 Transformer 提出）：
+   PE(pos, 2i)   = sin( pos / 10000^(2i/d) )
+   PE(pos, 2i+1) = cos( pos / 10000^(2i/d) )
+   · 固定、无需学习；不同频率让模型能表示相对位移
+   · 缺点：外推到训练长度之外泛化较差
+
+② 相对位置 / 旋转式（RoPE）：
+   · 把位置编码作为旋转作用在 Q、K 上，
+     使注意力分数只依赖「相对位移」而非绝对位置
+   · 许多长上下文模型在此基础上配合插值/外推技巧扩展窗口
+   · 相对位置更利于长度外推，是当前主流做法之一
+
+话语权提示：位置编码的具体设计在快速演进，实际以所用模型的技术报告为准</div>
+  <ul>
+    <li><strong>Token 是子词单元</strong>：按 BPE 一类算法切分，不是「字」也不是「词」；英文常见词约 1~2 个 token，一个汉字常为 1~2 个 token，中日韩通常比英文更「贵」。</li>
+    <li><strong>计费结构</strong>：成本 = 输入单价 × 输入量 + 输出单价 × 输出量；输出通常比输入贵数倍，所以限制输出长度往往比砍输入更省。</li>
+    <li><strong>KV 缓存</strong>：自回归解码时每步只需计算新 token 的 Q，但需复用此前所有 K、V。缓存使单步延迟稳定，代价是显存随对话长度线性增长——这也是长对话变慢变贵的原因。</li>
+    <li><strong>lost in the middle</strong>：经验研究发现，长上下文中间位置的信息更容易被忽略，模型对首尾更敏感（相关公开研究约在 2023 年提出）。实践对策：关键指令放最前、关键材料放最后。</li>
+  </ul>
+  <table>
+    <caption class="caption">上下文预算的分配原则</caption>
+    <thead><tr><th>组成</th><th>内容</th><th>预算原则</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">系统提示</th><td>角色、规则、输出格式</td><td>短而硬，百 token 量级，放最前</td></tr>
+      <tr><th scope="row">参考材料</th><td>RAG 片段、文档、历史</td><td>只放命中 top-k，别整本塞；关键材料后置</td></tr>
+      <tr><th scope="row">任务指令</th><td>用户问题与约束</td><td>尽量后置、显式、可验证</td></tr>
+    </tbody>
+  </table>
+  <div class="callout tip"><span class="callout-label">工程直觉</span>把「贵」的部分（输出、长历史、无关材料）当资源管理：能摘要就摘要、能检索就不全放、能结构化就不自由发挥。省钱的同时通常也在提升可靠性。</div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">4</span>提示、微调与对齐：三种改变模型行为的手段</h2>
+          <p class="lede">要改变模型行为，有三条路径：改上下文（提示）、改参数（微调）、改偏好（对齐）。它们的成本、可迁移性与失效模式各不相同。</p>
+  <table>
+    <caption class="caption">提示工程 / 微调 / 对齐对比</caption>
+    <thead><tr><th>维度</th><th>提示工程</th><th>监督微调 SFT</th><th>偏好对齐（如 RLHF / DPO）</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">改什么</th><td>输入上下文</td><td>用「输入-输出」样例更新参数</td><td>用「哪个回答更好」的偏好数据调参</td></tr>
+      <tr><th scope="row">数据量</th><td>0，或几十条示例</td><td>百~万级高质量样例</td><td>偏好对；规模与质量都关键</td></tr>
+      <tr><th scope="row">成本</th><td>最低，秒级迭代</td><td>中到高，需算力与数据</td><td>高，流程复杂</td></tr>
+      <tr><th scope="row">擅长</th><td>格式、风格、即时任务约束</td><td>固定任务、领域语料内化</td><td>风格与安全边界、有用性偏好</td></tr>
+      <tr><th scope="row">风险</th><td>受窗口限制、易被注入</td><td>灾难性遗忘、过拟合</td><td>可能「对齐税」、迎合偏好而非真实</td></tr>
+    </tbody>
+  </table>
+  <p><strong>提示模式的三块基石</strong>：少样本示范（用输入→输出样例让模型模仿模式，质量与一致性比数量重要）、思维链（要求先给推理步骤，把中间计算外化为 token，复杂推理显著提升，代价是输出变长变贵；对较新模型其增益因任务而异，不宜视为普适定律）、结构化输出（JSON 模式 / 函数调用把「解析文本」这一最大失败源从流程移除）。</p>
+  <p><strong>RLHF 的机制</strong>（简化）：先在人类偏好数据上训练奖励模型 r(x, y)，再用强化学习（如 PPO）优化策略，使期望奖励最大化并加 KL 惩罚约束「别离原模型太远」：</p>
+  <div class="prompt-block"><span class="prompt-label">对齐目标的简化形式</span><button class="copy-btn" type="button">复制</button>max_π  E_(x, y~π) [ r(x, y) ]  −  β · D_KL( π(y|x) ‖ π_ref(y|x) )
+
+· r：奖励模型对人类偏好的估计
+· π_ref：微调前的参考策略
+· β：控制「对齐强度 vs 保持原始能力」的权衡
+  β 太小 → 为刷奖励而偏离、奖励被钻空子（reward hacking）
+  β 太大 → 几乎不改变行为，对齐失效
+· DPO 的思路：不显式训奖励模型，直接用偏好对构造可优化的损失</div>
+  <div class="callout tip"><span class="callout-label">选择次序</span>先用提示与 RAG 解决 80% 的问题；只有在「任务固定、样例充足、提示已达上限」时才考虑微调。微调擅长期望的固定行为，不擅长注入易变的知识——知识仍应交给检索。</div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">5</span>RAG：检索增强生成的完整流水线</h2>
+          <p class="lede">RAG 把「背知识」改成「查资料」，把风险从模型侧移到检索侧——错误的片段，无论生成端多努力都救不回来。</p>
+  <div class="prompt-block"><span class="prompt-label">RAG 的两阶段检索流程</span><button class="copy-btn" type="button">复制</button>离线索引阶段：
+  文档 → 分块(chunk) → 嵌入(embedding) → 存入向量库
+
+在线查询阶段：
+  问题 → 嵌入 → 向量近邻检索(ANN) 召回 top-k
+       → [可选] 关键词检索 BM25 → 混合(hybrid) 融合
+       → 重排(rerank) 精排 → 取前 m 条 → 拼进提示 → 生成
+
+嵌入与相似度：
+  · 把文本映射为向量 e ∈ R^d
+  · 常用余弦相似度  cos(a,b) = (a·b) / (|a| |b|)
+  · 近似最近邻（HNSW、IVF 等）用少量精度换大幅加速
+
+分块策略：
+  · 大小常在 200~1000 token 区间
+  · 相邻块 10%~20% 重叠，避免答案被切断
+  · 优先按结构边界（标题/段落/代码块）切，优于机械等长切</div>
+  <p>检索质量的度量：<strong>召回率@k</strong>（正确片段是否在 top-k 内）、<strong>MRR / NDCG</strong>（正确片段的排名），以及端到端的答案正确率。关键实践是<strong>先离线测检索命中率，再调生成提示</strong>——如果答案块根本没被召回，任何提示技巧都是徒劳。</p>
+  <table>
+    <caption class="caption">RAG 各环节的失败模式与对策</caption>
+    <thead><tr><th>环节</th><th>典型失败</th><th>对策</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">分块</th><td>答案被切断在两个块里</td><td>结构切分 + 重叠窗口 + 块级上下文头</td></tr>
+      <tr><th scope="row">嵌入</th><td>专有名词、编号、代号对语义向量不敏感</td><td>混合 BM25 关键词检索，保留元数据过滤</td></tr>
+      <tr><th scope="row">检索</th><td>top-k 混入相似但无关片段</td><td>加 rerank 重排 + 相似度阈值过滤</td></tr>
+      <tr><th scope="row">生成</th><td>无依据时仍编造、忽略引用</td><td>限定「仅据所给资料回答，无依据则答不知道」并附引用</td></tr>
+    </tbody>
+  </table>
+  <div class="callout tip"><span class="callout-label">原则</span>RAG 的瓶颈通常在检索，不在生成。把「检索命中率」当成第一类指标来监控，比反复改提示更有效。</div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">6</span>智能体：工具调用、ReAct 循环与规划</h2>
+          <p class="lede">智能体 = 模型 + 工具 + 循环 + 护栏。难点不在提示，而在多步执行中保持可控与可观测。</p>
+  <div class="prompt-block"><span class="prompt-label">ReAct 循环与工具调用协议</span><button class="copy-btn" type="button">复制</button>ReAct = Reason（思考）→ Act（行动）→ Observe（观察） 交替推进
+
+每一轮：
+  Thought:  我需要先查当前汇率
+  Action:   get_rate(currency="USD")
+  Observation: 1 USD = 7.15 CNY     ← 由运行时真实执行并回填
+  ...（循环）...
+  Thought:  信息已足够
+  Final:    答案为 ...
+
+工具调用的工程约束：
+  · 工具以带 schema 的「函数描述」交给模型（名称+参数类型+说明）
+  · 模型只输出「调用意图」（结构化），执行由运行时完成
+  · 结果回填到上下文，作为下一步的证据
+  · 硬护栏：步数上限、超时、参数白名单、敏感操作人工确认
+
+规划范式对照：
+  · 单步调用：一次决定一个工具
+  · ReAct：边想边做，逐步获取证据
+  · 先规划后执行（如先生成步骤清单再逐步执行）：适合可预分解的任务，
+    但计划一旦偏离现实，回退成本更高</div>
+  <p>为什么 ReAct 有效？它把「一次性生成复杂答案」改写为「多步小决策 + 外部证据回填」，每一小步都有明确的局部目标，错误可以在下一步被纠正，而不是一路错到底。<strong>信用分配</strong>问题随之而来：最终成败该归因于哪一步？完整的轨迹日志是唯一可靠的诊断依据。</p>
+  <p><strong>评测的成本结构</strong>：多步智能体的成功率往往随步数近似指数衰减——若单步正确率 p，n 步任务的理论上限约为 p<sup>n</sup>。这解释了为什么「每步 95% 正确」的智能体在 20 步任务上近乎必败，也说明为什么减少步数、增加每步确定性是提升可靠性的关键杠杆。</p>
+  <div class="callout warn"><span class="callout-label">第一原则</span>智能体事故的首要原因是「状态不可见」。完整记录每步的工具调用与返回，比写更聪明的提示更能提升成功率；其次才是给工具最小权限。</div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">7</span>幻觉的机制成因与治理边界</h2>
+          <p class="lede">幻觉不是 bug，而是概率生成的固有属性。工程目标不是消灭它，而是让它可测、可截、可控。</p>
+  <div class="feature-list">
+    <div class="feature"><div class="f-ico">1</div><div><h4>来源一：目标错位</h4><p>训练目标是「最可能的续写」，不是「检索到的事实」；流畅与真实没有必然联系。当高概率续写恰好是错误信息时，模型会以确定的语气输出它。</p></div></div>
+    <div class="feature"><div class="f-ico">2</div><div><h4>来源二：知识缺口与时效</h4><p>训练数据过期、覆盖不全或自相矛盾时，参数里没有可靠依据，模型仍倾向于「填补空白」以维持流畅。</p></div></div>
+    <div class="feature"><div class="f-ico">3</div><div><h4>来源三：解码与采样</h4><p>温度与采样使输出带随机性；高温度增加多样性也增加偏离事实的概率。这是可通过参数部分控制的一环。</p></div></div>
+    <div class="feature"><div class="f-ico">4</div><div><h4>缓解：接地与限定</h4><p>RAG 提供外部依据、限定「仅据所给资料回答，无依据则答不知道」、关键事实要求附引用、适当降低温度。把「不知道自己不知道」转化为「可检测的弃权」。</p></div></div>
+  </div>
+  <p><strong>评测方法</strong>：固定测试集 + 明确评分标准的人工抽评是金标准；LLM-as-judge 便宜，但带位置偏差与自我偏好，需校准、盲序、抽检；端到端指标（任务完成率、答案准确率、引用正确率）比笼统的「回答质量」更可执行。<strong>安全边界</strong>：提示注入——用户内容或检索文档里混入指令即可劫持行为，因此用户数据与系统指令要分离、检索内容一律视为不可信；工具按最小权限授权，写操作要求人工确认。</p>
+  <div class="callout warn"><span class="callout-label">红线</span>凡是不可逆操作（删数据、转账、发邮件）不允许智能体自主完成；人在环节里不是性能开销，而是安全设计。</div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">8</span>前沿与研究进展</h2>
+          <p class="lede">从 2017 年的 Transformer 到今天的智能体系统，几条主线塑造了当前的工程范式。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">Transformer</span><span class="tl-date">Vaswani 等, 2017</span><p>提出完全基于注意力的架构，用自注意力替代循环结构，使并行训练成为可能，成为后续几乎所有大模型的骨架。</p></div>
+            <div class="tl-item"><span class="tl-era">预训练 + 微调范式</span><span class="tl-date">2018 起</span><p>先在大规模无标注语料上自监督预训练，再在下游任务微调，证明「通用语言表示」可迁移。</p></div>
+            <div class="tl-item"><span class="tl-era">规模化与缩放律</span><span class="tl-date">2020 起</span><p>Kaplan 等报告性能随参数、数据、算力呈幂律改善，推动「更大模型」路线的系统化；后续工作对数据与参数的最优配比做了修正。</p></div>
+            <div class="tl-item"><span class="tl-era">对齐与指令跟随</span><span class="tl-date">2022 起</span><p>RLHF、指令微调让模型从「续写器」变为「助手」；InstructGPT、DPO 等工作把偏好对齐流程标准化。对齐税与评估方法仍是争论点。</p></div>
+            <div class="tl-item"><span class="tl-era">思维链与推理提示</span><span class="tl-date">Wei 等, 2022</span><p>提示模型分步推理可显著提升算术与逻辑任务表现；后续的自洽性（多次采样投票）、思维树等扩展进一步推高复杂推理可靠性。</p></div>
+            <div class="tl-item"><span class="tl-era">ReAct 与工具增强</span><span class="tl-date">Yao 等, 2022</span><p>把「思考」与「行动」交替，让模型借助外部工具逐步获取证据，成为智能体循环的经典范式。</p></div>
+            <div class="tl-item"><span class="tl-era">RAG 与长上下文</span><span class="tl-date">2020 起持续演进</span><p>检索增强把外部知识接进生成；长上下文模型与 RAG 形成互补——检索定精度、长窗口定连贯，二者如何分工仍无定论。</p></div>
+            <div class="tl-item"><span class="tl-era">高效注意力与推理优化</span><span class="tl-date">2022 起</span><p>FlashAttention 等以分块与重计算降低显存并加速；KV 缓存管理、量化、投机解码共同重塑了长上下文服务的成本结构。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">读法</span>模型能力与工程栈都在快速迭代。看到「某项技巧提升 X%」时，先问：用的是什么模型、什么任务、什么评测，以及能否在你的数据上复现。多数结论随模型版本而变。</div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">9</span>跨学科视角</h2>
+          <p class="lede">大模型应用横跨语言学、信息检索、控制论、认知科学与人机交互。理解这些连接，能把「调提示」上升为「设计系统」。</p>
+  <div class="grid-2">
+    <div class="card"><h4>信息检索</h4><p>RAG 的召回/精排/融合直接继承经典 IR 的思想：BM25 与向量检索是互补的两条召回路线，NDCG/MRR 是排序评估的标准尺。</p></div>
+    <div class="card"><h4>概率与统计</h4><p>交叉熵、困惑度、温度采样都是概率论语言；幻觉的概率本质、评测的置信区间、A/B 实验的显著性，都需统计素养。</p></div>
+    <div class="card"><h4>控制论与系统工程</h4><p>智能体是带反馈的控制回路：感知（工具观察）→ 决策（模型）→ 执行 → 校正。护栏、超时、幂等与可观测性是控制系统的通用要求。</p></div>
+    <div class="card"><h4>认知科学</h4><p>「幻觉」「工作记忆（上下文）」「注意」等类比既启发思考也易误导；把模型能力拟人化会低估其系统性偏差，引用时宜保持机制视角。</p></div>
+    <div class="card"><h4>语言学与语用学</h4><p>提示是「用自然语言编程」；指代、预设、言外之意在提示中的歧义，正是提示工程要显式化的对象。</p></div>
+    <div class="card"><h4>安全与人机交互</h4><p>提示注入、越狱、隐私泄露属安全工程；人在环、可解释、可撤销属交互设计。二者共同定义「可部署」与「负责任」的边界。</p></div>
+  </div>
+</section>
+
+        <section>
+          <h2><span class="sec-num">10</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「上下文窗口越大越好，全书直接塞进去」
+
+「模型说了就是事实，加个『请准确』就行」
+
+「温度调到 0 就没有幻觉了」
+
+「微调能注入最新知识」
+
+「智能体越多步越智能」</pre><div class="why">问题：忽略了成本、机制与边界。长上下文有二次成本与中间遗忘；流畅≠为真；低温降低随机性但不补知识；微调注入的是行为与风格，知识仍易过时；步数越多，误差累积越接近指数放大。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>关键材料放首尾、按需检索；能摘要就不全放
+
+用 RAG 接地 + 允许弃权 + 要求引用
+
+低温只减少采样随机性，不能消除知识缺口
+
+知识用检索，行为用微调；易变知识不做微调
+
+减少步数、提升每步确定性，用轨迹日志做诊断</pre><div class="why">要点：任何技巧都对应一个机制假设。判断是否适用，看它改变的是输入、参数、还是外部证据。</div></div>
+          </div>
           <table>
-            <caption class="caption">上下文预算的典型分配</caption>
-            <thead><tr><th>组成</th><th>内容</th><th>预算原则</th></tr></thead>
+            <caption class="caption">技术适用边界速查</caption>
+            <thead><tr><th>技术</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
             <tbody>
-              <tr><th scope="row">系统提示</th><td>角色、规则、输出格式</td><td>短而硬，百 token 量级</td></tr>
-              <tr><th scope="row">参考材料</th><td>RAG 片段、文档、历史对话</td><td>只放检索命中的 top-k，别整本塞入</td></tr>
-              <tr><th scope="row">任务指令</th><td>用户问题与约束</td><td>尽量后置、显式</td></tr>
+              <tr><th scope="row">少样本提示</th><td>格式约束、模式明确的任务</td><td>需要外部知识的开放问答</td></tr>
+              <tr><th scope="row">思维链</th><td>可分解的推理任务</td><td>纯事实检索（无推理可拆）</td></tr>
+              <tr><th scope="row">RAG</th><td>私有/时效性知识</td><td>无文档可检索、需全局推理</td></tr>
+              <tr><th scope="row">微调</th><td>固定任务、稳定风格</td><td>知识频繁更新、数据稀缺</td></tr>
+              <tr><th scope="row">多步智能体</th><td>工具丰富、可分解、可验证</td><td>不可逆操作、步数长、无法回滚</td></tr>
             </tbody>
           </table>
-        </section>
-        <section>
-          <h2><span class="sec-num">2</span>提示模式：少样本、思维链与结构化输出</h2>
-          <p class="lede">提示工程的核心不是「咒语」，而是用上下文示范把任务约束讲清楚。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>少样本（few-shot）</h4><p>在提示里放几个「输入→期望输出」的示例，模型靠上下文模仿模式。示例的质量和一致性远比数量重要，边缘案例示例尤其有效。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>思维链（CoT）</h4><p>要求先给出推理步骤再给结论（如「请一步步分析」），让模型把中间计算外化成 token，复杂推理任务显著提升；代价是输出变长、变贵。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>结构化输出</h4><p>约定 JSON 字段或用 API 的 JSON 模式/function calling 约束输出 schema，把「解析文本」这个最大失败源从流程里拿掉。</p></div></div>
-          </div>
-          <div class="prompt-block"><span class="prompt-label">结构化输出提示示例</span><button class="copy-btn" type="button">复制</button>你是一个文本分类器。只输出 JSON，不要输出任何其他文字。
+</section>
 
-输入：{text}
-输出格式：
-{
-  "category": "bug | feature | inquiry",
-  "confidence": 0.0 到 1.0 的数字,
-  "reason": "不超过 20 字的判断依据"
-}
-
-示例：
-输入：登录页面点击按钮无反应
-输出：{"category": "bug", "confidence": 0.9, "reason": "描述了功能故障"}</div>
-          <div class="callout tip"><span class="callout-label">陷阱</span>示例里的格式必须与要求完全一致——一个示例中多出的引号或解释文字，会被模型忠实地复现。</div>
-        </section>
         <section>
-          <h2><span class="sec-num">3</span>RAG 检索增强生成</h2>
-          <p class="lede">RAG 把「背知识」改成「查资料」，同时治幻觉、时效与私有数据三大痛点，代价是把风险从模型侧移到检索侧。</p>
-          <ul>
-            <li><strong>分块（chunking）</strong>：把文档切成 200~1000 token 级的片段，相邻块保留 10%~20% 重叠以免语义被切断；按标题、段落等结构边界切，效果优于机械等长切。</li>
-            <li><strong>嵌入（embedding）</strong>：用嵌入模型把文本映射为语义向量，用余弦相似度衡量相关性，交给向量数据库做近邻检索。</li>
-            <li><strong>检索与重排</strong>：先向量检索召回 top-k（或叠加 BM25 关键词检索的混合方案），再用 rerank 模型对候选精排出前几条进提示。</li>
-          </ul>
-          <table>
-            <caption class="caption">RAG 各环节的失败模式</caption>
-            <thead><tr><th>环节</th><th>典型失败</th><th>对策</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">分块</th><td>答案恰好被切断在两个块里</td><td>结构化切分 + 重叠窗口</td></tr>
-              <tr><th scope="row">嵌入</th><td>专有名词、编号对语义向量不敏感</td><td>混合关键词检索，保留元数据</td></tr>
-              <tr><th scope="row">检索</th><td>top-k 里混入相似但无关的片段</td><td>加 rerank 重排 + 相似度阈值过滤</td></tr>
-            </tbody>
-          </table>
-          <div class="callout tip"><span class="callout-label">原则</span>检索质量决定上限：错误的片段无论生成端多努力都救不回来。先离线测检索命中率，再调生成提示。</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">4</span>智能体设计：工具、规划与反思</h2>
-          <p class="lede">智能体 = 模型 + 工具 + 循环。难点不在提示，而在让系统在多步执行中保持可控。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>工具调用</h4><p>把 API 以带 schema 的函数描述给模型，模型输出结构化的调用意图（函数名+参数），由运行时真正执行并把结果回填。模型的职责是「决定调用」，不是「执行」。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>规划循环</h4><p>ReAct 模式让模型在「思考（Reason）→行动（Act）→观察（Observe）」间交替推进，把大任务拆成可验证的小步，每步的观察结果都是下一步的证据。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>反思与护栏</h4><p>执行后让模型（或另一模型）对照任务目标自检、重试或回退；同时工程侧设硬护栏——步数上限、超时、参数白名单、敏感操作人工确认。</p></div></div>
-          </div>
-          <div class="callout tip"><span class="callout-label">经验</span>智能体事故的第一原因是「状态不可见」：完整记录每步的工具调用与返回，比写更聪明的提示更能提升成功率；其次是给工具最小权限。</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">5</span>幻觉、评测与安全边界</h2>
-          <p class="lede">幻觉不是 bug，而是概率生成的固有属性；工程的目标不是消灭它，而是让它在可控范围可测、可截。</p>
-          <ul>
-            <li><strong>来源一：概率本质</strong>。模型输出的是「最可能的续写」，不是「检索到的事实」——流畅与真实没有必然联系。</li>
-            <li><strong>来源二：知识缺口</strong>。训练数据过期、覆盖不全或自相矛盾时，模型仍会给出确定语气的回答。</li>
-            <li><strong>缓解手段</strong>：RAG 提供外部依据、限定「仅根据所给资料回答，无依据时回答不知道」、关键事实要求附引用、适当降低 temperature。</li>
-          </ul>
-          <ul>
-            <li><strong>评测方法</strong>：固定测试集 + 明确评分标准的人工抽评是金标准；LLM-as-judge 便宜但带位置偏差与自我偏好，需校准、盲序、抽检；端到端指标（任务完成率、答案准确率）比「回答质量」更可执行。</li>
-            <li><strong>安全边界</strong>：提示注入——用户内容或检索文档里混入指令即可劫持行为，因此用户数据与系统指令要分离、检索内容视为不可信；工具按最小权限授权，写操作要求人工确认。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">红线</span>凡是不可逆操作（删数据、转账、发邮件）不允许智能体自主完成；人在环节里不是性能开销，是安全设计。</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">大模型应用速记</span><button class="copy-btn" type="button">复制</button>· token 是子词单元，输出比输入贵，先限输出
-· 长上下文有 lost in the middle：关键信息放首尾
-· few-shot：示例质量与一致性大于数量
-· CoT 先推理后结论，复杂任务涨点、成本上升
-· 用 JSON 模式 / function calling 锁死输出结构
-· RAG 流程：分块 → 嵌入 → 向量检索 → rerank → 生成
-· 分块带 10%~20% 重叠，按结构边界切
-· 检索质量是 RAG 上限，先测命中率再调生成
-· 专有名词检索用关键词+向量混合方案
-· 智能体 = 模型 + 工具 schema + 规划循环 + 护栏
-· ReAct：思考 → 行动 → 观察，逐步推进
-· 步数上限、超时、最小权限、写操作人审
-· 幻觉源于概率生成，缓解靠接地与限定，不靠许愿
+          <h2><span class="sec-num">11</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">大模型应用速记</span><button class="copy-btn" type="button">复制</button>· 自回归目标：min −(1/n)Σ log P(w_t|w_&lt;t)；困惑度 PPL=exp(L)
+· 模型学的是「更可能的续写」，不是「更真实的事实」
+· 注意力：softmax(QKᵀ/√d_k)V；Q 找什么、K 是什么、V 带什么
+· 复杂度：注意力矩阵计算 O(n²d)、显存 O(n²)；序列翻倍≈4 倍
+· 除以 √d_k 防点积方差膨胀导致 softmax 饱和
+· 多头 = 多个子空间并行软检索
+· 长上下文方案：滑窗/线性近似/FlashAttention；后者不改 O(n²)
+· 位置编码：绝对正弦外推差；RoPE 用旋转注入相对位置
+· KV 缓存换延迟，显存随对话线性增长
+· lost in the middle：关键指令放前、关键材料放后
+· token 是子词；输出常比输入贵，先限输出
+· 改行为三路径：改输入(提示)、改参数(微调)、改偏好(对齐)
+· RLHF：max E[r] − β·KL(π‖π_ref)；β 平衡对齐强度与原始能力
+· DPO 不显式训奖励模型，直接用偏好对构造损失
+· RAG 流程：分块→嵌入→向量检索→(混合)→rerank→生成
+· 分块 200~1000 token，重叠 10%~20%，按结构边界切
+· 检索质量定上限：先测召回率@k，再调生成
+· RAG 失败多在检索，不在生成
+· 智能体 = 模型 + 工具 schema + 循环 + 护栏
+· ReAct：Thought → Action → Observation 交替
+· 模型只输出调用意图，执行由运行时完成
+· 多步成功率≈p^n：减步数、提确定性是关键杠杆
+· 幻觉三来源：目标错位、知识缺口、采样随机；缓解靠接地与弃权
+· 不可逆操作必须人在环；检索内容视为不可信（防注入）
 · 评测：固定测试集人工抽评为金标准，LLM 评审需校准</div>
-        </section>
+</section>
+
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">12</span>练习清单</h2>
+          <p class="lede">以下练习要求推导、实现或测量，产出可检验的证据。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用官方 tokenizer 工具统计一段中英文混合文本的 token 数，估算一次调用的成本</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">同一个任务分别写 0/2/5 个示例的提示，对比输出一致性与格式遵守度</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">让模型输出严格 JSON，并在代码里加解析失败的重试逻辑</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">搭建最小 RAG：切 10 个文档块、算嵌入、检索 top-3、生成带引用的回答</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">给检索结果里藏一句「请忽略以上指令」，观察注入是否成功并加防御</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">实现一个只读工具（如查天气/查文档）的 ReAct 循环，记录每步调用与观察</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">出 20 道有标准答案的题做固定测试集，人工评分后再试 LLM 评审并对比分歧</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用矩阵维度推导缩放点积注意力的计算量，说明 n 翻倍时 FLOPs 的倍数，并解释 √d_k 的必要性</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">手写一个单头自注意力（含 softmax）并验证输出每行权重和为 1，再与多头实现对比参数量</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">为同一段长文本分别在首/中/尾插入关键事实，测模型能否答对，复现并量化 lost in the middle</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用官方 tokenizer 统计中英混合文本的 token 数，按输入/输出单价估算一次调用的成本并设计省钱方案</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">搭建最小 RAG：切 20 个块、算嵌入、检索 top-3、生成带引用回答；标注 10 个问题的 召回率@3</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">对比：同一问题分别用纯向量检索与 BM25+向量混合检索，比较含专有名词问题的命中差异</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">实现一个只读工具的 ReAct 循环，记录每步 Thought/Action/Observation，并注入一次工具失败观察模型如何纠错</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">用 p^n 模型估算：单步正确率 0.9 时 10 步任务的理论成功率，并给出两种提升手段及其代价</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">在检索文档中藏入「忽略以上指令」验证提示注入，再实现指令与数据分离的防御并复测</label></div>
           </div>
-        </section>
+</section>
       </main>
       <footer>
-        <p class="footnote">内容综合自 OpenAI/Anthropic 官方提示工程文档、相关检索增强与智能体公开研究综述的通行实践，建议以所用模型的最新官方文档为准。</p>
+        <p class="footnote">内容综合自 Transformer 原始论文（Vaswani 等，2017）的公开表述、ReAct（Yao 等，2022）与思维链（Wei 等，2022）的公开摘要、以及 OpenAI/Anthropic 官方提示工程文档的通行实践。位置编码、长上下文与高效注意力的具体设计在快速演进，落地时请以所用模型的技术报告与最新官方文档为准；缩放律相关结论参考 Kaplan 等（2020）起的公开工作，部分细节在后续研究中已被修正。</p>
       </footer>
     </div>
   </article>

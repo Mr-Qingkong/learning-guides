@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>哲学导论指南</title>
+  <title>哲学思维进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>哲学导论指南</h1>
-          <p class="report-intro__summary">哲学不是给出答案的学科，而是训练提问的学科——从"什么是存在"到"我们如何知道"再到"怎样做是对的"。这份指南串起形而上学、认识论、伦理学、逻辑学与方法论五大领域，帮你建立一套可迁移的思辨工具箱。</p>
+          <h1>哲学思维进阶指南</h1>
+          <p class="report-intro__summary">哲学不是给出答案的学科，而是训练提问的学科——从"什么是存在"到"我们如何知道"再到"怎样做是对的"。本指南把五大领域（形而上学、认识论、伦理学、逻辑学、方法论）还原到论证层：不仅告诉你各家说了什么，更展示它的推理链、反例结构与失效边界。</p>
           <div class="intro-meta">
             <span>领域：人文 · 社会</span>
             <span>难度：进阶</span>
@@ -25,8 +25,19 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>形而上学：存在与本质</h2>
-          <p class="lede">形而上学追问最根本的问题：什么真正存在？事物的本质是什么？柏拉图的理念论和亚里士多德的实体学说给出了两条经典回答路线。</p>
+          <h2><span class="sec-num">1</span>形而上学：从"存在"到本体论承诺的推导</h2>
+          <p class="lede">形而上学追问最根本的问题：什么真正存在？事物的本质是什么？但"存在"本身不是一个可直接观察的属性——因此形而上学的第一项工作，是把模糊的直觉翻译成可争辩的<mark class="key">本体论承诺</mark>（ontology commitment）：一个理论说"X 存在"，到底承诺了什么。</p>
+          <h3>从"共相之争"到论证结构</h3>
+          <p>唯名论与实在论之争不是趣味问题，它有一个清晰的论证骨架。以"红"为例，考察三段论：</p>
+          <div class="prompt-block"><span class="prompt-label">共相的实在论论证（还原版）</span><button class="copy-btn" type="button">复制</button>前提 1：多个不同事物（这朵玫瑰、那件衣服）都是"红的"。
+前提 2：若"红"只是每个事物各自的属性，则这些事物之间没有共同之处。
+前提 3：但我们确实用同一个词"红"并作出可检验的相同判断（都吸收 ≈ 620–750 nm 光）。
+──────────────────────────────
+结论：似乎存在某个"红"本身（共相），被多个事物分有。
+
+实在论者（柏拉图）把共相定位于超越的"理念世界"；
+唯名论者反驳：只需承认"红"是一个**谓词**，不必承认它指称一个**实体**——
+奥卡姆剃刀在此出场：如无必要勿增实体。</div>
           <table>
             <caption class="caption">柏拉图 vs 亚里士多德：两个形而上学传统</caption>
             <thead><tr><th>维度</th><th>柏拉图（理念论）</th><th>亚里士多德（实体论）</th></tr></thead>
@@ -37,22 +48,30 @@
               <tr><th scope="row">经典比喻</th><td>洞穴囚徒：影子非真实</td><td>四因说：质料/形式/动力/目的</td></tr>
             </tbody>
           </table>
+          <h3>同一性问题：形式化追问</h3>
+          <p>"什么使 X 在不同时间仍是同一个 X"可拆成两个判据，二者常冲突：</p>
+          <p>· 质的同一（qualitative identity）：属性集合相同；<br>· 数的同一（numerical identity）：是"同一个东西"而非"两个一模一样的东西"。</p>
+          <p>忒修斯之船之所以棘手，是因为木板逐一替换后，<strong>质料连续性</strong>与<strong>形式（结构）连续性</strong>指向不同答案：若同一性 = 质料，则换完即非原船；若同一性 = 组织形式，则始终是原船。人格同一性问题同理——记忆连续性（洛克）、身体连续性、心理连续性各给一套判据，且能构造出彼此冲突的思想实验。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>本体论</h4><p>研究"什么存在"——存在有哪些基本类别？心与物是同一种东西还是两种？抽象对象（数字、命题）是否"真实存在"？</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>本质与偶性</h4><p>亚里士多德区分：本质属性是事物不可缺少的（人是理性的动物），偶性属性是可有可无的（苏格拉底是秃头）。这一区分至今影响分类学与科学。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>心物问题</h4><p>意识与物理身体是什么关系？笛卡尔的二元论（心物分离）是经典起点，但现代心智哲学更多偏向物理主义——心即大脑的活动。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>本质与偶性</h4><p>亚里士多德区分：本质属性是事物不可缺少的（人是理性的动物），偶性属性可有可无（苏格拉底是秃头）。现代模态语义学把它改写成：本质 = 在所有可能世界中该个体都具有的属性。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>心物问题</h4><p>意识与身体的关系。笛卡尔二元论的困难在于"交互作用"：非物质的心如何推动物质的身体？物理主义则要面对"感受质"（qualia）难题——为什么信息加工会伴随主观体验。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>必然与可能</h4><p>莱布尼茨的"可能世界"框架把模态词量化："必然 P" = 所有可能世界中 P 为真；"可能 P" = 至少一个可能世界 P 为真。这套语义学是当代形而上学与逻辑的核心工具。</p></div></div>
           </div>
-          <p>柏拉图的洞穴比喻至今仍是哲学入门的标志性思想实验：囚徒只看到墙上的影子，以为那就是<mark class="key">全部的真实</mark>——直到有人走出洞穴看见太阳。它问的是：你怎么确定自己看到的世界不是"影子"？</p>
-          <div class="callout tip"><span class="callout-label">奥卡姆剃刀</span>如无必要，勿增实体。当两个理论解释力相同时，选择假设更少的那个。这不是真理标准——而是方法论偏好，它指导理论选择而非判定真伪。奥卡姆的威廉（约 1287–1347）的这一原则深刻影响了现代科学哲学。</div>
+          <div class="callout tip"><span class="callout-label">奥卡姆剃刀的正确用法</span>如无必要，勿增实体。它<strong>不是</strong>真理标准，而是理论选择的启发式：当两个理论解释力相同时，选假设更少、本体论承诺更弱的那个。它约束的是"我们该接受哪个理论"，而非"哪个理论为真"——因为更简洁的理论也可能恰好是错的。</div>
         </section>
         <section>
-          <h2><span class="sec-num">2</span>认识论：我们如何知道</h2>
-          <p class="lede">认识论研究知识的本质、来源与限度。核心问题是：什么样的信念才算"知识"？我们凭什么相信自己所相信的？</p>
-          <ul>
-            <li><strong>理性主义</strong>：知识主要来自理性与先验推理。笛卡尔的"我思故我在"（cogito ergo sum）是典范——从唯一不可怀疑的事实出发，重建知识大厦。</li>
-            <li><strong>经验主义</strong>：知识主要来自感官经验。洛克说人心如"白板"（tabula rasa），一切观念来自经验。休谟进一步追问：因果性本身也无法被直接感知——我们只看到"先后"和"恒常联结"。</li>
-            <li><strong>康德的综合</strong>：康德在《纯粹理性批判》（1781）中调和两者：经验提供材料，但心灵提供加工材料的先天结构（如时空直观和因果范畴）——"无直观的概念是空的，无概念的直观是盲的"。</li>
-          </ul>
+          <h2><span class="sec-num">2</span>认识论：知识定义的推导与反驳</h2>
+          <p class="lede">认识论研究知识的本质、来源与限度。核心问题是：什么样的信念才算"知识"？这一节不罗列学派，而是走一遍"提出定义 → 构造反例 → 修补定义"的完整论证循环。</p>
+          <h3>从 JTB 到 Gettier：一次定义失败的标准案例</h3>
+          <div class="prompt-block"><span class="prompt-label">知识的经典三元定义（JTB）</span><button class="copy-btn" type="button">复制</button>知识 = 信念（Belief） ∧ 真（Truth） ∧ 证成（Justification）
+
+三个条件缺一不可：
+  · 只有信念无真 —— 妄想不是知识；
+  · 真但无信念 —— 你恰好说中但自己不信，不算你知道；
+  · 真且有信念但无证成 —— 瞎猜对了也不算知识。
+
+问：这三者合起来就充分了吗？
+1963 年 Gettier 用反例回答：不充分。</div>
           <table>
             <caption class="caption">知识的三元定义与 Gettier 问题</caption>
             <thead><tr><th>要素</th><th>含义</th><th>经典质疑</th></tr></thead>
@@ -62,16 +81,22 @@
               <tr><th scope="row">证成（Justification）</th><td>你有充分理由相信</td><td>有证成也可能只是运气——见下</td></tr>
             </tbody>
           </table>
-          <p>传统定义"知识 = 有证成的真信念"（JTB）沿用了两千多年。直到 1963 年，埃德蒙·盖梯尔（Edmund Gettier）发表了一篇仅三页的论文，用反例证明：<mark class="key">有证成的真信念未必是知识</mark>。比如你看到桌上有一支铅笔（其实是别人的铅笔恰好在那个位置），你形成"桌上有一支铅笔"的信念——它是真的、你有证成、你确实相信——但这更像是运气，不是知识。"盖梯尔问题"引发了认识论的持续争论至今。</p>
-          <div class="callout tip"><span class="callout-label">笛卡尔的方法论怀疑</span>笛卡尔系统性地怀疑一切可被怀疑的：感官可能欺骗我（做梦）、甚至数学可能被恶魔操纵——但"我在怀疑"这件事本身不可怀疑，所以"我思故我在"。这不是口号，而是一个方法论：从最不可动摇的基点出发，逐层重建知识。</div>
+          <p>盖梯尔反例的通用结构是<mark class="key">"证成与真之间的断裂"</mark>：你的证成支持某个信念，但使该信念为真的实际原因，与你据以相信的理由无关。例如你看到桌上有一支铅笔（其实是别人恰好放在那儿的复制品），你形成"桌上有一支铅笔"的信念——它真、你有证成、你确实相信，但这更像运气。解决方案分两大路线：① 加固证成条件（如可靠主义：信念须由可靠机制产生）；② 承认知识不可再分解（如知识优先论，把"知道"当作不可还原的初始概念）。</p>
+          <div class="grid-2">
+            <div class="card"><h4>理性主义</h4><p>知识主要来自理性与先验推理。笛卡尔的"我思故我在"（cogito ergo sum）是典范——从唯一不可怀疑的基点出发重建知识大厦。</p></div>
+            <div class="card"><h4>经验主义</h4><p>知识主要来自感官经验。洛克说人心如"白板"（tabula rasa）；休谟进一步追问：因果性本身也无法被直接感知——我们只看到"先后"与"恒常联结"。</p></div>
+            <div class="card"><h4>康德的综合</h4><p>经验提供材料，心灵提供加工材料的先天结构（时空直观与因果范畴）。"无直观的概念是空的，无概念的直观是盲的"——知识 = 感性杂多 × 知性范畴。</p></div>
+            <div class="card"><h4>可靠主义（Reliabilism）</h4><p>知识不在于能否给出理由，而在于信念是否由可靠过程产生（知觉、记忆、推理）。它绕开了"无限回溯的理由链"难题。</p></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">归纳问题的边界</span>休谟指出：归纳本身无法被归纳证明——用"过去归纳有效"论证"未来归纳有效"构成循环。这不是可被"解决"的错误，而是理性的结构性限度。科学的选择是<strong>实用地搁置</strong>：接受归纳为方法论前提，而非可证明的真理。</div>
         </section>
         <section>
-          <h2><span class="sec-num">3</span>伦理学三大流派</h2>
-          <p class="lede">伦理学回答"我该怎样做"。西方伦理学史上有三座高峰，各自给出了判断对错的不同标准。</p>
+          <h2><span class="sec-num">3</span>伦理学：判断标准的量化与冲突</h2>
+          <p class="lede">伦理学回答"我该怎样做"。西方伦理学史上有三座高峰，各自给出判断对错的不同标准。本节把它们的判据写成可操作的形式，好让分歧变得可检验。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>功利主义（Consequentialism）</h4><p>杰里米·边沁和约翰·斯图尔特·密尔：对错由后果决定——最大化最大多数人的幸福。"幸福"可以是快乐（边沁）或更宽泛的福祉（密尔）。优点是直觉清晰，困境是可能牺牲少数。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>义务论（Deontology）</h4><p>伊曼努尔·康德：对错由行为本身决定，不看后果。道德法则来自绝对命令（Categorical Imperative）——"只按照你能同时意愿它成为普遍法则的准则行动"。核心是：人永远是目的，不能仅当作手段。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>德性伦理学（Virtue Ethics）</h4><p>亚里士多德：伦理的重点不是单次行为对错，而是"成为什么样的人"。德性是习惯化形成的品格特质，在两极之间取中道（Golden Mean）——勇气在怯懦与鲁莽之间。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>功利主义（Consequentialism）</h4><p>边沁与密尔：对错由后果决定——最大化最大多数人的幸福。可写成加总式：一个行为正确当且仅当其后果的总效用 Σ U_i 不低于其他可选行为。困境是可能牺牲少数。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>义务论（Deontology）</h4><p>康德：对错由行为准则本身决定，不看后果。绝对命令要求"只按你能同时意愿它成为普遍法则的准则行动"，且"人永远是目的，不能仅当作手段"。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>德性伦理学（Virtue Ethics）</h4><p>亚里士多德：伦理重点不是单次行为对错，而是"成为什么样的人"。德性是通过习惯化（hexis）形成的品格特质，在实践中道（Golden Mean）取中——勇气在怯懦与鲁莽之间。</p></div></div>
           </div>
           <table>
             <caption class="caption">三大流派的核心差异</caption>
@@ -80,86 +105,149 @@
               <tr><th scope="row">判断对象</th><td>行为后果</td><td>行为本身（准则）</td><td>行为者品格</td></tr>
               <tr><th scope="row">核心问题</th><td>什么后果最好？</td><td>什么准则可普遍化？</td><td>什么样的人是好的人？</td></tr>
               <tr><th scope="row">代表人物</th><td>边沁、密尔</td><td>康德</td><td>亚里士多德</td></tr>
-              <tr><th scope="row">经典困境</th><td>电车难题：推一人救五人对不对？</td><td>不可把人仅当手段——推人下去违反绝对命令</td><td>勇敢的人会怎么做？</td></tr>
+              <tr><th scope="row">判据形式</th><td>最大化 Σ U_i</td><td>准则可普遍化 ∧ 不把人仅当手段</td><td>是否符合中道与明智</td></tr>
             </tbody>
           </table>
-          <p>电车难题（Trolley Problem）由菲利帕·福特（Philippa Foot）在 1967 年提出后经朱迪斯·汤姆森扩展，至今是最著名的伦理学思想实验之一。它的价值不在"找到正确答案"，而在于<mark class="key">暴露你的道德直觉内部的不一致</mark>——多数人愿意拉拉杆让电车转向救五人（功利直觉），但不愿亲手推一人下去（义务论直觉），尽管后果一样。</p>
+          <h3>电车难题：歧义在哪个变量上</h3>
+          <div class="prompt-block"><span class="prompt-label">两个版本的形式差异</span><button class="copy-btn" type="button">复制</button>拉杆版：扳动开关 → 电车改道 → 死 1 救 5
+  变量：后果分配改变（谁丧生），无新的因果介入。
+
+推人版：把身旁胖子推下桥 → 用其身体挡车 → 死 1 救 5
+  变量：新增一个"把人当工具"的介入行为。
+
+两版后果完全相同（−1 换 +5），但多数人接受前者、拒斥后者。
+⇒ 说明道德判断不只依赖后果总量，还依赖**行为与后果的因果结构**：
+   · 伤害是"作为"还是"不作为"（doing vs allowing）；
+   · 受害者是被"使用"还是被"卷入"（use vs side-effect）。
+
+功利主义只看第一行（净后果），义务论与双效原则能捕捉第二行。
+二者的分歧因此落在"因果结构是否道德相关"这一可争辩命题上。</div>
+          <p>电车难题由菲利帕·福特（Philippa Foot）在 1967 年提出、经朱迪斯·汤姆森扩展，是当代伦理学最著名的思想实验之一。它的价值不在"找到正确答案"，而在于<mark class="key">暴露你的道德直觉内部的不一致</mark>——并迫使你说清楚：究竟是哪个变量使你对两个版本产生不同的道德反应。</p>
         </section>
         <section>
-          <h2><span class="sec-num">4</span>逻辑学：演绎与归纳</h2>
-          <p class="lede">逻辑学是哲学的工具学科：它研究什么推理是有效的——从前提能否合理地推出结论。亚里士多德的三段论奠定了演绎逻辑两千多年的基础。</p>
-          <ul>
-            <li><strong>演绎推理（Deduction）</strong>：如果前提为真，结论必然为真。经典三段论："所有人会死；苏格拉底是人；所以苏格拉底会死。"——结论已经包含在前提中，只是被显化。</li>
-            <li><strong>归纳推理（Induction）</strong>：从特殊到一般，结论或然为真但不必然。"观察到的天鹅都是白的；所以所有天鹅是白的"——澳洲黑天鹅的出现即可推翻。</li>
-            <li><strong>溯因推理（Abduction）</strong>：皮尔士提出，从结果反推最佳解释。"草坪湿了 → 可能下过雨"——它在科学假说形成中扮演核心角色。</li>
-            <li><strong>休谟的归纳问题</strong>：归纳推理本身无法被归纳证明——用"过去归纳有效"来论证"未来归纳有效"本身就是归纳，构成循环。这一难题至今未被"解决"，只是被实用地搁置。</li>
-          </ul>
+          <h2><span class="sec-num">4</span>逻辑学：从真值表到推理的有效性</h2>
+          <p class="lede">逻辑学是哲学的工具学科：它研究什么推理是有效的——从前提能否合理地推出结论。有效性（validity）与真（truth）是两个独立概念，这是入门时最易混淆的一点。</p>
+          <h3>演绎有效性的定义</h3>
+          <div class="prompt-block"><span class="prompt-label">有效性与可靠性的区分</span><button class="copy-btn" type="button">复制</button>命题逻辑基本联结词的真值表（以 → 为例）：
+  P  Q │ P → Q
+  T  T │   T
+  T  F │   F      ← 只有"前件真、后件假"时假
+  F  T │   T
+  F  F │   T
+
+定义：论证有效 ⟺ 不存在使所有前提为真、结论为假的赋值（反例行）。
+定义：论证可靠（sound）⟺ 有效 ∧ 所有前提实际为真。
+
+两个独立维度：
+  有效但不可靠：前提假（"所有人会飞；苏格拉底是人；⇒ 苏格拉底会飞"）
+  真但无效    ：结论碰巧真，推理不成立
+
+常见有效式：肯定前件 (MP)     P→Q, P ⊢ Q
+常见无效式：肯定后件 (AC)     P→Q, Q ⊬ P   ← 谬误
+常见无效式：否定前件 (DA)     P→Q, ¬P ⊬ ¬Q ← 谬误</div>
+          <p>亚里士多德的三段论奠定了演绎逻辑两千多年的基础，而现代一阶逻辑（弗雷格、罗素）用<mark class="key">量词与谓词</mark>精确刻画了"所有""存在"如何参与推理。要害在于：把日常语言的模糊表述翻译成无歧义的形式语言，谬误往往在翻译步骤暴露。</p>
           <table>
             <caption class="caption">三种推理的对比</caption>
             <thead><tr><th>类型</th><th>方向</th><th>确定性</th><th>典型用途</th></tr></thead>
             <tbody>
               <tr><th scope="row">演绎</th><td>一般 → 特殊</td><td>保真（前提真则结论必然真）</td><td>数学证明、三段论</td></tr>
               <tr><th scope="row">归纳</th><td>特殊 → 一般</td><td>不保真（可被新证据推翻）</td><td>经验科学、统计推断</td></tr>
-              <tr><th scope="row">溯因</th><td>结果 → 最佳解释</td><td>不保真（可能有更好的解释）</td><td>诊断、侦探、假说生成</td></tr>
+              <tr><th scope="row">溯因</th><td>结果 → 最佳解释</td><td>不保真（可能有更好解释）</td><td>诊断、侦探、假说生成</td></tr>
             </tbody>
           </table>
-          <p>波普尔对归纳问题的回应是：科学不靠归纳"证实"理论，而靠演绎<mark class="key">证伪</mark>——一个好的理论必须是"可被观察反驳"的（可证伪性）。不能被任何观察推翻的命题不是科学命题。这一标准虽非完美，但深刻影响了 20 世纪科学哲学。</p>
-          <div class="callout tip"><span class="callout-label">常见谬误速查</span>诉诸权威（因为专家说了所以对）、稻草人（曲解对方论点再反驳）、虚假二选（只给两个选项实际还有更多）、滑坡谬误（从A推出极端Z却无中间链条证明）。识别谬误比记住名字更重要——问"这个推理的哪一步出了问题"。</div>
+          <p>波普尔对归纳问题的回应是：科学不靠归纳"证实"理论，而靠演绎<mark class="key">证伪</mark>——好的理论必须"可被观察反驳"（可证伪性）。逻辑上，H ⇒ O（假设蕴含观察预测），若观察到 ¬O，则必然 ¬H（这是有效的否定后件式）。证伪的力量正来自它是演绎的、保真的；而"证实"永远只是归纳的、不保真的。</p>
+          <div class="callout tip"><span class="callout-label">谬误的识别逻辑</span>诉诸权威（专家说了所以对）、稻草人（曲解对方论点再反驳）、虚假二选（只给两个选项）、滑坡（从 A 推出极端 Z 却无中间链条）。识别要点不是记名字，而是定位<strong>出错的那一步</strong>：是隐含前提为假？是推理形式无效？还是术语被偷换了含义？</div>
         </section>
         <section>
-          <h2><span class="sec-num">5</span>哲学方法论与思想实验</h2>
-          <p class="lede">哲学不靠实验，而靠概念分析和思想实验——后者通过极端假设来测试概念边界，揭示直觉中的矛盾与隐藏假设。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>缸中之脑</h4><p>希拉里·普特南（Hilary Putnam）和笛卡尔恶魔假说的现代版：如果你的大脑被取出放进缸中，由计算机模拟一切感觉，你能分辨吗？它测试"外部世界是否真实"这一认识论极限。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>中文房间</h4><p>约翰·瑟尔（John Searle, 1980）：一个不懂中文的人按规则手册操作中文符号，外人以为他懂中文——但他真的"理解"了吗？它质疑"符号操作等于理解"这一强人工智能假设。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>忒修斯之船</h4><p>一艘船的木板被逐一替换，直到所有部件都换过——它还是原来那艘船吗？它测试"同一性"概念：什么使一个事物在不同时间仍然是"同一个"。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>无知之幕</h4><p>约翰·罗尔斯（John Rawls, 1971）：设计社会制度时，假设你不知道自己在社会中是富人还是穷人、是多数还是少数——在这种"无知之幕"后你会选择什么样的分配规则？它是一种契约论式的正义思考方法。</p></div></div>
+          <h2><span class="sec-num">5</span>前沿与研究进展</h2>
+          <p class="lede">哲学并非停滞的经典注疏。近几十年，实验哲学、形式化方法与人机伦理正在重塑议题。以下按时间线梳理几条可核实的脉络（不确定处用"约""主流观点认为"限定）。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">1960s</span><span class="tl-date">1963</span><p>盖梯尔发表短论文，动摇"知识 = 有证成的真信念"定义，此后分析认识论转入对"证成"结构的长期争论（可靠主义、德性认识论等相继出现）。</p></div>
+            <div class="tl-item"><span class="tl-era">1970s</span><span class="tl-date">1971</span><p>罗尔斯《正义论》以"无知之幕"重构社会契约论，把正义原则的推导形式化，复兴了规范政治哲学。</p></div>
+            <div class="tl-item"><span class="tl-era">1980s</span><span class="tl-date">1980</span><p>瑟尔提出"中文房间"思想实验，质疑强人工智能（符号操作是否等于理解），成为心智哲学与 AI 讨论的常用靶点。</p></div>
+            <div class="tl-item"><span class="tl-era">2000s</span><span class="tl-date">约 2000 起</span><p>"实验哲学"（experimental philosophy）兴起：用问卷与统计方法检验哲学家对"直觉"的依赖，发现直觉存在跨文化差异，对"思想实验即证据"的传统做法提出经验层面的质疑。</p></div>
+            <div class="tl-item"><span class="tl-era">2010s</span><span class="tl-date">近十年</span><p>人工智能伦理成为显学：算法公平、可解释性、"机器能否有道德地位"等问题推动伦理学与计算机科学、法学的交叉。主流观点认为这些讨论尚在快速演变，未有定论。</p></div>
+            <div class="tl-item"><span class="tl-era">持续</span><span class="tl-date">争论中</span><p>意识的"难问题"（Chalmers 提出）仍悬而未决：物理过程为何伴随主观体验。相关立场多元，从物理主义到泛心论均有主张者，不宜简化为"已有答案"。</p></div>
           </div>
+          <div class="callout warn"><span class="callout-label">读前沿的审慎原则</span>本节的年份与主张经过压缩。凡涉及"最新结论"，请回查一手文献的原文与后续回应，不要仅凭二手概述下判断——这正是认识论中"证成来源的可靠性"问题在实践中的体现。</div>
+        </section>
+        <section>
+          <h2><span class="sec-num">6</span>跨学科视角</h2>
+          <p class="lede">哲学的许多问题并非它专属，而是在与逻辑学、认知科学、数学、法学的交界处获得新工具。</p>
+          <div class="grid-2">
+            <div class="card"><h4>逻辑学 ↔ 数学 ↔ 计算机</h4><p>一阶逻辑是数学证明与程序验证的共同语言；可计算性理论（图灵、哥德尔）直接回答"哪些问题原则上可判定"，与逻辑实证主义对"意义"的追问一脉相承。</p></div>
+            <div class="card"><h4>认识论 ↔ 认知科学</h4><p>推理偏差（确认偏误、可得性启发）为"我们如何知道"提供了经验数据；实验哲学正是把认识论问题交给实证方法检验的尝试。</p></div>
+            <div class="card"><h4>伦理学 ↔ 经济学 ↔ 博弈论</h4><p>功利主义的"最大化总效用"与福利经济学同源；罗尔斯的无知之幕可形式化为"在不确定自身位置时的规则选择"，与契约论和博弈论中的"最大化最小值"策略相通。</p></div>
+            <div class="card"><h4>心灵哲学 ↔ 神经科学 ↔ AI</h4><p>"心物问题"在 fMRI 与深度学习时代被重述：哪些功能可被计算实现？主观体验是否可被还原？中文房间与"难问题"是两门学科共享的争论焦点。</p></div>
+            <div class="card"><h4>政治哲学 ↔ 法学</h4><p>正义原则、权利、契约等概念是宪政与法理学的理论底座；法律解释中的"目的论解释 vs 文义解释"之争，本质上是伦理与语言哲学问题的实践版本。</p></div>
+            <div class="card"><h4>科学哲学 ↔ 统计学</h4><p>波普尔的可证伪性与贝叶斯确证理论都试图刻画"证据如何支持假设"；p 值的误用争论，正需要科学哲学关于归纳与检验的清晰框架。</p></div>
+          </div>
+        </section>
+        <section>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">哲学最大的风险不是"想错"，而是把某一层面的结论当作普遍的、无条件的真理。以下三个误区在入门阶段尤其常见。</p>
+          <h3>误区一：相对主义 = 宽容</h3>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">误区</span><pre>"没有客观对错，一切都相对" → 因此我该尊重所有观点。</pre><p class="why">问题：若真的没有客观对错，"宽容"本身也只是相对偏好，无法被用作普遍要求；相对主义无法推出宽容，反而取消了对不宽容的批评能力。</p></div>
+            <div class="side good"><span class="side-tag">修正</span><pre>区分"不同社会道德规范有差异"（经验事实）
+与"没有任何跨情境的规范性标准"（规范主张）。</pre><p class="why">前者可被人类学支持，后者是一个更强的哲学立场，需要独立论证——承认多样性不等于放弃一切评价标准。</p></div>
+          </div>
+          <h3>误区二：科学已经"终结"了哲学问题</h3>
+          <p>实证科学能回答"是什么、如何运作"，但对"应该怎样""什么是证成""同一性的判据是什么"这类规范性与概念性问题，它至多提供经验输入，不能替代概念分析本身。反过来，哲学也不能凭空断言经验事实——这正是康德"无直观的概念是空的"之意。</p>
+          <h3>误区三：思想实验的直觉就是证据</h3>
+          <p>思想实验依赖直觉，但直觉受文化、措辞、呈现顺序影响。实验哲学的发现提醒我们：<mark class="key">一个思想实验的说服力，本身需要被检验，而非直接采信</mark>。合适的态度是——用思想实验<strong>暴露你的假设</strong>，再追问这些假设是否可辩护。</p>
           <table>
-            <caption class="caption">哲学方法论的核心工具</caption>
-            <thead><tr><th>工具</th><th>作用</th><th>注意事项</th></tr></thead>
+            <caption class="caption">哲学工具的适用边界</caption>
+            <thead><tr><th>工具</th><th>作用</th><th>失效/边界条件</th></tr></thead>
             <tbody>
               <tr><th scope="row">概念分析</th><td>澄清概念的逻辑结构与必要条件</td><td>可能脱离实际——需与经验对照</td></tr>
               <tr><th scope="row">思想实验</th><td>用极端假设暴露直觉矛盾</td><td>直觉可能因文化而异，非万能判据</td></tr>
-              <tr><th scope="row">反例法</th><td>用一个反例推翻普遍主张</td><td>推翻定义不等于解决问题——需重建</td></tr>
-              <tr><th scope="row">先验论证</th><td>证明某条件是某事物存在的必要前提</td><td>易与经验主张混淆——需区分</td></tr>
+              <tr><th scope="row">反例法</th><td>用一个反例推翻普遍主张</td><td>推翻定义不等于问题解决——需重建新定义</td></tr>
+              <tr><th scope="row">先验论证</th><td>证明某条件是某事物存在的必要前提</td><td>易与经验主张混淆——必须区分逻辑必然与事实必然</td></tr>
             </tbody>
           </table>
-          <p>思想实验的价值不在"给出答案"，而在<mark class="key">让你看见自己未曾审视的假设</mark>。当你发现一个思想实验让你左右为难时——那正是哲学开始起作用的时刻。哲学训练的最终产出不是一套立场，而是一种能力：面对复杂问题时，先问"这个问题的前提是什么""这些概念是否清晰""我遗漏了哪些可能性"。</p>
-          <div class="callout tip"><span class="callout-label">哲学阅读建议</span>读哲学原著不要追求"读懂每一句话"——先抓论证骨架：前提是什么？推理链如何展开？结论是什么？哪些概念是定义性的、哪些是实质性的？第二遍再深入细节。柏拉图对话录、笛卡尔《第一哲学沉思集》、罗尔斯《正义论》都是适合入门的原典。</div>
+          <p>哲学训练的产出不是一套立场，而是一种能力：面对复杂问题时，先问"这个问题的前提是什么""这些概念是否清晰""我遗漏了哪些可能性""反驳会从哪一步来"。</p>
         </section>
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
+          <h2><span class="sec-num">8</span>速查卡</h2>
           <div class="prompt-block"><span class="prompt-label">哲学速记</span><button class="copy-btn" type="button">复制</button>· 形而上学问"什么真正存在"：柏拉图理念论 vs 亚里士多德实体论
-· 奥卡姆剃刀：如无必要勿增实体（方法论偏好，非真理标准）
-· 认识论三元：理性主义（笛卡尔）/ 经验主义（洛克休谟）/ 康德综合
-· JTB 定义：知识 = 有证成的真信念，Gettier 反例动摇此定义
-· 笛卡尔：我思故我在——方法论怀疑的不可动摇基点
-· 伦理学三派：功利主义（后果）/ 义务论（准则）/ 德性伦理学（品格）
+· 本体论承诺：一个理论说"X 存在"究竟承诺了什么
+· 奥卡姆剃刀：如无必要勿增实体（理论选择的启发式，非真理标准）
+· 同一性 = 质的同一 与 数的同一；忒修斯之船暴露二者冲突
+· 本质属性 = 所有可能世界中都具有；偶性属性可有可无
+· 认识论三元 JTB：知识 = 信念 ∧ 真 ∧ 证成
+· Gettier（1963）：有证成的真信念未必是知识，证成与真可断裂
+· 理性主义（笛卡尔）/ 经验主义（洛克、休谟）/ 康德综合
+· 休谟归纳问题：归纳本身无法被归纳证明（理性的结构性限度）
+· 伦理学三派：功利主义（后果 Σ U）/ 义务论（准则）/ 德性伦理学（品格）
 · 康德绝对命令：只按你能意愿其为普遍法则的准则行动
-· 电车难题：暴露道德直觉内部的不一致
-· 演绎保真、归纳不保真、溯因取最佳解释
-· 休谟归纳问题：归纳本身无法被归纳证明
-· 波普尔可证伪性：不能被推翻的命题不是科学命题
-· 思想实验价值：让你看见未审视的假设
-· 罗尔斯无知之幕：在不知道自己身份时设计正义规则</div>
+· 电车难题：两版后果相同但直觉不同 ⇒ 因果结构是否道德相关
+· 演绎有效 ⟺ 无"前提真结论假"的反例行；有效 ≠ 可靠
+· 常见无效式：肯定后件、否定前件——谬误就在形式里
+· 波普尔可证伪性：不能被观察反驳的命题不是科学命题
+· 证伪之力来自否定后件式（演绎保真），证实只是归纳
+· 罗尔斯无知之幕：不知道自己身份时设计正义规则
+· 思想实验的价值在于暴露假设，而非直接充当证据</div>
         </section>
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <p class="lede">以下 9 题要求推导、构造与自我反驳，而非复述结论。每题附判据，完成后请对照检查是否达到要求。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用柏拉图洞穴比喻分析一个自己曾经"把影子当真实"的认知经历</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">构造一个 Gettier 式反例：一个"有证成的真信念"却更像运气的案例</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用三大伦理流派分别分析一个真实道德困境，比较结论差异</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">找出一条自己推理中的谬误，拆解它的错误链条</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">区分演绎与归纳：各写一个自己日常使用的推理，判断类型</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用无知之幕思考一个分配问题：你不知道自己身份时会怎么设计规则</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">选一个哲学概念（如"自由""正义""知识"），尝试给出你的定义并用反例测试</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">把"共相是否存在"改写成含明确前提的三段论，并指出实在论与唯名论各自否定哪一步（判据：前提可编号，反驳指向具体步骤）</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">构造一个 Gettier 式反例：一个"有证成的真信念"却更像运气，并说明断裂发生在证成与真的哪一环（判据：三元条件齐备但直觉上不是知识）</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用真值表验证"肯定后件"是无效式，找出使其前提真而结论假的那一行（判据：列出 4 行赋值，标出反例行）</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用三大伦理流派分别分析同一个真实道德困境，写出各自的判据式并比较结论差异（判据：每派给出可操作的判断步骤）</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">设计一个电车难题的"第三版本"，改变因果结构但保持后果不变，预测多数人的直觉会如何变（判据：明确写出被改变的自变量）</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">区分演绎与归纳：各写一个自己日常使用的推理，判断类型并指出归纳项可能被什么证据推翻（判据：给出具体反例条件）</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用无知之幕设计一个分配规则，然后论证为什么你认为它在幕后会被人选择（判据：区分风险态度与规则选择）</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">选一个哲学概念（如"自由""正义""知识"），给出你的定义，再用一个反例测试并修补它（判据：经历"定义→反例→修订"完整循环）</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">就"科学能否解决规范性问题"写一段正反双方各三句的对话，并指出分歧的真正前提（判据：双方论证指向同一隐含命题的取舍）</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">原创交互式学习资料，基于哲学经典文献整理，引用包括柏拉图《理想国》、亚里士多德《形而上学》《尼各马可伦理学》、笛卡尔《第一哲学沉思集》、洛克《人类理解论》、休谟《人性论》、康德《纯粹理性批判》《实践理性批判》、密尔《功利主义》、Gettier《有证成的真信念即知识？》（1963）、罗尔斯《正义论》（1971）、Searle 中文房间（1980）等。</p>
+        <p class="footnote">原创交互式学习资料，基于哲学经典文献整理，引用包括柏拉图《理想国》、亚里士多德《形而上学》《尼各马可伦理学》、笛卡尔《第一哲学沉思集》、洛克《人类理解论》、休谟《人性论》、康德《纯粹理性批判》《实践理性批判》、密尔《功利主义》、Gettier《有证成的真信念即知识？》（1963）、罗尔斯《正义论》（1971）、Searle"中文房间"（1980）、Foot 电车难题（1967）、Chalmers 意识"难问题"等。前沿部分年份与主张经压缩，读者应回查一手文献。</p>
       </footer>
     </div>
   </article>

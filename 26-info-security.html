@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>信息安全常识指南</title>
+  <title>信息安全深度进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>信息安全常识指南</h1>
-          <p class="report-intro__summary">安全不是买来的产品，而是一组持续的权衡：先明确「保护什么、防谁」，再谈工具。本指南从 CIA 三要素讲到加密、证书、常见攻击与个人防护，把原理和可执行清单连成一条线。</p>
+          <h1>信息安全深度进阶指南</h1>
+          <p class="report-intro__summary">安全不是买来的产品，而是一组可推导、可验证的权衡。本指南把 CIA 三性、威胁建模、对称与非对称密码的数学基础、哈希与抗碰撞性、数字签名与 PKI、TLS 握手协议，以及重放 / 中间人 / 注入类攻击的原理与防护，连成一条从「密码学原语」到「协议」再到「工程防御」的完整推导链。</p>
           <div class="intro-meta">
             <span>领域：科技 · AI</span>
             <span>难度：进阶</span>
@@ -26,134 +26,240 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>CIA 三要素与威胁建模</h2>
-          <p class="lede">一切安全需求最终都能落到三个词上；一切攻击也都在破坏其中之一。</p>
+          <h2><span class="sec-num">1</span>CIA 三性、威胁建模与攻击面形式化</h2>
+          <p class="lede">一切安全需求最终都能落到三个词上；一切攻击也都在破坏其中之一。先把「想保护什么、防谁、防到什么程度」写成可检验的命题，再谈工具。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>保密性（C）</h4><p>信息只被授权者看到。加密、访问控制都在服务它。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>完整性（I）</h4><p>信息不被未授权篡改，且篡改可被发现。哈希与签名服务它。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>可用性（A）</h4><p>授权者需要时可访问。DDoS、勒索软件攻击的就是它——最常被低估的一项。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>保密性（Confidentiality）</h4><p>信息只被授权者获取。形式化目标：给定密文，敌手在多项式时间内区分两条明文的优势可忽略。加密、访问控制、最小化收集都在服务它。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>完整性（Integrity）</h4><p>数据不被未授权篡改，且篡改可被检测。注意「可检测」弱于「不可篡改」：MAC 与签名都承认篡改可能，但承诺篡改后必被发现。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>可用性（Availability）</h4><p>授权者需要时可访问。DDoS 与勒索软件攻击的正是它——最常被低估的一项，因为没有直接的「破解」，破坏却最彻底。</p></div></div>
           </div>
           <table>
             <caption class="caption">STRIDE 威胁分类（微软提出）</caption>
             <thead><tr><th>威胁</th><th>破坏的属性</th><th>例子</th></tr></thead>
             <tbody>
-              <tr><th scope="row">假冒 Spoofing</th><td>真实性</td><td>伪造身份、钓鱼登录页</td></tr>
-              <tr><th scope="row">篡改 Tampering</th><td>完整性</td><td>改传输中的数据、改文件</td></tr>
-              <tr><th scope="row">抵赖 Repudiation</th><td>不可否认性</td><td>否认自己做过操作</td></tr>
-              <tr><th scope="row">信息泄露 Disclosure</th><td>保密性</td><td>拖库、配置错误公开</td></tr>
-              <tr><th scope="row">拒绝服务 DoS</th><td>可用性</td><td>DDoS 打瘫服务</td></tr>
-              <tr><th scope="row">权限提升 EoP</th><td>授权边界</td><td>普通用户拿到管理员</td></tr>
+              <tr><th scope="row">假冒 Spoofing</th><td>真实性</td><td>伪造身份、钓鱼登录页、ARP 欺骗</td></tr>
+              <tr><th scope="row">篡改 Tampering</th><td>完整性</td><td>改传输中的数据、改文件、改日志</td></tr>
+              <tr><th scope="row">抵赖 Repudiation</th><td>不可否认性</td><td>否认自己签过合同或下过单</td></tr>
+              <tr><th scope="row">信息泄露 Disclosure</th><td>保密性</td><td>拖库、配置错误公开、侧信道</td></tr>
+              <tr><th scope="row">拒绝服务 DoS</th><td>可用性</td><td>DDoS 打瘫服务、资源耗尽</td></tr>
+              <tr><th scope="row">权限提升 EoP</th><td>授权边界</td><td>普通用户拿到管理员、越权访问</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">威胁建模三步</span>盘点<strong>资产</strong>（什么值得保护）→ 找<strong>入口与信任边界</strong>（数据从哪进出、边界在哪）→ 对每一处评估<strong>对策</strong>。跳过这一步直接堆工具，是最常见的失败模式。</div>
+          <div class="prompt-block"><span class="prompt-label">威胁建模四步（可照抄的推导框架）</span><button class="copy-btn" type="button">复制</button>1. 资产：列出要保护的实体（数据、凭据、算力、声誉）及各自 CIA 权重
+2. 信任边界：画出数据从哪进、在哪离开信任域（用户→网关→服务→数据库）
+3. 对手模型：谁、有多少预算、能接触什么（脚本小子 / 内部人员 / 有组织犯罪 / 国家级）
+4. 对策与残余风险：针对每个 STRIDE 项给出控制，写明攻击成本 vs 收益，接受无法消除的残余
+—— 跳过第 3 步，等于在没有对手的真空里做设计</div>
+          <div class="callout warn"><span class="callout-label">常见失败模式</span>直接堆工具（装了防火墙 / 上了加密就以为安全）而不做威胁建模，会把预算花在不相关项上。安全的第一性原理是<strong>对手与资产的匹配</strong>，不是工具清单。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>对称、非对称加密与哈希</h2>
-          <p class="lede">对称快但密钥怎么安全给对方？非对称解决了分发，但慢——真实系统两者混用。</p>
+          <h2><span class="sec-num">2</span>对称加密、非对称加密与 RSA 的数学基础</h2>
+          <p class="lede">对称快但密钥如何安全分发？非对称解决了分发难题，代价是慢若干数量级——于是真实系统把两者混用。</p>
           <table>
-            <caption class="caption">对称与非对称</caption>
+            <caption class="caption">对称与非对称：能力与代价</caption>
             <thead><tr><th>维度</th><th>对称加密</th><th>非对称加密</th></tr></thead>
             <tbody>
-              <tr><th scope="row">密钥</th><td>加解密同一把</td><td>公钥加密、私钥解密</td></tr>
-              <tr><th scope="row">速度</th><td>快，适合大量数据</td><td>慢几个数量级</td></tr>
-              <tr><th scope="row">代表</th><td>AES（FIPS 197，2001）</td><td>RSA（1977）、ECC（1985）</td></tr>
-              <tr><th scope="row">典型用途</th><td>数据加密</td><td>密钥交换、数字签名</td></tr>
+              <tr><th scope="row">密钥</th><td>加解密同一把（会话密钥）</td><td>公钥加密、私钥解密；或私钥签名、公钥验证</td></tr>
+              <tr><th scope="row">速度</th><td>快，适合大量数据（按块）</td><td>慢几个数量级（大整数模运算）</td></tr>
+              <tr><th scope="row">安全性依赖</th><td>分组密码的混淆与扩散</td><td>大整数分解 / 离散对数 / 椭圆曲线难题</td></tr>
+              <tr><th scope="row">代表</th><td>AES（FIPS 197，2001）</td><td>RSA（1977）、ECC（1985，Koblitz 与 Miller 分别提出）</td></tr>
+              <tr><th scope="row">典型用途</th><td>数据加密、MAC</td><td>密钥交换、数字签名、身份认证</td></tr>
             </tbody>
           </table>
+          <div class="prompt-block"><span class="prompt-label">RSA 的推导：欧拉定理 → 模幂 → 正确性</span><button class="copy-btn" type="button">复制</button>1. 选两个大素数 p、q，令 n = p·q，φ(n) = (p−1)(q−1)
+2. 选公开指数 e，满足 gcd(e, φ(n)) = 1
+3. 求私钥 d，满足 e·d ≡ 1 (mod φ(n))（用扩展欧几里得算法）
+4. 公钥 (e, n)，私钥 (d, n)
+5. 加密 C = M^e mod n；解密 M = C^d mod n
+正确性：由欧拉定理，若 gcd(M, n)=1，则 M^φ(n) ≡ 1 (mod n)
+因为 e·d = 1 + k·φ(n)，故 C^d = M^(e·d) = M^(1+k·φ(n)) = M·(M^φ(n))^k ≡ M (mod n)
+陷阱：必须填充（OAEP），裸 RSA 是确定性映射，同一明文永远同一密文
+—— 安全性假设：分解 n 在计算上不可行（这是唯一根基，一旦被打破全盘失效）</div>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>混合加密</h4><p>HTTPS、TLS 的标准做法：用非对称算法协商出一次性会话密钥，之后用 AES 等对称算法传输数据。各取所长。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>哈希三性质</h4><p>单向（不可逆推原文）、抗碰撞（找不到同摘要的两输入）、雪崩效应（改一位、摘要巨变）。摘要长度决定碰撞难度。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>盐与慢哈希</h4><p>存口令必须先加随机盐再哈希（防彩虹表比对），并用 bcrypt（1999）或 Argon2（2015 年竞赛冠军）这类刻意慢的哈希，让暴力枚举付出代价。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>模幂为什么快</h4><p>计算 M^e mod n 绝不先算 M^e 再取模（会爆炸）。用<strong>平方—乘法</strong>（快速幂），把指数二进制展开，从左到右每步平方、遇 1 再乘，复杂度从 O(e) 降到 O(log e) 次模乘。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>分组密码的两大设计原则</h4><p>Shannon 提出<strong>混淆</strong>（让密文与密钥的关系高度非线性，靠 S 盒）与<strong>扩散</strong>（一个明文位影响多个密文位，靠置换 / 行移位 / 列混合），共同产生雪崩效应。AES 用多轮（128 位密钥 10 轮）反复施加这两种操作。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>工作模式决定安全性</h4><p>ECB 对相同明文块产生相同密文块，会暴露结构（著名的「ECB 企鹅图」）。CBC 引入链式与前缀 IV 但仍可被篡改；GCM 提供认证加密（AEAD）同时保证保密与完整，是现代首选。</p></div></div>
           </div>
-          <div class="callout tip"><span class="callout-label">年代红线</span>MD5（1991）与 SHA-1（1995）均已被实际碰撞攻破——SHA-1 的碰撞 2017 年被公开演示。新系统哈希至少 SHA-256；RSA 密钥至少 2048 位（RSA-768 已于 2009 年被成功分解）。</div>
+          <div class="callout warn"><span class="callout-label">年代红线</span>DES（56 位密钥）早在 1990 年代被穷举攻破，现由 AES 取代；MD5（1991）与 SHA-1（1995）均已被实际碰撞攻破——SHA-1 的碰撞 2017 年由 CWI 与 Google 合作公开演示（SHAttered）。新系统哈希至少 SHA-256；RSA 密钥至少 2048 位（768 位的 RSA-768 于 2009 年被成功分解）。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>数字签名与证书链</h2>
-          <p class="lede">签名解决「这消息确实是他发的、且没被改过」；证书解决「这把公钥真的是他的」。</p>
+          <h2><span class="sec-num">3</span>哈希函数、抗碰撞性与生日界</h2>
+          <p class="lede">哈希把任意长输入压成定长摘要；它的安全性不在「不可逆」，而在三类问题的计算难度。</p>
+          <div class="feature-list">
+            <div class="feature"><div class="f-ico">1</div><div><h4>三类安全性质</h4><p><strong>原像抗性</strong>：给定 y，找不到 x 使 H(x)=y（单向）。<strong>第二原像抗性</strong>：给定 x，找不到 x′≠x 使 H(x′)=H(x)。<strong>抗碰撞性</strong>：找不到任意 x′≠x 使两者摘要相同。后者最弱，一旦破了前两者通常也危。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>生日界：n 位摘要的真实强度</h4><p>由生日悖论，找碰撞的期望尝试约 2^(n/2) 次，而非 2^n。所以 SHA-256（256 位）抗碰撞强度约 2^128，而非 2^256——这正是 SHA-1（160 位）能被实际攻破的原因（碰撞界仅约 2^80）。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>Merkle–Damgård 与长度扩展攻击</h4><p>MD5、SHA-1、SHA-2 用迭代结构：分组串联、逐块压缩。这带来<strong>长度扩展攻击</strong>——已知 H(secret‖m) 可算出 H(secret‖m‖padding‖m′)，无需知道 secret。HMAC 用嵌套 (K⊕opad) 与 (K⊕ipad) 双次哈希专门堵住这个漏洞；SHA-3（2015）改用海绵结构彻底规避。</p></div></div>
+          </div>
+          <div class="prompt-block"><span class="prompt-label">口令存储的正确姿势</span><button class="copy-btn" type="button">复制</button>错误：md5(password)              —— 无盐，彩虹表秒破
+错误：sha256(password + salt)      —— 快，GPU 每秒可算数十亿次
+正确：Argon2id / scrypt / bcrypt  —— 刻意慢 + 内存硬 + 每用户随机盐
+要点：
+· 每用户独立随机盐，防彩虹表与相同口令批量识别
+· 慢哈希让离线暴力枚举的每次尝试付出内存与时间代价
+· bcrypt（1999）内建盐；Argon2（2015 年密码哈希竞赛冠军）可调时间/内存/并行度
+· 与泄露口令库（如 HIBP）比对拦截，而非强制周期更换</div>
+          <div class="callout tip"><span class="callout-label">别混淆用途</span>哈希不是加密：摘要不可逆，也不该被用来「加密」需要还原的数据。要保密用 AEAD（如 AES-GCM）；要认证完整用 HMAC；要抗抵赖用签名。三者目标不同，混用是常见 bug 来源。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>数字签名、PKI 与 TLS 握手</h2>
+          <p class="lede">签名解决「消息确实是他发的、且没被改过」；证书解决「这把公钥确实是他的」；TLS 把二者缝成一条可协商、可前向保密的隧道。</p>
           <ul>
-            <li><strong>签名流程</strong>：发送方对消息先取哈希摘要，再用<strong>私钥</strong>签摘要；接收方用<strong>公钥</strong>验签并比对自算摘要——一致即证明来源与完整性。</li>
-            <li><strong>不可否认</strong>：只有私钥持有者能生成合法签名，因此签名者事后无法抵赖。</li>
-            <li><strong>信任的传递</strong>：公钥本身可能被调包，于是需要第三方证明——这就是证书。</li>
+            <li><strong>签名流程</strong>：发送方对消息取哈希摘要，再用<strong>私钥</strong>签摘要（如 RSA-PSS 或 ECDSA）；接收方用<strong>公钥</strong>验签并比对自算摘要——一致即证明来源与完整性。</li>
+            <li><strong>不可否认</strong>：只有私钥持有者能生成合法签名，因此签名者事后无法抵赖（前提：私钥未泄露、未被共享）。</li>
+            <li><strong>信任的传递</strong>：公钥本身可能被调包，于是需要第三方证明——这就是 CA 签发的证书。</li>
           </ul>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>X.509 证书</h4><p>一张「公钥 + 持有者身份 + 有效期 + 签发者」的证明文件，由 CA 用自己的私钥签名。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>信任链</h4><p>站点证书由中间 CA 签发，中间 CA 由根 CA 签发；根 CA 自签并预装在操作系统与浏览器的信任库里——链条的起点是「出厂预置 + 系统更新」。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>吊销机制</h4><p>私钥泄露后靠 CRL（吊销列表）或在线的 OCSP 查询让证书提前失效；浏览器逐步改用更轻量的 OCSP 装订。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>X.509 证书与信任链</h4><p>证书 = 公钥 + 持有者身份 + 有效期 + 用途 + 签发者，由 CA 用自己私钥签名。站点证书由中间 CA 签发，中间 CA 由根 CA 签发；根 CA 自签并预装在操作系统与浏览器信任库——链条起点是「出厂预置 + 系统更新」。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>吊销：CRL、OCSP 与 OCSP 装订</h4><p>私钥泄露后需让证书提前失效。CRL 是签名的吊销列表（体积大、时效差）；OCSP 在线查询单张证书状态（有隐私与延迟问题）；<strong>OCSP Stapling</strong> 由服务器把带时间戳的 OCSP 响应一并送达，兼顾时效与隐私。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>前向保密（PFS）</h4><p>若会话密钥由服务器私钥直接加密传递，一旦私钥未来泄露，历史流量可被解密。用临时 Diffie–Hellman（DHE / ECDHE）每会话生成一次性密钥，事后丢弃，即使长期私钥泄露也解不开过去的流量。</p></div></div>
           </div>
-          <div class="callout tip"><span class="callout-label">点开看一次</span>在浏览器地址栏查看任意 HTTPS 站点的证书：主体、签发者、有效期、完整链条都能看到。见过一次，信任模型就不再抽象。</div>
+          <div class="prompt-block"><span class="prompt-label">TLS 1.3 握手（简化的 1-RTT ECDHE）</span><button class="copy-btn" type="button">复制</button>Client → Server：ClientHello（支持的版本、套件、密钥共享、随机数）
+Server → Client：ServerHello（选定套件、密钥共享、随机数）
+                 {Certificate, CertificateVerify, Finished}  ← 服务端认证与完整性
+Client → Server：{Finished}
+双方由 ECDHE 共享秘密 + 双方随机数导出会话密钥（HKDF）
+关键点：
+· TLS 1.3（RFC 8446，2018）默认前向保密，删除了 RSA 密钥交换与过时套件
+· 认证靠证书链验证 + CertificateVerify 用私钥对握手记录签名
+· 握手后所有应用数据经 AEAD 加密并带认证标签，防篡改与重放（配合序列号）</div>
+          <div class="callout tip"><span class="callout-label">点开看一次</span>在浏览器地址栏查看任意 HTTPS 站点的证书：主体、签发者、有效期、完整链条都能看到。见过一次，信任模型与「根 CA 从哪来」就不再抽象。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>常见攻击面</h2>
-          <p class="lede">攻击者永远寻找最薄弱的一环，而那一环通常是人而不是代码。</p>
+          <h2><span class="sec-num">5</span>常见攻击的原理与防护</h2>
+          <p class="lede">攻击者永远寻找最薄弱的一环，而那一环通常是人而不是代码。理解原理，才能判断防护是否真的堵住了根因。</p>
           <table>
-            <caption class="caption">高频攻击与对应防御</caption>
+            <caption class="caption">高频攻击：原理与对应防御</caption>
             <thead><tr><th>攻击</th><th>原理</th><th>核心防御</th></tr></thead>
             <tbody>
-              <tr><th scope="row">钓鱼</th><td>伪造界面骗取凭据</td><td>核对域名、通行密钥、双因素</td></tr>
-              <tr><th scope="row">SQL 注入</th><td>拼接的输入被当 SQL 执行</td><td>参数化查询，杜绝拼接</td></tr>
+              <tr><th scope="row">重放 Replay</th><td>截获合法报文后原样重发</td><td>随机数 / 时间戳 / 序列号，让旧报文失效</td></tr>
+              <tr><th scope="row">中间人 MITM</th><td>在两端之间转发并各自建立会话</td><td>证书校验 + 证书固定，缺失校验即失效</td></tr>
+              <tr><th scope="row">SQL 注入</th><td>拼接的输入被当 SQL 执行</td><td>参数化查询（预编译），杜绝拼接</td></tr>
               <tr><th scope="row">XSS</th><td>恶意脚本被注入页面执行</td><td>输出编码 + CSP 内容安全策略</td></tr>
               <tr><th scope="row">CSRF</th><td>借已登录身份发起伪造请求</td><td>CSRF token、SameSite Cookie</td></tr>
-              <tr><th scope="row">勒索软件</th><td>加密文件勒索赎金</td><td>备份（3-2-1）+ 最小权限</td></tr>
+              <tr><th scope="row">勒索软件</th><td>加密文件勒索赎金</td><td>备份（3-2-1）+ 最小权限 + 隔离</td></tr>
             </tbody>
           </table>
-          <p>注入类常年位居 OWASP Top 10 前列，共同根源是把<strong>数据当代码</strong>执行；防御的共同思路是分离——数据只作为数据处理。体系层面记住两条：<strong>纵深防御</strong>（多层控制，不赌单点）与<strong>最小权限</strong>（只给完成任务所需的最小授权）。</p>
-          <div class="callout tip"><span class="callout-label">社会工程</span>冒充 IT 支持要验证码、冒充领导催转账、伪造紧急氛围——社会工程绕过的是<strong>人的流程</strong>而非技术控制，所以「异常 + 紧急 + 涉及凭据/转账」的组合必须走独立渠道二次确认。</div>
+          <div class="feature-list">
+            <div class="feature"><div class="f-ico">1</div><div><h4>注入的根因：数据被当代码</h4><p>SQL / XSS / 命令注入是同一类错误——把用户输入拼进一个由解释器执行的上下文。防御的共同思路是<strong>分离</strong>：数据只作为数据传递（参数化、编码、白名单校验），永不靠「过滤特殊字符」这种易漏的黑名单。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>为什么 MITM 能成功</h4><p>加密本身挡得住窃听，却挡不住「你和攻击者各握一把钥匙」。MITM 的突破口几乎总是<strong>证书校验缺失或被绕过</strong>（自签证书一键信任、移动 App 忽略错误、被预置的恶意根证书）。所以安全的根基不是密码算法，而是<strong>信任锚是否可信</strong>。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>重放为何需要「新鲜性」</h4><p>若协议只保证报文来自合法方，攻击者原样重发转账指令依然有效。对策是给每个会话引入不可预测的挑战值（nonce）或严格递增序列号，并在服务端记录已用值——本质是把「这条报文现在仍然有效」编码进协议。</p></div></div>
+          </div>
+          <p>注入类常年位居 OWASP Top 10 前列；防御的体系层面记住两条：<strong>纵深防御</strong>（多层控制，不赌单点）与<strong>最小权限</strong>（只给完成任务所需的最小授权，且默认拒绝）。</p>
+          <div class="callout tip"><span class="callout-label">社会工程</span>冒充 IT 支持要验证码、冒充领导催转账、伪造紧急氛围——社会工程绕过的是<strong>人的流程</strong>而非技术控制，所以「异常 + 紧急 + 涉及凭据 / 转账」的组合必须走独立渠道二次确认。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>口令、双因素与个人防护清单</h2>
-          <p class="lede">NIST SP 800-63B（2017）修正了流行误区：长度与唯一性，远比花式复杂度重要。</p>
+          <h2><span class="sec-num">6</span>口令、双因素与个人防护体系</h2>
+          <p class="lede">NIST SP 800-63B 修正了流行误区：长度与唯一性，远比花式复杂度与强制周期更换重要。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>强口令原则</h4><p>长度优先（允许 64 位以上）、全站唯一、不强制周期更换（有证据才换）、与泄露口令库比对拦截——这是 NIST 的现行建议。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>密码管理器</h4><p>让你为每个站点生成并保存互不相关的长随机口令。记忆负担交给工具，人只需守住一个强主口令。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>双因素分级</h4><p>通行密钥（FIDO2/WebAuthn，绑定域名、抗钓鱼）最强；TOTP（RFC 6238，30 秒一码的验证器 App）次之；短信验证最弱（可被 SIM 卡劫持），聊胜于无。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>强口令原则</h4><p>长度优先（允许 64 位以上）、全站唯一、不强制周期更换（有泄露证据才换）、与泄露口令库比对拦截——这是 NIST 的现行建议，也与「每 90 天改一次」的老规训相反。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>双因素分级</h4><p>通行密钥（FIDO2 / WebAuthn，绑定域名、公钥挑战响应、抗钓鱼）最强；TOTP（RFC 6238，30 秒一码的验证器）次之；短信 / 邮件验证最弱（可被 SIM 卡劫持或邮箱接管），聊胜于无。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>为什么通行密钥抗钓鱼</h4><p>FIDO2 把凭据绑定到具体域名，认证过程是挑战—响应签名，私钥永不出设备。钓鱼站域名不同，浏览器根本不会用它签名——这不是「用户更小心」，而是把安全性从人的判断转移到协议本身。</p></div></div>
           </div>
           <ul>
-            <li><strong>系统与应用及时更新</strong>：绝大多数成功攻击利用的是已公开、已修补的漏洞。</li>
-            <li><strong>备份 3-2-1</strong>：3 份副本、2 种介质、1 份异地（或离线）——勒索软件的第一道也是最后一道保险。</li>
+            <li><strong>系统与应用及时更新</strong>：绝大多数成功攻击利用的是已公开、已修补的漏洞，补丁延迟是最好的靶子。</li>
+            <li><strong>备份 3-2-1</strong>：3 份副本、2 种介质、1 份异地或离线——勒索软件的第一道也是最后一道保险；注意「备份连接的凭据」也要与生产隔离，否则一起被加密。</li>
             <li><strong>公共网络</strong>：不信任的网络里敏感操作只走 HTTPS，或用 VPN 加密全部流量。</li>
-            <li><strong>授权梳理</strong>：定期清理「用第三方账号登录」的授权与长期未用的应用。</li>
+            <li><strong>授权梳理</strong>：定期清理「用第三方账号登录」的授权与长期未用的应用，收回闲置凭据。</li>
           </ul>
-          <div class="callout tip"><span class="callout-label">心态</span>安全是一个持续的过程而非一次达标的状态：威胁在变，防护要跟着复查、更新、演练。</div>
+          <div class="callout warn"><span class="callout-label">心态</span>安全是一个持续的过程而非一次达标的状态：威胁在变，防护要跟着复查、更新、演练。没有「已经安全」，只有「当前风险可接受」。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">安全速记</span><button class="copy-btn" type="button">复制</button>· CIA：保密性、完整性、可用性——先问攻击破坏哪项
+          <h2><span class="sec-num">7</span>前沿与研究进展</h2>
+          <p class="lede">近几十年，密码学从「能加密」走向「可证明安全」，工程则把安全从「事后审计」推向「默认内置」。</p>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-era">1976–1977</div><div class="tl-date">公钥密码学诞生</div><p>Diffie 与 Hellman 提出公钥交换（1976）；Rivest、Shamir、Adleman 提出 RSA（1977）。密码学从「共享密钥」跨入「非对称」。</p></div>
+            <div class="tl-item"><div class="tl-era">1985</div><div class="tl-date">椭圆曲线密码</div><p>Koblitz 与 Miller 分别提出 ECC：以更短密钥达到同等强度（256 位 ECC ≈ 3072 位 RSA），适合移动与物联网。</p></div>
+            <div class="tl-item"><div class="tl-era">2001</div><div class="tl-date">AES 成为标准</div><p>FIPS 197 确立 AES，取代 DES；后续 GCM 等 AEAD 模式让「加密 + 完整性」一次完成。</p></div>
+            <div class="tl-item"><div class="tl-era">2004–2017</div><div class="tl-date">哈希的连环崩塌</div><p>2004 年王小云等公开 MD5 碰撞；2017 年 SHAttered 项目演示 SHA-1 碰撞。SHA-2 仍是主力，SHA-3（Keccak，2015 定标）作为备用海绵结构标准。</p></div>
+            <div class="tl-item"><div class="tl-era">2015</div><div class="tl-date">后量子与抗侧信道密码</div><p>NIST 于 2016 年启动后量子密码（PQC）标准化，2022 年起陆续选定基于格的算法（如 CRYSTALS-Kyber / Dilithium）用于密钥封装与签名——应对未来量子计算机对 RSA / ECC 的威胁（Shor 算法）。</p></div>
+            <div class="tl-item"><div class="tl-era">2018</div><div class="tl-date">TLS 1.3 定标</div><p>RFC 8446：默认前向保密、强制 AEAD、握手提速至 1-RTT（甚至 0-RTT）、砍掉一堆历史遗留的不安全套件。</p></div>
+            <div class="tl-item"><div class="tl-era">近十年</div><div class="tl-date">零信任与供应链安全</div><p>「从不信任、始终验证」的零信任架构取代「内网即可信」的边界模型；软件物料清单（SBOM）与依赖审计应对供应链攻击（如 2020 年 SolarWinds 事件）。</p></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">争议点：加密与合规的张力</span>端到端加密与执法部门「合法访问」诉求长期冲突（所谓 Crypto War 的延续）。技术上，为特定方留后门难以只对「好人」开放——这是安全界普遍反对「Clipper 芯片」式后门的核心论据。据通行说法，强加密的普及与监管的博弈仍在持续。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>跨学科视角</h2>
+          <p class="lede">密码学的根基是数论与复杂度，安全的分析框架则借自博弈论、经济与认知科学。</p>
+          <div class="grid-2">
+            <div class="card"><h4>数论与计算复杂性</h4><p>RSA 依赖大整数分解的困难，Diffie–Hellman / ECC 依赖离散对数的困难。安全性被形式化为「归约」：若你能攻破协议，则你能解出难题——这就是可证明安全的语言。</p></div>
+            <div class="card"><h4>信息论</h4><p>Shannon（1949）证明<strong>一次性密码本</strong>在信息论意义上不可破译（完美保密），但要求密钥不短于明文且只用一次——它给出「理论上限」，也解释了为何实用加密必须是计算安全而非信息论安全。</p></div>
+            <div class="card"><h4>博弈论与经济学</h4><p>攻击者与防御者是攻防博弈：安全是抬高攻击成本到超过预期收益。多数攻击不是「更强」，而是「更便宜」；这也解释了为何经济激励（如漏洞赏金、保险）是有效杠杆。</p></div>
+            <div class="card"><h4>认知心理学</h4><p>钓鱼与社工利用的是<strong>权威</strong>（伪装领导）、<strong>紧迫</strong>（限时）、<strong>社会认同</strong>（同事都点了）等捷径。防御因此不能只靠「提高警惕」，而要用技术手段把判断成本降到最低（如通行密钥、默认拒绝）。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">跨界启示</span>把安全当成复杂系统问题：单点最优不等于整体最优。加密再强，若密钥管理、身份认证、人的流程有短板，系统仍然脆弱——安全的强度等于最弱环节。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>常见误区与边界条件</h2>
+          <p class="lede">安全的直觉常常是错的。以下是考证与工程中最容易栽跟头的几条。</p>
+          <div class="compare">
+            <div class="side"><span class="side-tag">常见误区</span><p>「哈希就是加密」「加密了就安全」「用了 HTTPS 就绝对安全」「强密码规则是加符号和定期更换」「自己实现加密算法更安全」。</p></div>
+            <div class="side"><span class="side-tag">更接近事实</span><p>哈希不可逆、不保密；加密只保证机密性，不保证完整与可用；HTTPS 挡不住服务端漏洞与客户端被控；长度与唯一性 > 复杂度；<strong>不要自己造密码学</strong>——用经过审计的库与协议。</p></div>
+          </div>
+          <table>
+            <caption class="caption">边界条件：这些情况下直觉会失效</caption>
+            <thead><tr><th>场景</th><th>为什么直觉失效</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">ECB 模式加密图片</th><td>相同明文块产出相同密文块，图像轮廓泄露——加密≠不可识别</td></tr>
+              <tr><th scope="row">只签名不校验</th><td>客户端忽略证书错误，MITM 畅通无阻：算法的强度被使用方绕过</td></tr>
+              <tr><th scope="row">短摘要被当长摘要用</th><td>128 位摘要受生日界限制，实际抗碰撞仅约 2^64——位数要按用途算</td></tr>
+              <tr><th scope="row">盐复用 / 全站同一盐</th><td>相同口令仍得相同摘要，彩虹表与批量识别重新生效</td></tr>
+              <tr><th scope="row">密钥硬编码进客户端</th><td>「藏在 App 里的对称密钥」在逆向面前等于公开，无法保护数据</td></tr>
+            </tbody>
+          </table>
+          <div class="callout warn"><span class="callout-label">最强的边界提醒</span>安全链条的强度等于最弱一环，而且攻击者只会攻击最弱的一环。攻击面往往不在密码算法里，而在实现细节、依赖库、配置、人的流程中。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">信息安全速记</span><button class="copy-btn" type="button">复制</button>· CIA：保密性、完整性、可用性——先问攻击破坏哪项
+· 威胁建模四步：资产 → 信任边界 → 对手模型 → 对策与残余风险
 · STRIDE：假冒、篡改、抵赖、泄露、拒绝服务、提权
-· 威胁建模三步：资产 → 入口与信任边界 → 对策
-· 对称快（AES）；非对称解密钥分发（RSA/ECC）
-· 真实系统 = 混合加密：非对称协商会话密钥
-· MD5、SHA-1 已可实际碰撞；哈希至少 SHA-256
-· 口令存储：加盐 + 慢哈希（bcrypt/Argon2）
-· 签名 = 私钥签、公钥验：完整性 + 不可否认
-· 证书链：根 CA → 中间 CA → 站点证书
-· 注入防参数化查询；XSS 防输出编码 + CSP
-· CSRF 防 token 与 SameSite；勒索靠 3-2-1 备份
-· 强口令看长度与唯一性，交给密码管理器
-· 双因素优先通行密钥 / TOTP；短信验证最弱</div>
+· 对称快（AES）用会话密钥；非对称（RSA/ECC）解密钥分发
+· 真实系统 = 混合加密：非对称协商会话密钥 + 对称传数据
+· RSA 根基是分解难题；由欧拉定理保证 e·d ≡ 1 时的正确性
+· 快速幂（平方—乘法）把模幂降到 O(log e) 次模乘
+· 分组密码靠混淆（S 盒）+ 扩散产生雪崩；ECB 泄露结构，用 GCM
+· 哈希三性质：原像抗性、第二原像抗性、抗碰撞性
+· 生日界：n 位摘要抗碰撞仅约 2^(n/2)——SHA-256 ≈ 2^128
+· 长度扩展攻击 → 用 HMAC；口令存储用加盐 + 慢哈希（Argon2/bcrypt）
+· 签名 = 私钥签摘要、公钥验签 → 完整性 + 不可否认
+· 证书链：根 CA → 中间 CA → 站点证书；吊销用 CRL/OCSP/装订
+· 前向保密靠 ECDHE 一次性密钥，私钥泄露也解不开历史流量
+· TLS 1.3（RFC 8446）默认 PFS + 强制 AEAD + 1-RTT
+· 防重放靠 nonce/时间戳/序列号；防 MITM 靠证书校验与固定
+· 注入根因：数据被当代码；防参数化查询 + 输出编码 + CSP
+· 强口令看长度与唯一性；双因素优先通行密钥 > TOTP > 短信
+· 勒索防守：3-2-1 备份 + 备份凭据隔离 + 最小权限
+· 沉浸式记忆：不要自己造密码学，用审计过的库与协议</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">11</span>练习清单</h2>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用 CIA 三要素复盘一次自己经历的安全事件</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">解释 HTTPS 为什么同时使用对称与非对称加密</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">在浏览器里查看一张证书的完整信任链</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">把一段拼接 SQL 改写为参数化查询</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">为核心账户开启通行密钥或 TOTP 双因素</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">按 3-2-1 原则审计自己的备份策略</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">找出一封钓鱼邮件的三个破绽并记录特征</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">取 p=61、q=53，手算 n、φ(n)，选 e=17，用扩展欧几里得求出 d，再对明文 M=65 完成一次加密与解密，逐步验证 C^d ≡ M (mod n)</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">实现快速幂（平方—乘法）与朴素幂，对 e≈2^2048 量级的指数比较模乘次数，用计数验证复杂度确为 O(log e)</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用同一密钥在 ECB 与 CBC 模式下加密一张纯色图案的位图，直观对比两幅密文图，解释 ECB 为何暴露结构</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">编写脚本统计某哈希在不同输入位数下的输出翻转位数，验证雪崩效应（约 50% 位改变）；再对比 160 位与 256 位摘要的抗碰撞尝试次数量级</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">在实验环境演示一次长度扩展攻击：仅凭 H(secret‖m) 与 secret 长度算出 H(secret‖m‖pad‖x)，再改用 HMAC 验证同一攻击失效</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用 openssl s_client 观察一次真实 TLS 1.3 握手，标出 ClientHello、ServerHello、证书、Finished 的顺序，并确认所用的密钥交换（ECDHE）与 AEAD 套件</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">在本地搭建一个存在拼接 SQL 的登录接口，构造能绕过认证的输入；随后改写为参数化查询，证明同一输入不再生效并解释原理</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">写一个最小重放攻击演示：客户端发送带 nonce 的请求，服务端记录已用 nonce；再分别去掉 nonce / 固定 nonce，展示重放成功与失败的差异</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">对照 NIST SP 800-63B 与 OWASP 的现行建议，检查自己主要账户的双因素类型（通行密钥 / TOTP / 短信）与口令可管理性，输出一份按风险排序的整改清单</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">基于 NIST SP 800-63B、OWASP 等公开标准与安全工程通行实践整理。</p>
+        <p class="footnote">基于 NIST SP 800-63B、FIPS 197、RFC 8446、OWASP 等公开标准与密码学通行教材整理；涉及年份与标准的表述以官方原文为准。</p>
       </footer>
     </div>
   </article>

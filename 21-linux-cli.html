@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>Linux 与命令行进阶指南</h1>
-          <p class="report-intro__summary">命令行的力量不是背命令，而是「一切皆文件」加「小工具可组合」这两条设计哲学。本指南从目录结构与权限模型讲到文本三剑客、管道组合与进程管理，帮你从会敲命令进阶到会设计命令。</p>
+          <p class="report-intro__summary">命令行的力量不是背命令，而是「一切皆文件」加「小工具可组合」这两条设计哲学。本指南不止讲怎么敲，更讲背后的机制：inode 与权限位、文件描述符与管道、fork/exec 与进程模型、虚拟内存与分页、以及如何用性能工具定位瓶颈。读完你能解释命令为什么这样工作，而不只是会用。</p>
           <div class="intro-meta">
             <span>领域：科技 · AI</span>
             <span>难度：进阶</span>
@@ -26,7 +26,7 @@
       <main>
         <section>
           <h2><span class="sec-num">1</span>目录结构与「一切皆文件」</h2>
-          <p class="lede">FHS（文件系统层级标准）让任何 Linux 机器的布局都可预测——这正是「换个服务器也能徒手干活」的底气。</p>
+          <p class="lede">FHS（文件系统层级标准）让任何 Linux 机器的布局都可预测——这正是「换个服务器也能徒手干活」的底气。而「一切皆文件」是这套可预测性背后的统一抽象。</p>
           <table>
             <caption class="caption">高频目录速览</caption>
             <thead><tr><th>目录</th><th>存放内容</th><th>典型用途</th></tr></thead>
@@ -44,12 +44,144 @@
           </ul>
           <div class="callout tip"><span class="callout-label">习惯</span>排查任何问题先问三件事：日志在哪（/var/log）、配置在哪（/etc）、进程状态如何（ps、/proc）。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>文件与文本处理四件套</h2>
-          <p class="lede">find 找文件，grep 找内容，sed 改文本，awk 算行列——服务器上 80% 的日常操作由它们组成。</p>
+          <h2><span class="sec-num">2</span>inode、目录与硬/软链接：文件到底是怎么被找到的</h2>
+          <p class="lede">大多数人以为文件名指向文件内容，实际上文件名只是「目录项」里的一条记录，真正描述文件的是 inode。理解这一层，才能解释链接、删除与空间占用的怪现象。</p>
+          <div class="prompt-block"><span class="prompt-label">观察 inode 与链接</span><button class="copy-btn" type="button">复制</button>ls -li file.txt          # -i 显示 inode 号，-l 显示链接计数
+stat file.txt            # 查看 inode、权限、时间戳、块数
+ln file.txt hard          # 硬链接：同一 inode 的第二个名字
+ln -s /etc/hosts soft      # 软链接：一个存路径的特殊文件
+df -i                     # 查看 inode 用量（inode 也会被耗尽）
+find / -xdev -inum 12345  # 用 inode 号反查所有硬链接名</div>
+          <ul>
+            <li><strong>inode 存放什么</strong>：文件类型、权限位、属主属组、三个时间戳、大小、以及指向数据块的指针；<strong>不含文件名</strong>。目录本质是一张「文件名 → inode 号」的映射表。</li>
+            <li><strong>引用计数即生命周期</strong>：inode 里有一个链接计数（<code>ls -l</code> 第二列）。<code>rm</code> 只是把目录项和计数减一；计数归零且没有进程打开该文件时，数据块才真正释放。这解释了「删了文件但磁盘没空」——进程仍持有打开的文件描述符。</li>
+            <li><strong>硬链接 vs 软链接</strong>：硬链接与源文件共享 inode，不能跨文件系统、不能指向目录；软链接是独立 inode，存的是目标路径，可跨文件系统、可悬空（dangling）。</li>
+            <li><strong>设计权衡</strong>：把元数据与文件名分离，使同一份数据可以有多个名字，也让 <code>mv</code> 在同一文件系统内只是改目录项（O(1)），而非搬动数据。</li>
+          </ul>
+          <div class="callout warn"><span class="callout-label">误区</span>「文件名就是文件」是初学者最大的直觉陷阱。<code>rm</code> 删的是名字，不是数据；<code>find . -name</code> 匹配的是目录项中的名字，与 inode 无关。大量小文件会先耗尽 inode 而非磁盘空间。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>权限模型：rwx 位与八进制编码的推导</h2>
+          <p class="lede">权限是 Linux 安全的地基：谁（属主/属组/其他人）能对这个文件做什么（读/写/执行）。而八进制写法其实是三个比特位到数字的直接编码。</p>
+          <div class="prompt-block"><span class="prompt-label">权限位与数值换算</span><button class="copy-btn" type="button">复制</button># 每组三位，位权分别为 4 / 2 / 1
+# r=4(100)  w=2(010)  x=1(001)  -=0(000)
+# 三者相加就是该组的八进制数字：
+#   rwx = 4+2+1 = 7      r-x = 4+0+1 = 5
+#   rw- = 4+2+0 = 6      r-- = 4+0+0 = 4
+# 三组依次为 属主 / 属组 / 其他人
+chmod 754 deploy.sh        # u=rwx(7), g=r-x(5), o=r--(4)
+chmod +x deploy.sh          # 三组都加执行位
+chmod -R g-w shared/        # 递归去掉属组的写权限
+chmod 4755 tool             # 首位的 4 = setuid：以属主身份执行
+chown app:app shared/       # 变更属主与属组
+ls -ld shared/              # 查看目录本身的权限（-d 很关键）
+sudo -u www-data cat /var/www/index.html   # 以指定用户身份执行</div>
+          <table>
+            <caption class="caption">特殊权限位与含义</caption>
+            <thead><tr><th>前缀位</th><th>八进制</th><th>含义</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">setuid</th><td>4000</td><td>执行时临时获得文件属主身份（<code>passwd</code> 即靠此改 shadow）</td></tr>
+              <tr><th scope="row">setgid</th><td>2000</td><td>执行时获得属组身份；用在目录上则新建文件继承目录属组</td></tr>
+              <tr><th scope="row">sticky</th><td>1000</td><td>目录上设置后，只有属主能删自己的文件（<code>/tmp</code> 即典型）</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><strong>目录的 x 是「进入权」</strong>：没有 x 无法 <code>cd</code> 进去，即使有 r 也只能看到文件名列表而读不了文件内容；目录的 w 是「改名录权」（增删改文件名）。</li>
+            <li><strong>umask 是掩码</strong>：新建文件基准 666、目录基准 777，实际权限 = 基准 &amp; (~umask)。umask 022 时，文件 644（666-022）、目录 755（777-022）。</li>
+          </ul>
+          <div class="callout tip"><span class="callout-label">原则</span>权限只给到任务所需的最小集合；需要管理员能力时用 <code>sudo</code> 执行单条命令，而不是长期挂在 root 会话里。setuid 是提权漏洞的高发区，非必需不要给脚本设 setuid。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>文件描述符、管道与重定向的底层模型</h2>
+          <p class="lede">重定向和管道不是 shell 的特殊语法糖，而是对「文件描述符表」的复制与改写。看清 fd 模型，<code>2&gt;&amp;1</code> 的顺序问题就不再是玄学。</p>
+          <ul>
+            <li><strong>三个标准流</strong>：stdin（fd 0）、stdout（fd 1）、stderr（fd 2）。进程启动时这三个 fd 就已打开，默认指向终端。</li>
+            <li><strong>重定向 = dup2 系统调用</strong>：<code>&gt; file</code> 先打开 file 得到 fd，再用 <code>dup2</code> 把它复制到 fd 1，之后进程写到 1 的所有数据都落进 file。这是「内核里的指针改写」，业务进程毫不知情。</li>
+            <li><strong>管道 = 内核缓冲区</strong>：<code>cmd1 | cmd2</code> 由 shell 先创建管道（一块内核环形缓冲区，含读端与写端两个 fd），再 fork 出两个子进程，分别把写端接到 cmd1 的 fd 1、读端接到 cmd2 的 fd 0。数据先进内核缓冲区，两侧可并发推进。</li>
+            <li><strong>顺序陷阱的成因</strong>：<code>cmd &gt; out 2&gt;&amp;1</code> 先把 1 指向 out，再把 1 的当前目标（out）复制给 2，于是 stderr 也进 out；反过来 <code>cmd 2&gt;&amp;1 &gt; out</code> 是先把 2 指向当前 1（终端），再把 1 改到 out，结果 stderr 仍在终端。左到右求值是这个「剪刀差」的根源。</li>
+            <li><strong>管道容量与背压</strong>：管道缓冲区有上限（常见 64 KB，可查 <code>/proc/sys/fs/pipe-max-size</code>），写端写满会阻塞，形成天然的背压（backpressure），这也是 <code>cmd | head</code> 能提前终止上游的机制。</li>
+          </ul>
+          <div class="prompt-block"><span class="prompt-label">重定向与管道实战</span><button class="copy-btn" type="button">复制</button>ps aux | grep -v grep | grep nginx | wc -l   # 数出 nginx 相关进程数
+./run.sh &gt; out.log 2&gt;&amp;1                      # 正常+错误输出都进文件
+./run.sh &gt;&gt; out.log                          # 追加而非覆盖
+./run.sh 2&gt;/dev/null                         # 只要正常输出，错误丢弃
+du -sh */ | sort -rh | head -5               # 当前目录最大的 5 个子目录
+# 进程替换：把命令输出当文件用（bash 特性）
+diff &lt;(sort a.txt) &lt;(sort b.txt)
+# tee：既写屏幕又写文件，常用于观察长管道中间结果
+make 2&gt;&amp;1 | tee build.log</div>
+          <div class="callout tip"><span class="callout-label">心法</span>拿到需求先拆步骤：「产出什么 → 怎么过滤 → 怎么排序/统计」，每个环节找一个最简单的工具，用 <code>|</code> 串起来。看到 <code>2&gt;&amp;1</code> 时，在脑内把「1 和 2 两个 fd 此刻指向哪里」画出来。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>进程、fork/exec 与信号语义</h2>
+          <p class="lede">进程是资源调度的单位，信号是与它对话的语言。理解 fork/exec 与「信号可被捕获」这一点，才能解释后台任务、僵尸进程与优雅停机。</p>
+          <div class="prompt-block"><span class="prompt-label">进程与后台</span><button class="copy-btn" type="button">复制</button>ps aux | grep -v grep | grep sshd    # 查进程（-v 排除 grep 自身）
+top                                  # 实时看 CPU/内存；按 M 按内存排序
+kill -TERM 1234                      # 发 15 号信号，进程可优雅清理（默认）
+kill -9 1234                         # SIGKILL 不可捕获，清理失败时的最后手段
+./job.sh &                           # 放后台运行
+nohup ./job.sh &                     # 忽略 SIGHUP，终端退出后仍存活
+jobs -l                              # 列出本会话后台任务
+fg %1                                # 把 1 号任务调回前台
+ps -o pid,ppid,stat,cmd -p 1234      # 看父子关系与状态（Z 为僵尸）</div>
+          <table>
+            <caption class="caption">常用信号与其可捕获性</caption>
+            <thead><tr><th>信号</th><th>编号</th><th>典型用途</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">SIGTERM</th><td>15</td><td>请求优雅退出，可被程序捕获做清理（默认 kill）</td></tr>
+              <tr><th scope="row">SIGKILL</th><td>9</td><td>强制终止，不可捕获、不可忽略，最后手段</td></tr>
+              <tr><th scope="row">SIGHUP</th><td>1</td><td>终端断开时发出；很多守护进程借此重载配置</td></tr>
+              <tr><th scope="row">SIGINT</th><td>2</td><td>Ctrl+C 发出，请求中断</td></tr>
+              <tr><th scope="row">SIGCHLD</th><td>17</td><td>子进程状态变化时通知父进程，供回收</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><strong>fork / exec 的分离</strong>：shell 执行外部命令时，先 <code>fork</code> 复制出一个子进程（复制页表但用写时复制技术延迟复制内存），子进程再 <code>exec</code> 装载目标程序替换自己的镜像。这种「先复制再替换」的两段式设计，让重定向、管道、环境变量都能在 fork 与 exec 之间从容布置。</li>
+            <li><strong>僵尸与孤儿</strong>：子进程结束后内核保留其退出码直到父进程 <code>wait</code> 回收；父进程未回收则成为僵尸（Z 状态，占 PID 不占资源）。父进程先死则子进程被 init/systemd 收养。</li>
+            <li><strong>写时复制（COW）</strong>：fork 后父子共享物理页，只有某方写入时才复制该页。这让 fork 变得廉价，也是很多并发模型的基础。</li>
+          </ul>
+          <div class="prompt-block"><span class="prompt-label">脚本骨架与清理钩子</span><button class="copy-btn" type="button">复制</button>#!/usr/bin/env bash
+set -euo pipefail          # 出错即停 / 未定义变量报错 / 管道任一环失败即失败
+tmp="$(mktemp)"
+trap 'rm -f "$tmp"; echo "cleaned"' EXIT   # 无论如何退出都清理
+echo "step 1" &gt;&gt; "$tmp"
+[ "$#" -ge 1 ] || { echo "usage: $0 arg" &gt;&amp;2; exit 2; }
+echo "arg=$1 exit_of_last=$?"</div>
+          <div class="callout warn"><span class="callout-label">边界</span>kill -9 跳过进程的清理逻辑，可能留下半写的文件或未释放的锁；正确次序是先 TERM 等待，超时才 KILL。另外 <code>set -e</code> 在管道与条件语句中有微妙例外，关键脚本要显式检查退出码。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>内存、分页与 OOM：进程眼中的「假内存」</h2>
+          <p class="lede">每个进程都以为自己独占一整片连续内存，这是虚拟内存提供的幻觉。看清分页与换页，才能读懂 free、top 的那些反直觉数字。</p>
+          <div class="prompt-block"><span class="prompt-label">观察内存与分页</span><button class="copy-btn" type="button">复制</button>free -h                  # 人类可读；重点看 available 而非 free
+cat /proc/meminfo         # MemTotal / MemAvailable / SwapCached ...
+vmstat 1 5                # 每秒采样 5 次：si/so 是换入换出页速率
+cat /proc/&lt;pid&gt;/status    # 看 VmRSS（实际占用物理内存）与 VmSize
+ps -o pid,rss,vsz,cmd -p 1  # rss=常驻物理内存, vsz=虚拟地址空间大小
+ulimit -a                 # 查看资源上限（文件数、内存等）
+dmesg | grep -i oom       # 查看是否发生过 OOM 杀进程</div>
+          <ul>
+            <li><strong>虚拟地址空间</strong>：进程用的是虚拟地址，内核通过页表（多级页表）翻译成物理地址。页表项记录「该页在不在物理内存、权限如何」，页大小常见 4 KB。</li>
+            <li><strong>按需分页</strong>：只访问用到的页才真正分配物理页（demand paging），所以 vmstat 的 <code>si/so</code>（swap in/out）与 major fault 才是真实压力的信号。</li>
+            <li><strong>RSS vs VSZ</strong>：VSZ 是虚拟空间总量（含未落地的映射，常虚高），RSS 才是真正占住的物理内存——判断内存泄漏看 RSS 趋势而不是 VSZ。</li>
+            <li><strong>缓存也是「已用」</strong>：Linux 会用空闲内存做页缓存（cache/buffer），<code>free</code> 里 free 少不代表内存紧张，要看 <code>available</code>（可回收后真正可用的大小）。</li>
+            <li><strong>OOM Killer</strong>：当内存与交换空间都无法满足分配时，内核按 oom_score 选择进程终止。容器里的内存限制（cgroup）会让进程在整机内存充足时也被杀掉。</li>
+          </ul>
+          <div class="callout tip"><span class="callout-label">判读</span>看到内存告警先分清三类：真泄漏（RSS 单调上升）、缓存占用（cache 高但 available 充足）、换页抖动（si/so 持续非零）。三者的处理方式完全不同。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>文本处理四件套与性能分析工具</h2>
+          <p class="lede">find 找文件，grep 找内容，sed 改文本，awk 算行列——日常半数操作由它们组成；而排障时还要会看「谁在吃 CPU/IO/内存」。</p>
           <div class="prompt-block"><span class="prompt-label">四件套核心用法</span><button class="copy-btn" type="button">复制</button># find：按条件找文件
 find /var/log -name "*.log" -mtime +7        # 7 天前修改的日志
 find . -type f -size +100M                   # 找出大于 100M 的普通文件
+find . -name "*.tmp" -print0 | xargs -0 rm -f # -print0/-0 安全处理含空格名
 
 # grep：在文件里找内容
 grep -rn "ERROR" --include="*.py" .           # 递归、带行号、限定文件类型
@@ -61,102 +193,151 @@ sed -i.bak 's/foo/bar/g' file                 # 全局替换并保留 .bak 备�
 
 # awk：按行、按列处理
 awk '{print $1, $3}' access.log               # 输出第 1、3 列（默认空白分隔）
-awk -F: '$3 >= 1000 {print $1}' /etc/passwd   # 以冒号分隔，筛出普通用户名</div>
+awk -F: '$3 &gt;= 1000 {print $1}' /etc/passwd   # 以冒号分隔，筛出普通用户名
+awk '{sum += $10} END {print sum}' access.log # 汇总（如第 10 列为字节数）</div>
           <table>
-            <caption class="caption">四件套选型逻辑</caption>
-            <thead><tr><th>工具</th><th>本质</th><th>何时用</th></tr></thead>
+            <caption class="caption">性能分析：先问「瓶颈在哪一类资源」</caption>
+            <thead><tr><th>工具</th><th>看什么</th><th>典型信号</th></tr></thead>
             <tbody>
-              <tr><th scope="row">find</th><td>按条件遍历文件树</td><th>按名称、大小、时间定位文件</td></tr>
-              <tr><th scope="row">grep</th><td>正则匹配文本行</td><td>在已知内容找未知位置</td></tr>
-              <tr><th scope="row">sed</th><td>逐行流编辑器</td><td>批量替换、增删行</td></tr>
-              <tr><th scope="row">awk</th><td>按行列编程</td><td>过滤列、统计汇总、生成报表</td></tr>
+              <tr><th scope="row">top / htop</th><td>进程级 CPU 与内存</td><td>某进程持续高 CPU（%us 用户态 / %sy 内核态）</td></tr>
+              <tr><th scope="row">vmstat</th><td>系统级换页与上下文切换</td><td><code>si/so</code> 高=内存换页；<code>cs</code> 高=调度压力</td></tr>
+              <tr><th scope="row">iostat</th><td>磁盘吞吐与等待</td><td><code>%util</code> 接近 100、<code>await</code> 偏高=IO 瓶颈</td></tr>
+              <tr><th scope="row">lsof</th><td>谁打开了哪些文件/端口</td><td>端口被占、文件被占不放</td></tr>
+              <tr><th scope="row">strace</th><td>系统调用轨迹</td><td>卡在哪个 syscall、errno 是什么</td></tr>
+              <tr><th scope="row">df / du</th><td>磁盘容量与目录占用</td><td>df 满而 du 对不上=被删除但未释放的文件</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">纪律</span>带 <code>-i</code> 的 sed 会原地改文件：先去掉 -i 预览输出，或用 <code>-i.bak</code> 自动留备份。</div>
+          <div class="prompt-block"><span class="prompt-label">排障组合拳</span><button class="copy-btn" type="button">复制</button>uptime                                  # 负载均值：1/5/15 分钟
+lsof -i :8080                           # 谁占着 8080 端口
+ss -lntp                                # 列出监听端口及对应进程
+du -sh */ | sort -rh | head             # 找出最占空间的目录
+find / -xdev -type f -size +1G 2&gt;/dev/null   # 找超大文件
+iostat -x 1 3                           # 看磁盘 %util 与 await
+ls -l /proc/&lt;pid&gt;/fd                    # 看进程打开了哪些 fd</div>
+          <div class="callout tip"><span class="callout-label">纪律</span>带 <code>-i</code> 的 sed 会原地改文件：先去掉 -i 预览输出，或用 <code>-i.bak</code> 自动留备份。排障遵循「先系统后进程再 syscall」的收敛路径，避免一上来就 strace 淹没在输出里。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">3</span>权限模型：rwx 与用户组</h2>
-          <p class="lede">权限是 Linux 安全的地基：谁（属主/属组/其他人）能对这个文件做什么（读/写/执行）。</p>
-          <ul>
-            <li><strong>读懂 ls -l</strong>：<code>-rwxr-xr--</code> 后三组依次对应<strong>属主、属组、其他人</strong>；<code>r=4、w=2、x=1</code>，一组权限就是数字之和，所以 <code>rwxr-xr--</code> = 754。</li>
-            <li><strong>目录的 x</strong> 是「进入权」：没有 x 无法 cd 进去，即使有 r 也只能看到文件名列表而读不了内容。</li>
-            <li><strong>属主属组变更</strong>：<code>chown user:group file</code> 改归属；<code>umask</code> 决定新建文件的默认权限（umask 022 → 文件 644、目录 755）。</li>
-          </ul>
-          <div class="prompt-block"><span class="prompt-label">权限操作</span><button class="copy-btn" type="button">复制</button>chmod 754 deploy.sh        # u=rwx, g=rx, o=r
-chmod +x deploy.sh          # 三组都加执行位
-chmod -R g-w shared/        # 递归去掉属组的写权限
-chown app:app shared/       # 变更属主与属组
-ls -ld shared/              # 查看目录本身的权限（-d 很关键）
-sudo -u www-data cat /var/www/index.html   # 以指定用户身份执行</div>
-          <div class="callout tip"><span class="callout-label">原则</span>权限只给到任务所需的最小集合；需要管理员能力时用 <code>sudo</code> 执行单条命令，而不是长期挂在 root 会话里。</div>
+          <h2><span class="sec-num">8</span>前沿与研究进展</h2>
+          <p class="lede">Linux 与命令行并非静止的「老技术」。近年最活跃的方向，是把过去零散的经验工具，升级为有可观测性、可复现、可度量的工程体系。</p>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-era">内核与容器</div><p>cgroups 与 namespaces 是容器隔离的基石，二者分别负责资源限制与视图隔离；后续加入的 cgroup v2 统一了层级模型，改善了资源分配与可观测性。据通行说法，这些机制自 2000 年代末逐步进入内核主线。</p></div>
+            <div class="tl-item"><div class="tl-era">可观测性三支柱</div><p>metrics（指标）、logs（日志）、traces（链路追踪）成为现代排障范式。eBPF 让「内核级观测」不再需要重编译内核或加载专用模块，bcc/bpftrace 等工具把系统调用、网络、调度行为变成可编程的数据源。</p></div>
+            <div class="tl-item"><div class="tl-era">eBPF 与内核可编程</div><p>eBPF 程序在受限沙箱内运行于内核态，可用于网络过滤、性能剖析与安全审计。据通行说法，它是近年 Linux 内核最受关注的可扩展机制之一，被广泛用于生产环境的低开销观测。</p></div>
+            <div class="tl-item"><div class="tl-era">结构化日志与配置代码化</div><p>从自由文本日志到 JSON 结构化日志、从手改配置到 IaC（基础设施即代码）与声明式配置，趋势是「把运维经验编码为可版本控制、可审查、可回滚的资产」。</p></div>
+            <div class="tl-item"><div class="tl-era">Shell 与工具的演进</div><p>现代工具强调结构化输出与自动补全；据通行说法，<code>ripgrep</code>、<code>fd</code>、<code>jq</code> 等工具因更快的搜索与更友好的数据格式，在开发者中流行。核心思想仍是「小工具 + 组合」，只是数据格式从纯文本走向结构化。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">读法</span>前沿不是要你追新工具，而是理解方向：可观测、可复现、可声明。掌握这套思路，任何新工具出现你都能快速定位它在体系中的位置。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">4</span>管道重定向与组合哲学</h2>
-          <p class="lede">Unix 哲学的核心一招：每个工具只做好一件事，用管道把它们的 stdout 串成流水线。</p>
-          <ul>
-            <li><strong>三个标准流</strong>：stdin（0）、stdout（1）、stderr（2）。<code>&gt;</code> 覆盖写、<code>&gt;&gt;</code> 追加写、<code>2&gt;</code> 重定向错误、<code>2&gt;&amp;1</code> 把错误并入标准输出（注意要写在目标重定向之后）。</li>
-            <li><strong>管道</strong>：<code>cmd1 | cmd2</code> 把前者的 stdout 接到后者的 stdin，数据不落盘、并行推进。</li>
-            <li><strong>/dev/null</strong>：丢弃输出的黑洞，常用于屏蔽噪音（<code>2&gt;/dev/null</code>）。</li>
-          </ul>
-          <div class="prompt-block"><span class="prompt-label">组合示例</span><button class="copy-btn" type="button">复制</button>ps aux | grep -v grep | grep nginx | wc -l   # 数出 nginx 相关进程数
-./run.sh > out.log 2>&1                      # 正常+错误输出都进文件
-./run.sh >> out.log                          # 追加而非覆盖
-./run.sh 2>/dev/null                         # 只要正常输出，错误丢弃
-du -sh */ | sort -rh | head -5               # 当前目录最大的 5 个子目录
-crontab -l | grep -v '^#'                    # 看定时任务，滤掉注释行</div>
-          <div class="callout tip"><span class="callout-label">心法</span>拿到需求先拆步骤：「产出什么 → 怎么过滤 → 怎么排序/统计」，每个环节找一个最简单的工具，用 <code>|</code> 串起来。</div>
+          <h2><span class="sec-num">9</span>跨学科视角：操作系统的抽象来自哪里</h2>
+          <p class="lede">Linux 的设计不是凭空发明，它站在操作系统理论、并发理论、硬件体系结构的肩上。看清这些连接，命令就从「记」变成了「推」。</p>
+          <div class="grid-2">
+            <div class="card">
+              <h3>与体系结构</h3>
+              <p>分页、多级页表、TLB、缓存层次直接决定命令的性能特征。为什么随机读写比顺序慢？因为磁盘/SSD 的物理特性与预取策略。理解存储层次，才能解释 <code>iostat</code> 与 <code>vmstat</code> 的数字。</p>
+            </div>
+            <div class="card">
+              <h3>与并发理论</h3>
+              <p>写时复制、信号、管道背压都是并发控制的体现。管道缓冲区满则阻塞，本质是生产者-消费者模型；<code>set -euo pipefail</code> 则是对错误传播语义的显式约定。</p>
+            </div>
+            <div class="card">
+              <h3>与信息安全</h3>
+              <p>权限位、setuid、最小权限原则是访问控制理论在系统层的落地。能力模型（capabilities）与 SELinux/AppArmor 进一步把「全有或全无的 root」拆成细粒度许可，是安全熵减的方向。</p>
+            </div>
+            <div class="card">
+              <h3>与软件工程</h3>
+              <p>Unix 哲学「小工具 + 管道」与微服务、函数式组合、单一职责高度同构；幂等、可回滚、可观测也正是运维脚本的工程要求。</p>
+            </div>
+          </div>
+          <p>一个统一的视角是：Unix 用「文件」这一最简抽象统一了异构资源，用「管道」这一最简组合子统一了工具协作。抽象越少，组合越自由——这是它历久弥新的根本原因。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>进程管理与 shell 脚本要素</h2>
-          <p class="lede">进程是资源调度的单位，信号是与它对话的语言；脚本则把这些操作固化成可复用的资产。</p>
-          <div class="prompt-block"><span class="prompt-label">进程与后台</span><button class="copy-btn" type="button">复制</button>ps aux | grep -v grep | grep sshd    # 查进程（-v 排除 grep 自身）
-top                                  # 实时看 CPU/内存；按 M 按内存排序
-kill -TERM 1234                      # 发 15 号信号，进程可优雅清理（默认）
-kill -9 1234                         # SIGKILL 不可捕获，清理失败时的最后手段
-./job.sh &                           # 放后台运行
-nohup ./job.sh &                     # 终端退出后仍存活
-jobs -l                              # 列出本会话后台任务
-fg %1                                # 把 1 号任务调回前台</div>
-          <ul>
-            <li><strong>脚本骨架</strong>：首行 <code>#!/bin/bash</code> 声明解释器；<code>$1</code>、<code>$#</code>、<code>$?</code> 分别是第一个参数、参数个数、上一命令退出码；命令替换用 <code>$( )</code>。</li>
-            <li><strong>set -euo pipefail</strong>：出错即停、未定义变量报错、管道任一环节失败都算失败——生产脚本的保险丝。</li>
-            <li><strong>清理钩子</strong>：<code>trap 'rm -f "$tmp"; echo done' EXIT</code> 保证脚本无论如何退出都执行清理。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">边界</span>kill -9 跳过进程的清理逻辑，可能留下半写的文件或锁；正确次序是先 TERM 等待，超时才 KILL。</div>
+          <h2><span class="sec-num">10</span>常见误区与边界条件</h2>
+          <p class="lede">很多「诡异现象」都能归到几条被误解的机制上。把它们显式列出来，比记住一百条命令更有价值。</p>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">常见误区</span>
+              <p>「rm 就是把文件删掉」——实际只是删除目录项并减计数，进程仍打开则空间不释放。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">正确理解</span>
+              <p>理解 inode 链接计数与打开文件描述符后，用 <code>lsof</code> 找到占着已删文件的进程，重启或关闭 fd 才真正回收空间。</p>
+            </div>
+          </div>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">常见误区</span>
+              <p>「free 显示内存快没了，得赶紧加内存」——忽略了 page cache 可回收，也忽略了 available。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">正确理解</span>
+              <p>看 <code>available</code> 判断真实余量，用 <code>vmstat</code> 的 si/so 判断是否换页抖动，再看 RSS 趋势判断泄漏。</p>
+            </div>
+          </div>
+          <table>
+            <caption class="caption">边界条件清单</caption>
+            <thead><tr><th>场景</th><th>边界/陷阱</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">重定向顺序</th><td><code>&gt; out 2&gt;&amp;1</code> 与 <code>2&gt;&amp;1 &gt; out</code> 结果不同，因为 fd 是按从左到右的当前指向被复制的</td></tr>
+              <tr><th scope="row">信号与清理</th><td><code>kill -9</code> 不可捕获，会跳过清理逻辑；网络/存储服务应实现 SIGTERM 优雅停机</td></tr>
+              <tr><th scope="row">管道与子 shell</th><td>管道中每个命令在独立子进程中运行，管道内的变量赋值不会影响外层 shell</td></tr>
+              <tr><th scope="row">文件名安全</th><td>文件名可含空格/换行，脚本里用 <code>find -print0 | xargs -0</code> 与加引号处理</td></tr>
+              <tr><th scope="row">sed -i 兼容性</th><td>GNU sed 与 BSD/macOS sed 的 <code>-i</code> 语法不同，跨平台脚本需注意</td></tr>
+              <tr><th scope="row">磁盘与配额</th><td>df 满但 du 对不上，常见于被删除但未释放的文件或挂载点被覆盖（目录被挂载遮蔽）</td></tr>
+            </tbody>
+          </table>
+          <div class="callout warn"><span class="callout-label">边界</span>以上细节在不同发行版、不同内核版本、不同 shell（bash/zsh/dash）下可能略有差异；本指南按 GNU/Linux 与常见发行版的通行行为描述，具体以 <code>man</code> 手册与本机实测为准。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
+          <h2><span class="sec-num">11</span>速查卡</h2>
           <div class="prompt-block"><span class="prompt-label">Linux 命令行速记</span><button class="copy-btn" type="button">复制</button>· 排查三板斧：配置在 /etc、日志在 /var/log、状态看 ps 与 /proc
+· 文件名只是目录项，真正描述文件的是 inode；rm 删的是名字
+· 硬链接共享 inode（不可跨文件系统/不可指目录），软链接存路径
+· inode 也会被耗尽：df -i 查看；大量小文件先耗 inode
+· 权限三组人：属主/属组/其他人，r=4 w=2 x=1，相加得八进制
+· 目录 x 权限是进入权，没有它 cd 都不行；目录 w 是改名录权
+· umask 022 → 新文件 644、新目录 755（基准 & ( ~umask )）
+· setuid 4000 / setgid 2000 / sticky 1000，是提权漏洞高发区
+· 标准流 0/1/2；重定向本质是 dup2 复制 fd
+· 顺序陷阱：&gt; out 2&gt;&amp;1 才对，2&gt;&amp;1 必须写在目标重定向之后
+· 管道 = 内核缓冲区，写满阻塞形成背压
+· fork 复制进程，exec 替换镜像；fork 后用写时复制省内存
+· 僵尸是已退出但父进程未 wait 回收的子进程（Z 状态）
+· kill 先 TERM 后 KILL，-9 不可捕获是最后手段
+· 内存看 available 不看 free；泄漏看 RSS 趋势不看 VSZ
+· 排障先系统（vmstat/iostat）后进程（top）再 syscall（strace）
+· 脚本三件套：#!/bin/bash、set -euo pipefail、trap 清理
 · find 按名称/大小/时间找文件，-mtime +7 表示 7 天前
 · grep -r 递归、-n 行号、--include 限定文件类型
 · sed -i 改文件前先预览，或用 -i.bak 留备份
 · awk 按列处理：$1 是首列，-F 指定分隔符
-· 权限三组人：属主/属组/其他人，r=4 w=2 x=1
-· 目录 x 权限是进入权，没有它 cd 都不行
-· umask 022 → 新文件 644、新目录 755
-· sudo 单命令提权，别长挂 root 会话
-· 标准流 0/1/2；> 覆盖、>> 追加、2>&1 并流
-· 管道哲学：拆步骤、选小工具、| 串联
 · du -sh */ | sort -rh | head 找大目录
-· kill 先 TERM 后 KILL，-9 是最后手段
-· 脚本三件套：#!/bin/bash、set -euo pipefail、trap 清理</div>
+· lsof / ss 定位端口占用，du 与 df 对不上查未释放文件</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">12</span>练习清单</h2>
+          <p class="lede">以下练习要求推导、验证或实现，而非背诵命令。做完应能解释「为什么」，而不只是「怎么做」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
             <div class="check-item"><input type="checkbox" id="c1"><label for="c1">不查资料说出 /etc、/var、/home、/proc、/dev 各放什么，并各找两个真实例子</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用 find 找出 /var 下 7 天前的 .log 文件，再用 xargs 或 -exec 统计总大小</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用一条管道统计某日志中 ERROR 出现的次数及去重后的错误类型</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">写一条 sed 命令批量改配置，先预览再 -i.bak 落盘，最后 diff 验证</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">写一个部署脚本 deploy.sh，要求 chmod 754、用 set -euo pipefail 与 trap 清理临时文件</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">把一个长期任务用 nohup 放后台，退出终端验证它仍在运行，再用 ps 定位并 kill 它</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用 awk 从 /etc/passwd 提取所有普通用户的用户名与主目录，按用户名排序输出</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">创建硬链接与软链接各一个，用 ls -li 对比 inode 号与链接计数，解释 rm 源文件后两者的差异</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">写出 rwxr-x--- 与 r--r--r-- 对应的八进制值，并用 chmod 还原；再解释 umask 027 下新建文件与目录的权限</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">分别执行 cmd &gt; out 2&gt;&amp;1 与 cmd 2&gt;&amp;1 &gt; out，在终端观察 stderr 去向差异，并画图说明两个 fd 的指向变化</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">验证管道背压：用 yes 接到一个慢速读取的程序，用 ps 观察 yes 是否被阻塞，并查 /proc/sys/fs/pipe-max-size</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">复现僵尸进程：写一个 fork 后子进程立即退出而父进程不 wait 的程序，用 ps 看到 Z 状态，再解释如何回收</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">写一个部署脚本 deploy.sh，要求 set -euo pipefail、trap 清理临时文件、参数校验，并 chmod 754</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">在一个受控目录里用 dd 造大文件后删除但保持打开，用 df 与 lsof 定位「空间未释放」，再关闭 fd 验证恢复</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">给定一个疑似 IO 瓶颈的场景，写出用 vmstat、iostat、top 的排查顺序，并说明每个工具关键列的含义与判读阈值</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">内容依据 Filesystem Hierarchy Standard 与 GNU coreutils/sed/awk 官方文档的通行用法整理，细节以所用发行版的 man 手册为准。</p>
+        <p class="footnote">内容依据 Filesystem Hierarchy Standard、Linux man-pages 与 GNU coreutils/sed/awk 官方文档的通行用法整理；eBPF、cgroups 等机制细节以所用内核版本与发行版文档为准。</p>
       </footer>
     </div>
   </article>

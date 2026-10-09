@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>计算机网络基础指南</title>
+  <title>计算机网络进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>计算机网络基础指南</h1>
-          <p class="report-intro__summary">网络的全部精妙都源于一个问题：两台互不信任的机器，如何可靠地交换字节。本指南沿分层模型展开，把 IP、TCP、DNS/TLS 的设计动机与故障排查方法串成一条主线。</p>
+          <h1>计算机网络进阶指南</h1>
+          <p class="report-intro__summary">网络的全部精妙都源于一个问题：两台互不信任的机器，如何在会丢包、会失序、会拥堵的链路上可靠地交换字节。本指南沿分层与封装展开，把 TCP 状态机、拥塞控制的 AIMD 动力学、滑动窗口吞吐量公式、CIDR 子网计算与 BGP 路由策略串成一条可推导、可计算的主线。</p>
           <div class="intro-meta">
             <span>领域：科技 · AI</span>
             <span>难度：进阶</span>
@@ -26,8 +26,9 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>分层模型</h2>
-          <p class="lede">分层的本质：每层只依赖下一层的接口，于是复杂度与故障都可以逐层隔离。</p>
+          <h2><span class="sec-num">1</span>分层与封装：为什么网络必须是分层的</h2>
+          <p class="lede">分层的本质：每层只依赖下一层的接口，于是复杂度可分解、故障可隔离、实现可替换。它是工程上的「关注点分离」，也是网络能扩展到全球规模的前提。</p>
+          <p>先看一封数据的下行旅程：应用层生成消息 M，传输层加上端口与序号等信息得到「段」，网际层加上源/目的 IP 得到「包」（数据报），链路层加上帧头帧尾得到「帧」，物理层变成比特流。接收端逐层剥头、逐层交付，各层只读自己那一层的头部。这个「加头—剥头」的对称过程就是<strong>封装与解封装</strong>。它的代价是每层都有额外头部开销（例如 TCP 20 字节 + IP 20 字节 + 以太网 14 字节，加上帧间隙，实际有效载荷效率会低于理论值），收益则是<strong>层与层之间的解耦</strong>——换 Wi-Fi 不必改 HTTP，升级 IP 版本不必改 TCP 语义。</p>
           <table>
             <caption class="caption">OSI 七层与 TCP/IP 四层的映射</caption>
             <thead><tr><th>OSI（1984）</th><th>TCP/IP</th><th>职责</th><th>代表协议</th></tr></thead>
@@ -38,18 +39,29 @@
               <tr><th scope="row">数据链路 / 物理</th><td>网络接口</td><td>相邻节点传帧、传比特</td><td>以太网、Wi-Fi</td></tr>
             </tbody>
           </table>
-          <p>OSI 是 1984 年 ISO 颁布的「参考」模型，会话与表示层在实践中很少独立成层；TCP/IP 四层才是互联网的事实标准。排查网络问题时，按四层思考已经足够。</p>
-          <div class="callout tip"><span class="callout-label">封装与解封装</span>发送时数据自上而下逐层加头（段 → 包 → 帧），接收时自下而上逐层剥头。抓包工具逐层展示的信息，正是这些头部的还原。</div>
+          <p>OSI 是 1984 年 ISO 颁布的「参考」模型，会话与表示层在实践中很少独立成层；TCP/IP 四层才是互联网的事实标准。分层不是唯一可能的抽象，但它是<strong>在「可替换性」与「复用效率」之间被历史验证过的最优折中</strong>：层数太少则耦合严重，层数太多则头部开销与穿越成本上升。</p>
+          <div class="callout tip"><span class="callout-label">封装与解封装</span>发送时数据自上而下逐层加头（段 → 包 → 帧），接收时自下而上逐层剥头。抓包工具逐层展示的树状信息，正是这些头部的还原——这也解释了为什么「MTU 分片」「首部压缩」这类概念总在特定层出现。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>IP、子网划分与路由</h2>
-          <p class="lede">IPv4 是 32 位、约 43 亿个地址；1993 年的 CIDR 用「前缀长度」取代了僵化的类别边界。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>子网划分</h4><p>从主机位借位给网络位：/26 的子网有 2⁶ = 64 个地址、可用 62 个——扣除网络地址与广播地址各一个。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>私有地址与 NAT</h4><p>RFC 1918 保留三个私有段供内网使用；NAT 在出口处改写地址与端口，让大量私网设备共享少数公网 IP。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>路由与最长前缀匹配</h4><p>路由表按「前缀/掩码」组织，命中多条时选最长者。默认路由 0.0.0.0/0 是最短前缀，为一切未知目的地兜底。</p></div></div>
-          </div>
+          <h2><span class="sec-num">2</span>IP、CIDR 子网计算与路由匹配</h2>
+          <p class="lede">IPv4 是 32 位、约 43 亿个地址；1993 年提出的 CIDR 用「前缀长度」取代僵化的类别边界，让地址块可按需切分、并按最长前缀匹配路由。</p>
+          <h3>子网计算：把位运算变成可手算的公式</h3>
+          <p>在 CIDR 中，一个前缀写作 IP/长度，例如 192.168.10.0/24 表示前 24 位为网络位、后 8 位为主机位。记前缀长度为 p，则：</p>
+          <div class="prompt-block"><span class="prompt-label">CIDR 计算三公式</span><button class="copy-btn" type="button">复制</button>设前缀长度 p（0 ≤ p ≤ 32），主机位数 h = 32 − p：
+
+子网大小（地址总数） = 2ʰ
+可用主机数           = 2ʰ − 2        （扣网络地址与广播地址各一，仅当 h ≥ 2）
+子网掩码             = 前 p 位为 1、后 h 位为 0
+                       例 p=26 → 255.255.255.192（末字节 1100 0000 = 192）
+
+子网边界对齐：第 k 个子网的网络地址 = 基址 + k × 2ʰ（k 从 0 计）
+块内第一个可用地址 = 网络地址 + 1；最后一个可用 = 广播地址 − 1
+
+例：把 192.168.10.0/24 均分为 4 个子网 → 需借 2 位 → p = 24 + 2 = 26
+    掩码 255.255.255.192，每个子网 2⁶ = 64 个地址、62 个可用。
+    四个网络地址：.0、.64、.128、.192；广播分别 .63、.127、.191、.255。</div>
+          <p>注意「借位」与「子网数」的对偶关系：借 b 位得到 2ᵇ 个子网，每个子网主机位减少 b。这条式子解释了为什么子网划分是<strong>零和的</strong>——你无法在不损失主机位数的情况下增加子网数，反之亦然。这也是 VLSM（可变长子网掩码）要按实际需求分配不同长度前缀的原因。</p>
           <table>
             <caption class="caption">RFC 1918 私有地址段</caption>
             <thead><tr><th>网段</th><th>范围</th><th>常见场景</th></tr></thead>
@@ -59,17 +71,55 @@
               <tr><th scope="row">192.168.0.0/16</th><td>192.168.0.0 – 192.168.255.255</td><td>家庭路由器</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">动手算</span>把 192.168.10.0/24 均分成 4 个子网：网络位加 2 变为 /26，掩码 255.255.255.192，每个子网 64 个地址、62 个可用主机。</div>
+          <h3>NAT 与「地址耗尽」的工程解法</h3>
+          <p>IPv4 只有 2³² ≈ 43 亿地址，远少于联网设备数。NAT 在出口把私网 (源IP, 源端口) 映射成公网 (公网IP, 新端口)，靠一张映射表实现<strong>多对一的地址复用</strong>。它的隐性代价不止于「破坏了端到端透明性」：NAT 表项需要超时清理（否则耗尽端口）、妨碍了需要主动入连接的 P2P 应用（须借助 STUN/打洞），也使得「主机就是网络」的原始设计假设失效。这正是 IPv6 用 128 位地址（约 3.4×10³⁸ 个）追求「重新端到端」的动机。</p>
+          <h3>路由与最长前缀匹配</h3>
+          <p>路由器收到包后只做一件事：用目的地址查路由表，选<strong>最长前缀匹配</strong>（longest prefix match）的那条。若前缀长度相同，用管理距离/度量值决胜；都不命中则用默认路由 0.0.0.0/0（前缀长度 0，是最短前缀，为一切未知目的地兜底）。这套「更具体的路由更优先」的直觉，正是 CIDR 聚合（把连续小前缀合并成一个大前缀）与策略路由得以共存的基础：前者减少表项、后者允许用更长前缀「覆盖」默认行为。</p>
+          <div class="callout tip"><span class="callout-label">动手算</span>给定目的地址 192.168.10.130，路由表同时含 192.168.10.0/24 与 192.168.10.128/25 时，应选 /25——因为 128/25 覆盖 128–255，且前缀更长、更具体。把地址与掩码按位与即可验证命中。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>TCP 与 UDP</h2>
-          <p class="lede">TCP 用状态机与重传换可靠交付；UDP 把可靠性与拥塞控制的选择权全部交还应用层。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>三次握手</h4><p>SYN → SYN+ACK → ACK：双方各自确认「我能发、你能收」，并交换随机的初始序号。不能只用两次：无法排除历史重复的连接请求把接收方拖入错误状态。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>四次挥手与 TIME_WAIT</h4><p>FIN → ACK → FIN → ACK；主动关闭方进入 TIME_WAIT 并停留 2MSL（Linux 默认 60 秒），确保最后的 ACK 可达，也让旧报文在网络中自然消亡。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>拥塞控制四阶段</h4><p>慢启动（每 RTT 窗口翻倍）→ 拥塞避免（线性增长）→ 快重传（收到 3 个重复 ACK 立即重传）→ 快恢复。流量控制看接收窗口，拥塞控制看网络容量，二者共同决定发送速率。</p></div></div>
-          </div>
+          <h2><span class="sec-num">3</span>TCP 状态机：握手、挥手与可靠性机制</h2>
+          <p class="lede">TCP 用一台显式状态机 + 序号/确认 + 重传，在不可靠的 IP 之上构造出可靠、有序、流量受控的字节流。</p>
+          <h3>三次握手：为什么是三次</h3>
+          <div class="prompt-block"><span class="prompt-label">连接建立（三次握手）</span><button class="copy-btn" type="button">复制</button>客户端 → 服务端：SYN(seq=x)                       客户端进入 SYN_SENT
+服务端 → 客户端：SYN(seq=y) + ACK(ack=x+1)          服务端进入 SYN_RCVD
+客户端 → 服务端：ACK(ack=y+1)                       双方进入 ESTABLISHED
+
+为什么不是两次？
+  若只用两次，一个「因网络延迟而滞留的历史 SYN」可能在连接关闭后到达服务端，
+  服务端据此建立连接并分配资源、单方面等待数据，造成资源浪费与状态错乱。
+  第三次 ACK 让客户端有机会「否认」这个过期的连接请求。
+交换随机初始序号（ISN）的另一个目的：防止旧连接的迟到报文被误认为本连接的数据。</div>
+          <h3>四次挥手、TIME_WAIT 与 2MSL</h3>
+          <p>TCP 是全双工的，关闭需两个方向各发一个 FIN，故为四次：FIN → ACK → FIN → ACK。主动关闭方在发出最后一个 ACK 后进入 TIME_WAIT，停留 2×MSL（报文最大生存时间；Linux 默认约 60 秒）。它存在的两个理由：<strong>其一</strong>，若最后那个 ACK 丢失，对端会重发 FIN，只有还在 TIME_WAIT 的主动方才能重发 ACK；<strong>其二</strong>，让本次连接的所有旧报文在网络中自然消亡，避免它们污染使用相同四元组的新连接。<mark class="key">TIME_WAIT 是「可靠性」与「资源占用」之间被刻意支付的代价</mark>。</p>
+          <h3>滑动窗口：可靠性与吞吐量其实是同一件事</h3>
+          <p>TCP 允许发送方在未收到确认前连续发送一段数据，这段可发送的序号区间就是<strong>发送窗口</strong>。窗口越大，能「在空中」的未确认数据越多，吞吐量潜力越高。设往返时间为 RTT、接收窗口为 W 字节，则在忽略丢包与拥塞限制时，吞吐量的上限（凭直觉而非严格推导）为：</p>
+          <div class="prompt-block"><span class="prompt-label">带宽时延积与吞吐量上限</span><button class="copy-btn" type="button">复制</button>上限吞吐量 ≈ W / RTT
+
+这正是著名的「带宽时延积」（BDP）问题的另一面：
+  链路容量 C 的路径上，要让管道「填满」，窗口至少要 W ≥ C × RTT
+
+例：RTT = 100 ms，窗口 W = 64 KiB（约 524288 bit）
+     上限吞吐 ≈ 524288 bit / 0.1 s ≈ 5.24 Mbps
+     若链路实际容量是 100 Mbps，则窗口成了瓶颈——需靠窗口缩放选项放大 W。
+
+流量控制（接收方用 rwnd 通告「我还能收多少」）与
+拥塞控制（发送方根据网络反馈调整 cwnd）共同决定实际发送窗口：
+     有效窗口 = min(cwnd, rwnd)</div>
+          <h3>拥塞控制：AIMD 的动力学</h3>
+          <p>拥塞控制的目标是「在不知道网络容量的情况下，逼近但不压垮它」。经典 TCP（如 Reno）分四个阶段，核心是<strong>加性增、乘性减</strong>（AIMD）：</p>
+          <table>
+            <caption class="caption">拥塞控制四阶段</caption>
+            <thead><tr><th>阶段</th><th>触发与行为</th><th>cwnd 变化</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">慢启动</th><td>连接开始或超时后，指数探测</td><td>每 RTT 翻倍，直到阈值 ssthresh</td></tr>
+              <tr><th scope="row">拥塞避免</th><td>超过 ssthresh 后，谨慎线性增长</td><td>每 RTT 约 +1 MSS</td></tr>
+              <tr><th scope="row">快重传</th><td>收到 3 个重复 ACK（说明中间丢了段）</td><td>立即重传，不等超时</td></tr>
+              <tr><th scope="row">快恢复</th><td>快重传后不回到慢启动</td><td>ssthresh 减半，cwnd = ssthresh + 3，随后线性增</td></tr>
+            </tbody>
+          </table>
+          <p>AIMD 为什么稳定？把它当成一次<strong>锯齿振荡</strong>：多个流共享同一瓶颈时，各自在拥塞避免阶段线性加、遇丢包就减半。线性加让它们持续竞争带宽，减半则让过载的流迅速退让——这套规则把总发送速率收敛到<strong>接近但略低于</strong>链路容量的公平衡量点（fair equilibrium），而不是各流自我最优导致的「公地悲剧」式拥塞崩溃。代价是锯齿型吞吐波动与「丢包即拥塞」的隐含假设，而后者在现代无线/高带宽链路上并不总成立——这正是后续改良算法的出发点。</p>
           <table>
             <caption class="caption">TCP 与 UDP 对比</caption>
             <thead><tr><th>维度</th><th>TCP</th><th>UDP</th></tr></thead>
@@ -77,19 +127,22 @@
               <tr><th scope="row">连接</th><td>面向连接，先握手</td><td>无连接，直接发送</td></tr>
               <tr><th scope="row">可靠性</th><td>确认、重传、按序</td><td>尽力而为，可能丢、乱序</td></tr>
               <tr><th scope="row">首部开销</th><td>至少 20 字节</td><td>8 字节</td></tr>
+              <tr><th scope="row">拥塞控制</th><td>内置，随网络反馈自适应</td><td>无，交由应用层自行处理</td></tr>
               <tr><th scope="row">典型应用</th><td>HTTP、SSH、邮件</td><td>DNS 查询、实时音视频、QUIC</td></tr>
             </tbody>
           </table>
+          <div class="callout warn"><span class="callout-label">常见误读</span>「TCP 保证可靠，所以不会丢数据」——准确说法是：TCP 保证<strong>交付给应用层</strong>的是完整且有序的字节流，代价是延迟与重传开销。对实时视频这类「过期即无用」的数据，靠重传换来的可靠反而有害，所以它们选 UDP 并在应用层自行做容错。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>DNS、HTTP/HTTPS 与 TLS</h2>
-          <p class="lede">DNS 把名字翻译成地址，HTTP 定义报文格式，TLS 在两者之间加一层加密与认证。</p>
+          <h2><span class="sec-num">4</span>DNS、HTTP/HTTPS 与 TLS 握手</h2>
+          <p class="lede">DNS 把名字翻译成地址，HTTP 定义报文格式，TLS 在两者之间插入认证与加密；三者叠加，才构成「打开一个网页」的完整前提。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>DNS 分层解析</h4><p>根 → 顶级域（.com）→ 权威服务器；客户端先查本地缓存（受 TTL 约束），再由递归解析器代为迭代查询。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>HTTP 版本演进</h4><p>1.1 让持久连接成为默认；2（RFC 7540，2015）单连接多路复用并压缩头部；3 改用基于 UDP 的 QUIC（RFC 9114，2022），把传输层队头阻塞挪出 TCP。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>HTTPS 与 TLS 握手</h4><p>证书验证服务器身份；非对称算法（如 ECDHE）协商出会话密钥；之后全部数据用对称加密传输——这就是「混合加密」。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>DNS 分层解析</h4><p>根 → 顶级域（.com）→ 权威服务器；客户端先查本地缓存（受 TTL 约束），再由递归解析器代为迭代查询。TTL 是「一致性」与「负载」之间的旋钮：TTL 越小，切换 IP 越快生效，但查询压力越大。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>HTTP 版本演进</h4><p>1.1 让持久连接成为默认；2（RFC 7540，2015）在单连接上多路复用并以 HPACK 压缩头部；3 改用基于 UDP 的 QUIC（RFC 9114，2022），把传输层「队头阻塞」从 TCP 的字节流中挪出，并默认加密。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>HTTPS 与 TLS 握手</h4><p>证书验证服务器身份；非对称/临时密钥交换（如 ECDHE）协商出会话密钥；之后全部数据用对称加密传输——这就是「混合加密」，各取所需。</p></div></div>
           </div>
+          <p>队头阻塞是个值得记住的概念：HTTP/1.1 中同一连接上若前一个响应迟迟不到，后面的请求即便已就绪也只能排队；HTTP/2 在<strong>应用层</strong>解决了它（多路复用），但底层 TCP 的字节流仍可能因某个丢包而让所有流一起等待——这正是 HTTP/3 把可靠传输搬到 QUIC（UDP 之上、每流独立）的动因。</p>
           <table>
             <caption class="caption">TLS 1.2 与 1.3 的握手成本</caption>
             <thead><tr><th>版本</th><th>定稿</th><th>完整握手</th><th>要点</th></tr></thead>
@@ -98,61 +151,154 @@
               <tr><th scope="row">TLS 1.3</th><td>2018（RFC 8446）</td><td>1-RTT</td><td>删掉弱算法；会话恢复可 0-RTT</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">前向保密</span>用 ECDHE 这类「每次会话临时生成」的密钥交换，即使日后服务器私钥泄露，过往流量也无法被解密——TLS 1.3 已将其设为默认。</div>
+          <p>0-RTT 恢复很诱人（省一个往返），但它用预先共享密钥加密的第一批数据<strong>缺乏前向保密且可被重放</strong>，因此规范建议只把它用于幂等的安全请求。技术在「延迟」与「安全性」上的每一次取舍，都值得这样问一句「代价记在谁头上」。</p>
+          <div class="callout tip"><span class="callout-label">前向保密</span>用 ECDHE 这类「每次会话临时生成」的密钥交换，即使日后服务器私钥泄露，过往流量也无法被解密——TLS 1.3 已将其设为默认，且废弃了不具前向保密的静态 RSA 密钥传输。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>故障排查：分层定位</h2>
-          <p class="lede">排障第一原则：自底向上逐层排除，不要一上来就怀疑应用。</p>
+          <h2><span class="sec-num">5</span>路由算法与 BGP：自治系统的策略博弈</h2>
+          <p class="lede">域内路由追求「最短/最快」，域间路由（BGP）追求「符合商业与策略的可达性」——后者不是最优化，而是谈判。</p>
+          <p>可以把路由算法分成两大家族：<strong>距离矢量</strong>（每个路由器把自己的整张距离表告诉邻居，代表 RIP）与<strong>链路状态</strong>（每个路由器广播自己的链路代价，各自用 Dijkstra 算最短路，代表 OSPF）。距离矢量有一个著名的病态行为——<strong>计数到无穷</strong>：一条链路断开后，错误信息可能被邻居反复传播、代价逐步增大而非立即归零；工程上靠「水平分割」「毒性逆转」等技巧缓解。链路状态没有这个问题，因为每台路由器掌握全网拓扑、独立计算。</p>
+          <div class="prompt-block"><span class="prompt-label">距离矢量 vs 链路状态</span><button class="copy-btn" type="button">复制</button>距离矢量（RIP）：邻居间交换「我到各目的地的距离」
+  · 信息是「二手」的，收敛慢，可能计数到无穷
+  · 实现简单，适合小型网络
+
+链路状态（OSPF）：每台路由器泛洪「我这条链路的状态」→ 全网拓扑
+  · 各自跑 Dijkstra，收敛快、易扩展
+  · 需要维护拓扑数据库，计算与存储开销更大
+
+域间路由 BGP：把互联网切成自治系统（AS）
+  · 交换的是「到某个前缀要经过哪些 AS」的路径向量，而非单一距离
+  · 选路由策略（商业关系：客户—提供商 / 对等）而非纯最短决定
+  · 三条常见规则：本地优先级 > AS 路径长度 > 其他度量</div>
+          <p>为什么域间要用路径向量而不是距离矢量？因为 AS 之间不共享内部代价，且必须能<strong>检测环路</strong>（AS 路径里出现自己的 AS 号即丢弃）与<strong>执行策略</strong>（不希望流量经过的商业伙伴可以不让它经过）。这也意味着 BGP 的「最优」是政策上的、而非度量上的：一条经过更多跳但更符合商业关系的路径会被优先选择。现实中的 BGP 安全事故（前缀劫持、路由泄露）正源于此——协议信任邻居的宣告，而验证机制长期缺位。</p>
+          <div class="callout tip"><span class="callout-label">安全扩展</span>为缓解前缀劫持，业界部署了资源公钥基础设施 RPKI 与 BGP 起源验证（RFC 6811）等机制，用密码学证明「某 AS 有权宣告某前缀」。这属于渐进式改良而非根本重构——BGP 要改动，牵动的是整个互联网的协同。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>故障排查：分层定位与可复现</h2>
+          <p class="lede">排障第一原则：自底向上逐层排除，不要一上来就怀疑应用；每一层都要留下可复现的证据。</p>
           <table>
             <caption class="caption">症状 → 层次 → 工具</caption>
             <thead><tr><th>症状</th><th>疑似层次</th><th>工具</th></tr></thead>
             <tbody>
               <tr><th scope="row">网口灯不亮 / 完全不通</th><td>物理 / 链路</td><td>换线、看驱动与协商速率</td></tr>
               <tr><th scope="row">ping 不通网关或外网 IP</th><td>网络</td><td>ipconfig、路由表、tracert</td></tr>
-              <tr><th scope="row">ping 通但服务连不上</th><td>传输</td><td>telnet / Test-NetConnection 测端口</td></tr>
+              <tr><th scope="row">ping 通但服务连不上</th><td>传输</td><td>telnet / Test-NetConnection 测端口、测三次握手</td></tr>
               <tr><th scope="row">域名打不开而 IP 可达</th><td>应用（DNS）</td><td>nslookup、dig、更换 DNS</td></tr>
               <tr><th scope="row">证书告警 / 页面异常</th><td>应用（TLS/HTTP）</td><td>curl -v、浏览器开发者工具</td></tr>
             </tbody>
           </table>
-          <p>tracert 的原理是让 TTL 逐跳递减、靠沿途路由器返回的 ICMP 超时报文拼出路径——它同时告诉你<strong>断在第几跳</strong>。定位到层之后，把「客户端 / 网络 / 服务端」三段切开各自验证，避免在错误一侧空耗时间。</p>
-          <div class="callout tip"><span class="callout-label">职业习惯</span>先收集事实（ping、tracert、抓包输出）再下结论；一次只改一处、改完即验证，永远说得出「当前状态是哪次改动造成的」。</div>
+          <p>tracert 的原理是让 TTL 逐跳递减、靠沿途路由器返回的 ICMP 超时报文拼出路径——它同时告诉你<strong>断在第几跳</strong>。定位到层之后，把「客户端 / 网络 / 服务端」三段切开各自验证：例如用 curl -v 分别观察 DNS 解析耗时、TCP 握手耗时、TLS 握手耗时与首字节时间（TTFB），就能把「慢」准确定位到某一段，而不是笼统地怪「网速慢」。</p>
+          <div class="callout tip"><span class="callout-label">职业习惯</span>先收集事实（ping、tracert、抓包输出）再下结论；一次只改一处、改完即验证，永远说得出「当前状态是哪次改动造成的」。可复现的最小证据，胜过十条经验猜测。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">网络速记</span><button class="copy-btn" type="button">复制</button>· 排障按四层思考：接口 → 网际 → 传输 → 应用
+          <h2><span class="sec-num">7</span>前沿与研究进展</h2>
+          <p class="lede">网络近十年的主线是「从几十年的经典协议里挤出延迟」，以及「把安全与可验证性内建进协议」。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">拥塞控制的反思与新算法</span><span class="tl-date">2010s 至今</span><p>在长肥管道（高带宽、高 RTT）与无线链路上，「丢包即拥塞」假设失效，催生了以延迟为信号的算法（如 BBR 系列，2016 年论文公开）。争论焦点在于：是否可能既填满带宽又不引起缓冲膨胀，以及不同算法的公平 coexist 问题——目前无统一结论。</p></div>
+            <div class="tl-item"><span class="tl-era">QUIC 与 HTTP/3</span><span class="tl-date">2012 起 / RFC 9000 系列 2021、RFC 9114 2022</span><p>Google 于约 2012 年提出 QUIC，后在 IETF 标准化。把可靠传输、加密、多路复用打包进用户态、基于 UDP，规避 TCP 的队头阻塞并加快握手。它代表了「把传输层能力上移到用户态、快速迭代」的路线。</p></div>
+            <div class="tl-item"><span class="tl-era">IPv6 的持续部署</span><span class="tl-date">1998（RFC 2460）起</span><p>128 位地址、简化头部、原生支持自动配置。近年全球活跃部署率持续上升，但迁移是「渐进共存」而非切换，双栈与 NAT 长期并存。IPv6 的教训常被引用为「协议的成功也取决于部署激励，而非纯粹的技术优越性」。</p></div>
+            <div class="tl-item"><span class="tl-era">路由安全：RPKI 与起源验证</span><span class="tl-date">2010s 至今</span><p>针对前缀劫持与路由泄露，RPKI 用公钥证明前缀授权，BGP 起源验证（RFC 6811）据此过滤非法宣告。难点在部署与治理：需要所有相关方协同签字与过滤，属典型的「安全是生态问题」。</p></div>
+            <div class="tl-item"><span class="tl-era">可编程网络与 P4</span><span class="tl-date">2014 起</span><p>P4 让数据平面行为可由程序描述，推动「带内网络遥测」（INT）与灵活的负载均衡/故障切换。它把网络从「配置」推向「编程」，但也带来一致性与安全的新问题。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类进展</span>看到「新协议让网络更快」，先分清三件事：改善的是<strong>握手延迟</strong>、<strong>稳态吞吐</strong>还是<strong>丢包恢复</strong>？在什么网络条件下测的（数据中心 / 广域 / 无线）？与既有协议的<strong>公平性</strong>如何？多数结论都强依赖于测试环境。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>跨学科视角</h2>
+          <p class="lede">网络不是孤立的协议集合，它与排队论、控制论、信息论、博弈论共享同一套数学语言。</p>
+          <div class="grid-2">
+            <div class="card"><h4>排队论</h4><p>路由器的缓存与调度本质是排队系统；到达率接近服务率时队列长度与延迟急剧上升（Little 定律 L = λW），这解释了缓冲膨胀与「越拥堵越慢」的非线性。</p></div>
+            <div class="card"><h4>控制论 / 反馈系统</h4><p>拥塞控制是一个闭环反馈控制器：cwnd 是控制量，丢包/延迟是反馈信号，AIMD 是控制律。稳定性、超调、振荡都是控制工程的标准问题。</p></div>
+            <div class="card"><h4>信息论</h4><p>香农定理给出信道容量上限 C = B·log₂(1+S/N)；纠错码、调制方式与「用重传还是用冗余纠错」的取舍，都源于此。</p></div>
+            <div class="card"><h4>博弈论</h4><p>多流共享带宽、AS 之间的路由选择都是博弈：AIMD 的公平收敛、BGP 的策略均衡，解释了为何「个体最优」可能损害整体。</p></div>
+            <div class="card"><h4>图论与最优化</h4><p>最短路由、最小代价、最大流是图上最优化问题的直接应用；域内路由可还原为 Dijkstra，域间路由则携带策略约束。</p></div>
+            <div class="card"><h4>密码学</h4><p>TLS、证书、RPKI 都建立在公钥密码与哈希之上；「认证」与「保密」是两个独立目标，混淆它们是最常见的安全误判。</p></div>
+          </div>
+          <p>把这些放一起看，会发现一个共同结构：<strong>在带宽、延迟、存储与信任的约束下，分配稀缺资源并维持稳定</strong>。这正是网络设计的通用形态，也是它为什么同时是工程、数学与治理问题。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「带宽大就等于网快」
+
+「ping 通就说明服务正常」
+
+「TCP 保证不丢数据」
+
+「子网掩码 /26 有 64 个可用主机」
+
+「BGP 会选最短路径」</pre><div class="why">问题：带宽只是容量，延迟与丢包同样决定体验；ping 只测 ICMP 可达，不保证目标端口在监听的 TCP 服务可用；TCP 保证的是应用层看到的有序字节流，过程仍会重传；/26 有 64 个地址但只有 62 个可用；BGP 选的是策略路径，不是跳数最短。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>带宽大≠快：看 BDP、RTT、丢包率与拥塞状态
+
+用测端口（telnet/Test-NetConnection）验证服务
+
+TCP 用重传换有序交付，代价是延迟
+
+可用主机数 = 2ʰ − 2（h≥2）；/31、/32 是特例
+
+BGP 是策略路由：本地优先级、AS 路径、商业关系</pre><div class="why">要点：网络性能是<strong>容量×时延×丢包</strong>的联合结果，任何单一指标都不足以判断「快慢」。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>结论/机制</th><th>成立条件</th><th>失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">吞吐 ≈ W/RTT</th><td>无丢包、无拥塞、接收窗口为瓶颈</td><td>链路丢包或 cwnd 主导时</td></tr>
+              <tr><th scope="row">丢包即拥塞</th><td>有线、缓存充足的经典路径</td><td>无线误码、缓冲膨胀场景</td></tr>
+              <tr><th scope="row">可用主机 = 2ʰ−2</th><td>h ≥ 2 的点对点以外的子网</td><td>/31（RFC 3021 可用两地址）、/32 单主机</td></tr>
+              <tr><th scope="row">TIME_WAIT 2MSL</th><td>主动关闭方，确保末次 ACK 可达</td><td>高并发短连接场景会耗尽端口，需调优</td></tr>
+              <tr><th scope="row">0-RTT 恢复</th><td>幂等的安全请求</td><td>非幂等请求有重放风险，应禁用</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">计算机网络速记</span><button class="copy-btn" type="button">复制</button>· 排障按四层思考：接口 → 网际 → 传输 → 应用
 · 发送逐层加头、接收逐层剥头（封装/解封装）
-· IPv4 32 位约 43 亿地址；IPv6 128 位
+· IPv4 32 位（约 43 亿）；IPv6 128 位（约 3.4×10³⁸）
+· CIDR：子网大小 2ʰ；可用主机 = 2ʰ − 2（h≥2）
+· 借 b 位得 2ᵇ 个子网，主机位减 b——划分是零和的
+· /26 → 掩码 255.255.255.192，每块 64 地址、62 可用
 · RFC 1918 私网段：10/8、172.16/12、192.168/16
-· 子网可用主机数 = 2^主机位 − 2
-· 路由查表看最长前缀匹配；默认路由 0.0.0.0/0 兜底
-· 三次握手 SYN → SYN+ACK → ACK，交换随机初始序号
+· 查表看最长前缀匹配；默认路由 0.0.0.0/0 兜底
+· 三次握手 SYN → SYN+ACK → ACK；交换随机 ISN 防旧报文
+· 三次而非两次：让客户端能否决过期的历史 SYN
 · 四次挥手后主动方 TIME_WAIT 停留 2MSL
-· 拥塞控制：慢启动 → 拥塞避免 → 快重传 → 快恢复
-· TCP 首部至少 20 字节；UDP 首部仅 8 字节
-· DNS：本地缓存（TTL）→ 根 → 顶级 → 权威
-· HTTP/2（2015）单连接多路复用；HTTP/3 走 QUIC/UDP
-· TLS 1.3（2018）1-RTT 握手，恢复会话可 0-RTT</div>
+· 吞吐上限 ≈ W/RTT；窗口须 ≥ C×RTT 才能填满管道
+· 有效窗口 = min(cwnd, rwnd)：网络容量与接收能力取小
+· 拥塞控制 AIMD：慢启动翻倍 → 拥塞避免 +1 → 快重传/快恢复
+· 快重传触发于 3 个重复 ACK；快恢复 cwnd 减半不归零
+· RTT、带宽、丢包共同决定体验；大带宽不等于快
+· DNS 分层：本地缓存 → 根 → 顶级 → 权威（受 TTL 约束）
+· HTTP/2 多路复用（2015）；HTTP/3 走 QUIC/UDP（2022）
+· TLS 1.3（2018）1-RTT 握手，恢复可 0-RTT（限幂等）</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">11</span>练习清单</h2>
+          <p class="lede">以下练习要求<strong>推导、计算或实测</strong>并附判据，而非「看过即会」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">把 192.168.10.0/24 划成 4 个子网，写出掩码与可用主机数</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">抓包观察一次完整的三次握手与四次挥手</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">解释 TIME_WAIT 为什么等 2MSL 而不是立即关闭</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用 ping / tracert 判断一次断网发生在哪一层</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用 curl -v 对比 HTTP 与 HTTPS 的建连全过程</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">画出「输入网址到页面显示」的完整时序图</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用 nslookup / dig 追踪一次 DNS 解析路径</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">把 172.16.0.0/16 按需划分：先划出 4 个 /18，再从第一个 /18 里划出 8 个 /21，写出每个子网的网络地址、广播地址、掩码与可用主机数</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">给定目的地址 10.1.2.130 与路由表 {10.0.0.0/8, 10.1.0.0/16, 10.1.2.0/24, 10.1.2.128/25, 0.0.0.0/0}，逐条按位与验证，写出命中项与理由</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">抓包观察一次完整的三次握手与四次挥手，标出每一段报文的 seq/ack 变化，并对照本文状态机说明每步的状态迁移</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">给出一条 RTT=80 ms、容量 1 Gbps 的路径，计算带宽时延积 BDP；据此说明最小发送窗口应设为多大才能填满链路，并换算成 TCP 窗口字段所需位数（含窗口缩放）</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">在实验环境构造丢包，观察慢启动→拥塞避免→快重传→快恢复的 cwnd 曲线，标出 ssthresh 随丢包减半的位置，并解释锯齿波形的成因</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">解释 TIME_WAIT 等 2MSL 的两个理由；再说明为什么高并发短连接会耗尽本地端口，给出两种缓解手段及其副作用</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用 curl -v 分别测量同一站点的 DNS 解析、TCP 握手、TLS 握手与 TTFB 耗时，指出瓶颈落在哪一段并给出证据</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">构造一个「计数到无穷」的小型距离矢量拓扑（3 节点、一条链路断开），逐步算出各轮的距离表演化，再说明水平分割如何打断它</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">查阅一次真实的前缀劫持或路由泄露事件，写出：本应宣告的前缀、实际被谁宣告、BGP 起源验证（RFC 6811）能否拦下、以及为什么部署不充分会失效</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">基于 Tanenbaum《计算机网络》等经典教材与 IETF RFC 要点整理。</p>
+        <p class="footnote">基于 Tanenbaum《计算机网络》等经典教材与 IETF RFC 要点整理。分层映射、CIDR 计算、三次握手/四次挥手与 TIME_WAIT、拥塞控制四阶段与 AIMD、滑动窗口吞吐量模型均按通行标准表述；HTTP/2（RFC 7540, 2015）、HTTP/3 与 QUIC（RFC 9000 系列 2021、RFC 9114, 2022）、TLS 1.2（RFC 5246, 2008）与 TLS 1.3（RFC 8446, 2018）、BGP 起源验证（RFC 6811）、/31 子网（RFC 3021）、IPv6（RFC 2460, 1998）的年份与编号依 RFC 通行记录给出。BBR 系列算法约 2016 年公开论文，P4 于 2014 年提出，正文已用「约」表述。所有公式与数值为量级估计与教学示例，具体性能请以实测与原始文献为准。</p>
       </footer>
     </div>
   </article>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>建筑欣赏指南</title>
+  <title>建筑进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>建筑欣赏指南</h1>
-          <p class="report-intro__summary">建筑是凝固的音乐，也是文明的技术档案。从承重墙到框架结构，从希腊柱式到哥特尖拱，从斗拱到柯布西耶五点——这份指南带你建立结构逻辑、风格演变、中西体系、现代主义和空间体验的认知框架，学会用「看」而不只是「拍」来欣赏建筑。</p>
+          <h1>建筑进阶指南</h1>
+          <p class="report-intro__summary">把建筑从「看风格」还原为「读力的路径」。本指南从力的传递这条主线出发，推导拱为何需要扶壁、哥特为何能开满窗、框架为何解放了平面；再延伸到结构计算、环境性能与城市认知等跨学科视角，最后落到可自测的高阶练习。</p>
           <div class="intro-meta">
             <span>领域：艺术 · 美学</span>
             <span>难度：进阶</span>
@@ -25,101 +25,169 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>建筑结构基础</h2>
-          <p class="lede">建筑的底层逻辑是力如何传递到地面。理解结构，就能读懂任何建筑为什么是那个形状。</p>
+          <h2><span class="sec-num">1</span>力如何走到地面：结构是一条受力链（原理推导）</h2>
+          <p class="lede">建筑的第一性问题不是「好不好看」，而是「力有没有路回家」。任何形状的背后，都是一条可以被画出来的受力路径。</p>
+          <p>把建筑想象成一条<strong>把荷载（自重、人、风、地震）安全导入地基的通道</strong>。材料能承受两种基本作用：<strong>受压</strong>（石材、砖、混凝土擅长）与<strong>受拉</strong>（钢材、木材顺纹擅长）。上千年里，建筑的演化基本上是「找到让擅长受压的材料少受拉的形状」的历史。</p>
+          <div class="prompt-block"><span class="prompt-label">推导链：为什么拱必须配扶壁</span><button class="copy-btn" type="button">复制</button>推导链：从「横梁」到「拱」到「飞扶壁」
+1. 横梁：受弯，下缘受拉。石梁受拉弱 → 跨度做不大、易断
+2. 拱：把荷载转为沿拱线的压力，让石材「只受压」 → 跨度增大
+   代价：拱脚产生向外的「侧推力」（它想张开）
+3. 侧推力必须被抵消，否则拱会垮。三种解法：
+   a. 加厚墙 / 加重墩 —— 用重量顶住（罗马式）
+   b. 用「飞扶壁」把侧推力引到外部独立墩柱（哥特）
+   c. 用「拉杆/钢索」施加拉力抵消（现代）
+4. 结论：哥特能开满窗，是因为侧推力被「外引」，
+   墙不再需要自己承重 → 墙可以变成玻璃
+· 一句话：风格差异常可还原为「侧推力被怎么处理」</div>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>承重墙结构</h4><p>墙体本身既分隔空间又承担重量。门窗位置受限于墙身，空间开阔度受限。古希腊神庙、中世纪城堡、中国传统砖砌民居均属此类。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>框架结构</h4><p>由柱和梁组成骨架承重，墙体只做围合不承重。空间布局自由，可大面积开窗。现代钢筋混凝土和钢结构的核心体系。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>拱与穹顶</h4><p>通过弧形结构将垂直压力转化为侧推力，实现大跨度。罗马万神殿穹顶、哥特飞扶壁、伊斯兰穹顶都建立在此原理上。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>悬挑与张拉</h4><p>现代结构利用钢材的抗拉性，将楼板或屋面悬挑出支撑之外，制造视觉上的漂浮感。弗兰克·劳埃德·赖特的流水别墅是经典案例。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>承重墙结构</h4><p>墙体既分隔空间又承担重量。门窗受力学限制：开口越大，墙的连续性被削弱越多，因此靠墙的窗户通常小而对称。古希腊神庙、中世纪城堡、传统砖石民居均属此类。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>框架结构</h4><p>柱与梁组成骨架承重，墙体只围合不承重。空间布局自由、可大面积开窗——这是现代建筑自由的<strong>结构前提</strong>。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>拱与穹顶</h4><p>用弧形把垂直压力转为沿拱线的压力，代价是侧推力。罗马万神殿穹顶、哥特飞扶壁、伊斯兰穹顶都建立在这同一原理上。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>悬挑与张拉</h4><p>利用钢材的抗拉性，把楼板或屋面悬挑出支撑之外，制造漂浮感；张拉结构则用索把拉力直接呈现出来。赖特的流水别墅是早期经典。</p></div></div>
           </div>
-          <p>古罗马建筑师维特鲁威在《建筑十书》中提出建筑的<mark class="key">三原则</mark>：<strong>firmicity</strong>（坚固）、<strong>utility</strong>（实用）、<strong>venusticity</strong>（美观）。两千年来技术天翻地覆，这三条判断标准至今未被超越——任何建筑都应同时回答「站不站得住、好不好用、美不美」三个问题。</p>
-          <div class="callout tip"><span class="callout-label">承重墙 vs 框架</span>最简单的辨别方法：看墙上有无大开口。承重墙结构的窗户受限于结构，通常小而对称排列；框架结构可以整面墙做玻璃幕墙。巴黎圣母院的厚墙小窗与密斯·凡德罗玻璃幕墙的对比，本质上是结构逻辑的对比。</div>
+          <p>古罗马建筑师维特鲁威在《建筑十书》中提出建筑<mark class="key">三原则</mark>：坚固（firmitas）、实用（utilitas）、美观（venustas）。两千年后技术天翻地覆，这三个判断维度仍未被超越——任何建筑都应回答「站不站得住、好不好用、美不美」。</p>
+          <div class="callout tip"><span class="callout-label">一眼辨结构</span>看墙上有没有大开口。承重墙结构的窗户受限于结构，通常小而对称排列；框架结构可以整面墙做玻璃。巴黎圣母院的厚墙小窗与密斯玻璃幕墙的对比，本质是结构逻辑的对比，而非「审美取向」的对比。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>西方建筑风格演变</h2>
-          <p class="lede">西方建筑风格是一条清晰的时间轴。掌握几个关键节点，就能把任何欧洲建筑归类到正确的时代。</p>
+          <h2><span class="sec-num">2</span>西方古典与哥特：比例体系与结构的合力</h2>
+          <p class="lede">希腊柱式与哥特尖拱，是两套用不同方式解决「秩序」与「受力」问题的答案。</p>
           <table>
             <caption class="caption">古希腊三大柱式</caption>
             <thead><tr><th>柱式</th><th>柱头特征</th><th>柱身比例</th><th>气质</th></tr></thead>
             <tbody>
-              <tr><th scope="row">多立克（Doric）</th><td>简洁方圆顶，无装饰</td><td>粗壮，高径比约 4:1</td><td>刚劲质朴，男性气质</td></tr>
-              <tr><th scope="row">爱奥尼（Ionic）</th><td>两侧卷涡（volutes）</td><td>纤细，高径比约 9:1</td><td>优雅柔和，女性气质</td></tr>
-              <tr><th scope="row">科林斯（Corinthian）</th><td>毛莨叶装饰，繁复华丽</td><td>最细，高径比约 10:1</td><td>奢华精致</td></tr>
+              <tr><th scope="row">多立克（Doric）</th><td>简洁，无装饰</td><td>粗壮，高径比较小</td><td>刚劲质朴</td></tr>
+              <tr><th scope="row">爱奥尼（Ionic）</th><td>两侧卷涡（volutes）</td><td>纤细，高径比较大</td><td>优雅柔和</td></tr>
+              <tr><th scope="row">科林斯（Corinthian）</th><td>茛苕叶装饰，繁复华丽</td><td>最纤细</td><td>奢华精致</td></tr>
             </tbody>
           </table>
-          <p>希腊柱式经由罗马传遍欧洲，成为古典建筑语言的字母表。维特鲁威在《建筑十书》中对柱式的比例与适用场景有详细论述——多立克用于下层，爱奥尼用于中层，科林斯用于上层，这一层级排列在罗马斗兽场外立面完整呈现。</p>
-          <p>中世纪哥特建筑的核心创新是<mark class="key">尖拱</mark>（pointed arch）。尖拱比罗马式圆拱侧推力更小、可以更高更薄，配合<strong>飞扶壁</strong>（flying buttress）将拱顶的侧推力外引至独立墩柱，墙壁不再承重，得以大面积开窗——于是有了沙特大教堂的彩色玻璃玫瑰窗。哥特教堂的「向上感」不是装饰，是结构的必然结果。</p>
-          <p>文艺复兴建筑以布鲁内莱斯基的佛罗伦萨圣母百花大教堂穹顶为起点，回归古典几何与对称秩序。巴洛克建筑在文艺复兴基础上加入动态曲线和戏剧性光影，罗马四泉圣卡罗教堂是典型。新古典主义则在 18-19 世纪再次回归希腊罗马的纯粹形式。</p>
+          <p>希腊柱式以柱径为基本单位组织比例，柱式之间不是「风格任选」，而带有<strong>层级与场景</strong>意义——罗马斗兽场外立面自下而上依次叠置多立克、爱奥尼、科林斯，正是这种层级观的完整呈现。中世纪的哥特建筑则走出另一条路：尖拱比半圆拱的侧推力更小、可建得更高更薄，配合<strong>飞扶壁</strong>把拱顶侧推力引向外部独立墩柱，墙壁彻底不必承重，于是有了大面积的彩色玻璃窗。哥特教堂的「向上感」不是装饰趣味，而是<strong>结构的必然结果</strong>。</p>
+          <div class="callout warn"><span class="callout-label">风格的边界</span>把建筑史当成「风格目录」来背，容易漏掉因果。更稳妥的读法是：先问「这套结构解决了什么问题、留下了什么代价」，再谈审美。文艺复兴的对称与几何秩序、巴洛克的动感曲线与戏剧光影，都可以在「结构与视觉如何互相成就」的框架下理解，而不只是标签。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">3</span>中国古建筑体系</h2>
-          <p class="lede">中国古建筑以木构为核心，有一套与西方石构完全不同的结构逻辑和美学体系。</p>
-          <div class="callout tip"><span class="callout-label">斗拱</span>斗拱是中国木构建筑最具标志性的构件：在柱头与屋檐之间，由一层层方形「斗」和弓形「拱」交错叠合，将屋檐荷载逐层传递到柱子上。斗拱不仅是结构转接件，更是等级标识——故宫太和殿使用了最高等级的九踩斗拱。日本建筑中的「組物」（kumimono）即源自斗拱体系。</div>
-          <p>中国木构体系的核心是<strong>抬梁式</strong>与<strong>穿斗式</strong>两大结构：抬梁式以柱承梁、梁上短柱再承上层梁，适合大空间（北方官式建筑）；穿斗式以柱直接承檩、穿枋横向联系，适合小间距（南方民居）。两种体系都以榫卯节点连接，<mark class="key">柔性节点</mark>允许建筑在小震中摇摆耗能而不倒塌。</p>
+          <h2><span class="sec-num">3</span>中国木构：柔性节点与模数体系</h2>
+          <p class="lede">中国古建筑以木构为核心，有一套与西方石构完全不同的受力哲学——它不求「更硬」，而求「以柔克刚」。</p>
+          <div class="callout tip"><span class="callout-label">斗拱</span>斗拱是中国木构最具标志性的构件：在柱头与屋檐之间，由层层方形「斗」与弓形「拱」交错叠合，把屋檐荷载逐层传递到柱子上。它既是结构转接件，也是等级标识——故宫太和殿使用了高等级的多踩斗拱。斗拱体系还传播到周边地区，日本建筑中的「组物」即与其同源。</div>
+          <p>中国木构的主体是<strong>抬梁式</strong>与<strong>穿斗式</strong>两大体系：抬梁式以柱承梁、梁上短柱再承上层梁，室内少柱、适合大空间（多见于北方官式建筑）；穿斗式以柱直接承檩、穿枋横向联系，用柱密而柱细，适合小间距（多见于南方民居）。二者都以<strong>榫卯</strong>连接——节点不使用刚性固接，而保留一定活动余地，使建筑在地震中通过摇摆与摩擦耗能，不致脆性破坏。这与现代抗震中「延性与耗能」的思路相通，但实现路径完全不同。</p>
           <ul>
-            <li><strong>台基</strong>：建筑的基础层，等级越高台基越高层数越多。故宫三大殿三层汉白玉台基是最高等级。</li>
-            <li><strong>屋身</strong>：柱与斗拱构成的中间层，开间数标识等级——面阔九间为最高。</li>
-            <li><strong>屋顶</strong>：等级最高者为庑殿顶，其次歇山顶，再次悬山顶、硬山顶。屋顶曲线（举折）是中国建筑独有的美学特征。</li>
+            <li><strong>台基</strong>：建筑的基础层，等级越高台基越高、层数越多。</li>
+            <li><strong>屋身</strong>：柱与斗拱构成的中间层，开间数标识等级。</li>
+            <li><strong>屋顶</strong>：等级高者为庑殿顶，其次歇山顶，再次悬山、硬山；屋顶曲线（举折）是中国建筑独有的美学特征。</li>
           </ul>
-          <p>梁思成在《中国建筑史》和《营造法式》注释中系统梳理了中国古建筑的模数体系：宋代《营造法式》以「材」为基本模数，清代《工程做法》以「斗口」为模数，建筑各部分尺寸均按模数倍数确定——这与古希腊以柱径为模数的思路异曲同工，体现了不同文明对<mark class="key">比例秩序</mark>的共同追求。</p>
+          <p>宋代《营造法式》以「材」为基本模数，清代《工程做法》以「斗口」为模数，建筑各部分尺寸按模数倍数确定——这与古希腊以柱径为模数在思路上异曲同工，体现了不同文明对<mark class="key">比例秩序</mark>的共同追求，也说明模数化是大型营造得以组织与传承的技术基础。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">4</span>现代主义与当代建筑</h2>
-          <p class="lede">20 世纪初，混凝土和钢材彻底改变了建筑的可能。现代主义不是一种风格，而是一场关于建筑应该怎样回应工业时代的思想运动。</p>
+          <h2><span class="sec-num">4</span>现代主义：承重与围合分离之后</h2>
+          <p class="lede">20 世纪，混凝土与钢材让「承重」和「围合」第一次可以彻底分开。现代主义不是一种装饰风格，而是这场结构革命的思想后果。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>底层架空</h4><p>用柱将建筑抬离地面，首层变为公共空间。萨伏伊别墅是经典实现。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>自由平面</h4><p>墙体不再承重，可以自由布置在任何位置，空间组合不受结构限制。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>自由立面</h4><p>外墙不承重，窗和实墙的位置由设计而非结构决定，立面成为独立表达。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>横向长窗</h4><p>框架结构允许整面墙开窗，水平长窗带来连续视野。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>底层架空</h4><p>用柱把建筑抬离地面，首层成为连续公共空间，建筑「漂浮」。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>自由平面</h4><p>墙体不承重，可自由布置，空间组合不再被结构线绑定。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>自由立面</h4><p>外墙不承重，窗与实墙的位置由设计而非结构决定，立面成为独立表达面。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>横向长窗</h4><p>框架允许整面墙开窗，水平长窗带来连续视野。</p></div></div>
             <div class="feature"><div class="f-ico">5</div><div><h4>屋顶花园</h4><p>平屋顶替代坡屋顶，释放出可用的屋顶空间。</p></div></div>
           </div>
-          <p>以上五条即 Le Corbusier（柯布西耶）在 1927 年提出的<strong>建筑五点</strong>，在萨伏伊别墅完整呈现。这五点的共同前提是框架结构——<mark class="key">承重与围合的分离</mark>是现代建筑自由的根源。</p>
-          <p>现代主义大师各有哲学：密斯·凡德罗的「<mark class="key">少即是多</mark>」（Less is More）追求极简的结构表现；赖特的有机建筑主张与自然融合；阿尔瓦·阿尔托关注人的感官体验，用木材和曲线柔化现代主义的冷硬。当代建筑在生态可持续、数字化建造等方向继续拓展，但结构自由这一现代主义遗产仍是出发点。</p>
-          <div class="callout warn"><span class="callout-label">批判</span>现代主义的「国际式」在战后全球扩散，催生了大量无视地域气候和文化语境的千篇一律建筑。罗伯特·文丘里在《建筑的复杂性与矛盾性》中以「少即是乏味」（Less is a Bore）回应密斯，开启了后现代主义对意义、装饰和历史引用的回归。</div>
+          <p>以上五条即 Le Corbusier（柯布西耶）于 1920 年代提出的<strong>建筑五点</strong>，在萨伏伊别墅完整呈现。五点的共同前提仍是第 1 节那条主线：<mark class="key">承重与围合的分离</mark>——这才是现代建筑自由的根源，而不是「审美偏好变了」。</p>
+          <p>现代主义大师各有取向：密斯·凡德罗的「少即是多」追求结构的清晰表达；赖特的有机建筑主张与场地融合；阿尔瓦·阿尔托关注感官体验，用木材与曲线柔化现代主义的冷硬。当代建筑在生态可持续、数字建造等方向继续拓展，但「结构自由」这一遗产仍是出发点。</p>
+          <div class="callout warn"><span class="callout-label">反面的代价</span>现代主义的「国际式」在战后全球扩散，也催生了大量无视地域气候与文化语境的同质化建筑。文丘里以「少即是乏味」（Less is a Bore）回应密斯，开启了后现代对意义、装饰与历史引用的回归。这提醒我们：一种结构上的自由，若不与环境性能、地方文化结合，可能带来新的问题。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>空间体验与城市肌理</h2>
-          <p class="lede">建筑不只从外面看，更要从里面走。空间体验是建筑区别于雕塑的根本——它让你进入作品内部。</p>
-          <p>日本建筑师芦原义信在《外部空间设计》中提出 <mark class="key">积极空间与消极空间</mark> 的概念：积极空间是有明确围合和意图设计的空间，让人愿意停留；消极空间是建筑之间的无组织剩余，人只是路过。好的城市设计是让消极空间变成积极空间——广场、街道、口袋公园不应是建筑的「缝隙」，而应成为生活的场所。</p>
-          <p>城市肌理（urban fabric）指建筑群共同形成的空间纹理。欧洲中世纪城市的曲折街道和有机生长的肌理，与奥斯曼巴黎改造后的放射大道形成对比，又与现代主义新城的网格化大街区截然不同。不同肌理对应不同的生活方式：密路网小街区的城市适合步行，大街区宽马路的适合车行。</p>
-          <p>凯文·林奇在《城市意象》中提出人们靠<mark class="key">五要素</mark>构建城市心理地图：路径（paths）、边缘（edges）、区域（districts）、节点（nodes）、地标（landmarks）。一座容易认知的城市，这五类元素清晰且关系明确——迷路不是因为方向感差，而是城市的意象要素模糊。</p>
-          <div class="callout tip"><span class="callout-label">欣赏建议</span>下次走进一座建筑时，问自己三个问题：结构如何传力（看柱、墙、拱）？空间如何引导你的身体（看门洞、轴线、视线）？材料如何传达时间感（看质感、色彩、老化痕迹）？这三个问题分别对应维特鲁威三原则的坚固、实用与美观。</div>
+          <h2><span class="sec-num">5</span>空间体验与城市认知</h2>
+          <p class="lede">建筑不只从外面看，更要从里面走。空间体验是建筑区别于雕塑的根本——它把你放进作品内部。</p>
+          <p>日本建筑师芦原义信在《外部空间设计》中提出<mark class="key">积极空间与消极空间</mark>：积极空间有明确围合与意图设计，让人愿意停留；消极空间是建筑之间的无组织剩余，人只是路过。好的城市设计，是把消极空间转化为积极空间——广场、街道、口袋公园不应是建筑的「缝隙」，而应成为生活的场所。</p>
+          <p>城市肌理（urban fabric）是建筑群共同形成的空间纹理。中世纪城市的曲折街道与有机生长，与近代放射大道改造、现代主义新城的网格大街区截然不同；不同肌理对应不同的生活方式——密路网小街区适合步行，大街区宽马路适合车行。凯文·林奇在《城市意象》中提出人们靠<mark class="key">五要素</mark>构建城市的心理地图：路径（paths）、边缘（edges）、区域（districts）、节点（nodes）、地标（landmarks）。一座容易认知的城市，这五类元素清晰且关系明确——迷路往往不是方向感差，而是城市意象要素本身模糊。</p>
+          <div class="callout tip"><span class="callout-label">欣赏三问</span>走进一座建筑时问自己：结构如何传力（看柱、墙、拱）？空间如何引导你的身体（看门洞、轴线、视线）？材料如何传达时间（看质感、色彩、老化痕迹）？这三问分别对应维特鲁威三原则的坚固、实用与美观。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">建筑欣赏速记</span><button class="copy-btn" type="button">复制</button>· 结构核心：力如何传到地面
-· 承重墙：墙承重，开口受限；框架：柱梁承重，墙自由
+          <h2><span class="sec-num">6</span>前沿与跨学科：建筑正被「计算」与「性能」重塑</h2>
+          <p class="lede">从手工制图到参数化设计与性能模拟，建筑的技术基础正在改变。以下方向仍在快速发展，结论需审慎看待。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">古典比例与模数</span><span class="tl-date">古代—19 世纪</span><p>维特鲁威的柱式比例、《营造法式》的「材」模数，都是以几何与比例组织营造的早期系统化方法。</p></div>
+            <div class="tl-item"><span class="tl-era">钢筋混凝土与钢结构</span><span class="tl-date">19 世纪末—20 世纪</span><p>让「承重与围合分离」成为可能，直接催生了现代主义的五点与高层建筑。</p></div>
+            <div class="tl-item"><span class="tl-era">结构与计算</span><span class="tl-date">20 世纪中后期</span><p>有限元等计算方法使复杂形态的受力分析成为常规，让壳体、悬挑、张拉等高难度结构可以精确校核。</p></div>
+            <div class="tl-item"><span class="tl-era">参数化与数字建造</span><span class="tl-date">1990s 起</span><p>以参数与算法生成几何，配合数控加工与机器人建造，把「复杂形态」从图纸难题变为可施工问题。</p></div>
+            <div class="tl-item"><span class="tl-era">性能化与低碳设计</span><span class="tl-date">近年</span><p>以能耗、日照、风环境、碳排放为目标的模拟与优化成为设计流程的一部分；既有建筑的改造与再利用也被广泛重视。相关标准与方法仍在演进中。</p></div>
+          </div>
+          <div class="grid-2">
+            <div class="card"><h4>力学 × 形态</h4><p>受力路径的分析决定了拱、壳、悬挑能否成立。形态不只是审美选择，往往是被力「逼」出来的结果。</p></div>
+            <div class="card"><h4>材料科学 × 结构</h4><p>受压与受拉能力的差异，决定了石材、木、钢、混凝土各自的适用范围与连接方式。</p></div>
+            <div class="card"><h4>环境工程 × 性能</h4><p>朝向、遮阳、通风、热工等环境性能，正在成为与传统「形式」并列的设计约束。</p></div>
+            <div class="card"><h4>抗震工程 × 柔性节点</h4><p>榫卯的摇摆耗能与现代延性抗震设计目标相通，是传统智慧与现代工程对话的一个例证。</p></div>
+            <div class="card"><h4>认知心理学 × 城市</h4><p>林奇的城市意象理论把「人如何记住一座城」变成可研究的问题，影响了后续的城市设计方法论。</p></div>
+            <div class="card"><h4>社会学 × 空间生产</h4><p>空间如何被使用、谁被排除在外，是建筑学与社会学交叉的持续议题，也提醒我们建筑不只是技术对象。</p></div>
+          </div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">把建筑史当风格标签、把美学当唯一标准，是最常见的两层误解。先问受力，再谈形式。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">误解</span><pre>「建筑风格就是外观花样，
+好看最重要；
+装饰越多越讲究；
+老建筑只是落后技术。」</pre><p class="why">把建筑等同于立面审美，割裂了形式与其背后的结构、材料与使用逻辑。</p></div>
+            <div class="side good"><span class="side-tag">更准确</span><pre>「形式往往被受力与功能'逼'出。
+哥特能开满窗，是因为侧推力被外引；
+斗拱既是结构件也是等级符号。
+技术新旧不等于优劣，关键看是否解决问题。」</pre><p class="why">把形式看作结构、材料、功能与文化共同作用的结果，而非孤立的审美偏好。</p></div>
+          </div>
+          <table>
+            <caption class="caption">六个典型误区及其边界条件</caption>
+            <thead><tr><th>误区</th><th>为什么错</th><th>成立/失效的边界</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">建筑=外观风格</th><td>忽略了结构、材料与使用</td><td>风格史可作入门线索，但不能替代受力与功能分析</td></tr>
+              <tr><th scope="row">哥特高耸纯是装饰</th><td>尖拱+飞扶壁是受力结构的结果</td><td>其「向上感」来自结构，但也被人为强化为宗教表达</td></tr>
+              <tr><th scope="row">木构不如石构结实</th><td>体系不同，木构以柔性与耗能见长</td><td>抗震场景下柔性节点有独特优势，不可简单判定高下</td></tr>
+              <tr><th scope="row">现代主义=极简风格</th><td>它是一场结构革命的思想后果</td><td>「少即是多」是选择之一，非现代主义的唯一定义</td></tr>
+              <tr><th scope="row">越高越先进</th><td>高度依赖材料、结构、经济与安全成本</td><td>高度是综合权衡的结果，非技术先进性的单一指标</td></tr>
+              <tr><th scope="row">城市肌理可有可无</th><td>肌理直接影响步行与生活模式</td><td>不同肌理服务不同生活方式，需结合使用场景评估</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">建筑进阶速记</span><button class="copy-btn" type="button">复制</button>· 第一性问题：力如何走到地面（受压 vs 受拉）
+· 承重墙：墙承重、开口受限；框架：柱梁承重、墙自由
+· 拱：把弯转为压力，代价是向外的侧推力
+· 侧推力三解法：加厚墙 / 飞扶壁外引 / 拉杆施拉
+· 哥特能开满窗 = 侧推力被外引，墙变玻璃（结构必然）
 · 维特鲁威三原则：firmitas 坚固、utilitas 实用、venustas 美观
-· 希腊三柱式：多立克刚劲、爱奥尼柔和、科林斯华丽
-· 哥特核心：尖拱减侧推力 + 飞扶壁外引力 = 高墙大窗
+· 希腊三柱式：多立克刚劲、爱奥尼柔和、科林斯华丽（以柱径为模数）
 · 斗拱：柱头与屋檐间的结构转接件，兼等级标识
-· 中国木构：抬梁式（大空间）与穿斗式（密柱），榫卯柔性节点
+· 中国木构：抬梁式（大空间）与穿斗式（密柱），榫卯柔性耗能
 · 屋顶等级：庑殿 > 歇山 > 悬山 > 硬山
 · 宋代以「材」、清代以「斗口」为模数
-· 柯布西耶五点：底层架空、自由平面、自由立面、横向长窗、屋顶花园
-· 前提：框架结构使承重与围合分离
+· 柯布西耶五点：底层架空/自由平面/自由立面/横向长窗/屋顶花园
+· 前提：承重与围合分离（结构自由）
 · 密斯「少即是多」，文丘里「少即是乏味」
 · 芦原义信：积极空间让人停留，消极空间只是剩余
-· 凯文·林奇城市五要素：路径、边缘、区域、节点、地标
+· 凯文·林奇五要素：路径、边缘、区域、节点、地标
 · 欣赏三问：结构如何传力、空间如何引导、材料如何传达时间</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">选一栋建筑，判断它是承重墙结构还是框架结构</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">找一组古希腊柱式照片，辨认多立克/爱奥尼/科林斯</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">画一张哥特教堂剖面草图，标出尖拱和飞扶壁传力路径</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">辨识身边一栋中国古建筑的屋顶等级和结构类型</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用柯布西耶五点逐一分析萨伏伊别墅</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">画你所在街区的平面草图，标出积极空间和消极空间</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用凯文·林奇五要素画出你所在城市的心理地图</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">画一张哥特教堂剖面草图，标出尖拱与飞扶壁把侧推力引到哪里</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用「受压/受拉」解释：为什么石梁不能像钢梁那样做大跨度</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">选一栋建筑，判断它是承重墙还是框架结构，并给出墙面开窗的证据</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">找一组柱式照片，辨认多立克/爱奥尼/科林斯并说明层级排列的用意</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">比较榫卯柔性节点与现代抗震的「延性耗能」：目标相同处与路径不同处各是什么</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用柯布西耶五点逐一分析萨伏伊别墅，并指出每点的结构前提</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">画你所在街区的平面草图，标出积极空间与消极空间，并提一条改进建议</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">用凯文·林奇五要素画出你所在城市的心理地图，指出哪类要素最模糊</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">比较中西两大模数体系（材/斗口 与 柱径），说明模数化对大型营造的意义</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">就「建筑的高度是否能代表技术水平」写一段有立场的论述，至少给出一支持一反对的理由</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">原创交互式学习资料，基于维特鲁威《建筑十书》、梁思成《中国建筑史》、Le Corbusier 建筑五点及凯文·林奇《城市意象》整理。</p>
+        <p class="footnote">基于维特鲁威《建筑十书》、中国古建筑木构与《营造法式》《工程做法》模数体系的通行知识、Le Corbusier 建筑五点、芦原义信《外部空间设计》及凯文·林奇《城市意象》等公开学术成果整理。结构受力与城市理论的表述为概括性说明，涉及前沿技术方向的部分仍在发展，请以原始文献为准。</p>
       </footer>
     </div>
   </article>

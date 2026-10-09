@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>记忆术进阶指南</title>
+  <title>记忆术深度进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>记忆术进阶指南</h1>
-          <p class="report-intro__summary">「记不住」多数时候不是存储失败，而是提取失败——线索没建够。本指南从编码、存储、提取三阶段切入，讲透组块化、精细加工、记忆宫殿与间隔重复的原理，最后拼装出一套可日常运转的个人记忆系统。</p>
+          <h1>记忆术深度进阶指南</h1>
+          <p class="report-intro__summary">「记不住」多数时候不是存储失败，而是提取失败——线索没建够。本指南用记忆的三级模型定位瓶颈，用 R(t) = e^(−t/S) 把遗忘写成可计算的函数，把工作记忆容量从「7±2」更新到「约 4 组块」并说清争议，再拆解 SM-2 与半衰期回归两代间隔重复调度算法，最后给出记忆宫殿、精细编码与测试效应的机制链条与组合方案。</p>
           <div class="intro-meta">
             <span>领域：思维 · 表达</span>
             <span>难度：进阶</span>
@@ -25,104 +25,298 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>记忆三阶段与失败模式</h2>
-          <p class="lede">「记不住」是笼统的抱怨——先定位失败发生在哪一段，干预才有效。</p>
+          <h2><span class="sec-num">1</span>记忆的三级模型：先定位瓶颈，再谈技巧</h2>
+          <p class="lede">「记不住」是笼统的抱怨。记忆系统是一条流水线，只有先知道信息卡在哪一级，干预才可能有效。</p>
+          <p>经典的多存储模型（Atkinson 与 Shiffrin 在 1960 年代末提出）把记忆拆成三级，后续研究对其做了大量修正，但作为诊断框架仍然有效：</p>
           <table>
-            <caption class="caption">三阶段诊断表</caption>
-            <thead><tr><th>阶段</th><th>发生什么</th><th>失败的样子</th><th>干预方向</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">编码</th><td>信息进入记忆，建立初始痕迹</th><td>「看了但没进脑子」：注意力涣散、缺乏加工</th><td>精细加工、建立联想、专注状态</td></tr>
-              <tr><th scope="row">存储</th><td>痕迹被巩固（睡眠是关键环节）</th><td>熬夜后学习内容大量蒸发</th><td>保证睡眠，别指望透支后补记</td></tr>
-              <tr><th scope="row">提取</th><td>靠线索把记忆调出来</th><td>「话到嘴边」：痕迹在，线索弱</th><td>多挂检索线索，用提取练习强化</td></tr>
-            </tbody>
-          </table>
-          <p>多数「忘」是<strong>提取失败</strong>而非存储失败：信息在里面，只是缺触发它的线索。改进方向是给记忆多挂几条线索（语境、地点、情绪、联想），而不是一味重复输入。</p>
-        </section>
+    <caption class="caption">三级模型：容量、时长与瓶颈定位</caption>
+    <thead><tr><th>层级</th><th>容量 / 时长</th><th>编码形式</th><th>典型失败</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">感觉记忆</th><td>极大容量、数百毫秒级</td><td>感觉通道的原始痕迹（视觉/听觉）</td><td>未注意即消失；「看了但没看见」</td></tr>
+      <tr><th scope="row">工作记忆</th><td>约 4 个组块、秒级（无复述则约 15–30 s）</td><td>语音回路、视空间画板、中央执行</td><td>容量溢出；「中间那段丢了」</td></tr>
+      <tr><th scope="row">长时记忆</th><td>容量近乎无限、可维持数十年</td><td>语义网络、图式</td><td>提取失败；「话到嘴边」</td></tr>
+    </tbody>
+  </table>
+  <p>三级之间的搬运由两个机制控制：<strong>复述</strong>（维持性复述只在工作记忆里循环，精细复述才向长时记忆写入）与<strong>巩固</strong>（需要时间与睡眠参与的痕迹稳定化过程）。</p>
+  <div class="prompt-block"><span class="prompt-label">流水线模型与瓶颈判据</span><button class="copy-btn" type="button">复制</button>感觉记忆 --注意--> 工作记忆 --精细复述/巩固--> 长时记忆 --线索匹配--> 提取
 
-        <section>
-          <h2><span class="sec-num">2</span>工作记忆容量与组块化</h2>
-          <p class="lede">工作记忆是全系统的瓶颈：一次只能持有约 4 个组块——但组块本身可以巨大。</p>
-          <ul>
-            <li><strong>容量限制</strong>：经典估计是 7±2（Miller），现代研究修正为约 4 个组块（Cowan）——限制的是「单元数」，不是单元大小。</li>
-            <li><strong>组块化</strong>：把 1-9-2-0-2-0-2-4 变成 1920、2024 两个「年份」，容量瞬间翻倍。有结构的材料更好记，原因就在这里。</li>
-            <li><strong>长时记忆是原料库</strong>：专家与新手的差别不在容量，而在库存了多少现成组块（棋形、词块、公式模板）。</li>
-            <li><strong>实操</strong>：先找结构（韵律、模式、熟悉序列），找不到就制造结构（编组、缩写、串联）。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">洞察</span>「理解」在认知上的含义就是：长时记忆里拥有该领域的组块。这解释了为什么懂的人觉得简单、不懂的人看到的是天文数字。</div>
-        </section>
+判据表（用「失败的样子」反推瓶颈）：
+· 「看了但没进脑子」          → 注意或精细复述环节缺失
+· 「只记得开头结尾，中间丢了」 → 工作记忆容量溢出（序列位置效应）
+· 「熬夜学习后内容蒸发」      → 巩固环节被睡眠剥夺破坏
+· 「明明记得却说不出来」      → 提取线索不匹配（编码特异性失败）
+· 「越紧张越想不起来」        → 提取时的资源被占用（见第 5 节测试效应）
 
-        <section>
-          <h2><span class="sec-num">3</span>精细加工与联想：关键字法 · 故事法</h2>
-          <p class="lede">记忆术的核心只有一条：把要记的东西挂到「你已经拥有」的记忆网络上。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>关键字法</h4><p>外语词记忆利器。取外语词的谐音形成母语图像，再把图像与词义建立荒诞互动——两步缺一不可，只谐音不互动等于白做。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>故事链</h4><p>把清单串成一个有因果、有画面的荒诞故事。顺序与情节提供天然检索线索，遗忘一项时可以沿情节「走到」它。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>首字母缩略</h4><p>提取每项首字合成一个可发音的词——用一个「组块」携带整张清单，为每项留一个钩子。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>图像夸张原则</h4><p>互动越荒诞、越动感、越具体，编码越深。平淡画面是记忆术的毒药：大脑不记日常，只记异常。</p></div></div>
-          </div>
-          <p><strong>适用边界</strong>：记忆术擅长「无结构的配对与清单」（名字、数字、词汇表），不擅长概念理解——用关键字法记外语词可以起步，但语言习得还得靠语境与重复。术是杠杆，不是地基。</p>
-        </section>
+关键结论：多数日常「忘」发生在最后一环。
+∴ 改进方向是「多挂线索 + 主动提取」，而不是「重复输入」</div>
+  <div class="callout tip"><span class="callout-label">诊断</span>下一次说自己「记不住」时，先写一句失败的样子，再对照上表定位。定位错误的代价是：为提取问题做重复输入（无效），或为编码问题做线索搭建（无效）。</div>
+</section>
 
-        <section>
-          <h2><span class="sec-num">4</span>记忆宫殿：位置法</h2>
-          <p class="lede">位置法（Method of Loci）借用大脑对空间位置的天然超强记忆，把顺序信息「铺」在熟悉路线上。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>选宫殿</h4><p>一条你闭眼能走完的路：回家路线、住宅平面、通勤路。固定 10~20 个位置点，越熟悉越好，不必华丽。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>固定顺序</h4><p>位置点严格按固定顺序编号（门口 → 鞋柜 → 沙发……）。顺序即提取顺序，一旦确定不再改动。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>放置图像</h4><p>每个位置放一个夸张、动态、荒诞的图像代表要记的内容——图像与内容的关联越直接越好。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>走一遍</h4><p>在心里沿路线走一遍「取回」图像；正走、倒走各一遍，双向可提取才算真正掌握。</p></div></div>
-          </div>
-          <p>为什么有效：空间记忆是进化保留下来的「免费通道」——海马体本就装备位置细胞；宫殿只是借这条高速路搬运任意信息。竞赛记忆选手的「超能力」几乎全部建立在此法之上。</p>
-          <div class="callout tip"><span class="callout-label">门槛</span>宫殿本身必须先练熟（空跑几遍），否则记忆时工作记忆要同时干「走路线」和「放图像」两件事，效果大打折扣。</div>
-        </section>
+<section>
+  <h2><span class="sec-num">2</span>工作记忆容量：从 7±2 到约 4 组块，以及争议所在</h2>
+  <p class="lede">工作记忆是全系统的瓶颈。但「容量是 7」这个数字在课上被讲了五十年，而它其实已经更新过两次。</p>
+  <h3>三代容量估计</h3>
+  <ul>
+    <li><strong>Miller（1956）的 7±2</strong>：发表于《心理学评论》的经典论文，标题大意是「神奇的数字七，加减二」。它谈的是<strong>绝对判断</strong>与<strong>即时记忆广度</strong>，后者常被引用的范围是约 5–9 个「项」。这项工作的核心贡献不是数字，而是<strong>组块（chunk）</strong>这一概念。</li>
+    <li><strong>Cowan（2001 年起）的约 4</strong>：当实验排除复述、分组等策略的辅助后，纯粹的即时记忆容量稳定在<strong>约 4 个组块</strong>。Cowan 的综述把大量未受策略污染的估计聚到 3–5 的区间，并提出 4 是可陈述的容量上限。</li>
+    <li><strong>组块大小无上限，数量有上限</strong>：容量限制的是「单元数」，不是「单元的信息量」。一个经过训练的组块可以包含极多信息（见下）。</li>
+  </ul>
+  <h3>组块化的信息论视角</h3>
+  <p>为什么「1920-2024」比「1-9-2-0-2-0-2-4」好记？不是数字变少了，而是<strong>编码的语义单位数减少了</strong>：前者是 2 个有意义的组块，后者是 8 个孤立项。</p>
+  <div class="prompt-block"><span class="prompt-label">组块化的容量换算</span><button class="copy-btn" type="button">复制</button>设工作记忆容量 C ≈ 4 个组块。
+若每个组块最多承载的信息量为 b 比特，
+则单次可保持的信息上限 ≈ C × b
 
-        <section>
-          <h2><span class="sec-num">5</span>间隔重复与个人记忆系统</h2>
-          <p class="lede">遗忘是默认设置；间隔重复是对抗它唯一可扩展的方案。</p>
-          <ul>
-            <li><strong>复习节奏</strong>：当天 / 24 小时内阻断最陡峭的初期遗忘，3 天、7 天、半月、1 个月逐级拉平曲线——每次成功提取后，间隔翻倍。</li>
-            <li><strong>一卡一问</strong>：卡片必须原子化。一卡多问会互相遮蔽，某处忘了整卡作废，复习粒度失控。</li>
-            <li><strong>只收自己写的</strong>：转写即加工——抄来的卡片是别人的组块，用起来处处硌手。</li>
-            <li><strong>宁少勿断</strong>：每天 10~20 分钟、坚持数月，胜过周末一次两小时的报复性复习。</li>
-            <li><strong>月度清理</strong>：对「永远记不住」的卡片动手——改写、拆分或删除，它们在消耗每日额度。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">机制</span>间隔重复的隐藏收益是「提取练习」本身（测试效应）：每次费力回忆都在加深痕迹。没有软件时，任何「先回忆再核对」的做法都是低配替代。</div>
-        </section>
+· 未组块化：b ≈ log₂(k)，k 为元素种类（十进制数字 b ≈ 3.32 bit）
+  → 上限 ≈ 4 × 3.32 ≈ 13 bit ≈ 4 个数字
+· 组块化后：b 由组块内结构决定，可远大于 log₂(k)
+  → 记忆选手能把「一副牌的顺序」映射到有限个熟悉组块，
+    使 b 极大，从而在同样 C 下承载远超 4 个数字的信息
 
-        <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">记忆术速记</span><button class="copy-btn" type="button">复制</button>· 三阶段诊断：没进脑子（编码）→ 没存住（存储/睡眠）→ 找不回（提取）
-· 多数「忘」是提取失败：缺线索，不是缺信息
-· 工作记忆约 4 个组块，扩容靠组块化
-· 专家优势 = 长时记忆里的现成组块
-· 记忆术核心：挂到已有网络，越荒诞越牢
-· 关键字法两步：谐音成图像 + 图像与词义互动
-· 故事链：因果与画面提供天然顺序线索
+这就是「专家优势」的信息论表述：
+  专家与新手的容量 C 相同，差别在 b
+
+物理学类比：容量是「寄存器个数」，组块化是「提高每个寄存器的字长」</div>
+  <h3>争议与边界</h3>
+  <div class="callout warn"><span class="callout-label">注意争议</span>「工作记忆容量 = 4」是常被引用的现代估计，但它在两个方向上都有争论：一是<strong>该不该把它当作单一数字</strong>（不同任务、不同材料的估计散布在 2–6 之间，部分研究者认为「容量」本身是任务依赖的而非固定常量）；二是<strong>容量与注意控制的关系</strong>——有观点认为限制源于注意焦点而非「存储槽位」。因此引用时宜写「据 Cowan 的估计约为 4 个组块，仍存争议」，而不是「工作记忆就是 4」。</div>
+  <p>另一个边界是<strong>组块化的代价</strong>：组块依赖长时记忆中已有的图式，因此对新领域无效。「先找结构，找不到就制造结构」这条操作原则，前半句依赖已有知识，后半句（编组、缩写、串联）才是新手可用的部分。</p>
+</section>
+
+<section>
+  <h2><span class="sec-num">3</span>精细编码：特征绑定与记忆术的机制</h2>
+  <p class="lede">记忆术的全部操作，可以归约为一个动作：把新信息绑到「已经稳固的旧记忆」上，并让绑定的特征尽可能多、尽可能独特。</p>
+  <h3>从「痕迹衰减」到「干扰」</h3>
+  <p>遗忘的机制解释有两类主流观点，它们并不互斥：</p>
+  <ul>
+    <li><strong>痕迹衰减</strong>：不使用则痕迹随时间变弱。它的直觉对应下面的指数模型。</li>
+    <li><strong>干扰</strong>：旧信息与新信息互相竞争。前摄干扰指旧记忆阻碍新记忆（先学的电话号干扰后学的），倒摄干扰指新记忆破坏旧记忆（学了新语言忘旧语言）。</li>
+  </ul>
+  <p><strong>特征绑定</strong>的说法是：编码时把「内容」与「语境、空间、情绪、动作」等多维特征绑在一起，提取时任一条特征都可能成为入口。这解释了为什么荒诞、动感、具体、带情绪的画面更好记——不是因为它「有趣」，而是因为它<strong>附加了更多可用的检索特征</strong>，从而提高了编码特异性匹配的概率。</p>
+  <div class="prompt-block"><span class="prompt-label">精细编码的两个必要条件</span><button class="copy-btn" type="button">复制</button>一次成功的联想编码必须同时满足：
+① 有一个可感知、可复述的「媒介」（谐音、图像、位置）
+② 媒介与目标内容之间有「双向可还原」的绑定
+
+反例分析（关键字法）：
+· 只谐音不互动 → 缺 ②（媒介与词义没有绑定）→ 记住图像但想不起词义
+· 只互动不具体 → 缺 ①（图像模糊无可复述性）→ 无法稳定复现
+· 两者都有但无独特性 → 同一图像被复用于多个目标 → 相互干扰
+
+∴ 「越荒诞越好」的准确含义是：
+  荒诞 = 低混淆概率 → 减少干扰 → 提高区分度</div>
+  <h3>三类常用编码法的作用点</h3>
+  <div class="feature-list">
+    <div class="feature"><div class="f-ico">1</div><div><h4>关键字法</h4><p>外语词记忆的常用工具：谐音生成母语音像，再把音像与词义做荒诞互动。两步缺一不可——它是「媒介 + 绑定」的最小实现。</p></div></div>
+    <div class="feature"><div class="f-ico">2</div><div><h4>故事链</h4><p>把清单串成有因果、有画面的荒诞故事。因果与情节本身就是顺序线索，遗忘一项时可以沿情节「走到」它。它解决的是序列表述问题。</p></div></div>
+    <div class="feature"><div class="f-ico">3</div><div><h4>首字母缩略</h4><p>把每项首字合成一个可发音的词：用一个组块承载整张清单，同时为每项保留一个钩子。它解决的是容量压缩问题。</p></div></div>
+    <div class="feature"><div class="f-ico">4</div><div><h4>图像夸张原则</h4><p>互动越荒诞、越动感、越具体，编码越深。平淡画面是记忆术的毒药：大脑不记日常，只记异常。</p></div></div>
+  </div>
+  <div class="callout warn"><span class="callout-label">边界</span>记忆术擅长「无结构的配对与清单」（名字、数字、词汇表），不擅长概念理解。用关键字法记外语词可以起步，但真正的语言习得还得靠语境、频率与使用。术是杠杆，不是地基——把记清单的效率误认为理解力的提升，是记忆术最常见的自欺。</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">4</span>遗忘曲线的数学：为什么复习要给「临界难度」</h2>
+  <p class="lede">遗忘不是「慢慢变淡」，而是一条可被拟合的曲线。一旦把它写成函数，复习时机的选择就从经验变成优化问题。</p>
+  <p>Ebbinghaus 在 1880 年代的自我实验（用无意义音节，自我报告式）给出了遗忘曲线的雏形。现代通行表述用指数衰减近似：</p>
+  <div class="prompt-block"><span class="prompt-label">遗忘曲线与稳定性增长</span><button class="copy-btn" type="button">复制</button>保留率（含 Unicode 符号的三种等价写法）：
+ ① R(t) = e^(−t/S)
+ ② R(t) = exp(−t/S)
+ ③ R(t) = 2^(−t/S′)      （S′ 为半衰期尺度，两种写法等价）
+
+参数含义：
+· t：自上次学习/复习以来的时间
+· S：记忆稳定性（stability），S 越大衰减越慢
+· 半衰期 t½：使 R = 0.5 的时间，t½ = S · ln2 ≈ 0.693 S
+
+关键机制：S 不是常数，而是随每次「成功提取」而增长。
+  失败提取时 S 几乎不增长，甚至下降。
+
+复习时机的优化目标：在 R 降到目标下限 R* 时复习
+  解 R(t*) = R*  → t* = −S ln R* = S · ln(1/R*)
+  例：取 R* = 0.9，t* ≈ 0.105 S；取 R* = 0.8，t* ≈ 0.223 S
+
+∴ 同一稳定性 S 下，「复习得太早」浪费次数，
+  「复习得太晚」则 R 过低，提取失败，S 不增长
+  → 存在一个效率最优的目标保留率区间</div>
+  <p>这条数学给出三个可操作的推论：</p>
+  <ol>
+    <li><strong>间隔应随 S 增长而拉长</strong>。既然 S 随每次成功提取变大，理想间隔不是固定值，而是逐次递增——这正是所有间隔重复算法的共同骨架。</li>
+    <li><strong>「刚好想不起来又要想起来」是最优难度区</strong>。这个说法（desirable difficulty，Bjork 提出）的核心是：提取时需要付出努力但最终成功，对 S 的增益最大。这解释了为什么「一遍遍重读」效率低下——重读时没有提取努力。</li>
+    <li><strong>失败提取仍有价值，但需立即纠正</strong>。失败会暴露真实的 S，但若不及时重学，可能进入「错误强化」。</li>
+  </ol>
+  <div class="callout warn"><span class="callout-label">边界</span>遗忘曲线最初来自无意义音节的自我实验，对<strong>有意义的、已建立图式的材料</strong>，实际衰减远慢于该曲线。此外个体差异大、情境依赖强，把 R(t) = e^(−t/S) 当作精确预测工具是不恰当的——它的价值在于提供<strong>结构</strong>（S 增长、间隔递增、临界难度），而非具体数值。</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">5</span>间隔重复调度：从 SM-2 到半衰期回归</h2>
+  <p class="lede">把上一节的数学变成可执行的软件，就需要调度算法：给定历史复习记录，决定下一次何时复习、给多长的间隔。</p>
+  <h3>第一代：SM-2 与「难度因子」</h3>
+  <p>SM-2 是 SuperMemo 系列算法中流传最广的一版（由 Piotr Woźniak 在 1980 年代末提出），也是大量开源记忆软件实现的基础。它的核心是给每张卡片维护一个<strong>难度因子</strong> E-Factor（EF）与当前间隔 I：</p>
+  <div class="prompt-block"><span class="prompt-label">SM-2 风格调度（伪代码，非官方源码）</span><button class="copy-btn" type="button">复制</button>每张卡片状态：EF（初始 2.5，下限 1.3）、I（当前间隔，单位天）、n（成功复习次数）
+
+评分 q ∈ {0,1,2,3,4,5}（0 完全想不起 … 5 秒答）
+
+若 q &lt; 3:
+    视为失败 → n 归零，I 回到起点（如 1 天）
+    EF 不变（部分实现会轻微下调）
+否则:
+    若 n == 0: I = 1
+    若 n == 1: I = 6
+    否则:      I = round(I × EF)
+    n += 1
+    EF = EF + (0.1 − (5 − q) × (0.08 + (5 − q) × 0.02))
+    EF = max(EF, 1.3)          # 防止间隔过短
+
+下次复习时间 = 今天 + I 天</div>
+  <p>把它与第 4 节的数学对上：EF 扮演的角色就是「S 的增长倍率」——回忆越顺利（q 越高），倍率越大、下次间隔越长；回忆越吃力，倍率被调低。EF 的下限 1.3 是一条工程约束，防止某张卡片因连续低分而陷入「每天都要复习」的死循环。</p>
+  <h3>第二代：把「稳定性」当显式状态</h3>
+  <p>BM 系列（FSRS 等，约 2022 年前后公开发布）代表的思路是：不再用一个难度因子间接推导间隔，而是为每张卡片显式建模三个量——<strong>难度 D</strong>、<strong>稳定性 S</strong>、<strong>可提取性 R</strong>，并让 S 按经验公式随每次复习增长。其思想骨架可简化表述为：</p>
+  <div class="prompt-block"><span class="prompt-label">半衰期回归调度的思想骨架</span><button class="copy-btn" type="button">复制</button>状态：(S, D, 上次复习距今 t)
+计算：R = (1 + t/(9S))^(−1)        # 一种常用的可提取性近似
+调度：解 R = 目标保留率（常取 0.9）得到间隔 I = 9S (R^−1 − 1)
+
+更新（示意，非官方公式）：
+  成功且回忆轻松  → S 增长幅度大（乘数 &gt; 1，且受 D 调节）
+  成功但很吃力    → S 增长幅度小
+  失败            → S 显著下降，D 上升
+
+与 SM-2 的差别：
+· SM-2：只显式存 I 与 EF，S 隐含
+· BM 类：显式存 S 与 D，间隔由「目标保留率」反解
+· 参数由大规模真实复习日志拟合而非手调</div>
+  <div class="callout tip"><span class="callout-label">如何选</span>对个人使用者，算法差异带来的收益通常小于「卡片质量」与「是否坚持」的差异。真正值得投入的是：一卡一问、只收自己转写的、每天固定时段复习。算法是二阶优化，卡片质量是一阶。</div>
+  <h3>测试效应：间隔重复的隐藏引擎</h3>
+  <p>间隔重复之所以有效，不只因为「按时复习」这个时间安排，更因为每次复习都是一次<strong>提取练习</strong>。这一独立现象被称为<strong>测试效应</strong>（或提取练习效应）：Roediger 与 Karpicke 在 2000 年代的一系列实验显示，采用「先学后测」的组在延迟测验中的成绩显著优于同等时间的「重复学习」组——即使后者多读了几遍材料。</p>
+  <p>机制解释与第 4 节连通：检索过程本身重塑了痕迹，使 S 增长更快；而重读只带来「熟悉感」，这种熟悉感会被误判为掌握（元认知偏差）。这也解释了为什么「看答案」比「想不起来再看答案」效率低。</p>
+</section>
+
+<section>
+  <h2><span class="sec-num">6</span>记忆宫殿与空间记忆的神经基础</h2>
+  <p class="lede">位置法（Method of Loci）借用大脑对空间位置的天然记忆，把顺序信息「铺」在熟悉路线上——它不是玄学，而是对一条进化上古老的神经通路的重用。</p>
+  <p>神经机制的三条证据链：</p>
+  <ul>
+    <li><strong>位置细胞（place cells）</strong>：O'Keefe 等在大鼠海马体中记录到对特定位置放电的神经元，是空间认知的经典发现（2014 年诺贝尔生理学或医学奖授予 O'Keefe 与 Moser 夫妇的空间认知工作体系）。</li>
+    <li><strong>网格细胞（grid cells）</strong>：内嗅皮层中存在按六边形栅格放电的神经元，为空间提供度量坐标。这类细胞的发现属于上述同一研究体系。</li>
+    <li><strong>结构重用与海马体体积</strong>：有研究显示伦敦出租车司机（需要记忆复杂路线）的海马后部体积与从业年限相关，被广泛作为「空间训练可改变脑结构」的证据。需注意：这类研究多为横断相关设计，因果方向存在争论（也可能是先有较大海马体的人更易入行）。</li>
+  </ul>
+  <p>操作四步与门槛：</p>
+  <div class="feature-list">
+    <div class="feature"><div class="f-ico">1</div><div><h4>选宫殿</h4><p>一条闭眼能走完的路线：回家路径、住宅平面。固定 10–20 个位置点，越熟悉越好。</p></div></div>
+    <div class="feature"><div class="f-ico">2</div><div><h4>固定顺序</h4><p>位置点严格按固定顺序编号（门口 → 鞋柜 → 沙发……）。顺序即提取顺序，一旦确定不再改动。</p></div></div>
+    <div class="feature"><div class="f-ico">3</div><div><h4>放置图像</h4><p>每个位置放一个夸张、动态、荒诞的图像，与内容的关联越直接越好（对应第 3 节的「媒介 + 绑定」）。</p></div></div>
+    <div class="feature"><div class="f-ico">4</div><div><h4>走一遍</h4><p>在心里沿路线「取回」图像；正走、倒走各一遍。双向可提取才算掌握——倒走检验的是绑定是否稳定，而非顺序记忆。</p></div></div>
+  </div>
+  <div class="callout tip"><span class="callout-label">门槛</span>宫殿本身必须先练熟（空跑几遍）。否则记忆时工作记忆要同时承担「走路线」与「放图像」两件事，直接触发第 2 节所说的容量溢出。竞技记忆选手的「超能力」几乎全部建立在此法之上，其可训练性有大量实践支持，但个体差异也确实存在。</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">7</span>前沿与研究进展</h2>
+  <p class="lede">记忆研究近二十年出现几条与个人实践直接相关的主线，其中既有稳固结论，也有仍在争论的部分。</p>
+  <div class="timeline">
+    <div class="tl-item"><span class="tl-era">记忆运动员的大脑</span><span class="tl-date">Maguire 等, 2003</span><p>对世界记忆锦标赛顶尖选手的脑成像研究显示：他们在结构上并无普遍异常，记忆表现与一组<strong>空间记忆相关脑区的使用策略</strong>有关。核心结论是「记忆冠军靠方法而非天赋」，这与位置法的训练实践一致。</p></div>
+    <div class="tl-item"><span class="tl-era">工作记忆容量的现代估计</span><span class="tl-date">Cowan, 2001 起</span><p>剔除复述与分组策略后，即时记忆容量稳定在约 4 个组块；但「容量是否为固定标量」仍在争论中，见第 2 节的边界说明。</p></div>
+    <div class="tl-item"><span class="tl-era">测试效应的确立与推广</span><span class="tl-date">Roediger 与 Karpicke, 2000s</span><p>提取练习的收益被反复验证并进入课堂实践，使「自测」从考试手段变成学习手段。</p></div>
+    <div class="tl-item"><span class="tl-era">睡眠与巩固的机制细化</span><span class="tl-date">2000s 至今</span><p>研究把「睡眠帮助记忆」细化为：慢波睡眠与纺锤波活动、海马与新皮层的对话（系统巩固假说）、以及靶向记忆再激活（在睡眠中重放与学习相关的线索可能增强特定记忆）。这些结论多来自实验室条件，日常生活如何利用仍在探索。</p></div>
+    <div class="tl-item"><span class="tl-era">开源间隔重复与调度算法</span><span class="tl-date">2020s</span><p>以 Anki 生态为代表，SM-2 及其变体成为事实标准；2022 年前后公开的 FSRS 系列引入显式稳定性/难度建模，宣称可在大规模日志上拟合并减少复习量。这些算法由社区与研究者持续迭代，效果证据主要来自回顾性日志而非严格随机对照。</p></div>
+  </div>
+  <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到「记忆提升 X%」，先问三件事：测的是即时回忆还是延迟（1 周以上）回忆、是自由回忆还是有线索回忆、有没有独立重复。「方法 vs 天赋」这类结论尤其要看样本是否只含顶尖选手。</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">8</span>跨学科视角</h2>
+  <div class="grid-2">
+    <div class="card"><h4>认知心理学</h4><p>编码—存储—提取框架、组块化、测试效应、合意难度，构成记忆实践的全部理论底座。</p></div>
+    <div class="card"><h4>神经科学</h4><p>海马与新皮层的系统巩固、位置细胞与网格细胞、睡眠中的记忆重放，为位置法与「睡后复习」提供机制解释。</p></div>
+    <div class="card"><h4>信息论</h4><p>比特、信道容量与「组块 = 提高每单元信息量」的换算，把「专家优势」写成可计算的形式。</p></div>
+    <div class="card"><h4>概率与统计</h4><p>保留率 R(t) 是时间上的生存函数；调度算法本质是在「复习成本 × 遗忘成本」下做期望损失最小化。</p></div>
+    <div class="card"><h4>计算机科学</h4><p>间隔重复是典型的「缓存 + 刷新策略」问题：LRU、指数退避在网络与存储系统中有同构结构，可作为理解调度算法的直觉来源。</p></div>
+    <div class="card"><h4>教育学</h4><p>提取练习与间隔学习被列为少数「高效学习技术」之一，与「重读、划线」形成对照——后者的主观流畅感与客观成绩常背离。</p></div>
+  </div>
+  <p>共同结构是：<strong>有限容量的快速存储 + 近乎无限的慢速存储 + 靠线索完成的检索</strong>。这与 CPU 缓存层次、数据库索引、乃至笔记系统的设计问题同构，说明「记忆」不只是一个心理学话题，而是一类通用的信息架构问题。</p>
+</section>
+
+<section>
+  <h2><span class="sec-num">9</span>常见误区与边界条件</h2>
+  <div class="compare">
+    <div class="side bad"><span class="side-tag">常见误区</span><pre>「忘性大 = 记性差 = 天赋问题」
+
+「多看几遍就记住了」
+
+「工作记忆就是 7 个」
+
+「记忆术能提升理解力」
+
+「间隔重复 = 每天把卡片全刷一遍」</pre><div class="why">问题：把提取问题误判为存储问题。重复阅读带来的是熟悉感而非可提取性；7±2 的说法已被更严格的实验修正；记忆术只优化「无结构材料」的编码与提取，与概念理解是两个通道；每天刷全卡会破坏间隔递增的设计，把间隔重复退化成集中重复。</div></div>
+    <div class="side good"><span class="side-tag">更准确的表述</span><pre>先诊断瓶颈：编码 / 巩固 / 提取，
+再选干预，别一律加重复次数
+
+用自测代替重读：
+想不起来再看答案，才有提取努力
+
+容量约 4 组块（仍存争议），
+扩容靠组块化，不靠死撑
+
+记忆术负责清单与配对，理解负责概念
+
+间隔随稳定性增长而拉长：
+成功提取后间隔递增，才是算法本意</pre><div class="why">要点：把记忆当作「可测量的提取问题」来处理，干预目标是把 R 维持在目标区间，而不是把材料在心里过多少遍。</div></div>
+  </div>
+  <table>
+    <caption class="caption">方法适用边界速查</caption>
+    <thead><tr><th>方法</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">记忆宫殿</th><td>有序清单、演讲大纲、竞赛项目</td><td>需要随机访问的概念网络；宫殿未练熟时</td></tr>
+      <tr><th scope="row">关键字法</th><td>外语词汇起步、专业术语配对</td><td>抽象概念体系；谐音无法自然关联时</td></tr>
+      <tr><th scope="row">故事链</th><td>10–30 项的有序清单</td><td>条目过多的长清单（情节会自己失序）</td></tr>
+      <tr><th scope="row">间隔重复</th><td>需要长期保持的事实与配对</td><td>技能与运动模式（需程序性练习）；理解型内容须先理解</td></tr>
+      <tr><th scope="row">组块化</th><td>有可发现结构的材料</td><td>全新领域中无图式可依时——此时先建基础</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><span class="callout-label">边界</span>记忆表现的个体差异真实存在，但远小于「是否使用了有效策略」带来的差异。同时须注意：本指南不涉及记忆障碍（如病理性遗忘）的识别与干预，若出现明显异常的记忆衰退并影响生活，应就医评估。</div>
+</section>
+
+<section>
+  <h2><span class="sec-num">10</span>速查卡</h2>
+  <div class="prompt-block"><span class="prompt-label">记忆术速记</span><button class="copy-btn" type="button">复制</button>· 三级模型：感觉记忆（数百毫秒）→ 工作记忆（约 4 组块）→ 长时记忆（近无限）
+· 失败四诊：没进脑（注意/精细复述）｜丢中段（容量溢出）｜熬夜即蒸发（巩固）｜说不出来（提取）
+· 多数日常「忘」是提取失败：缺线索，不是缺信息
+· 容量三代估计：7±2（Miller 1956）→ 约 4 组块（Cowan 2001 起）→ 仍存争议
+· 容量限制的是组块数，不是组块大小；专家优势在组块的信息量
+· 组块化换算：单次信息上限 ≈ 容量 C × 每块信息 b 比特
+· 遗忘曲线：R(t) = e^(−t/S)，半衰期 t½ = S·ln2 ≈ 0.693 S
+· 复习阈值：t* = S·ln(1/R*)；R* = 0.9 时 t* ≈ 0.105 S
+· 稳定性 S 随每次成功提取增长 → 间隔应逐次递增
+· 合意难度：需要努力才想起来的提取，增益最大
+· SM-2 骨架：I 从 1 天、6 天起，之后 I ← round(I × EF)，EF 初值 2.5、下限 1.3
+· BM 类调度：显式建模 S 与 D，由目标保留率反解间隔
+· 测试效应：同等时间下，自测优于重读（Roediger 与 Karpicke 的脉络）
 · 宫殿四步：选路线 → 编号 → 放图像 → 正反走一遍
-· 位置法借用空间记忆这条「进化免费通道」
-· 间隔重复：快忘时复习，成功提取后间隔翻倍
-· 卡片一卡一问，只收自己转写的
-· 每日 10 分钟 &gt; 每周一次 2 小时
-· 永远记不住的卡片：改写、拆分或删除</div>
-        </section>
+· 位置法借海马的位置细胞与内嗅皮层的网格细胞
+· 记忆冠军靠方法不靠天赋（Maguire 等, 2003）
+· 巩固依赖睡眠：学后睡比熬夜补记有效
+· 卡片一卡一问，只收自己转写的；每天固定时段优于周末暴刷</div>
+</section>
 
-        <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 8</span></div>
-          <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用三阶段表诊断最近一次「记不住」，写出失败发生在哪段</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">把一个 12 位数字序列编组为 4 个组块并记住，隔天检验</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用关键字法记 5 个外语单词（谐音图像 + 词义互动两步）</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">把一张购物清单编成故事链，晚上不看原文复述</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">建一个 10 位置的小宫殿（如家里动线），空跑 3 遍</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用宫殿记住一组 10 项的顺序信息，正反各复述一遍</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">在 Anki 或纸卡上开始第一个间隔重复牌组，每天不超过 15 分钟</label></div>
-            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">一周后清理牌组：永远记不住的卡片改写或删除</label></div>
-          </div>
-        </section>
+<section>
+  <h2><span class="sec-num">11</span>练习清单</h2>
+  <p class="lede">以下练习要求推导、实验或实现，须给出可验证的数据或结论。</p>
+  <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
+  <div class="checklist">
+    <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用三级模型诊断最近 3 次「记不住」，分别写出失败的样子并定位到具体环节；给出对应干预，并说明为什么其他干预在此处无效</label></div>
+    <div class="check-item"><input type="checkbox" id="c2"><label for="c2">自测组块化上限：在 10 秒内记忆随机数字串，分别测试「逐位呈现」与「分成 3–4 位小组呈现」，各做 5 轮记录正确位数，检验容量是否稳定在约 4 个组块</label></div>
+    <div class="check-item"><input type="checkbox" id="c3"><label for="c3">推导 t* 与 R* 的关系：由 R(t) = e^(−t/S) 解出复习阈值公式，填入 R* = 0.9 / 0.85 / 0.8 三档，计算各自的 t*/S 比值并解释「早复习浪费、晚复习失效」的临界点</label></div>
+    <div class="check-item"><input type="checkbox" id="c4"><label for="c4">手写实现一个 SM-2 风格的调度器（约 40 行）：输入评分序列，输出每次间隔与 EF；用「全 4 分」与「全 2 分」两组输入对比第 10 次复习的间隔差异</label></div>
+    <div class="check-item"><input type="checkbox" id="c5"><label for="c5">设计一次遗忘曲线测量：选 20 个陌生配对，学习到 100% 正确后用自由回忆在 0.5h、1d、3d、7d 四个时点测量，拟合指数模型并估计 S 与半衰期（说明你的拟合方法）</label></div>
+    <div class="check-item"><input type="checkbox" id="c6"><label for="c6">做一次测试效应对照实验：把同一批 30 个知识点分为「重读组」与「自测组」，各投入相同总时间，7 天后统一测验，报告两组得分与你的方法学局限</label></div>
+    <div class="check-item"><input type="checkbox" id="c7"><label for="c7">建一个 10 位置宫殿并空跑 3 遍，用它记住一组 10 项顺序信息；记录「正走」与「倒走」的提取耗时差异，解释差异来源</label></div>
+    <div class="check-item"><input type="checkbox" id="c8"><label for="c8">用关键字法记 5 个外语单词，逐个标注「媒介」与「绑定」两项是否都成立；一周后回测，统计失败项缺失的是哪一项</label></div>
+    <div class="check-item"><input type="checkbox" id="c9"><label for="c9">在 Anki 或纸卡上建立第一个牌组，运行 3 周；统计每天新增与复习量、以及「永远记不住」的卡片比例，据此改写或删除这些卡片并说明判据</label></div>
+    <div class="check-item"><input type="checkbox" id="c10"><label for="c10">查一项睡眠与记忆巩固的实证研究（如慢波睡眠与记忆保留的关系），写出其方法、样本、结论与至少两条局限；并据此给出你自己的「学后睡眠安排」规则</label></div>
+  </div>
+</section>
       </main>
+
       <footer>
-        <p class="footnote">基于认知心理学通行结论（提取练习、间隔效应、精细编码、位置法）整理，参考 Baddeley 工作记忆模型、Cowan 组块容量研究与竞技记忆实践。</p>
+        <p class="footnote">机制部分参考记忆的多存储模型（Atkinson 与 Shiffrin 在 1960 年代末提出的框架）、Miller 1956 年关于「7±2」的经典论文、Cowan 2001 年起关于约 4 个组块的估计、Ebbinghaus 的遗忘曲线自我实验、Bjork 提出的合意难度概念、Roediger 与 Karpicke 的测试效应研究脉络、Maguire 等 2003 年对记忆运动员的脑成像研究、O'Keefe 与 Moser 夫妇在空间认知与位置细胞、网格细胞方向的工作体系，以及 SM-2（Woźniak 提出的 SuperMemo 系列算法之一）与 2020 年代公开的 FSRS 类调度的通行表述。需注意：「工作记忆容量 = 4」仍存争议；「出租车司机海马体体积」类研究多为横断相关设计，因果方向有争论；SM-2 伪代码为按公开描述的再表述，非官方源码。所有数值为量级估计，具体结论请以原始文献为准。</p>
       </footer>
     </div>
   </article>

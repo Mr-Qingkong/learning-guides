@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>数据分析进阶指南</h1>
-          <p class="report-intro__summary">分析的本质不是「用工具」，而是「用统计思维拆解问题并排除干扰」。这份指南讲描述统计、相关与因果、A/B 检验和常见偏差——四样能真正防住「被数据骗」的本事。</p>
+          <p class="report-intro__summary">分析的本质不是「用工具」，而是「用统计思维拆解问题并排除干扰」。本指南从期望与方差的定义出发，推导标准误为什么随样本量按 1/√n 收缩、中心极限定理如何支撑 A/B 检验、辛普森悖论为何会发生；再连接因果推断的革命、多重比较与 p 值争议等当代统计前沿。</p>
           <div class="intro-meta">
             <span>领域：数据</span>
             <span>难度：进阶</span>
@@ -26,91 +26,248 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>描述统计：先「看清」数据</h2>
-          <p class="lede">拿到数据第一件事不是画图，而是看「中心」和「离散」两个维度。</p>
+          <h2><span class="sec-num">1</span>描述统计：中心、离散与分布形状的量化</h2>
+          <p class="lede">拿到数据第一件事不是画图，而是把「分布」压成几个可比较的数——中心、离散、形状各司其职。</p>
+          <p>描述统计是在做<strong>降维</strong>：用少数几个量概括一堆数据，必然会损失信息，因此必须知道每个量「丢掉了什么」。先给出严格定义：</p>
+          <div class="prompt-block"><span class="prompt-label">核心统计量的定义</span><button class="copy-btn" type="button">复制</button>设样本 x₁, x₂, …, x_n
+
+样本均值：       x̄ = (1/n) Σ xᵢ
+样本方差：       s² = (1/(n−1)) Σ (xᵢ − x̄)²
+样本标准差：     s  = √(s²)      ← 与原数据同量纲
+中位数：        排序后中间位置的值（偶数取中间两数平均）
+四分位距：      IQR = P75 − P25   ← 对极值稳健的离散度
+变异系数：      CV = s / x̄       ← 无量纲，便于跨数据集比较
+
+注意：方差用 n−1 而非 n（贝塞尔校正），因为是用样本均值
+而非真实均值，自由度少 1，否则会系统性低估总体方差。</div>
+          <p>三个统计量的分工是：<strong>均值</strong>刻画中心但对极值敏感，<strong>中位数</strong>抗极值，<strong>标准差</strong>刻画离散。为什么必须同看？设想一组收入数据：多数人 5000 元、少数人千万级——均值会被拉高到远超「典型值」，此时中位数才反映普通人的处境，而标准差（或 IQR）告诉你贫富差距有多大。只看一个数，就会得出「人均很高」的误导结论。</p>
           <table>
-            <caption class="caption">核心统计量</caption>
-            <thead><tr><th>指标</th><th>含义</th><th>易被什么扭曲</th></tr></thead>
+            <caption class="caption">核心统计量：各自刻画什么、被什么扭曲</caption>
+            <thead><tr><th>指标</th><th>刻画的维度</th><th>易被什么扭曲</th></tr></thead>
             <tbody>
-              <tr><th scope="row">均值 mean</th><td>算术平均</td><td>极值（被少数高/低值拉偏）</td></tr>
-              <tr><th scope="row">中位数 median</th><td>排序后中间值</td><td>对极值稳健</td></tr>
-              <tr><th scope="row">众数 mode</th><td>出现最多的值</td><td>分类数据常用</td></tr>
-              <tr><th scope="row">方差/标准差</th><td>数据离散程度</td><td>单位难直观比较</td></tr>
-              <tr><th scope="row">分位数</th><td>如 P25/P75 划分分布</td><td>需配合箱线图看</td></tr>
+              <tr><th scope="row">均值 mean</th><td>中心（重心）</td><td>极值、长尾（被少数高/低值拉偏）</td></tr>
+              <tr><th scope="row">中位数 median</th><td>中心（位置）</td><td>对极值稳健，但不反映尾部信息</td></tr>
+              <tr><th scope="row">众数 mode</th><td>最频出现的值</td><td>近连续数据中不稳定</td></tr>
+              <tr><th scope="row">标准差 s</th><td>离散度（同量纲）</td><td>受极值影响大，跨量纲难直接比</td></tr>
+              <tr><th scope="row">IQR / 分位数</th><td>离散度（稳健）</td><td>不看尾部极值</td></tr>
+              <tr><th scope="row">偏度 / 峰度</th><td>分布形状（不对称、尾部厚薄）</td><td>小样本下估计不稳</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">核心习惯</span>报告「平均」时永远顺手报「中位数 + 标准差」，三者同看才能还原分布。只有均值是「用一条腿走路」。</div>
+          <div class="callout tip"><span class="callout-label">核心习惯</span>报告「平均值」时永远顺手报「中位数 + 离散度」。只有均值是「用一条腿走路」；在长尾分布（收入、曝光、请求延迟）中，均值常常在说谎。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>相关 ≠ 因果</h2>
+          <h2><span class="sec-num">2</span>抽样与不确定性的来源：标准误为什么是 1/√n</h2>
+          <p class="lede">你算出的均值永远不等于真值，因为只抽了有限样本。问题是：它差多少？这个不确定性能被算出来。</p>
+          <p>样本均值 x̄ 本身是一个<strong>随机变量</strong>——换一批样本，它就变。它的波动程度叫<strong>标准误</strong> SE，有一个漂亮的公式：</p>
+          <div class="prompt-block"><span class="prompt-label">标准误与中心极限定理</span><button class="copy-btn" type="button">复制</button>若样本独立同分布，总体标准差为 σ，样本量为 n：
+
+  标准误 SE(x̄) = σ / √n
+  用样本估计：    SE ≈ s / √n
+
+推论：
+· 样本量扩大 4 倍，标准误才减半 —— 精度提升是「收益递减」的
+· 想再精确一位，就要再多一个数量级的样本
+· n → ∞ 时，x̄ 的抽样分布趋于正态（中心极限定理 CLT），
+  这是 A/B 检验能用正态近似的理论基础
+
+关键前提（易被忽略）：
+· 独立同分布：样本之间相关时，√n 的收益会被削弱甚至消失
+· 有限总体：抽样比例很大时还需乘有限总体校正因子 √((N−n)/(N−1))</div>
+          <p>这个 1/√n 定律有两个直接的管理含义：<strong>其一</strong>，把实验精度翻倍需要 4 倍样本，成本呈平方增长——这是为什么「再跑久一点就有显著结果」往往是错觉，边际精度收益越来越小；<strong>其二</strong>，当样本之间不独立（如同一用户多次记录、同批实验相互污染），有效样本量会小于名义样本量，实际 SE 比公式更大，导致假阳性。</p>
+          <p><strong>中心极限定理</strong>（CLT）进一步给出：只要样本足够多且独立，无论总体分布是什么形状，x̄ 的分布都近似正态。这是整个假设检验体系的基石——即便原始数据是长尾的收入分布，其均值也会「长成」正态，于是可以用正态理论算置信区间与 p 值。</p>
+          <div class="callout warn"><span class="callout-label">边界</span>CLT 对「均值」很稳健，但对<strong>长尾的极端分位数</strong>（如 P99、最大值）收敛很慢。分析延迟、收入这类重尾指标时，用 P99 做的推断需要大得多的样本，或改用专门的极值/重尾方法，不能直接套正态公式。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>相关与因果：四种可能，与排除路径</h2>
           <p class="lede">「A 和 B 一起变」不意味着「A 导致 B」。这是数据分析里最常见、也最贵的错误。</p>
-          <p>两变量相关，至少有四种可能：A 导致 B、B 导致 A、<strong>第三方混杂变量</strong>同时导致 A 和 B、纯属巧合。判断因果需要更硬的证据：<strong>随机对照实验（RCT）</strong>是金标准；没有实验时，用「控制变量、时间先后、剂量反应、机制解释」等多条证据链共同佐证。</p>
+          <p>两个变量相关，至少有四种可能：<strong>A 导致 B</strong>、<strong>B 导致 A</strong>（反向因果）、<strong>第三方混杂变量</strong>同时导致 A 和 B、以及<strong>纯属巧合</strong>（尤其在你反复找关系时）。要谈因果，必须引入反事实框架：</p>
+          <div class="prompt-block"><span class="prompt-label">因果效应的反事实定义</span><button class="copy-btn" type="button">复制</button>个体处理效应：τᵢ = Yᵢ(1) − Yᵢ(0)
+  其中 Yᵢ(1) 是「接受处理」的结果，Yᵢ(0) 是「未接受处理」的结果
+
+根本困难：同一个人不可能同时被处理又未被处理，
+  我们只能观察到其中一个 —— 这叫「因果推断的根本问题」
+
+平均处理效应 ATE = E[Y(1) − Y(0)]
+
+识别因果的三条常用路径：
+1. 随机化（RCT）：随机分配处理，使处理组与对照组在
+   所有（可测与不可测）维度上期望相等 → 差异可归因于处理
+2. 控制混杂：回归中纳入混杂变量（仅在「无未测混杂」假设下成立）
+3. 拟实验设计：工具变量、断点回归、双重差分（DID）</div>
+          <p>为什么<strong>随机化</strong>是金标准？因为它把「谁接受处理」这个决定交给了抛硬币，从而切断了「处理」与「任何潜在混杂变量」的关联——无论混杂是否被测量到。观察性研究无论控制多少变量，都只能排除<strong>已测</strong>混杂，无法排除<strong>未测</strong>混杂，这是它的根本软肋。</p>
           <div class="compare">
-            <div class="side bad"><span class="side-tag">✗ 误判</span><pre>「冰淇淋销量和溺水人数正相关，所以冰淇淋导致溺水。」</pre><div class="why">漏掉了共同原因：炎热的天气。</div></div>
-            <div class="side good"><span class="side-tag">✓ 正确</span><pre>「两者相关，可能因为天气炎热同时推高二者；需控制温度后再看相关性是否消失。」</pre><div class="why">先找混杂变量，再下因果结论。</div></div>
+            <div class="side bad"><span class="side-tag">误判</span><pre>「冰淇淋销量和溺水人数正相关，所以冰淇淋导致溺水。」</pre><div class="why">漏掉了共同原因：炎热的天气。这是典型的混杂变量同时推高二者。</div></div>
+            <div class="side good"><span class="side-tag">正确</span><pre>「两者相关，可能因为天气炎热同时推高二者；
+需控制温度后看相关性是否消失，或按温度分层比较。」</pre><div class="why">先找混杂变量，再谈因果；控制后相关若显著减弱，则支持混杂解释。</div></div>
           </div>
+          <p>在无法做实验时，因果判断靠<strong>多条证据链</strong>共同支撑：时间先后（因在前果在后）、剂量—反应关系（越多越强）、机制解释（有合理生物学/物理/经济机理）、以及控制混杂后关系依然稳健。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>A/B 检验：用数据做决策</h2>
-          <p class="lede">「新版点击率 5.1% vs 旧版 5.0%，所以新版更好？」——不，你还需要判断差异是否「显著」。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>假设检验</h4><p>先设「零假设：两版无差异」，计算 p 值；p 值小（如 &lt;0.05）说明差异不太可能来自随机波动。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>效应量</h4><p>p 值只回答「有没有差异」，效应量回答「差异有多大」，后者才关乎业务价值。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>样本量与统计功效</h4><p>样本太小，真实差异也测不出来；实验前要算清需要多少样本、跑多久。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>辛普森悖论</h4><p>分组看都成立、合并看却反转——务必按关键维度（如渠道、人群）分层看结果。</p></div></div>
-          </div>
+          <h2><span class="sec-num">4</span>A/B 检验：p 值的定义、功效与样本量推导</h2>
+          <p class="lede">「新版点击率 5.1% vs 旧版 5.0%，所以新版更好？」——不。你还需要判断这个差异能否被随机波动解释。</p>
+          <p>假设检验的骨架是：先设「零假设 H₀：两版无差异」，再问「若 H₀ 成立，观察到当前差异（或更极端）的概率有多大」。这个概率就是 <strong>p 值</strong>。</p>
+          <div class="prompt-block"><span class="prompt-label">p 值的严格定义与两类错误</span><button class="copy-btn" type="button">复制</button>p 值 = P(观察到当前或更极端的差异 | H₀ 为真)
+
+★ p 值不是「H₀ 为真的概率」，也不是「结论错误的概率」
+★ p < 0.05 的通行阈值是约定，不是自然定律
+
+两类错误：
+· 第一类错误 α（假阳性）：H₀ 为真却拒绝它。由显著性水平控制
+· 第二类错误 β（假阴性）：H₀ 为假却未拒绝
+· 统计功效 power = 1 − β：能检出真实效应的概率（惯例 ≥ 0.8）
+
+两比例检验的样本量（每组）近似式：
+  n ≈ 2 · (z_{1−α/2} + z_{1−β})² · p̄(1 − p̄) / δ²
+
+其中 δ 是你关心的「最小可检测效应」，
+     p̄ 是两组比例的均值，z 是标准正态分位数
+（α=0.05, β=0.2 时，z_{1−α/2}≈1.96, z_{1−β}≈0.84）
+
+关键推论：n ∝ 1/δ²
+· 想检出「减半」的效应，样本量要涨 4 倍
+· 想检出「十分之一」的效应，样本量要涨 100 倍</div>
+          <p>这个公式揭示了一个残酷的现实：<strong>小效应需要巨量样本</strong>。许多「没做出显著结果」的实验，不是因为效应不存在，而是功效不足——样本量本来就检不出来。反过来，样本量过大时，一个<strong>业务上毫无意义的微小差异</strong>也会显著，因此必须同时报告<strong>效应量</strong>与<strong>置信区间</strong>，而不只是 p 值。</p>
+          <h4>辛普森悖论：为什么分组合并会反转</h4>
+          <p>辛普森悖论是指：分组看各组都成立的结论，合并后可能反转。其机制是<strong>分组变量与处理变量相关</strong>，使得各组的样本权重在合并时发生了「隐藏的重新加权」。经典结构是：新版在「低转化人群」里占比更高，于是合并后总体被拉低。防御办法是<strong>实验前就按关键维度分层、并在分析时按权重还原</strong>，而不是事后随意切片。</p>
+          <div class="callout warn"><span class="callout-label">多重比较陷阱</span>若你把 20 个指标都做 α=0.05 的检验，即使全部无效，也期望有 1 个「显著」。这就是多重比较问题。防御：预先指定<strong>唯一主指标</strong>、用 Bonferroni 等方法校正阈值（α/m），或用 FDR 控制。事后从数据里挑出「显著的那个指标」报告，是严重的作弊。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>防不胜防的偏差</h2>
+          <h2><span class="sec-num">5</span>防不胜防的偏差：来源与机制</h2>
+          <p class="lede">偏差不是「不小心」，而是数据生成与选择过程的结构性产物。理解机制，才能设计防御。</p>
           <table>
-            <caption class="caption">常见数据偏差</caption>
-            <thead><tr><th>偏差</th><th>含义</th><th>防御</th></tr></thead>
+            <caption class="caption">常见数据偏差：机制与防御</caption>
+            <thead><tr><th>偏差</th><th>机制</th><th>防御</th></tr></thead>
             <tbody>
-              <tr><th scope="row">幸存者偏差</th><td>只看到「活下来的」，忽略被淘汰的</td><td>看完整样本，别只看成功案例</td></tr>
-              <tr><th scope="row">选择偏差</th><td>样本本身不具代表性</td><td>随机抽样，检查样本人口结构</td></tr>
-              <tr><th scope="row">确认偏误</th><td>只找支持自己结论的数据</td><td>主动找反例、设「证伪」检验</td></tr>
-              <tr><th scope="row">观察者偏差</th><td>测量方式本身影响结果</td><td>统一口径、双盲、自动化采集</td></tr>
-              <tr><th scope="row">回归均值</th><td>极端值下次自然回归平均，被误当「干预有效」</td><td>设对照组，别拿极端样本做「疗效」</td></tr>
+              <tr><th scope="row">幸存者偏差</th><td>只观测到「通过筛选而存活」的样本，被淘汰者不入数据</td><td>核对完整抽样框，明确「谁没被记录」</td></tr>
+              <tr><th scope="row">选择偏差</th><td>样本非随机，与目标群体系统性地不同</td><td>随机抽样；比对样本与总体的人口结构</td></tr>
+              <tr><th scope="row">确认偏误</th><td>只寻找支持既有假设的证据</td><td>预设证伪条件；主动寻找反例</td></tr>
+              <tr><th scope="row">观察者偏差</th><td>测量方式本身改变被测量对象或记录</td><td>统一口径、双盲、自动化采集</td></tr>
+              <tr><th scope="row">回归均值</th><td>极端值下次自然向均值回归，被误当「干预有效」</td><td>设对照组；别拿极端样本当「疗效」</td></tr>
+              <tr><th scope="row">数据泄漏</th><td>预测时用到了未来或目标信息</td><td>严格按时间切分训练/测试；审查特征可得时点</td></tr>
+            </tbody>
+          </table>
+          <p>其中<strong>回归均值</strong>最容易被误用：一项在「最差门店」上推出的改进措施，即使完全无效，下期数据也会因回归而变好。因此评估任何「针对极端对象」的干预，<strong>必须设对照组</strong>，否则把自然波动当成了疗效。</p>
+          <h4>分析实战框架</h4>
+          <div class="prompt-block"><span class="prompt-label">分析五步 + 追问</span><button class="copy-btn" type="button">复制</button>1. 提问：把模糊问题拆成可量化的指标，并写明「怎样算成功」
+2. 拆解：结果 = 因子1 × 因子2
+   （如 收入 = 流量 × 转化率 × 客单价；定位杠杆在哪一项）
+3. 洞察：分层/分段/分时看变化，找差异最大的切片
+4. 验证：相关≠因果——找对照、控制变量、做实验
+5. 表达：结论先行，附「效应量 + 置信区间 + 局限」</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">过去二三十年，数据分析最重要的进展不是工具变快，而是「如何从观测数据谈因果」的方法论革命。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">潜在结果与因果模型</span><span class="tl-date">Rubin 因果模型, 1970s–</span><p>用「潜在结果」（potential outcomes）把因果效应形式化为 Y(1)−Y(0)，并明确了随机化与可忽略性假设的作用。这是当代因果推断的共同语言。</p></div>
+            <div class="tl-item"><span class="tl-era">因果图</span><span class="tl-date">Pearl, 1990s–2000s</span><p>用有向无环图（DAG）表达变量间的因果结构，把「该控制哪些变量、不该控制哪些」变成可推理的问题（如后门准则、对撞因子偏差）。它纠正了「控制越多越好」的常见误解。</p></div>
+            <div class="tl-item"><span class="tl-era">双重差分与断点回归</span><span class="tl-date">计量经济学, 2000s 起普及</span><p>利用「政策/事件造成的外生变化」构造拟实验：DID 比较处理组与对照组的前后差异，断点回归利用阈值处的跳跃。这些方法让无法随机化的场景也能逼近因果结论。</p></div>
+            <div class="tl-item"><span class="tl-era">A/B 测试工程化</span><span class="tl-date">2010s 至今</span><p>大规模在线实验成为互联网产品决策的标配，随之发展出序贯检验、CUPED 方差缩减、以及「避免偷看」等工程实践。它把统计假设检验变成了可持续运行的流水线。</p></div>
+            <div class="tl-item"><span class="tl-era">p 值争议与可重复性危机</span><span class="tl-date">2010s 起</span><p>多篇综述与期刊政策讨论指出：滥用 p 值、p-hacking（反复尝试直到显著）、发表偏倚共同造成了可重复性危机。此后社区转向报告效应量与置信区间、推动预注册（preregistration）。</p></div>
+            <div class="tl-item"><span class="tl-era">因果机器学习</span><span class="tl-date">近年</span><p>将机器学习与因果推断结合（如用树模型估计异质处理效应、用表示学习处理高维混杂），目标从「预测得准」转向「估计干预效应准」。这是当前活跃且有争议的研究方向，具体方法的可靠性随假设而变。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类结论</span>看到一个因果宣称时问三件事：识别策略是什么（随机化？DID？断点？）、关键假设是什么（平行趋势？无未测混杂？）、以及结论对假设的敏感度多大。没有识别策略的「相关分析 + 控制变量」，因果可信度要打问号。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">数据分析不是孤立技能，它是统计、概率、因果科学与实验设计的交汇点。</p>
+          <div class="grid-2">
+            <div class="card"><h4>概率论</h4><p>标准误、置信区间、中心极限定理，全部建立在随机变量的期望与方差之上。不理解概率，就无法理解「不确定性可被量化」。</p></div>
+            <div class="card"><h4>因果科学 / 图模型</h4><p>潜在结果框架与因果图（DAG）给了「何时能谈因果」的判据；对撞因子、后门路径等概念纠正了朴素的控制变量直觉。</p></div>
+            <div class="card"><h4>实验设计</h4><p>随机化、对照、盲法、预注册来自费舍尔以来的实验方法论。它是「让数据能回答问题」的工程前提，而非分析的附属。</p></div>
+            <div class="card"><h4>计量经济学</h4><p>DID、工具变量、断点回归等识别策略源自经济学对政策评估的需求，如今是产品与公共政策分析的标准工具。</p></div>
+            <div class="card"><h4>机器学习 / 预测</h4><p>预测与推断目标不同：预测追求泛化误差最小，推断追求参数可解释与因果有效。混用二者（用预测模型的系数谈因果）是常见错误。</p></div>
+            <div class="card"><h4>认识论与科学哲学</h4><p>「证据强度」「可证伪性」「相关性不等于因果」这些原则，本质是科学哲学对『什么算可靠知识』的要求。</p></div>
+          </div>
+          <p>把这些连起来，一个共同结构浮现：<strong>不确定性可被量化，因果需要识别假设</strong>。数据分析的成熟度，正体现在是否清楚「我的结论依赖哪些假设、当假设不成立时结论会怎样变」。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「p < 0.05 就等于结论为真的概率 95%」
+
+「相关性大就说明因果强」
+
+「样本越大结论越可信」
+
+「控制更多变量一定更好」
+
+「平均提升就是每个人都提升」</pre><div class="why">问题：p 值是「H₀ 下见到该数据的概率」，不是「结论为真的概率」；相关不含因果方向；样本大也会有采样偏差与泄漏，大样本只是降低随机误差；控制对撞因子会引入新偏差；平均效应可能掩盖子群体完全相反的变化。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>报告效应量 + 置信区间；p 值只回答「是否超出随机波动」
+
+因果需识别策略（随机化/DID/断点），不能靠相关系数
+
+先检查抽样框与数据生成过程，再谈样本量
+
+控制变量要基于因果图判断（后门路径），不是越多越好
+
+平均之外必须看分层/异质效应，防止辛普森悖论</pre><div class="why">要点：把每条结论对应到定义与假设，避免把「统计显著」误读为「重要」或「真实」。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">t 检验 / 正态近似</th><td>均值比较、样本量足</td><td>重尾极端分位数、极小组样本</td></tr>
+              <tr><th scope="row">线性回归控制混杂</th><td>混杂已测、关系近似线性</td><td>存在未测混杂或对撞因子时</td></tr>
+              <tr><th scope="row">RCT</th><td>可随机分配时</td><td>伦理/成本不允许、存在溢出效应时</td></tr>
+              <tr><th scope="row">A/B 测试</th><td>在线可分流产品决策</td><td>长期效应、网络效应、稀有事件</td></tr>
+              <tr><th scope="row">相关系数</th><td>线性关联的快速探测</td><td>非线性关系、含离群点、推断因果</td></tr>
             </tbody>
           </table>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>分析实战框架</h2>
-          <div class="prompt-block"><span class="prompt-label">分析四步 + 追问</span><button class="copy-btn" type="button">复制</button>1. 提问：把模糊问题拆成可量化的指标
-2. 拆解：结果 = 因子1 × 因子2（如 收入 = 客单价 × 订单量 × 转化率）
-3. 洞察：分层/分段/分时看变化，找差异最大的切片
-4. 验证：相关≠因果，找对照、控制变量、做实验
-5. 表达：结论先行，附「置信度 + 局限」</div>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">数据分析速记</span><button class="copy-btn" type="button">复制</button>· 描述：均值 + 中位数 + 标准差（或 IQR）三者同看
+· 方差用 n−1（贝塞尔校正）以无偏估计总体方差
+· 标准误 SE = σ/√n；样本量 ×4 才让精度 ×2（收益递减）
+· 中心极限定理：均值近似正态，是假设检验的基石
+· CLT 对均值稳健，对重尾极端分位数收敛很慢
+· 相关≠因果：四种可能（A→B / B→A / 混杂 / 巧合）
+· 因果效应 = Y(1)−Y(0)；根本问题是不可同时观测
+· 随机化是金标准：切断处理与一切（含未测）混杂的关联
+· 观察性研究只能排除已测混杂，未测混杂是根本软肋
+· p 值 = P(数据 | H₀)，不是「H₀ 为真的概率」
+· α 控制假阳性，功效 1−β 反映检出真效应的能力（≥0.8）
+· 样本量 n ∝ 1/δ²：想让可检测效应减半，样本要 ×4
+· 报告「效应量 + 置信区间 + 局限」，不要只报 p 值
+· 多指标检验要做多重比较校正（Bonferroni / FDR）
+· 辛普森悖论源于分组变量与处理相关导致的隐藏加权
+· 回归均值：极端对象自然回归，干预必须设对照组
+· 数据泄漏 = 用了未来或目标信息，按时间切分防御
+· 控制变量依因果图判断（后门路径），并非越多越好
+· 平均提升可能掩盖子群体反向变化，务必分层看</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">分析速记</span><button class="copy-btn" type="button">复制</button>· 描述：均值 + 中位数 + 标准差同看
-· 相关≠因果：先找混杂变量，RCT 是金标准
-· A/B：p 值判显著，效应量判价值，算好样本量
-· 防偏差：幸存者、选择、确认、观察者、回归均值</div>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求推导、验证或实现，产出可检验的证据，而非「做过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">找一组数据，同时算均值、中位数、标准差</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">找出一个「相关被当因果」的真实报道并说明混杂变量</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">设计一个 A/B 测试，写出零假设与所需样本量</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">举一个你亲历过的「幸存者偏差」例子</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用「结果 = 因子1 × 因子2」拆解一个业务指标</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用「结论先行 + 局限说明」重写一份分析报告</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：从方差的定义出发说明「为什么用 n−1 而非 n」，并给出贝塞尔校正的理由</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">推导：证明 SE = σ/√n 导致「样本量翻倍精度只提升 √2 倍」，据此估算把误差减半所需样本量</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">验证：构造一个长尾分布，采样多次记录均值的分布，观察其趋近正态（验证 CLT），再对 P99 重复一次并解释差异</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">查证：找一篇「相关被当因果」的报道，画出其因果图（DAG），标出至少一个混杂变量或对撞因子</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">推导：用两比例样本量公式，算出「把转化率从 5% 提到 5.5%」在 α=0.05、功效 0.8 下每组所需样本量</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">验证：用模拟数据演示一次辛普森悖论（分组合并与整体结论相反），并指出是哪个变量的权重变化造成的</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">实验：在一份数据上同时做 20 个无关检验，统计出现「显著」的个数，说明多重比较问题</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">实现：用「结果 = 流量 × 转化率 × 客单价」拆解一个业务指标，定位某个季度下滑主要来自哪一项</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">验证：构造一组含「回归均值」的模拟数据，说明不设对照组为何会高估干预效果</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">查证：查阅 Rubin 因果模型或 Pearl 关于因果图的通行介绍，写出「后门准则」的含义与至少一个应用限制</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，基于统计学与分析实践整理。</p>
+        <p class="footnote">原创交互式学习资料。基础部分依据统计学通行的描述统计、抽样理论与假设检验框架整理（标准误 SE=σ/√n、中心极限定理、两比例样本量近似式）。因果部分参考 Rubin 因果模型（潜在结果）与 Pearl 的因果图（DAG）的通行介绍，以及计量经济学的双重差分、断点回归等拟实验方法。前沿部分包括在线实验工程（序贯检验、方差缩减）与近年关于 p 值滥用、可重复性危机的公开讨论。需注意：p 值阈值、功效惯例均为约定而非自然定律；辛普森悖论、回归均值等现象的严重程度随数据结构而变；因果机器学习等方向的可靠性依赖其识别假设，本指南已标注其不确定状态。所有公式为常见近似，具体结论请以原始文献与你的实际数据为准。</p>
       </footer>
     </div>
   </article>

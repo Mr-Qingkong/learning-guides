@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>心理学导论指南</title>
+  <title>心理学思维进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>心理学导论指南</h1>
-          <p class="report-intro__summary">心理学不是"读心术"，而是一门用实证方法研究人类行为与心理过程的科学。这份指南串起认知、行为主义、发展、社会与积极心理学五大分支，从记忆机制到幸福感，帮你建立对"人为什么这么想、这么做"的系统理解。</p>
+          <h1>心理学思维进阶指南</h1>
+          <p class="report-intro__summary">心理学不是「读心术」，而是一门把行为还原到可检验机制的科学。本指南不停留在「是什么」，而是追问「为什么」：从信息加工的计算式、强化程序的反应率方程、社会影响的规范与信息两条通道，到贝叶斯大脑与可复制性危机，帮助你把心理学结论当作「待检验的模型」而非「格言」。</p>
           <div class="intro-meta">
             <span>领域：人文 · 社会</span>
             <span>难度：进阶</span>
@@ -25,143 +25,254 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>认知心理学：信息加工模型</h2>
-          <p class="lede">认知心理学把人脑类比为信息加工系统：输入 → 编码 → 存储 → 提取 → 输出。Richard Atkinson 和 Richard Shiffrin 在 1968 年提出的记忆多重存储模型至今仍是入门框架。</p>
+          <h2><span class="sec-num">1</span>认知的信息加工机制：从容量限制到加工深度</h2>
+          <p class="lede">「短时记忆 7±2」是被广泛背诵的结论。但真正有用的是它的推导：容量限制如何在「组块」尺度上被绕过，以及注意资源如何决定信息能否进入长时记忆。</p>
+          <h3>为什么「7±2」不是固定的数字</h3>
+          <p>Miller 用「组块」（chunk）而非「比特」来度量容量，是因为容量限制的对象是<strong>有意义的单元</strong>，不是物理刺激。设一次使用的组块数为 C，每个组块包含元素数为 k，则能一次保持的元素总数：</p>
+          <div class="prompt-block"><span class="prompt-label">组块化对有效容量的放大</span><button class="copy-btn" type="button">复制</button>有效保持量 ≈ C × k ，其中 C ≈ 7±2（组块数上限）
+
+若把序列切成 m 个可命名单元，则每个单元的 k ≈ N/m，
+于是有效保持量随「命名压缩率」线性增长：
+  N_max ≈ (7±2) × k ， k 由长时记忆中的既有模式决定
+
+推论：容量瓶颈不在「元素数」，而在「可命名的单元数」——
+这正是「专家能瞬间记住棋盘」的机制：他们的 k 远大于新手。</div>
+          <p>由此推出一个可检验的预测：<strong>组块化的收益取决于长时记忆中是否已有对应模式</strong>。围棋高手能整块记住棋形，但面对随机摆放的棋子时记忆优势消失——这一结果被 Chase 与 Simon 的棋局记忆实验所支持，它同时否定了「专家就是记性好」的通俗解释。</p>
+          <h3>加工深度：记忆强度取决于加工的性质</h3>
+          <p>Craik 与 Lockhart（1972）提出：记忆痕迹的强度不由「复述时长」决定，而由<strong>加工的深度</strong>决定。把单词按字形（浅）、读音（中）、语义（深）分别加工，回忆成绩依次上升。这解释了一个反直觉现象：机械重复背诵（维持性复述）几乎不提升长时记忆，而「把新知识和已有知识建立联系」（精细复述）效果显著。机制层面的读法是——<mark class="key">编码强度正比于加工时被激活的语义网络规模</mark>。</p>
           <table>
-            <caption class="caption">Atkinson-Shiffrin 记忆三阶段模型</caption>
-            <thead><tr><th>存储类型</th><th>容量</th><th>持续时间</th><th>编码方式</th></tr></thead>
+            <caption class="caption">记忆系统：一条从存储到提取的机制链</caption>
+            <thead><tr><th>环节</th><th>机制</th><th>可预测的现象</th></tr></thead>
             <tbody>
-              <tr><th scope="row">感觉记忆</th><td>大（瞬时全部输入）</td><td>< 1 秒（视觉）/ 2–4 秒（听觉）</td><td>感觉特征（光、声）</td></tr>
-              <tr><th scope="row">短时记忆</th><td>7±2 个组块</td><td>约 15–30 秒（无复述）</td><td>语音编码为主</td></tr>
-              <tr><th scope="row">长时记忆</th><td>理论上无限</td><td>数年至终生</td><td>语义编码为主</td></tr>
+              <tr><th scope="row">感觉登记</th><td>感觉器官的瞬时保持，容量大、衰减快</td><td>部分报告法测得视觉登记可持续数百毫秒</td></tr>
+              <tr><th scope="row">注意选择</th><td>只有被注意的信息进入短时加工</td><td>未注意信息几乎不留下可提取痕迹</td></tr>
+              <tr><th scope="row">编码</th><td>语义加工比字形加工留下更强痕迹</td><td>深加工条件下的回忆率显著更高</td></tr>
+              <tr><th scope="row">提取</th><td>提取依赖线索与编码情境的匹配</td><td>编码特异性：情境匹配时提取更好</td></tr>
             </tbody>
           </table>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>编码</h4><p>将外部信息转化为心理表征。深度加工（语义编码）比浅层加工（只看字形或发音）产生更好的记忆——Craik 和 Lockhart 的加工深度理论（1972）。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>存储</h4><p>信息保持的过程。长时记忆分为陈述性记忆（事实与事件）和程序性记忆（技能与操作）。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>提取</h4><p>从存储中恢复信息。提取失败不等于遗忘——线索不对时，明明"记得"的东西就是想不起来。</p></div></div>
-          </div>
-          <p>米勒在 1956 年的经典论文《神奇的数字 7±2》指出：<mark class="key">短时记忆容量约 7 个组块</mark>。但"组块"可大可小——把 F-B-I-C-I-A-I-A-C-I-B-M 看作 3 个缩写而非 12 个字母，容量大幅扩展。组块化是记忆策略的底层原理。</p>
-          <div class="callout tip"><span class="callout-label">前摄与倒摄干扰</span>前摄干扰：旧记忆干扰新记忆的学习。倒摄干扰：新学习干扰旧记忆的提取。两者都解释了为什么"相似内容连着学"效果差——这也是间隔学习优于集中学习的原因之一。</div>
+          <div class="callout tip"><span class="callout-label">可检验的预测</span>如果记忆真由加工深度决定，那么「学习后立刻自我测试」（提取练习）应优于「重复阅读」。Roediger 与 Karpicke 的「测试效应」研究支持这一点：重复测试组在延迟测验中的保持显著优于重复学习组，尽管学习时后者更「感觉良好」——这正是机制推导优于主观感受的范例。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>行为主义与条件反射</h2>
-          <p class="lede">行为主义主张心理学只研究可观察的行为，不推测内部心理过程。巴甫洛夫的狗和斯金纳的箱子是这一学派的两个标志性实验。</p>
-          <ul>
-            <li><strong>经典条件反射（巴甫洛夫）</strong>：中性刺激与无条件刺激反复配对后，中性刺激单独也能引发反应。狗听到铃声就分泌唾液——学习发生在刺激之间。</li>
-            <li><strong>操作性条件反射（斯金纳）</strong>：行为的后果影响该行为的频率。奖励使其增加（正强化），惩罚使其减少——学习发生在行为与后果之间。</li>
-            <li><strong>强化与惩罚</strong>：正强化=加好事物增加行为；负强化=去坏事物增加行为；正惩罚=加坏事物减少行为；负惩罚=去好事物减少行为。四者不可混淆。</li>
-            <li><strong>消退</strong>：条件反射在不再配对后会逐渐减弱。但"自发恢复"表明学习并未完全消失——它只是暂时被抑制。</li>
-          </ul>
+          <h2><span class="sec-num">2</span>条件反射的机制：从联结到强化程序</h2>
+          <p class="lede">「经典条件反射」和「操作性条件反射」是两条机制不同的学习路径。把它们写成可计算的量，才能解释为什么某些行为顽固难消、某些强化程序产生最高反应率。</p>
+          <h3>两条学习路径的机制差异</h3>
+          <div class="prompt-block"><span class="prompt-label">两种条件反射的因果结构</span><button class="copy-btn" type="button">复制</button>经典条件反射（S–S 联结）：
+  中性刺激 CS 与无条件刺激 US 反复配对（CS 先于 US，间隔短）
+  ⇒ CS 获得预测 US 的能力 ⇒ 引发条件反应 CR
+  机制关键词：预期/预测。CS 成为 US 的「信号」。
+  若 CS 与 US 不再配对 ⇒ 消退；但「自发恢复」表明原联结被抑制而非抹除。
+
+操作性条件反射（R–O 联结）：
+  行为 R 之后出现结果 O ⇒ R 的未来频率由 O 的性质决定
+  · 正强化：R 后加好刺激 ⇒ R 频率 ↑
+  · 负强化：R 后撤坏刺激 ⇒ R 频率 ↑
+  · 正惩罚：R 后加坏刺激 ⇒ R 频率 ↓
+  · 负惩罚：R 后撤好刺激 ⇒ R 频率 ↓
+  注意：强化「增加」行为，惩罚「减少」行为；正/负描述「加/撤」，不描述好/坏。</div>
+          <h3>强化程序与反应率的定量关系</h3>
+          <p>操作性条件反射最可检验的成果是「强化程序」（schedule of reinforcement）。四大基本程序的反应模式有稳定差异：</p>
+          <div class="prompt-block"><span class="prompt-label">四种强化程序的反应模式</span><button class="copy-btn" type="button">复制</button>固定比率 FR：每 n 次反应给一次强化 ⇒ 高而稳定的反应率 + 强化后短暂停顿
+可变比率 VR：平均每 n 次反应给一次 ⇒ 最高、最持续的反应率（且极难消退）
+固定间隔 FI：每 t 时间后首次反应即强化 ⇒ 扇形模式：强化临近时加速
+可变间隔 VI：平均 t 时间后首次反应即强化 ⇒ 稳定、中等反应率
+
+机制解读：VR 之所以产生最高反应率且最难消退，是因为
+「奖励在第几次出现」不可预测 ⇒ 每次反应都有期望价值 ⇒ 无法判断
+「该不该继续」。这正是赌博、抽卡机制的行为学基础。
+
+消退抗性（resistance to extinction）近似随「部分强化率」上升：
+  连续强化（每次都给）⇒ 消退最快
+  间歇强化（偶尔给）  ⇒ 消退最慢</div>
           <table>
             <caption class="caption">经典条件反射 vs 操作性条件反射</caption>
             <thead><tr><th>维度</th><th>经典条件反射</th><th>操作性条件反射</th></tr></thead>
             <tbody>
-              <tr><th scope="row">代表人物</th><td>巴甫洛夫</td><td>斯金纳</td></tr>
-              <tr><th scope="row">学习机制</th><td>刺激 → 反应（被动联结）</td><td>行为 → 后果 → 行为频率（主动操作）</td></tr>
-              <tr><th scope="row">关键变量</th><td>刺激配对的时机与次数</td><td>强化 schedule（固定比率 / 可变比率等）</td></tr>
-              <tr><th scope="row">典型场景</th><td>恐惧症、广告联想</td><td>训练、激励机制设计</td></tr>
+              <tr><th scope="row">联结类型</th><td>刺激—刺激（S–S）</td><td>行为—后果（R–O）</td></tr>
+              <tr><th scope="row">行为角色</th><td>被动，由刺激引发</td><td>主动，由后果塑造</td></tr>
+              <tr><th scope="row">关键变量</th><td>CS 与 US 的时序与预测力</td><td>强化程序、即时性、强度</td></tr>
+              <tr><th scope="row">典型应用</th><td>恐惧形成、广告联想</td><td>行为塑造、激励机制设计</td></tr>
             </tbody>
           </table>
-          <p>行为主义在 20 世纪上半叶主导美国心理学，但 50 年代后认知革命兴起——人们发现仅靠"刺激-反应"无法解释语言习得、问题解决等复杂心理过程。乔姆斯基对斯金纳《言语行为》的批评（1959）被视为认知革命的开端之一。</p>
+          <p>一个关键机制发现（Rescorla, 1968）：经典条件反射的强度不取决于「配对次数」，而取决于 CS 对 US 的<strong>预测力</strong>。若一个更强的预测者存在，原 CS 的配对再多也难以形成条件反应（阻断效应）。这说明学习的是「信息」，而非「联结次数」——这一发现把行为主义推向了认知的方向。</p>
+          <div class="callout warn"><span class="callout-label">边界条件</span>「奖赏能强化行为」需满足条件：强化必须<strong>即时</strong>（延迟奖赏的强化效力大幅衰减）、必须被行为者<strong>感知为结果所致</strong>（偶然关联不足以形成学习）、且不能触发替代解释（如内在动机被外部奖赏挤出，即「过度理由效应」）。忽视这些边界，激励设计就会失效甚至反效。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">3</span>发展心理学：皮亚杰与维果茨基</h2>
-          <p class="lede">发展心理学研究人从出生到老年的心理变化。让·皮亚杰和列夫·维果茨基是儿童认知发展领域的两大理论支柱。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>皮亚杰：阶段论</h4><p>儿童认知发展经历四个不可逾越的阶段，每个阶段的思维质的不同。核心机制是同化（把新信息纳入已有图式）与顺应（改变图式以适应新信息）。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>维果茨基：社会文化理论</h4><p>认知发展根植于社会互动。最近发展区（ZPD）是儿童独立水平与在成人指导下能达到的水平之间的差距——教学应瞄准这个区间。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>关键差异</h4><p>皮亚杰强调儿童是"孤独的科学家"自主建构知识；维果茨基强调知识在互动中协同建构——语言和文化是认知发展的引擎。</p></div></div>
+          <h2><span class="sec-num">3</span>社会影响的两条通道：从从众到归因</h2>
+          <p class="lede">社会心理学的核心洞见常被简化为「情境力量大于人格」。更严谨的说法是：社会影响通过<strong>规范</strong>与<strong>信息</strong>两条不同通道起作用，两条通道的机制、条件与后果各不相同。</p>
+          <h3>从众的两条机制</h3>
+          <div class="prompt-block"><span class="prompt-label">规范性影响 vs 信息性影响</span><button class="copy-btn" type="button">复制</button>规范性影响（normative influence）：
+  动机 = 被群体接纳、避免被排斥
+  ⇒ 即使私下不同意，也公开顺从（compliance）
+  ⇒ 条件：群体重要、有监督、答案公开
+  ⇒ 若可匿名或不涉及归属，效应减弱
+
+信息性影响（informational influence）：
+  动机 = 想「正确」，把他人判断当作现实证据
+  ⇒ 真实改变私下的信念（conversion/内化）
+  ⇒ 条件：情境模糊、任务困难、他人被视为可信
+  ⇒ 即使匿名也会持续
+
+关键区分：阿希从众多为规范性（答案显然、但公开表态）；
+紧急情境中的从众多为信息性（情境模糊、无人知道该怎么做）。</div>
+          <p>这一区分有可检验的推论：<strong>改变「答案是否公开」应选择性影响规范性从众</strong>。研究一致发现，让被试私下作答会大幅降低从众率——因为归属压力被移除，而信息需求不变。反之，提高任务难度会提升信息性从众。</p>
+          <h3>归因与旁观者效应：机制而非道德</h3>
+          <p>旁观者效应常被讲述为「人心冷漠」，但机制解释是<strong>责任分散</strong>与<strong>多元无知</strong>的叠加。设现场有 n 名旁观者，若每个人都假设别人会出手，则个体出手的主观概率随 n 上升而下降——拉塔内与达利的实验正是通过改变「感知到的人数」来操纵帮助率。由此推出一个反直觉但可操作的结论：<mark class="key">求助时应指向特定个人（「穿蓝衣服的那位，请打 120」），以消解责任分散</mark>。</p>
+          <table>
+            <caption class="caption">三大经典社会心理学研究及其方法论教训</caption>
+            <thead><tr><th>研究</th><th>核心机制</th><th>方法论提醒</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">阿希从众</th><td>规范性影响：公开表态压力</td><td>变式（匿名、非一致盟友）可界定条件边界</td></tr>
+              <tr><th scope="row">米尔格拉姆服从</th><td>权威的「逐步升级」与责任转移</td><td>情境设计强烈影响结果，跨文化复制有差异</td></tr>
+              <tr><th scope="row">斯坦福监狱实验</th><td>角色与情境对行为的塑造</td><td>存在需求特征与研究者引导争议，不可作为单一证据</td></tr>
+            </tbody>
+          </table>
+          <p>斯坦福监狱实验是「读结论不如读方法」的典型案例：近年对原始档案的审查指出，参与者的行为可能部分被实验指令与研究者期望所引导。这不否定「情境影响行为」的一般结论，但提醒我们：<strong>单个经典实验的证据强度，远低于它在大众叙事中被赋予的地位</strong>。</p>
+          <div class="callout tip"><span class="callout-label">基本归因错误的机制</span>为什么我们习惯把他人行为归为「人品」、把自己归为「处境」？一个机制解释是<strong>注意焦点差异</strong>：观察他人时，注意力集中在人身上，情境在背景中被忽略；观察自己时，注意力集中在情境上。因此，若强制把注意力转向情境（如「设身处地」的指令），基本归因错误会减弱——这是可实验检验的预测。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>发展机制的争论：阶段论、社会文化与非连续性问题</h2>
+          <p class="lede">皮亚杰的「四阶段」是入门框架，但现代发展科学更关心机制：发展是连续累积还是不连续跃迁？社会互动在多大程度上是认知发展的成因而非陪衬？</p>
+          <h3>同化—顺应：发展如何驱动变化</h3>
+          <div class="prompt-block"><span class="prompt-label">同化、顺应与平衡化</span><button class="copy-btn" type="button">复制</button>图式（schema）= 组织经验的认知结构。
+
+同化（assimilation）：
+  把新经验纳入既有图式 ⇒ 结构不变，内容扩充
+  （幼儿把所有四条腿动物都叫「狗狗」）
+
+顺应（accommodation）：
+  既有图式无法容纳新经验 ⇒ 修改图式本身
+  （学会区分狗和马，结构被改写）
+
+平衡化（equilibration）：
+  同化与顺应之间的动态平衡过程 —— 失衡（认知冲突）
+  驱动儿童寻求更高层次的平衡，这是发展的「发动机」。
+
+可检验预测：若失衡是发展的驱动，那么「适度出乎预期」的
+经验应比「完全熟悉」或「完全陌生」更能促进结构改变。
+这与「最近发展区」在机制上是相通的。</div>
+          <p>这一模型与维果茨基的社会文化理论在机制上互补但不相同。维果茨基的核心是：高级心理机能<strong>先在社会互动中出现，后被个体内化</strong>（「内化」）。最近发展区（ZPD）不是「能力区间」的静态刻度，而是一个<strong>互动结构</strong>——在他人支持下，儿童能完成独立无法完成的任务，支持（脚手架）随能力增长而撤除。</p>
+          <table>
+            <caption class="caption">皮亚杰与维果茨基：机制层面的对照</caption>
+            <thead><tr><th>维度</th><th>皮亚杰</th><th>维果茨基</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">变化来源</th><td>个体与环境的失衡（自我调节）</td><td>社会互动中的协同建构</td></tr>
+              <tr><th scope="row">发展路径</th><td>普遍、阶段性的序列</td><td>受文化工具（语言）中介，路径多样</td></tr>
+              <tr><th scope="row">语言角色</th><td>思维发展的产物</td><td>思维发展的工具与前提</td></tr>
+              <tr><th scope="row">教学含义</th><td>提供「适度新颖」的冲突</td><td>在 ZPD 内提供脚手架并撤除</td></tr>
+            </tbody>
+          </table>
+          <p>现代研究对「阶段」的修正之一是：<strong>发展常表现为领域特异、非同步的变化</strong>，而非全领域同步跃迁。儿童在某些任务（如守恒）上表现出皮亚杰预测的阶段性，但在数字感、心智理论等领域有更早的能力。因此，「阶段论」宜作为粗略的发展地图，而非严格的发展定律——这本身就是「结论依赖测量方式」的一个示范。</p>
+          <div class="callout warn"><span class="callout-label">避免过度解读</span>「关键期」概念常被滥用为「错过就完了」。更准确的表述是「敏感期」（sensitive period）：某些能力在特定窗口内学习效率最高，但窗口关闭后通常仍可学习，只是效率下降、上限可能不同。把敏感期说成绝对临界点，是常见的概念膨胀。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>前沿与研究进展</h2>
+          <p class="lede">近三十年心理学最重要的变化，是把「直觉可信的效应」重新放上检验台，并发展出更严格的测量与建模方法。以下是几条主线。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">认知革命与信息加工</span><span class="tl-date">1950s–1970s</span><p>从行为主义转向内部过程研究：Miller 的容量研究、Chase 与 Simon 的专长记忆研究、Craik 与 Lockhart 的加工深度理论，把心理过程建模为可测量的信息变换。乔姆斯基对行为主义语言观的批评被视为关键转折之一。</p></div>
+            <div class="tl-item"><span class="tl-era">社会认知与归因</span><span class="tl-date">1960s–1980s</span><p>研究人如何在信息有限时推理他人与自我：归因偏差、启发式与偏差（Kahneman 与 Tversky 的工作）、认知失调及其修订版本。核心转向是：人不是「朴素的科学家」，而是「认知吝啬鬼」，依赖快捷规则。</p></div>
+            <div class="tl-item"><span class="tl-era">可复制性危机与改革</span><span class="tl-date">2010s 至今</span><p>大规模重复项目发现若干著名效应的效应量显著缩小甚至无法重复。改革措施包括：预注册、多实验室协作、开放数据、统计功效核算。需审慎表述的是——这并非「心理学不可信」，而是<strong>效应估计需要更严格的方法</strong>，且许多经典效应在更严格条件下依然稳健。</p></div>
+            <div class="tl-item"><span class="tl-era">贝叶斯大脑与预测编码</span><span class="tl-date">2000s 至今</span><p>把知觉与学习统一为「在不确定性下做概率推断」：大脑持有关于世界的先验，根据感觉输入更新后验，知觉是「受先验约束的推断」。该框架对错觉、注意、学习有统一解释力，但其可检验性与解释范围仍在争论中。</p></div>
+            <div class="tl-item"><span class="tl-era">开放科学与大数据心理测量</span><span class="tl-date">2010s 至今</span><p>线上大样本、经验取样（momentary assessment）、智能手机被动数据带来高生态效度的测量。争议点在于「大样本 ≠ 有代表性」与隐私伦理，结论的推广性仍需逐案评估。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到一个心理学结论，先问四件事：样本是谁（WEIRD 偏差？）、效应量多大（不只是 p 值）、是否预注册、能否被独立重复。多数畅销结论属于「可自测的启发式」，而非「已验证的普遍规律」。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>跨学科视角</h2>
+          <p class="lede">现代心理学与多个学科共享方法论与模型：与统计共享推断，与神经科学共享机制，与经济学共享决策模型，与计算科学共享算法框架。</p>
+          <div class="grid-2">
+            <div class="card"><h4>统计与因果推断</h4><p>效应量、置信区间、统计功效是心理学结论的「计量单位」；相关与因果的区分（随机分配、工具变量）决定一个结论能否经受检验。可复制性改革本质上是统计方法的改革。</p></div>
+            <div class="card"><h4>神经科学</h4><p>认知过程需要神经机制支撑：工作记忆对应前额叶持续活动，焦虑对应杏仁核—前额叶回路。但需警惕「反向推理」——用脑区激活解释心理现象，往往是把待解释项换了个名字。</p></div>
+            <div class="card"><h4>行为经济学</h4><p>前景理论、损失厌恶、时间不一致偏好源自心理学实验，反过来重塑了经济学的理性人假设。两学科共享「有限理性、有限自利、有限自制」的主体画像。</p></div>
+            <div class="card"><h4>计算机科学</h4><p>信息加工模型与计算理论同源：容量限制对应有限工作内存，强化学习对应操作性条件反射的算法化（奖励预测误差）。AI 中的「探索—利用」权衡正是行为塑造的核心问题。</p></div>
+            <div class="card"><h4>进化生物学</h4><p>许多心理倾向需从适应角度理解：恐惧的快速习得（对蛇、蜘蛛）、互惠利他、择偶偏好。进化视角能解释「为什么某些偏差是系统性的」，但易滑向「事后编故事」，需可检验预测。</p></div>
+            <div class="card"><h4>社会学与教育学</h4><p>归因偏差、刻板印象威胁、自我实现预言在社会分层与教育公平中广泛运作。心理机制为「结构性不平等的持续」提供了微观解释，两学科在「情境 vs 结构」上互相补充。</p></div>
+          </div>
+          <p>把这些放在一起会看到一个共同结构：<mark class="key">有限资源下的推断与适应</mark>。心理学结论的可迁移性，正来自这个「在约束下如何最优地处理信息」的统一问题。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么被过度简化，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「短时记忆就是 7 个东西」——所以一次只能记 7 项
+
+「奖励总能强化行为，惩罚总能消除行为」
+
+「从众的人缺乏主见」「旁观者冷漠」
+
+「左脑理性、右脑感性」
+
+「经典实验证明了 X，所以 X 一定成立」</pre><div class="why">问题：把「在特定条件下的测量或效应」当成无条件规律。容量以组块计、强化有时间与感知条件、从众有规范与信息两通道、左右脑分工被过度简化、单个实验的证据强度被夸大。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>容量限制的对象是「可命名单元」，组块化可大幅放大有效容量
+
+强化需满足即时、可感知因果、无动机挤出；惩罚常只压制行为不移除
+
+从众分规范性（顺从）与信息性（内化），机制与后果不同；旁观者效应源于责任分散
+
+左右脑在多数任务上协同；不对称是「相对优势」而非「功能独占」
+
+经典效应需看样本、效应量、预注册与重复性；结论是「当前证据支持」而非「永恒真理」</pre><div class="why">要点：心理学结论永远是「在给定样本与条件下，观测到什么效应，效应多大」。识别的关键是问条件与效应量，而非只记结论。</div></div>
           </div>
           <table>
-            <caption class="caption">皮亚杰认知发展四阶段</caption>
-            <thead><tr><th>阶段</th><th>年龄</th><th>核心特征</th></tr></thead>
+            <caption class="caption">机制与模型的适用边界速查</caption>
+            <thead><tr><th>概念/模型</th><th>适用前提</th><th>失效或需修正的场景</th></tr></thead>
             <tbody>
-              <tr><th scope="row">感知运动阶段</th><td>0–2 岁</td><td>通过感官和动作认识世界，发展客体永久性</td></tr>
-              <tr><th scope="row">前运算阶段</th><td>2–7 岁</td><td>符号思维出现，但自我中心、不可逆、不守恒</td></tr>
-              <tr><th scope="row">具体运算阶段</th><td>7–11 岁</td><td>逻辑思维出现，但需具体事物支撑，掌握守恒</td></tr>
-              <tr><th scope="row">形式运算阶段</th><td>11 岁+</td><td>抽象推理、假设思维、元认知能力发展</td></tr>
+              <tr><th scope="row">7±2 容量</th><td>材料为离散、无关联的组块</td><td>专家在熟悉领域内有效容量远超此值</td></tr>
+              <tr><th scope="row">加工深度</th><td>加工类型可被清晰操纵</td><td>深加工伴随更长时，难与时间效应完全分离</td></tr>
+              <tr><th scope="row">操作性强化</th><td>后果即时、被感知为因果</td><td>延迟奖赏效力下降；外在奖赏可挤出内在动机</td></tr>
+              <tr><th scope="row">从众的两通道</th><td>能区分公开/私下、任务清晰度</td><td>文化与情境调节效应强度，跨文化复制有差异</td></tr>
+              <tr><th scope="row">阶段发展论</th><td>特定任务上的典型样本</td><td>领域特异性与任务效应使阶段序列不严格同步</td></tr>
             </tbody>
           </table>
-          <p>维果茨基的<mark class="key">最近发展区</mark>概念对教育实践影响深远：好的教学不是重复学生已会的，也不是给远超能力的——而是在"稍微跳一跳才能够到"的区间内提供支架（scaffolding），逐步撤去支撑后让学生独立完成。</p>
-          <div class="callout tip"><span class="callout-label">守恒实验</span>皮亚杰的经典实验：把等量水从矮宽杯倒入高窄杯，前运算阶段儿童会说"高的更多"——因为他们只关注一个维度（高度），无法同时考虑宽度补偿。这是"不可逆思维"的直观演示。</div>
+          <div class="callout warn"><span class="callout-label">WEIRD 样本提醒</span>大量经典研究以西方、受教育、工业化、富裕、民主社会（WEIRD）的受试者为主。若把结论直接推广到其他文化，需格外谨慎——这本身就是「样本代表性决定结论范围」的重要边界。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">4</span>社会心理学：从众与偏见</h2>
-          <p class="lede">社会心理学研究人在群体中的行为如何改变。三个经典实验揭示了情境力量对行为的塑造远超我们愿意承认的程度。</p>
-          <table>
-            <caption class="caption">三大经典社会心理学实验</caption>
-            <thead><tr><th>实验</th><th>研究者</th><th>核心发现</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">从众实验</th><td>所罗门·阿希（1951）</td><td>面对群体一致错误答案，约 75% 的人至少一次跟随多数给出错误判断</td></tr>
-              <tr><th scope="row">服从实验</th><td>米尔格拉姆（1961）</td><td>在权威命令下，约 65% 的普通人愿意施加"致命级"电击</td></tr>
-              <tr><th scope="row">斯坦福监狱实验</th><td>菲利普·津巴多（1971）</td><td>角色与情境可以迅速改变普通人行为——但该实验的方法论争议也值得了解</td></tr>
-            </tbody>
-          </table>
-          <ul>
-            <li><strong>基本归因错误</strong>：解释他人行为时高估人格因素、低估情境因素——他迟到是因为"不靠谱"，我迟到是因为"堵车"。</li>
-            <li><strong>旁观者效应</strong>：在场人数越多，个体施助概率越低——责任分散使每个人都觉得"别人会出手"。达利和拉塔内（1968）的研究源于基蒂·吉诺维斯案。</li>
-            <li><strong>认知失调</strong>：行为与信念冲突时产生的心理不适。费斯廷格（1957）指出，人会通过改变信念来合理化已发生的行为——而非改变行为。</li>
-            <li><strong>内群体偏好</strong>：人们倾向于对自己所属群体成员更宽容、更信任——偏见的认知根源之一。</li>
-          </ul>
-          <p>社会心理学的核心洞见是：<mark class="key">情境的力量远大于人格特质</mark>。这不是为不良行为开脱，而是提醒我们——判断一个人时，先问"他处于什么情境"，再问"他是怎样的人"。</p>
-          <div class="callout tip"><span class="callout-label">刻板印象威胁</span>斯蒂尔和阿伦森（1995）发现：当某人意识到自己所属群体在该领域有负面刻板印象时，表现会下降——不是因为能力不足，而是焦虑占用了认知资源。这一发现对教育公平有深远意义。</div>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">心理学进阶速记</span><button class="copy-btn" type="button">复制</button>· 容量以「组块」计：有效保持量 ≈ (7±2) × 每块元素数
+· 加工深度决定记忆强度；精细复述 &gt; 维持性复述
+· 提取练习（测试效应）优于重复阅读 —— 可检验的机制预测
+· 经典条件反射 = S–S 联结，关键在 CS 对 US 的「预测力」
+· 操作性条件反射 = R–O 联结；强化增行为，惩罚减行为
+· 正/负描述「加/撤」刺激，不描述好/坏
+· 四大强化程序：FR / VR / FI / VI；VR 反应率最高、最难消退
+· 间歇强化比连续强化更抗消退（部分强化效应）
+· 强化需满足：即时、可感知因果、无动机挤出
+· 从众两通道：规范性（顺从，可被匿名消解）/ 信息性（内化，持续）
+· 旁观者效应 = 责任分散 + 多元无知；求助应指向具体个人
+· 基本归因错误源于注意焦点；转向情境可减弱
+· 同化 / 顺应 / 平衡化：失衡驱动发展（与 ZPD 机制相通）
+· 皮亚杰（个体失衡）vs 维果茨基（社会内化 + 脚手架）
+· 敏感期 ≠ 绝对关键期：窗口后仍可学，效率下降
+· 可复制性危机：效应量需重估；看样本、预注册与重复性
+· 预测编码：知觉 = 受先验约束的概率推断
+· WEIRD 样本限制结论的普适性</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>积极心理学与幸福感</h2>
-          <p class="lede">马丁·塞利格曼在 1998 年任美国心理学会主席时提出：心理学不应只研究"病理"——它也应该研究什么让人生值得过。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>习得性无助</h4><p>塞利格曼早期研究发现：反复经历不可控的负面事件后，动物和人会学会"放弃"——即使后来有了逃避途径也不尝试。这是抑郁认知模型的重要基础。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>习得性乐观</h4><p>如果无助可以习得，乐观也可以。塞利格曼提出解释风格：乐观者把坏事归为暂时的、特定的、外部的；悲观者归为永久的、普遍的、内在的。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>PERMA 模型</h4><p>塞利格曼后期提出的幸福五要素：积极情绪（P）、投入（E）、关系（R）、意义（M）、成就（A）——幸福感不等于快乐，而是五者的综合。</p></div></div>
-          </div>
-          <table>
-            <caption class="caption">享乐幸福 vs 实现幸福</caption>
-            <thead><tr><th>维度</th><th>享乐幸福（Hedonic）</th><th>实现幸福（Eudaimonic）</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">核心</th><td>快乐、舒适、避免痛苦</td><td>意义、成长、自我实现</td></tr>
-              <tr><th scope="row">来源</th><td>消费、娱乐、社交奖励</td><td>挑战、贡献、深度关系</td></tr>
-              <tr><th scope="row">持续性</th><td>短暂——适应后快感递减</td><td>持久——与人生目标对齐</td></tr>
-              <tr><th scope="row">风险</th><td>享乐适应：得到越多，满足阈值越高</td><td>过程可能痛苦，但整体满意度更高</td></tr>
-            </tbody>
-          </table>
-          <p>关于幸福的一个重要发现是<mark class="key">享乐适应</mark>：中彩票的人一年后幸福感回到基线水平，截瘫患者一年后也部分恢复。这意味着外在条件对幸福的影响有天花板——长期幸福感更多来自解释风格、深度关系和意义感。</p>
-          <div class="callout tip"><span class="callout-label">感恩练习</span>积极心理学中证据最充分的干预之一：每周写下三件感恩之事，持续 6 周即可显著提升主观幸福感。其机制不是"改变现实"，而是训练注意力偏向——把目光从缺失转向拥有。</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">心理学速记</span><button class="copy-btn" type="button">复制</button>· 信息加工模型：感觉记忆 → 短时记忆（7±2）→ 长时记忆
-· 加工深度越深，记忆越牢（Craik & Lockhart）
-· 组块化突破短时记忆容量限制
-· 前摄干扰：旧扰新；倒摄干扰：新扰旧
-· 巴甫洛夫经典条件反射：刺激-刺激联结
-· 斯金纳操作性条件反射：行为-后果联结
-· 正强化=加好增行为，负强化=去坏增行为
-· 皮亚杰四阶段：感知运动/前运算/具体运算/形式运算
-· 维果茨基最近发展区（ZPD）+ 支架教学
-· 阿希从众：多数人错误时约 75% 至少一次跟随
-· 米尔格拉姆服从：约 65% 愿施加"致命"电击
-· 基本归因错误：高估人格、低估情境
-· 认知失调：人改变信念来合理化行为（费斯廷格）
-· 塞利格曼 PERMA：积极情绪/投入/关系/意义/成就
-· 享乐适应：外在条件对幸福的影响有天花板</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <p class="lede">以下练习要求产出可检验的推导、设计或分析，而非「看过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用 Atkinson-Shiffrin 模型分析自己记一个电话号码的过程：经历哪三个存储</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">区分正强化、负强化、正惩罚、负惩罚，各举一个生活实例</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用皮亚杰阶段论判断一个儿童的思维处于哪一阶段，说出判断依据</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">找出一个自己犯"基本归因错误"的案例：把情境因素归成了人格</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用认知失调理论解释一个自己"行为改变信念"的真实经历</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">按 PERMA 五维度给自己当前生活打分，找出最弱的一项</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">连续一周每天写下三件感恩之事，周末回顾情绪变化</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用自己的记忆经验论证「容量以组块计」：找一个把 10+ 项压缩成少数组块的实例，写出压缩率 k 与单元数 C</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">设计一个区分「加工深度」与「复述时长」的对照实验方案，写出自变量、因变量与控制变量</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">判断一个日常场景使用的是哪种强化程序（FR/VR/FI/VI），并预测其反应率与消退抗性</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用「预测力而非配对次数」解释一个广告或恐惧形成案例，并说明阻断效应如何体现</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">构造一个情境，分别引发规范性从众与信息性从众，并写出区分两者的可观测指标</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用责任分散机制提出一个提高紧急帮助率的干预方案，并说明其可检验的预测</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用同化/顺应/平衡化分析自己掌握一个全新概念的过程，指出「失衡」出现在哪一步</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">选一个广为流传的心理学效应，核查其样本（是否 WEIRD）、效应量与重复性，写出你的可信度评估</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">用「有限资源下的推断」这一统一框架，把本指南中的三条机制串成一条解释链</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">原创交互式学习资料，基于经典心理学研究整理，引用包括 Atkinson & Shiffrin 记忆模型、Miller 7±2、Pavlov 经典条件反射、Skinner 操作性条件反射、Piaget 认知发展理论、Vygotsky 社会文化理论、Asch 从众实验、Milgram 服从实验、Zimbardo 斯坦福监狱实验、Festinger 认知失调理论、Seligman 积极心理学等。</p>
+        <p class="footnote">原创交互式学习资料。机制与推导部分基于认知心理学的标准框架：组块与加工深度、条件反射与强化程序（含部分强化效应）、社会影响的规范性与信息性双通道、皮亚杰的平衡化与维果茨基的社会文化理论。史实与文献引用包括 Miller 关于容量的研究、Craik 与 Lockhart 的加工深度理论（1972）、Rescorla 关于预测力与阻断的发现（1968）、Chase 与 Simon 的棋局记忆研究、Asch 从众研究、Milgram 服从研究、Latané 与 Darley 的旁观者研究、Festinger 的认知失调理论，以及 2010 年代的可复制性改革与预测编码框架。需注意：部分经典社会心理学实验（如斯坦福监狱实验）存在方法论争议，可复制性改革表明若干效应量需重估；正文已就此标注。所有数值为示例或量级估计，具体结论请以原始文献为准。</p>
       </footer>
     </div>
   </article>

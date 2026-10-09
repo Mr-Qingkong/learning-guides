@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>科学方法论指南</h1>
-          <p class="report-intro__summary">从培根的归纳法到波普尔的可证伪性，从穆勒五法到双盲实验，再到库恩的范式转换——这份指南把「科学为什么可靠」的底层逻辑讲清楚：不是因为它永远正确，而是因为它有一套不断纠错的机制。</p>
+          <p class="report-intro__summary">这份指南不满足于罗列「可证伪、双盲、范式」这些名词，而是把它们还原为推理结构：为什么「确认」在逻辑上永远无法成立（肯定后件的谬误），为什么随机化能消除混杂（期望为 0 的误差项），为什么统计显著不等于真实（基础率与多重比较），以及重复性危机如何被贝叶斯与元科学量化。并连接逻辑学、概率统计、因果推断与科学社会学的当代研究。</p>
           <div class="intro-meta">
             <span>领域：科学 · 方法</span>
             <span>难度：进阶</span>
@@ -26,119 +26,199 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>科学与非科学的划界</h2>
-          <p class="lede">「科学」和「非科学」的界限在哪里？这是科学哲学最根本的划界问题。</p>
-          <table>
-            <caption class="caption">划界标准的主要立场</caption>
-            <thead><tr><th>立场</th><th>代表人物</th><th>核心主张</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">可证伪性</th><td>Popper（1934/1959）</td><td>一个理论必须能被经验反驳才算科学；不能被任何观测反驳的理论不是科学</td></tr>
-              <tr><th scope="row">证实原则</th><td>逻辑经验主义（维也纳学派）</td><td>科学命题的意义在于可被经验证实；不可证实的命题是无意义的</td></tr>
-              <tr><th scope="row">范式标准</th><td>Kuhn（1962）</td><td>划界不在方法论层面，而在于是否属于某个成熟科学共同体的范式</td></tr>
-              <tr><th scope="row">方法论多元论</th><td>Feyerabend（1975）</td><td>不存在唯一普适的科学方法，科学进步靠「怎么都行」</td></tr>
-            </tbody>
-          </table>
-          <p>波普尔（Karl Popper）的<mark class="key">可证伪性</mark>标准最具影响力。他认为，马克思主义和历史唯物主义之所以在他看来不是科学，不是因为它们错误，而是因为它们太灵活——任何反例都可以被理论吸收解释，因而无法被「证伪」。相比之下，爱因斯坦广义相对论预言了光线在引力场中弯曲（1919 年 Eddington 日食观测验证），这一预言<strong>可能被观测否定</strong>——正因为它冒了被反驳的风险，它才是科学的。</p>
-          <div class="callout tip"><span class="callout-label">常见误解</span>「可证伪」不等于「已被证伪」，而是「原则上可以被经验检验反驳」。弗洛伊德精神分析声称能解释一切行为，但无论结果如何都无法反驳——这是波普尔批评其为「非科学」的核心理由。可证伪性是<strong>科学的门槛</strong>，不是科学的全部。</div>
+          <h2><span class="sec-num">1</span>科学推理的逻辑骨架：从假说到证伪</h2>
+          <p class="lede">科学的可靠性首先是一个逻辑问题。把推理写成形式，才能看清「证实」为什么在逻辑上不可能，而「证伪」为什么成立。</p>
+          <p>科学推理的基本单元是条件命题：<strong>如果理论 T 为真，那么应观察到预测 P</strong>，记作 T → P。围绕这个命题，有两条推理路径，一条有效、一条无效：</p>
+          <div class="prompt-block"><span class="prompt-label">两种推理形式：有效的证伪与无效的证实</span><button class="copy-btn" type="button">复制</button>否定后件（Modus Tollens）—— 有效：
+  前提 1：  T → P      （若 T 真，则必有 P）
+  前提 2：  ¬P         （观测到非 P）
+  结论  ：  ¬T         （故 T 为假）
+
+肯定后件（Affirming the Consequent）—— 无效：
+  前提 1：  T → P
+  前提 2：  P          （观测到 P）
+  结论  ：  T          （×  推不出 T！）
+
+关键：P 可能由别的理论 T' 同样预测（辅助假说、竞争理论）。
+所以「观测到 P」只能给 T 增加一点可信度，永远不能证明 T 为真。
+这正是波普尔「科学只能证伪、不能证实」的逻辑根据。</div>
+          <p>这条逻辑直接定义了<mark class="key">可证伪性</mark>（falsifiability）：一个命题只有当你能够描述出「什么样的观测会令其不成立」时，它才进入了经验科学的范围。注意这不是说它「已被证伪」，而是「原则上可被反驳」。一个预言「明天要么下雨要么不下雨」的陈述永远为真，也因而不含任何经验信息。</p>
+          <p>波普尔进一步给出了一个可量化的洞见：<strong>理论的信息量与它排除的可能性成正比</strong>。若理论 T 允许的世界状态集合为 W(T)，则其经验内容 ∝ 1/|W(T)|——说得越多、禁得越多、越容易被反驳，也就越有信息量。这解释了一个反直觉现象：越「大胆」的预测，一旦通过检验，给理论带来的支持越大；而「怎么都能解释」的理论，恰恰因不冒风险而几乎不提供信息。</p>
+          <div class="callout tip"><span class="callout-label">划界问题的谱系</span>用「可证伪性」划界并非唯一方案：逻辑经验主义主张「可证实性」（但被证实原则自身的困境击穿——证实原则本身既不能证实也不能证伪）；库恩主张划界不在方法而在「是否属于成熟科学共同体的范式」；费耶阿本德则否认存在唯一普适方法。当代科学哲学多采「多元标准」：可检验性、可重复性、与既有知识的一致性、解释力与预测力共同作用，而非单一判据。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>假说—演绎法</h2>
-          <p class="lede">科学推理的两条主线：从个别到一般的归纳法，从一般到个别的演绎法。真实科学实践是两者的交替循环。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>归纳法（Bacon, 1620）</h4><p>弗兰西斯·培根在《新工具》中系统阐述：从大量观察中总结规律。穆勒（J.S. Mill, 1843）进一步提炼出<strong>穆勒五法</strong>——求同法、求异法、同异并用法、剩余法、共变法——用于从经验中识别因果关系。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>演绎法</h4><p>从一般原理推出具体预测：如果理论 T 为真，则应观察到现象 E。如果实际观测到 ¬E（否定），则 T 被证伪（modus tollens）；如果观测到 E，则 T 得到<strong>暂时的</strong>支持——但不被证实，因为其他理论也可能预测 E。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>假说—演绎循环</h4><p>现代科学的标准流程：观察现象 → 提出假说 → 演绎出可检验的预测 → 实验检验 → 修正或放弃假说。这一循环的关键在于：假说必须生成<strong>可被检验的预测</strong>，而非事后解释一切。</p></div></div>
+          <h2><span class="sec-num">2</span>归纳问题与因果推断的逻辑</h2>
+          <p class="lede">「过去如此，故未来亦如此」——这条推理没有逻辑保证。休谟的质疑至今未被彻底解决，但它可以被精确地表述，并催生出实验设计的完整理论。</p>
+          <p>休谟（David Hume, 1748）的<strong>归纳问题</strong>可形式化为：一切从经验归纳出的普遍命题，其前提（有限的观察）都无法在逻辑上蕴含结论（无限的全称命题）。要论证归纳有效，需先假定「未来类似过去」，而这本身又是一个归纳结论——循环。太阳过去每天升起，不构成「明天必然升起」的逻辑证明。</p>
+          <p>波普尔的回应是回避归纳：科学不通过积累正面事例来「建立」理论，而通过证伪来「淘汰」理论，幸存的理论暂时可用。但批评者指出，科学家在实践中确实随正面证据的积累而提高信心——这需要一种<mark class="key">确证度</mark>（degree of confirmation）的度量，而非二值的证伪。贝叶斯框架提供了这一度量（见第 4 节）。</p>
+          <p>与归纳问题密切相关的是<strong>因果推断的逻辑</strong>。穆勒（J.S. Mill, 1843）的求异法给出了因果识别的操作化：若情形 A（有 X）导致结果 Y，情形 B（无 X）不导致 Y，其余条件相同，则 X 是 Y 的原因。用反事实语言（当代因果推断的核心，Rubin 因果模型）表述：X 对 Y 的<mark class="key">因果效应</mark> = E[Y | do(X=1)] − E[Y | do(X=0)]，即「干预」而非「观测」下的差值。</p>
+          <div class="prompt-block"><span class="prompt-label">混杂与随机化的数学原理</span><button class="copy-btn" type="button">复制</button>观测对比的偏差：把「相关」误当「因果」的来源
+  观测差  E[Y|X=1] − E[Y|X=0]
+        = 因果效应  +  选择偏差（混杂项）
+
+选择偏差 = 处理组与对照组在未观测因素上的系统差异
+
+随机化为何有效：
+  随机分配 ⇒ X 与所有潜在的混杂因素 U 独立 ⇒ E[U|X=1] = E[U|X=0]
+  偏差项在期望意义上为 0
+  ⇒ 观测差 ≈ 因果效应（大样本下）
+
+量级直觉：若存在一个未观测混杂 U 同时影响 X 与 Y，
+则偏差 ∝ cov(影响强度_X, 影响强度_Y)，与样本量无关——
+样本再大也消不掉系统偏差，这是观察性研究与 RCT 的根本分野。</div>
+          <p>这里的要点是<strong>「样本量」消不掉系统偏差</strong>。增加样本只能减少随机误差（方差 ∝ 1/n），却不能让一个被混杂污染的估计变准。这正是为什么当无法做实验时（如吸烟与肺癌），流行病学要借助 Hill（1965）的因果准则——时序性、效应强度、剂量—反应、一致性、可重复性、生物学合理性等——逐步排除「混杂」这一竞争解释，而非依赖单一研究。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>统计推断：为什么 p &lt; 0.05 不足以证明一个假说</h2>
+          <p class="lede">统计显著性检验是最被误用的科学工具。要看清它，必须区分「给定假设下的数据概率」与「给定数据下的假设概率」——这两者天差地别。</p>
+          <p>p 值的定义是：<strong>在原假设 H₀ 为真的前提下，观测到至少如此极端数据的概率</strong>，即 p = P(数据或更极端 | H₀)。它<em>不是</em>「H₀ 为真的概率」，也不是「结论为假 5% 的可能」。混淆这两者被称为<mark class="key">条件概率倒置</mark>（transposed conditional），是科研与新闻中最常见的误读。</p>
+          <div class="prompt-block"><span class="prompt-label">假阳性率、基础率与多重比较</span><button class="copy-btn" type="button">复制</button>1) 条件概率倒置
+   p 值 = P(数据 | H₀)      而人们常误读为 P(H₀ | 数据)
+   两者由贝叶斯公式联系，比值取决于先验 P(H₀)。
+
+2) 基础率效应：即使检验很准，先验很低的假说也很难被「证实」
+   设：先验真概率 P(H) = 0.1，检验灵敏度 0.8，假阳性率 0.05
+   则 P(H | 阳性)
+       = (0.8×0.1) / (0.8×0.1 + 0.05×0.9)
+       = 0.08 / (0.08 + 0.045) ≈ 0.64
+   即：阳性结果后为真的概率仅约 64%，远低于直觉的「80%」。
+
+3) 多重比较：检验越多次，偶然显著越多
+   独立检验 m 次，全都不显著（α=0.05）的概率 = 0.95^m
+   m = 20 时，至少一次假显著的概率 ≈ 1 − 0.95²⁰ ≈ 0.64
+   ⇒ 不做校正地「挑显著结果」，本身就是造假。</div>
+          <p>与之相对，贝叶斯方法给出的是人们真正想要的量：<strong>后验概率</strong> P(H | 数据)，由先验 P(H) 与似然 P(数据 | H) 通过贝叶斯公式更新。它把「基础率」显式纳入计算，避免了 p 值的逻辑陷阱。近年来心理学与神经科学推动的「贝叶斯革命」，正是用后验概率、贝叶斯因子与可信区间替代（或补充）频率派的 p 值。</p>
+          <div class="callout warn"><span class="callout-label">p 值有其用，但被赋予过多责任</span>2016 年美国统计学会（ASA）发布关于 p 值的声明，明确反对以「p &lt; 0.05」作为判断结论真伪的机械阈值，强调 p 值不能度量效应大小、不能度量假说为真的概率、单独使用时不足以提供证据。更稳健的做法是同时报告效应量、置信区间、样本量与预注册的分析计划——让读者看到「不确定性的完整形状」，而非一个通过/不通过的星号。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>从证实到确证：贝叶斯认识论与理论选择</h2>
+          <p class="lede">当「证实」在逻辑上不可能、「证伪」在实践上过严时，科学如何比较理论的优劣？贝叶斯框架给了可计算的答案。</p>
+          <p>贝叶斯确证理论把科学推理视为概率更新：理论的<mark class="key">确证度</mark>由证据带来的后验/先验之比衡量。一条证据 E 对假说 H 的支持强度，由似然比 P(E|H)/P(E|¬H) 决定——这正是<strong>奥卡姆剃刀</strong>与「解释力」的量化来源。</p>
+          <div class="prompt-block"><span class="prompt-label">奥卡姆剃刀的贝叶斯解释与理论确证</span><button class="copy-btn" type="button">复制</button>贝叶斯更新：P(H|E) ∝ P(E|H) · P(H)
+
+确证强度 = 似然比 LR = P(E|H₁) / P(E|H₂)
+
+奥卡姆剃刀为何「有效」（Bayes 视角）：
+  简单理论 = 参数少 / 先验概率质量集中
+  简单理论对数据「预测得更大胆」→ 若数据落在其窄预测内，
+  则 P(E|H_简单) 更高 → 被同等证据更强地支持。
+
+可证伪性 ↔ 高似然的统一：
+  一个理论禁得越多（预测越精确）→ 命中时 LR 越大。
+  这与波普尔「大胆理论经受检验后支持更强」在数学上一致。
+
+量纲示例：H₁ 预测 E 概率 0.9，H₂ 预测 E 概率 0.3
+  LR = 0.9 / 0.3 = 3，即 E 使 H₁ 相对 H₂ 的概率优势 ×3。</div>
+          <p>这一框架化解了波普尔与库恩的对立：波普尔强调单条反例的证伪力，库恩强调范式在面对反常时的韧性。贝叶斯视角下，二者是同一更新过程的两端——反常不是「一票否决」，而是降低后验概率；当反常累积到后验足够低时，范式转换发生。这解释了库恩观察到的「范式为什么能承受大量反常」，也保住了波普尔「科学终将被经验约束」的内核。</p>
+          <div class="callout tip"><span class="callout-label">研究纲领方法论</span>拉卡托斯（Lakatos）提出「研究纲领」由不可反驳的<strong>硬核</strong>（如牛顿力学的基本定律）与可调整的<strong>保护带</strong>（辅助假说、参数）组成。纲领是「进步的」（能预测新事实）还是「退化的」（只能事后补救）取决于它是否持续产生可检验的新预言。这一框架介于波普尔（一票证伪）与库恩（范式不可通约）之间，是理解真实科研动态最实用的模型之一。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>前沿与研究进展</h2>
+          <p class="lede">近十五年，科学方法论本身成为一门经验科学：元科学（meta-science）用数据研究科学。以下是有代表性的几条主线（标注不确定处）。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">证伪主义奠基</span><span class="tl-date">Popper, 1934/1959</span><p>以可证伪性区分科学与非科学，把「能否被反驳」确立为科学的核心标准，重塑了 20 世纪的科学观。</p></div>
+            <div class="tl-item"><span class="tl-era">范式与科学革命</span><span class="tl-date">Kuhn, 1962</span><p>提出常态科学—反常—危机—革命的动态模型，及范式「不可通约」命题，史学与哲学双线影响至今。</p></div>
+            <div class="tl-item"><span class="tl-era">重复性危机被量化</span><span class="tl-date">OSC, 2015</span><p>Open Science Collaboration 在《Science》报告：尝试重复 100 项心理学研究，约三成多的结果在统计上重现原结论。这一数字把「科学自我纠错」从信念变成可实证的研究对象。</p></div>
+            <div class="tl-item"><span class="tl-era">预注册与注册报告</span><span class="tl-date">2010s 至今</span><p>实验前公开假设与分析方案（预注册），或先审研究设计再收数据（注册报告），从制度上压缩「事后挑结果」（HARKing、p-hacking）的空间。</p></div>
+            <div class="tl-item"><span class="tl-era">p 值声明与统计改革</span><span class="tl-date">ASA, 2016</span><p>美国统计学会正式声明反对把 p&lt;0.05 当作机械判据，推动效应量与置信区间的强制报告，是统计实践的一次公开纠偏。</p></div>
+            <div class="tl-item"><span class="tl-era">开放数据与元科学</span><span class="tl-date">2010s 至今</span><p>开放数据、开放代码与多实验室大规模复制项目（如 Many Labs 系列）成为新的证据标准；元科学开始用计量方法研究发表偏倚、审稿行为与可重复性。争论焦点转向：改革是否真正提升了结论的稳健性，证据仍在积累，尚无定论。</p></div>
           </div>
-          <p>休谟（David Hume, 1748）指出归纳法的根本困难：我们无法从逻辑上保证「过去反复出现的规律在未来仍成立」——即归纳问题。太阳过去每天升起，不保证明天必然升起。波普尔的回应是：科学不靠归纳来「证实」理论，而是靠演绎来「证伪」——我们永远不能证明一个理论为真，只能证明它<strong>尚未被驳倒</strong>。</p>
-          <div class="callout warn"><span class="callout-label">归纳问题</span>休谟的质疑至今未被完全解决。波普尔的证伪主义是一种回应，但并非所有科学家都接受「科学只证伪不证实」的立场——实践中科学家确实在积累正面证据时增加对理论的信心。这一张力是科学哲学的活跃议题。</div>
+          <div class="callout tip"><span class="callout-label">如何读这类结论</span>看到「某项研究被推翻」「重复率仅三成」时，先问三件事：重复的是原研究还是概念性拓展？「失败」判定用的是显著性与否还是效应量一致性？样本与文化语境是否可比？多数复制失败反映的是<strong>原效应被高估</strong>或<strong>边界条件未申明</strong>，而非原结论纯属虚构——这是理解科学自我纠错的关键分寸。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>实验设计与控制</h2>
-          <p class="lede">实验的核心是控制变量：只改变一个因素，观察结果是否随之变化——这是穆勒「求异法」的操作化。</p>
-          <table>
-            <caption class="caption">实验设计的关键要素</caption>
-            <thead><tr><th>要素</th><th>含义</th><th>目的</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">实验组 vs 对照组</th><td>实验组接受处理，对照组不接受</td><td>提供基线，排除自然变化干扰</td></tr>
-              <tr><th scope="row">随机化分配</th><td>受试者随机分入两组</td><td>消除系统性偏差，平衡已知和未知混杂因素</td></tr>
-              <tr><th scope="row">双盲设计</th><td>受试者和实验者都不知道分组</td><td>防止预期效应和主观偏差</td></tr>
-              <tr><th scope="row">安慰剂</th><td>对照组接受「假处理」</td><td>分离处理本身的效果与心理效应</td></tr>
-              <tr><th scope="row">重复</th><td>多次独立实验验证</td><td>排除偶然性，评估结果可靠性</td></tr>
-            </tbody>
-          </table>
-          <p>双盲随机对照试验（RCT）被视为医学证据的「金标准」，其逻辑可追溯到穆勒五法中的求异法。Cochrane 协作组织系统评价数万篇 RCT，为循证医学提供基础。但当无法做实验时（如吸烟与肺癌的流行病学研究），观察性研究结合 Hill（1965）的<strong>因果推断准则</strong>——时序性、强度、一致性、特异性、剂量—反应关系等九项标准——同样可以建立因果推断。</p>
-          <div class="callout tip"><span class="callout-label">相关不等于因果</span>「冰淇淋销量与溺水死亡人数正相关」——但前者不导致后者，两者都因气温升高而增加。区分相关与因果需要：控制混杂变量、检验时序性、寻找合理的因果机制。这是统计素养的第一课，也是媒体误读研究最频繁的地方。</div>
-        </section>
-
-        <section>
-          <h2><span class="sec-num">4</span>可证伪性与范式转换</h2>
-          <p class="lede">科学不是知识的简单累积——库恩说，科学史更像一系列「世界观更替」的革命。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>常态科学</h4><p>在某个<strong>范式</strong>（paradigm）框架内工作：研究者共享理论假设、方法标准和问题清单。绝大多数日常科学研究属于常态科学——在已有框架内「解谜」（puzzle-solving），不质疑框架本身。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>反常与危机</h4><p>当范式无法解释的反常现象积累到一定程度，常态科学进入危机期。科学家尝试修补旧范式，但修补越多，范式越显笨拙——为革命创造了条件。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>科学革命</h4><p>新范式出现并与旧范式竞争。库恩强调：新旧范式之间<strong>不可通约</strong>（incommensurable）——它们对世界的描述、概念的含义、甚至「什么算问题」的标准都不同，不存在中立的裁判标准。哥白尼日心说 vs 托勒密地心说、相对论 vs 牛顿力学、氧化说 vs 燃素说都是经典案例。</p></div></div>
+          <h2><span class="sec-num">6</span>跨学科视角</h2>
+          <p class="lede">科学方法论不是孤立的哲学话题——它与逻辑学、概率论、因果推断、社会学共享同一套形式语言。</p>
+          <div class="grid-2">
+            <div class="card"><h4>形式逻辑</h4><p>证伪依赖否定后件（Modus Tollens）；确证与相关的区分、充分条件与必要条件，都是命题逻辑与谓词逻辑的直接应用。科学推理的有效性首先是逻辑有效性。</p></div>
+            <div class="card"><h4>概率论与统计学</h4><p>p 值、贝叶斯更新、似然比、置信区间、多重比较校正，构成实验结论的量化基础设施。理解了条件概率与全概率公式，就理解了大部分统计误读的根源。</p></div>
+            <div class="card"><h4>因果推断</h4><p>反事实模型（Rubin）、有向无环图（Pearl 的因果图）、do-算子把「因果」从哲学争论转为可计算对象；随机化、工具变量、自然实验都是识别因果效应的具体策略。</p></div>
+            <div class="card"><h4>科学社会学</h4><p>默顿规范、马太效应、同行评审与引用网络，描述知识生产的制度生态；重复性危机既是统计问题，也是激励结构（发表偏倚）问题，需两把刀一起解剖。</p></div>
+            <div class="card"><h4>认知心理学</h4><p>确认偏误、动机性推理、后见之明偏差，解释了科学家（作为人）为何会系统性偏向支持自己假说的证据——这正是双盲、预注册等制度设计的心理学依据。</p></div>
+            <div class="card"><h4>计算与信息论</h4><p>「理论的信息量 ∝ 它排除的可能性」与信息论中熵、惊讶度的定义相通；模型选择准则（AIC/BIC）把「拟合优度 vs 复杂度」的权衡写成了可计算的惩罚项。</p></div>
           </div>
-          <ul>
-            <li><strong>拉卡托斯（Lakatos）</strong>：修正库恩，提出「研究纲领」——由不可反驳的「硬核」加上可调整的「保护带」组成。进步的研究纲领能预测新事实，退化的纲领只能事后解释。</li>
-            <li><strong>波普尔 vs 库恩</strong>：波普尔认为科学靠不断的证伪前进；库恩认为常态科学家恰恰在<strong>不</strong>试图证伪范式——他们把反常当作自己解谜能力的不足。两人的分歧不是对错之分，而是描述了科学的不同阶段。</li>
-          </ul>
-          <p>库恩的《科学革命的结构》（1962）至今仍是科学哲学被引用最多的著作之一。他的核心洞察是：科学进步不是一条「不断逼近真理」的直线，而是一系列世界观更替——后继范式不一定在所有方面都优于前范式，但它解决了前范式的关键反常，并开辟了新的问题空间。</p>
+          <p>把它们放在一起，会浮现一个统一结构：<strong>用可形式化的推理约束不确定的信念，用制度设计对冲人的认知偏差</strong>。科学之所以可信，不在于科学家不犯错，而在于它同时装备了逻辑的纠错（证伪、贝叶斯）与社会的纠错（同行评审、复制、开放）。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>同行评审与科学共同体</h2>
-          <p class="lede">科学的可靠性不靠个人天才，而靠集体的纠错机制——同行评审是第一道关口。</p>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">以下说法在科普与新闻中流传极广，但要么在逻辑上错误，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「实验证实了这个理论」
+「p &lt; 0.05，所以结论为真的概率 95%」
+「相关就说明有因果」
+「重复失败 = 原研究造假」
+「一个反例就能推翻科学理论」
+「科学方法 = 固定的一二三四步」</pre><div class="why">问题：把逻辑上做不到的事（证实）、条件概率倒置（p 值含义）、识别问题（相关≠因果）、举证标准与动机（造假 vs 高估）、证伪的简单化（辅助假说可吸收反常）、以及对科学实践的浪漫化（真实科研是多元、试错、社会的）混淆在一起。这些都是「看起来对但错」的典型。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>证据「支持」或「暂时未能反驳」理论，而非「证实」
+p 值 = P(数据 | H₀)，不是 P(H₀ | 数据)；要后验概率，请用贝叶斯
+相关给出候选，因果需靠随机化或反事实识别策略
+重复失败更常意味效应被高估或边界未申明，须逐案分析
+反例先动摇的是「保护带」（辅助假说），未必是硬核
+科学方法 = 一套可形式化的推理规范 + 社会化纠错制度</pre><div class="why">要点：方法论的价值不是给人「标准答案」，而是给人「识别错误论证」的能力。使用任何统计或因果结论前，先问它的推理形式、假设与不确定区间。</div></div>
+          </div>
           <table>
-            <caption class="caption">科学知识生产的制度保障</caption>
-            <thead><tr><th>机制</th><th>作用</th><th>局限</th></tr></thead>
+            <caption class="caption">方法 / 概念工具的适用边界速查</caption>
+            <thead><tr><th>工具</th><th>适用场景</th><th>失效 / 需谨慎的场景</th></tr></thead>
             <tbody>
-              <tr><th scope="row">同行评审</th><td>投稿前由领域专家审查方法与结论</td><td>可能压制创新、审稿人偏见、滞后性</td></tr>
-              <tr><th scope="row">可重复性</th><td>他人独立重复实验应得到相似结果</td><td>许多发表的研究事后无法被重复</td></tr>
-              <tr><th scope="row">开放数据</th><td>公开原始数据供审查与再分析</td><td>隐私、商业利益与数据质量等问题</td></tr>
-              <tr><th scope="row">预注册</th><td>实验前公开假设与分析方案</td><td>执行成本与灵活性降低</td></tr>
-              <tr><th scope="row">引用与积累</th><td>知识在引用网络中积累与修正</td><td>马太效应——知名机构更易发表</td></tr>
+              <tr><th scope="row">可证伪性划界</th><td>区分经验科学与非经验陈述</td><td>数学与逻辑（不靠经验）、成熟理论的边缘修正</td></tr>
+              <tr><th scope="row">归纳法</th><td>从样本外推总体、建立经验规律</td><td>需要逻辑必然性时（归纳永无逻辑保证）</td></tr>
+              <tr><th scope="row">p 值 / 显著性检验</th><td>预设检验、单次、有明确原假设</td><td>需后验概率、多重比较未校正、追求效应大小时</td></tr>
+              <tr><th scope="row">RCT 随机对照</th><td>可操纵处理、需识别因果效应</td><td>不可随意处理（吸烟、地震）、外部效度受限</td></tr>
+              <tr><th scope="row">观察性因果准则（Hill）</th><td>无法实验时的因果推断</td><td>残存未测混杂、生态学谬误风险</td></tr>
+              <tr><th scope="row">贝叶斯确证</th><td>比较理论、纳入先验与基础率</td><td>先验主观性争议、计算复杂度</td></tr>
             </tbody>
           </table>
-          <p>Open Science Collaboration（2015）在《Science》发表的<mark class="key">重复性危机</mark>研究，试图重复 100 项心理学经典实验，成功率仅约 36%。这一结果震惊了学界，推动了预注册、开放数据和注册报告等改革。此后生物学（特别是癌症研究）、医学领域也报告了类似的重复率问题。科学正在用自身的方法审视自身——这恰恰是科学自我纠错能力的体现。</p>
-          <div class="callout tip"><span class="callout-label">默顿规范</span>社会学家 Robert Merton（1942）提出科学共同体的四项精神气质：<strong>普遍主义</strong>（不因身份而异）、<strong>公有性</strong>（知识属于共同体）、<strong>无私利性</strong>（为知识本身而非利益）、<strong>有条理的怀疑</strong>（不盲信权威）。这四条至今是科研伦理的基石——尽管现实中它们不断被学术造假、论文工厂和利益冲突所挑战。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">科学方法论速记</span><button class="copy-btn" type="button">复制</button>· 划界：可证伪性（Popper）——能被反驳才算科学
-· 归纳法（Bacon 1620）：从个别到一般；休谟质疑其合理性
-· 穆勒五法：求同、求异、同异并用、剩余、共变
-· 假说—演绎循环：观察→假说→可检验预测→检验→修正
-· 证伪 ≠ 已证伪；科学靠演绎纠错而非归纳证实
-· 实验设计：对照组+随机化+双盲+安慰剂+重复
-· RCT 是医学金标准；Hill 九项准则用于观察性因果推断
-· 相关 ≠ 因果：控制混杂、查时序、找机制
-· 库恩范式：常态科学→反常→危机→科学革命（不可通约）
-· 拉卡托斯：硬核+保护带；进步 vs 退化的研究纲领
-· 同行评审+可重复性+开放数据+预注册=科学纠错机制
-· 重复性危机：心理学 36% 可重复率（OSC 2015）
-· 默顿规范：普遍主义、公有性、无私利性、有条理的怀疑</div>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">科学方法论速记</span><button class="copy-btn" type="button">复制</button>· 证伪有效＝否定后件（T→P, ¬P ⇒ ¬T）
+· 证实无效＝肯定后件（T→P, P ⇏ T）——逻辑上永远不能「证实」
+· 可证伪性：能描述「何种观测会推翻它」才算经验科学
+· 理论信息量 ∝ 它排除的可能性；越大胆越有信息
+· 休谟归纳问题：有限观察无法逻辑蕴含全称结论
+· 穆勒求异法＝反事实因果的操作化
+· 因果效应 = E[Y|do(X=1)] − E[Y|do(X=0)]
+· 随机化有效：X 与潜在混杂独立 ⇒ 偏差期望为 0
+· 样本量只减方差（∝1/n），消不掉系统偏差
+· p 值 = P(数据|H₀)，不是 P(H₀|数据)（条件概率倒置）
+· 基础率效应：先验低时，阳性后验仍可能很低
+· 多重比较：m 次独立检验，假显著概率 ≈ 1 − 0.95^m
+· 确证强度 = 似然比 P(E|H₁)/P(E|H₂)
+· 奥卡姆剃刀：简单理论预测大胆，命中时被更强支持
+· 拉卡托斯：硬核 + 保护带；进步纲领能预测新事实
+· 库恩：常态科学→反常→危机→革命（范式不可通约）
+· 重复性危机：OSC 2015 心理学约三成多重现（口径见原文）
+· ASA 2016：反对把 p&lt;0.05 当机械判据，报告效应量与区间
+· 制度纠错：同行评审 + 预注册 + 开放数据 + 可重复性</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <p class="lede">以下练习要求给出推导、形式化或可检验的结论，而非「知道即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用可证伪性标准判断「星座学」和「万有引力」哪个是科学并说明理由</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">举例说明休谟的归纳问题为什么难以彻底解决</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用穆勒求异法设计一个简单的对照组实验</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">解释双盲设计为何能排除预期效应</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">找一个「相关被误读为因果」的媒体报道并拆解其错误</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用库恩的范式概念解释牛顿力学到相对论的转换</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">列出重复性危机暴露的三个科学制度短板并各提一条改进方向</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用真值表写出「肯定后件」为何无效，并构造一个日常生活中的无效推理实例</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">针对「咖啡降低某病风险」这一说法，写出其可证伪的预测形式，并说明何种观测会推翻它</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">设先验 P(H)=0.05、灵敏度 0.9、假阳性率 0.05，用贝叶斯公式算出阳性后的 P(H|+)</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">计算在 α=0.05 下做 30 次独立检验时「至少一次假显著」的概率，并解释为何须做多重比较校正</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">为一个观察性研究画出因果有向无环图（DAG），标出混杂变量并说明为何不能直接算差值</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用似然比 LR=P(E|H₁)/P(E|H₂) 比较两个假说，令数值具体并解释结论对先验的依赖</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">找一个被媒体报道的结论，判断它是否犯「条件概率倒置」或「相关当因果」，并写出更正表述</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">查阅 Open Science Collaboration（2015）或一项 Many Labs 复制研究，写出其方法、判定标准与至少一条局限</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">设计一份预注册方案：写明假设、样本量估算依据、主要指标与停止规则，并说明它如何抑制 p-hacking</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">用一个具体案例（如冷聚变或某被推翻的效应）说明「硬核/保护带」如何吸收反常，以及何时最终被放弃</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">基于 Popper《科学发现的逻辑》、Kuhn《科学革命的结构》、Bacon《新工具》、Mill《逻辑体系》、Merton 科学社会学及 Open Science Collaboration（2015）等公开学术成果整理。</p>
+        <p class="footnote">推理结构部分基于 Popper《科学发现的逻辑》（1934/1959）、Hume 的归纳问题（1748）、Mill《逻辑体系》（1843）、Kuhn《科学革命的结构》（1962）、Lakatos 的研究纲领方法论；统计部分基于条件概率与贝叶斯更新的一般原理、ASA 关于 p 值的声明（2016）及 Hill 的因果准则（1965）；复制与元科学部分参考 Open Science Collaboration 发表于《Science》的研究（2015）。文中的数值示例（基础率、多重比较、似然比）为教学演示假设，非实测数据；复制率的具体口径与统计改革的效果评价存在争议，正文已标注不确定状态。原创交互式学习资料。</p>
       </footer>
     </div>
   </article>

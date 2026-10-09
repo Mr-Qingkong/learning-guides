@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>时间管理进阶指南</title>
+  <title>时间与注意力管理进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,10 +13,10 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>时间管理进阶指南</h1>
-          <p class="report-intro__summary">时间管理的底层不是「排得更满」，而是「注意力管理」。这份指南讲要事第一、深度工作、帕金森定律与精力节律，帮你把时间花在真正的杠杆点上。</p>
+          <h1>时间与注意力管理进阶指南</h1>
+          <p class="report-intro__summary">时间不可管理，能管理的只有注意力与任务选择。本指南用「多任务切换的认知代价模型」「任务选择的最优化框架」「精力作为受限资源」三条主线，把效率问题还原成可建模、可度量、可实验的对象，并连接认知心理学、运筹学与行为经济学的当代研究。</p>
           <div class="intro-meta">
-            <span>领域：效率 / 职场</span>
+            <span>领域：效率 / 认知</span>
             <span>难度：进阶</span>
           </div>
         </div>
@@ -26,67 +26,185 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>四象限：多数人用错了</h2>
-          <p class="lede">艾森豪威尔矩阵把任务按「重要 / 紧急」分四类，但真正的秘诀是「减少紧急但不重要」。</p>
+          <h2><span class="sec-num">1</span>效率的第一性原理：产出等于什么</h2>
+          <p class="lede">所有时间管理方法论，本质上都在优化同一个式子；先把它写清楚，再谈工具，才不会本末倒置。</p>
+          <p>把「有效产出」写成可分解的形式：</p>
+          <div class="prompt-block"><span class="prompt-label">产出分解模型</span><button class="copy-btn" type="button">复制</button>有效产出 = Σ(任务价值_i × 完成度_i) − 切换损耗 − 协调开销
+         ≈ 可用时间 × 专注强度 × 任务选择质量 − 上下文切换成本
+
+其中：
+· 可用时间 T：每天清醒约 16 h，但「可深度利用」的上限远低于此
+· 专注强度 I：单位时间内投入的认知资源（受注意力残留、疲劳调制）
+· 任务选择质量 Q：选对任务的收益杠杆，通常是最被低估的一项</div>
+          <p>这个式子的意义在于：<strong>三个乘数里只要有一个接近零，整体产出就接近零</strong>。很多人只优化 T（早起、少睡、挤时间），却在 I 与 Q 上放任不管——于是「很忙、很累、产出很低」。更关键的是，T 有生理硬上限（睡眠剥夺会同时压低 I），而 Q 与 I 的提升空间几乎没有上限。</p>
+          <h3>为什么「忙」与「产出」会脱钩</h3>
+          <ul>
+            <li><strong>收益递减与边际价值</strong>：把工作日从 8 h 拉到 12 h，第 9–12 小时的单位产出往往低于前 8 小时，且错误率上升；在价值曲线上，多出来的时间可能落在「低斜率区」。</li>
+            <li><strong>可替代性</strong>：多数「紧急」事务可被委派、批处理或直接删除，属于 Q 维度的失控，而非 T 不足。</li>
+            <li><strong>多任务不存在</strong>：人脑不能真正并行处理两个需要意识的认知任务，所谓多任务是「快速切换」，每次切换都要付税——见下一节。</li>
+          </ul>
+          <div class="callout tip"><span class="callout-label">判断标准</span>评估任何时间管理方法时只问两个问题：它降低的是切换损耗，还是提升了任务选择质量？如果两者都答不上来，它大概率只是让你「感觉更有掌控感」。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">2</span>切换损耗的机制：注意力残留与重入成本</h2>
+          <p class="lede">任务切换不是「瞬间完成」的动作，它留有尾部成本。这个成本可被量化，且随任务复杂度上升。</p>
+          <p>索菲·勒鲁瓦（Sophie Leroy, 2009）提出的<strong>注意力残留</strong>（attention residue）描述的是：当从任务 A 切到任务 B 时，A 的未完成目标仍占据工作记忆资源，导致 B 的初期表现下降。其机制可以这样分解：</p>
+          <div class="prompt-block"><span class="prompt-label">单次切换的总成本</span><button class="copy-btn" type="button">复制</button>切换成本 = 卸载成本 + 重入成本 + 认知惯性成本
+
+· 卸载成本：把 A 的上下文从工作记忆中移出（若 A 未闭合，成本很高）
+· 重入成本：回到 A 时重建上下文——需要回忆「我做到哪、下一步是什么」
+· 认知惯性：切换到 B 后，A 的残留仍占用资源（即 attention residue）
+
+近似模型：若任务平均重入成本为 R，每小时切换 n 次，
+        则每日损耗占比 ≈ n × R / T_available （在频繁切换时非线性放大）</div>
+          <p>工程上的直观验证：一次分钟级的打断，往往需要<strong>十几分钟</strong>才能恢复到打断前的专注水平（这一结论被反复引用，出自 Gloria Mark 等对知识工作者的观测研究）。这不是「被打断的时间」，而是「被打断后持续低效的时间」。</p>
+          <h3>降低切换损耗的三条工程手段</h3>
+          <div class="feature-list">
+            <div class="feature"><div class="f-ico">1</div><div><h4>闭合式中断</h4><p>被打断前记录「当前状态 + 下一步」（一句 checkpoint），把卸载成本从「重建上下文」降为「读一行」。这是 Zettelkasten、issue 备注、脚本注释共同的底层动机。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>批处理同类任务</h4><p>把 n 次切换压缩为 1 次：邮件、消息、报销集中到固定时段处理。批处理的收益 = (n−1) × 单次切换成本，n 越大越划算。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>整块时间保护</h4><p>为高认知任务预留不间断的整块（通常 60–120 min），使其 n→0，从根上消除切换损耗。时间块的价值不在「排得满」，而在「排得整」。</p></div></div>
+          </div>
+          <div class="callout warn"><span class="callout-label">反直觉</span>「工作间隙刷一下手机」被普遍认为是休息，但它引入了新的上下文与情绪残留，往往让回到工作的重入成本更高。真正有效的休息是<strong>低认知负荷且不引入新目标</strong>的：闭眼、散步、望远。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>任务选择：从四象限到可计算的排序</h2>
+          <p class="lede">艾森豪威尔四象限给出了直觉分类，但它不是算法。要真正做决策，需要把「重要性」与「紧急性」转成可比较的量。</p>
           <table>
-            <caption class="caption">时间管理四象限</caption>
+            <caption class="caption">四象限矩阵：分类只是手段，处置策略才是目的</caption>
             <thead><tr><th></th><th>紧急</th><th>不紧急</th></tr></thead>
             <tbody>
-              <tr><th scope="row">重要</th><td>危机、临近截止——立刻做</td><td>规划、学习、健康、关系——优先投资</td></tr>
-              <tr><th scope="row">不重要</th><td>多数打断、部分会议——委派/拒绝</td><td>无意义的刷屏——尽量删除</td></tr>
+              <tr><th scope="row">重要</th><td>危机、临近截止。<em>策略：立即做，但事后复盘「为什么会变紧急」</em></td><td>规划、能力建设、健康、关系。<em>策略：主动排期，保护整块时间</em></td></tr>
+              <tr><th scope="row">不重要</th><td>多数组会、部分请求。<em>策略：委派、协商、批处理</em></td><td>无目的刷屏、低价值应酬。<em>策略：删除或严格限额</em></td></tr>
             </tbody>
           </table>
-          <p>高手花最多时间在「重要不紧急」，因为那才决定长期结果；新手被「紧急」牵着走，永远在救火。</p>
+          <p>四象限的致命缺陷是<strong>无法排序</strong>：如果三件事都是「重要且紧急」，怎么办？这就需要引入可计算的标准。一种常用的可操作化是把任务按「价值密度」排序：</p>
+          <div class="prompt-block"><span class="prompt-label">价值密度排序法</span><button class="copy-btn" type="button">复制</button>优先级 ∝ 期望价值 / 所需时间
+
+· 期望价值 = 收益 × 成功概率（收益可以是金钱、影响力、风险削减）
+· 所需时间 = 估计耗时（建议 ×1.5 的缓冲，见「计划谬误」）
+
+这解释了为什么「10 分钟能解决、影响不小的事」应优先：
+  其价值密度高，且能快速消除占用工作记忆的「开放回路」
+
+反例：一件价值高但要 3 个月的事，应被拆成可独立交付的小块，
+  否则它会长期占据背景进程且从不产生「已闭合」的满足</div>
+          <p>更形式化地，这接近运筹学中的<strong>背包问题</strong>：在有限时间预算内选择任务子集，使总价值最大。真实决策中价值与耗时都不确定，因此实用做法是：<strong>用期望价值/耗时做粗排，再按「是否阻塞他人」做微调</strong>——被他人依赖的任务有额外的协调收益。</p>
+          <div class="callout tip"><span class="callout-label">关键区分</span>「重要」不等于「有价值密度高」。理解与决策类任务（读论文、想清楚方向）单位时间价值极高但常被推迟；执行类任务（回消息、开会）价值密度低但即时反馈强——于是人天然偏向后者，这正是「瞎忙」的成因。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>深度工作与注意力残留</h2>
-          <p class="lede">每次切换任务，大脑都残留「上一个任务的注意力」，让你变「钝」。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>深度工作</h4><p>在无干扰的整块时间里，专注高认知、高价值的任务，产出远高于碎片化处理。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>注意力残留</h4><p>切换后，部分注意力还留在上一任务上；频繁切换会持续「漏油」。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>时间块（Time Blocking）</h4><p>提前给重要任务预留整块时间，把它当「和自己开的会」来保护。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>批量处理</h4><p>把邮件、消息等琐事集中到固定时段处理，而不是随时响应。</p></div></div>
+          <h2><span class="sec-num">4</span>精力：被忽略的乘数项</h2>
+          <p class="lede">时间是容器，精力是燃料。同一小时在巅峰期与低谷期的产出可相差数倍，把难事安排在低谷是纯亏损。</p>
+          <p>精力（更准确地说，是执行功能可用资源）受三条曲线叠加调制：</p>
+          <ul>
+            <li><strong>昼夜节律</strong>：核心体温与皮质醇的日周期，多数人的警觉度在醒后约 2–4 h 达首个峰值，午后出现低谷。</li>
+            <li><strong>稳态睡眠压力</strong>：清醒时腺苷累积，产生「困意」；睡眠将其清除。咖啡因的作用是<strong>阻断腺苷受体</strong>，只掩盖困意、不偿还睡眠债。</li>
+            <li><strong>任务相关疲劳</strong>：长时间从事高自我控制任务会消耗资源（自我损耗假说，注意：该假说近年元分析结果不一，应视为<strong>有争议</strong>的模型，而非定论）。</li>
+          </ul>
+          <p>由此得到一个务实的排程原则：<strong>把「需要深度认知 + 高错误成本」的任务放到精力峰值区，把机械、低风险任务放到低谷区</strong>。这不是自律问题，而是把任务特征与资源曲线做匹配的工程问题。</p>
+          <div class="callout warn"><span class="callout-label">注意争议</span>「自我损耗」（ego depletion）在 2010 年代是大热门，但多项大样本重复实验未能稳定复现原始效应量。引用它时宜表述为「一种有影响力的假说」而非「已证实结论」——这正是本指南强调「什么机制已被证实、什么还在争议」的示范。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">5</span>前沿与研究进展</h2>
+          <p class="lede">时间与注意力管理近二十年从「成功学」走向「可测量的行为科学」，以下是几条主线。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">注意力残留</span><span class="tl-date">Leroy, 2009</span><p>用实验证明未完成任务会持续占用认知资源，为「整块时间」与「闭合式中断」提供了机制层面的解释，而非仅凭经验。</p></div>
+            <div class="tl-item"><span class="tl-era">打断的成本量化</span><span class="tl-date">Gloria Mark 等, 2000s–2010s</span><p>对知识工作者的实地观测显示，任务被打断后恢复到原深度需要可观时间，且切换频率与压力、错误率相关。</p></div>
+            <div class="tl-item"><span class="tl-era">延迟折扣与拖延</span><span class="tl-date">行为经济学</span><p>拖延被重新解释为「时间不一致偏好」：远期收益被过度折扣，即时奖励占优。对策因此转向「改变即时激励结构」（如承诺机制、即时反馈），而非单纯靠意志力。</p></div>
+            <div class="tl-item"><span class="tl-era">数字环境与注意力</span><span class="tl-date">2010s 至今</span><p>研究焦点转向通知设计、无限滚动、算法推荐对注意力分配的影响；争论点在于「注意力是否被系统性侵蚀」及其因果证据强度，目前仍无定论。</p></div>
+            <div class="tl-item"><span class="tl-era">深度工作与产出分布</span><span class="tl-date">Newport, 2016 起</span><p>「深度工作」概念被广泛传播，其可检验核心是：高认知任务的产出高度依赖不间断时段。该框架偏实践总结，学术验证程度弱于前几条，宜作为假设而非定律使用。</p></div>
           </div>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到「提高 X% 效率」的结论，先问三件事：样本是谁（知识工作者？学生？）、测量的是主观感受还是客观产出、效应能否被独立重复。多数畅销结论属于「可自测的启发式」，而非「已验证的因果规律」。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>帕金森定律与拖延</h2>
-          <p class="lede">「工作会膨胀到填满你给它的所有时间。」——所以，给任务设更短的期限。</p>
-          <p>对抗拖延，靠的不是意志力，而是<strong>降低启动成本</strong>：把任务拆到「下一步行动」足够小（写一页 → 打开文档写第一句）；用「两分钟规则」处理小事；用「番茄钟」制造一个只做 25 分钟的承诺，骗过拖延的大脑。</p>
+          <h2><span class="sec-num">6</span>跨学科视角</h2>
+          <p class="lede">时间管理不是孤立技能，它与多个学科共享同一套数学与机制语言。</p>
+          <div class="grid-2">
+            <div class="card"><h4>认知心理学</h4><p>工作记忆容量有限、注意力资源可被占用与耗尽——这是切换损耗与「一次只做一件」的机制依据。</p></div>
+            <div class="card"><h4>运筹学 / 最优化</h4><p>任务选择本质是带约束的最优化（背包、调度问题）；批处理、优先级、瓶颈识别都可借调度理论的语言描述。</p></div>
+            <div class="card"><h4>行为经济学</h4><p>双曲贴现、现时偏好、承诺机制，解释了「明知该做却拖延」的结构性原因，并给出了契约式对策。</p></div>
+            <div class="card"><h4>控制论 / 反馈系统</h4><p>把一天看作带反馈的控制回路：计划→执行→测量→校正。没有测量（记录时间去向）的「管理」是开环控制，必然漂移。</p></div>
+            <div class="card"><h4>生理学与睡眠科学</h4><p>腺苷、褪黑素、皮质醇的节律决定了精力曲线的形状；睡眠债会同时压低专注强度与情绪稳定性。</p></div>
+            <div class="card"><h4>热力学类比</h4><p>注意力像一种「可耗散的能量」：总预算有限、存在泄漏（切换、干扰）、需要恢复。这个类比有助于避免「无限压榨时间」的错觉。</p></div>
+          </div>
+          <p>把这些放一起看，会发现一个共同结构：<strong>资源的有限性 + 分配决策 + 反馈校正</strong>。这正是「管理」的通用形态，也是为什么同一套思维可以迁移到金钱、精力、人脉。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>精力节律：在巅峰做难事</h2>
-          <p class="lede">时间只是容器，精力才是燃料。硬要在低谷期攻坚，等于用没电的手机跑大程序。</p>
-          <p>多数人的认知巅峰在上午。把「最重要的事」放在精力最好的时段，机械琐事放在低谷。用「睡眠、运动、饮食、休息」养护精力，比多挤一小时时间更划算。记住：<strong>管理精力，比管理时间更本质</strong>。</p>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「番茄钟适合所有人、所有任务」
+
+「多任务能提高效率」
+
+「休息就是刷手机」
+
+「自律的人靠意志力硬扛」</pre><div class="why">问题：把工具当成了普适规律。番茄钟对易被打断的工作有效，但会打断「需要长时预热」的深度任务；多任务实为切换，成本随复杂度上升；刷手机引入新上下文；而靠意志力的策略在长期几乎总是失败。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>按任务类型选工具：碎片任务用番茄钟，
+深度任务用 60–120 min 整块
+
+一次只做一件，用批处理压缩切换次数
+
+休息选低负荷、无新目标的活动
+
+靠结构与环境设计，不靠意志力</pre><div class="why">要点：工具是手段。判断一个方法是否适用，看它降低的是切换损耗、提升的是选择质量，还是仅仅在满足「掌控幻觉」。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">时间块</th><td>可预测的独立工作</td><td>高响应性岗位（值班、客服）</td></tr>
+              <tr><th scope="row">番茄钟</th><td>易拖延、易分心的启动期</td><td>需要长时预热的深度任务</td></tr>
+              <tr><th scope="row">四象限</th><td>任务分类的入门直觉</td><td>同象限内需要排序时（须换成价值密度法）</td></tr>
+              <tr><th scope="row">两分钟规则</th><td>琐碎、确定的小事</td><td>「两分钟」会不断膨胀的开放式任务</td></tr>
+            </tbody>
+          </table>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">时间管理速记</span><button class="copy-btn" type="button">复制</button>· 四象限：重点做「重要不紧急」，减少「紧急不重要」
-· 深度工作 + 时间块 + 批量处理，减少注意力残留
-· 帕金森定律：任务会填满给它的时间，设更短期限
-· 拖延：拆小下一步 + 两分钟规则 + 番茄钟
-· 精力巅峰做难事，精力 > 时间</div>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">时间与注意力速记</span><button class="copy-btn" type="button">复制</button>· 产出 ≈ 时间 × 专注强度 × 任务选择质量 − 切换损耗
+· 三个乘数任一趋零，产出趋零；加时间是最笨的优化
+· 注意力残留：未完成任务持续占用工作记忆（Leroy 2009）
+· 切换成本 = 卸载 + 重入 + 惯性；一次分钟级打断可致十几分钟低效
+· 闭合式中断：打断前写「当前状态 + 下一步」，降低重入成本
+· 批处理收益 ≈ (n−1) × 单次切换成本，n 越大越划算
+· 四象限只能分类不能排序；排序用「期望价值 / 耗时」
+· 任务选择近似背包问题：时间预算内最大化总价值
+· 优先做「价值密度高」的事，尤其能快速闭合的
+· 精力是受限资源：腺苷累积致困，咖啡因阻断受体但不还债
+· 峰值区做深度任务，低谷区做机械任务
+· 「自我损耗」假说争议大，引用时注明未定论
+· 拖延 = 时间不一致偏好；对策是改变即时激励结构
+· 开环管理必然漂移：不记录时间去向就谈不上管理
+· 工具是手段：只问「降低切换损耗还是提升选择质量」</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <p class="lede">以下练习要求产出可检验的证据或结论，而非「做过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">把本周任务按四象限分类，找出该删/该委派的</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">为明天最重要的事预留一个 90 分钟「时间块」</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">关闭消息通知，做一次无干扰的深度工作</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">把一件拖延的事拆成「小于 2 分钟的下一步」</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">观察并记录自己一天中精力最好和最差的时段</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">把琐事集中到一个固定时段批量处理</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用「产出 = 时间 × 强度 × 选择质量」拆解自己上周的一天，指出哪个乘数最低并给出证据</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">连续记录 3 个工作日的时间去向（精确到 30 分钟），统计切换次数与「被打断后的恢复时长」估算值</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">为一个高价值长周期任务设计 checkpoint 格式（状态 + 下一步），并在两次打断中实际使用</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">把本周 10 件事按「期望价值 / 耗时」排序，与四象限排序对比，指出两处差异及其原因</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">为明天设置两个 90 分钟整块（分别对应峰值与低谷时段），安排任务并记录完成度差异</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">做一次「批处理实验」：把消息/邮件集中到两个固定时段处理，对比当日的切换次数与主观疲劳</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">找出一个正在拖延的任务，用「时间不一致偏好」解释它，并设计一个改变即时激励结构的对策</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">查阅 Leroy(2009) 或 Gloria Mark 关于打断的一项研究，写出其方法、结论与至少一条局限</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">为自己的时间管理建立「开环→闭环」的最小测量：一个可周度复盘的三指标仪表（如深度时长/切换次数/完成率）</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，基于时间管理与注意力管理的通行研究（四象限、深度工作、帕金森定律等）整理。</p>
+        <p class="footnote">原创交互式学习资料。机制部分参考 Leroy 的注意力残留研究（2009）、Gloria Mark 等对知识工作者打断的实地观测；拖延部分参考行为经济学的双曲贴现与现时偏好框架；精力部分参考昼夜节律与腺苷模型。需注意：「自我损耗」假说与「深度工作」框架的实证强度弱于注意力残留等结论，本指南已在正文中标注争议状态。所有数值为量级估计，具体结论请以原始文献为准。</p>
       </footer>
     </div>
   </article>

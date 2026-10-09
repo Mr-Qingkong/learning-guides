@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQL 与数据查询指南</title>
+  <title>SQL 与数据查询进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>SQL 与数据查询指南</h1>
-          <p class="report-intro__summary">SQL 是声明式语言：你只描述「要什么」，执行顺序由引擎决定。掌握 SELECT 的逻辑执行顺序、JOIN 的膨胀陷阱与索引原理，就掌握了写出正确且不拖垮生产的查询的能力。</p>
+          <h1>SQL 与数据查询进阶指南</h1>
+          <p class="report-intro__summary">SQL 是声明式语言：你只描述「要什么」，执行顺序由引擎决定。但引擎不是黑箱——它把查询翻译成关系代数表达式，经由代价模型选择执行计划。本指南从关系代数、B+ 树索引复杂度讲到连接算法、范式与隔离级别，让你能写出既正确又高效的查询，并能读懂优化器的选择。</p>
           <div class="intro-meta">
             <span>领域：科技 · AI</span>
             <span>难度：进阶</span>
@@ -25,8 +25,8 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>SELECT 的逻辑执行顺序</h2>
-          <p class="lede">书写顺序与执行顺序不同——这是「SQL 为什么报错」的第一答案。</p>
+          <h2><span class="sec-num">1</span>SELECT 的逻辑执行顺序与关系代数</h2>
+          <p class="lede">书写顺序与执行顺序不同——这是「SQL 为什么报错」的第一答案。而执行顺序背后，是关系代数的算子组合。</p>
           <table>
             <caption class="caption">书写顺序 vs 逻辑执行顺序</caption>
             <thead><tr><th>书写顺序</th><th>逻辑执行顺序</th></tr></thead>
@@ -39,11 +39,24 @@
             <li><strong>推论二</strong>：聚合函数不能放进 WHERE（分组尚未发生），对分组结果的过滤必须用 HAVING。</li>
             <li><strong>推论三</strong>：ORDER BY 在 SELECT 之后执行，因此可以使用列别名；窗口函数也是在此前后完成计算的。</li>
           </ul>
-          <div class="callout tip"><span class="callout-label">心法</span>把查询读成一条数据流水线：先取表、再过滤行、然后分桶、筛桶、最后决定显示什么与什么顺序。报错时先问「此刻这步执行了没有」。</div>
+          <p>把 SQL 写成关系代数，就能看清每一步在做什么集合运算：</p>
+          <div class="prompt-block"><span class="prompt-label">SQL 与关系代数的对应</span><button class="copy-btn" type="button">复制</button>-- SQL:
+SELECT dept, COUNT(*) FROM employee WHERE status='active' GROUP BY dept;
+-- 关系代数（自内向外）：
+--   π_dept, count(*) ( γ_dept; count(*) ( σ_status='active' ( employee ) ) )
+--   σ 选择(过滤行)  π 投影(选列)  γ 分组聚合  ⋈ 连接  × 笛卡尔积
+
+-- 关键恒等式（优化器的改写依据）：
+--   σ_a(σ_b(R))     = σ_b(σ_a(R))         选择可交换
+--   σ_a(R ⋈ S)      = σ_a(R) ⋈ S          选择可下推（当条件只涉及 R）
+--   π_a(R ⋈ S)      = π_a(π_(a∩R)(R) ⋈ S) 投影可下推
+-- 这正是「先过滤再连接」永远更快的形式化理由。</div>
+          <div class="callout tip"><span class="callout-label">心法</span>把查询读成一条数据流水线：先取表、再过滤行、然后分桶、筛桶、最后决定显示什么与什么顺序。报错时先问「此刻这步执行了没有」，优化时先问「哪个算子产生最大中间结果」。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>JOIN 类型与笛卡尔积陷阱</h2>
-          <p class="lede">JOIN 的危险不在语法，而在行数：只要键不唯一，结果就悄悄膨胀。</p>
+          <h2><span class="sec-num">2</span>JOIN 类型、笛卡尔积陷阱与连接算法</h2>
+          <p class="lede">JOIN 的危险不在语法，而在行数；JOIN 的性能不在写法，而在算法。理解三种连接算法与复杂度，才能解释执行计划里的选择。</p>
           <table>
             <caption class="caption">四种 JOIN 的行为</caption>
             <thead><tr><th>类型</th><th>语义</th><th>结果行数</th></tr></thead>
@@ -54,13 +67,24 @@
               <tr><th scope="row">CROSS JOIN</th><td>笛卡尔积：所有组合</td><td>m × n，慎用</td></tr>
             </tbody>
           </table>
+          <table>
+            <caption class="caption">三种连接算法：复杂度与适用场景</caption>
+            <thead><tr><th>算法</th><th>复杂度</th><th>适用</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">嵌套循环（Nested Loop）</th><td>最坏 O(m×n)；有索引时为 O(m×log n)</td><td>小表驱动大表、内表连接列有索引</td></tr>
+              <tr><th scope="row">哈希连接（Hash Join）</th><td>约 O(m+n)（等值连接）</td><td>大表等值连接、无可用索引、内存可容纳哈希表</td></tr>
+              <tr><th scope="row">排序归并（Sort-Merge）</th><td>O(m log m + n log n)，含索引有序时可省排序</td><td>两边已有序、或需输出有序结果、范围连接</td></tr>
+            </tbody>
+          </table>
           <ul>
-            <li><strong>一对多膨胀</strong>：订单表 join 明细表，一个订单带 5 条明细就被展开成 5 行——先想清楚粒度再聚合。</li>
+            <li><strong>一对多膨胀</strong>：订单表 join 明细表，一个订单带 5 条明细就被展开成 5 行——先想清楚粒度再聚合。嵌套循环在小表驱动时问题不大，但若两边都大又无索引，O(m×n) 会瞬间压垮数据库。</li>
             <li><strong>LEFT JOIN 的隐形失效</strong>：在 WHERE 里对右表列加条件（如 <code>right.col IS NOT NULL</code> 或 <code>right.status = 1</code>），会把左表独有的行过滤掉，LEFT JOIN 退化成 INNER JOIN；对右表的条件应写进 ON。</li>
+            <li><strong>哈希连接为何快</strong>：先扫描小表建哈希表（O(m)），再扫描大表逐个探测（O(n)），把「两两比较」降为「一次哈希查找」。它只支持等值连接，且内存不足时会退化为分区哈希（grace hash）。</li>
             <li><strong>重复键自检</strong>：合并前后各 <code>SELECT COUNT(*)</code> 对账，行数不符立刻暴露键问题。</li>
           </ul>
-          <div class="callout tip"><span class="callout-label">纪律</span>每个 JOIN 前先确认「键唯一吗、这是一对几」；拿不准就先 COUNT 两个表和结果的行数。</div>
+          <div class="callout tip"><span class="callout-label">纪律</span>每个 JOIN 前先确认「键唯一吗、这是一对几」；拿不准就先 COUNT 两个表和结果的行数。看到执行计划里的连接算法，能反推优化器的成本判断。</div>
         </section>
+
         <section>
           <h2><span class="sec-num">3</span>聚合、GROUP BY 与 HAVING</h2>
           <p class="lede">聚合把多行压成一行，HAVING 在压缩之后再做筛选——两者隔着 GROUP BY 这道墙。</p>
@@ -75,14 +99,16 @@ ORDER BY avg_sal DESC
 LIMIT 10;</div>
           <ul>
             <li><strong>COUNT 的三种口径</strong>：<code>COUNT(*)</code> 统计行数（含 NULL）；<code>COUNT(col)</code> 忽略该列为 NULL 的行；<code>COUNT(DISTINCT col)</code> 先去重再计数。</li>
-            <li><strong>分组约束</strong>：SELECT 里出现的非聚合列必须都出现在 GROUP BY 里（严格模式的 MySQL 与多数数据库会直接报错）。</li>
-            <li><strong>WHERE 与 HAVING 分工</strong>：能用 WHERE 过滤的不要留到 HAVING——前者在分组前减少数据量，代价更低。</li>
+            <li><strong>分组约束</strong>：SELECT 里出现的非聚合列必须都出现在 GROUP BY 里（严格模式的 MySQL 与多数数据库会直接报错）。这是函数依赖约束在语法层的体现。</li>
+            <li><strong>WHERE 与 HAVING 分工</strong>：能用 WHERE 过滤的不要留到 HAVING——前者在分组前减少数据量（操作的行数更少），代价更低。这与关系代数里「选择下推」是同一原理。</li>
+            <li><strong>聚合的代价</strong>：分组通常需要排序或哈希。若分组列上有合适索引，可能直接利用索引顺序避免额外排序；否则会看到执行计划里的 <code>Using temporary</code> 或 <code>Using filesort</code>。</li>
           </ul>
           <div class="callout tip"><span class="callout-label">口径</span>写任何统计查询先回答三件事：一行代表什么（粒度）、NULL 怎么算（口径）、过滤发生在分组前还是后（位置）。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">4</span>子查询与 CTE</h2>
-          <p class="lede">子查询回答「一步算不出来」的问题；CTE 给这一步命名，让复杂逻辑可读可拆。</p>
+          <h2><span class="sec-num">4</span>子查询、CTE 与 NULL 三值逻辑</h2>
+          <p class="lede">子查询回答「一步算不出来」的问题；CTE 给这一步命名，让复杂逻辑可读可拆。而 NULL 的三值逻辑是很多「结果为空」事故的根源。</p>
           <div class="prompt-block"><span class="prompt-label">CTE 与子查询</span><button class="copy-btn" type="button">复制</button>-- CTE：先声明后引用，像一次性视图
 WITH ranked AS (
     SELECT emp_id, dept, salary,
@@ -101,15 +127,17 @@ WHERE EXISTS (SELECT 1
               FROM orders o
               WHERE o.emp_id = e.emp_id);</div>
           <ul>
-            <li><strong>CTE 的价值</strong>：给中间结果起名字，多步推导从嵌套括号变成从上到下的流水线；同层可声明多个 CTE 依次引用。</li>
-            <li><strong>EXISTS 优于 IN 的场景</strong>：相关子查询通常在大量数据下表现更好，而且避开 NULL 陷阱——<code>NOT IN (子查询)</code> 只要子查询返回含 NULL，结果一行都不会有，NULL 比较结果是 UNKNOWN。</li>
+            <li><strong>CTE 的价值</strong>：给中间结果起名字，多步推导从嵌套括号变成从上到下的流水线；同层可声明多个 CTE 依次引用。注意部分引擎可能内联 CTE 而非物化，性能需以执行计划为准。</li>
+            <li><strong>EXISTS 优于 IN 的场景</strong>：相关子查询通常在大量数据下表现更好，而且避开 NULL 陷阱——<code>NOT IN (子查询)</code> 只要子查询返回含 NULL，结果一行都不会有。</li>
+            <li><strong>NULL 的三值逻辑</strong>：SQL 的比较结果是真 / 假 / 未知（UNKNOWN）三种。任何与 NULL 的比较（包括 <code>NULL = NULL</code>）都是 UNKNOWN，而 WHERE 只接受「真」。所以判断 NULL 必须用 <code>IS NULL</code> / <code>IS NOT NULL</code>；聚合函数（除 COUNT(*)）一般忽略 NULL；<code>NOT IN</code> 子查询含 NULL 时整体为空，正是「UNKNOWN 参与否定」的结果。</li>
             <li><strong>标量子查询</strong>：只返回一行一列的子查询可以当值用（放 SELECT 或 WHERE 里），返回多行则报错——这是常见事故点。</li>
           </ul>
-          <div class="callout tip"><span class="callout-label">习惯</span>三层以上嵌套的子查询一律改写成 CTE；用 <code>NOT IN</code> 前先检查子查询结果是否可能含 NULL，拿不准就换 <code>NOT EXISTS</code>。</div>
+          <div class="callout tip"><span class="callout-label">习惯</span>三层以上嵌套的子查询一律改写成 CTE；用 <code>NOT IN</code> 前先检查子查询结果是否可能含 NULL，拿不准就换 <code>NOT EXISTS</code>。写带 NULL 的表时，脑中始终运行「三值逻辑」。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>窗口函数入门与查询优化</h2>
-          <p class="lede">窗口函数做「分组统计但不压缩行数」的事；优化则从「让引擎少扫数据」做起。</p>
+          <h2><span class="sec-num">5</span>窗口函数：不压缩行数的分组计算</h2>
+          <p class="lede">窗口函数做「分组统计但不压缩行数」的事：它在每一行旁边附上一个基于窗口的计算值，是排名、同组占比、移动平均的利器。</p>
           <div class="prompt-block"><span class="prompt-label">三个排名函数的区别</span><button class="copy-btn" type="button">复制</button>SELECT name, dept, salary,
        ROW_NUMBER() OVER w AS rn,   -- 严格 1,2,3,4：并列也分先后
        RANK()       OVER w AS rk,   -- 并列同名次，随后跳号：1,2,2,4
@@ -119,48 +147,221 @@ WINDOW w AS (PARTITION BY dept ORDER BY salary DESC);</div>
           <ul>
             <li><strong>OVER 子句即「窗口」</strong>：<code>PARTITION BY</code> 定义分组边界（每组独立计算），<code>ORDER BY</code> 决定累计、位移类函数的方向；只写 <code>OVER ()</code> 则在全表范围计算。</li>
             <li><strong>位置限制</strong>：窗口函数在 SELECT 阶段求值，因此不能出现在 WHERE / GROUP BY / HAVING 里——需要过滤其结果时，套一层子查询或 CTE 再 WHERE。</li>
+            <li><strong>帧（frame）概念</strong>：带 ORDER BY 的窗口默认帧是「从组首到当前行」，这正是 <code>SUM(...) OVER (ORDER BY ...)</code> 得到累计和的原因；用 <code>ROWS BETWEEN ... AND ...</code> 可自定义，实现移动平均。</li>
+            <li><strong>性能</strong>：窗口函数通常需要按 PARTITION/ORDER 排序，代价接近一次排序（O(n log n)）；若索引已提供所需顺序，可省去这一步。</li>
           </ul>
+          <div class="callout tip"><span class="callout-label">理解</span>GROUP BY 是「把多行压成一行」，窗口函数是「保留每一行，并给每行附加一个组内统计」。理解这个区别，就不会把它们混用。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">6</span>索引与 B+ 树：复杂度从哪里来</h2>
+          <p class="lede">索引不是「加个快」，而是把查找复杂度从线性降到对数。理解 B+ 树结构与最左前缀，就能预判哪些条件走索引。</p>
           <ul>
-            <li><strong>索引的本质</strong>：主流数据库用 B+ 树，把「按条件定位行」从 O(n) 降为 O(log n) 范围扫描；联合索引遵循<strong>最左前缀原则</strong>：<code>(a, b, c)</code> 只能支撑以 a 开头的条件组合。</li>
-            <li><strong>失效三坑</strong>：对索引列套函数或做运算（<code>WHERE YEAR(d) = 2024</code>）、隐式类型转换（字符串列传数字）、前模糊匹配（<code>LIKE '%x'</code> 无法走索引，<code>LIKE 'x%'</code> 可以）。</li>
-            <li><strong>覆盖索引</strong>：查询所需列全部包含在索引里时免回表；优化流程固定为「先 EXPLAIN 看执行计划，再动手」——关注 type（range 优于 ALL 全表扫）、rows 估算与 Using filesort / Using temporary。</li>
+            <li><strong>B+ 树的结构</strong>：一种多路平衡搜索树。内部节点只存键用于导航，全部数据行指针放在叶子节点，叶子之间用链表相连。树高很小（通常 3~4 层就能存百万行），因为每个节点能容纳大量键、扇出很高。</li>
+            <li><strong>复杂度</strong>：单点等值查找 O(log n)；范围查找先 O(log n) 定位起点，再沿叶子链表顺序扫描命中区间，总代价 O(log n + k)（k 为命中行数）。对比无索引全表扫描 O(n)，这是数量级的差距。</li>
+            <li><strong>为什么是 B+ 树而非二叉搜索树</strong>：磁盘/页是按块读取的，B+ 树的高扇出让树高极低，一次查找只需几次磁盘 I/O；且叶子链表天然支持范围扫描与有序输出。</li>
+            <li><strong>最左前缀原则</strong>：联合索引 <code>(a, b, c)</code> 相当于按 a、再按 b、再按 c 排序。因此只能支撑「以 a 开头」的条件组合；跳过 a 直接用 b 无法定位。</li>
+            <li><strong>失效三坑</strong>：对索引列套函数或做运算（<code>WHERE YEAR(d) = 2024</code>，破坏了有序性）、隐式类型转换（字符串列传数字）、前模糊匹配（<code>LIKE '%x'</code> 无法定位，<code>LIKE 'x%'</code> 可以）。</li>
+            <li><strong>覆盖索引</strong>：查询所需列全部包含在索引里时免回表——这是「用空间换 I/O」的典型权衡。</li>
           </ul>
+          <div class="prompt-block"><span class="prompt-label">索引与执行计划</span><button class="copy-btn" type="button">复制</button>EXPLAIN ANALYZE
+SELECT * FROM orders WHERE user_id = 42 AND created_at &gt; '2024-01-01';
+-- 关注：type（range/ref 优于 ALL 全表扫）、key（实际用的索引）、
+--       rows（估算扫描行数）、Extra（Using filesort / Using temporary / Using index）
+
+-- 让索引可用的写法：
+--   WHERE created_at &gt;= '2024-01-01'        -- 范围可走索引
+--   避开 WHERE YEAR(created_at) = 2024        -- 列上套函数会失效
+--   联合索引 (user_id, created_at) 支撑「等值+范围」组合</div>
           <div class="callout tip"><span class="callout-label">次序</span>优化铁律：先 EXPLAIN 定位瓶颈（全表扫还是排序），再考虑索引；索引本身有写放大成本，为高频查询建，不为「所有查询」建。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
+          <h2><span class="sec-num">7</span>范式、规范化与反范式的权衡</h2>
+          <p class="lede">范式是消除冗余与更新异常的设计准则；反范式是为读性能有意引入冗余。二者是一枚硬币的两面，理解依赖关系才能权衡。</p>
+          <table>
+            <caption class="caption">范式递进与目标</caption>
+            <thead><tr><th>范式</th><th>核心要求</th><th>消除的问题</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">1NF</th><td>每个字段都是原子值，不可再分</td><td>单元格里塞列表/多值</td></tr>
+              <tr><th scope="row">2NF</th><td>在 1NF 基础上，非主属性完全依赖主键（消除部分依赖）</td><td>复合主键下的部分依赖冗余</td></tr>
+              <tr><th scope="row">3NF</th><td>在 2NF 基础上，消除非主属性对主键的传递依赖</td><td>如「订单→客户→客户城市」的传递冗余</td></tr>
+              <tr><th scope="row">BCNF</th><td>每个决定因素都是候选键</td><td>主属性间的依赖异常（3NF 的加强）</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><strong>函数依赖</strong>：<code>X → Y</code> 表示 X 唯一决定 Y。规范化本质是围绕函数依赖做无损分解，把一张大表拆成若干「每个依赖都有合理归宿」的表。</li>
+            <li><strong>为什么规范化重要</strong>：冗余会导致更新异常——同一事实存多处，改一处忘另一处就产生不一致。规范化用「存一份」从结构上消除这类错误。</li>
+            <li><strong>反范式何时用</strong>：读多写少、联表代价高时，可有控制地冗余（如把总额、计数缓存到主表）。代价是必须处理一致性（触发器、事务、或定期校正）。</li>
+            <li><strong>权衡</strong>：规范化优化「写的一致性与空间」，反范式优化「读的速度」。没有普适答案——先规范化到 3NF 作为基线，再按实测热点有选择地反规范化。</li>
+          </ul>
+          <div class="callout tip"><span class="callout-label">原则</span>先设计到 3NF（结构正确），再针对瓶颈反范式（性能可调）。反过来做——先堆冗余再补齐一致——会让数据问题难以收拾。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>事务、ACID 与隔离级别</h2>
+          <p class="lede">事务保证一组操作要么全成、要么全不成。隔离级别则是在「并发性能」与「一致性」之间选一个档位，理解各档位允许什么异常是核心。</p>
+          <table>
+            <caption class="caption">隔离级别与可能出现的异常</caption>
+            <thead><tr><th>隔离级别</th><th>脏读</th><th>不可重复读</th><th>幻读</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">读未提交（Read Uncommitted）</th><td>可能</td><td>可能</td><td>可能</td></tr>
+              <tr><th scope="row">读已提交（Read Committed）</th><td>不可能</td><td>可能</td><td>可能</td></tr>
+              <tr><th scope="row">可重复读（Repeatable Read）</th><td>不可能</td><td>不可能</td><td>标准允许，部分实现（如 MySQL 默认）用间隙锁规避</td></tr>
+              <tr><th scope="row">串行化（Serializable）</th><td>不可能</td><td>不可能</td><td>不可能</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><strong>四类异常</strong>：脏读=读到别人未提交的中间值；不可重复读=同一事务两次读同一行结果不同；幻读=同一范围两次查询行数不同（多了或少了）；丢失更新=两事务基于旧值各自写回，覆盖彼此。</li>
+            <li><strong>实现机制</strong>：主流引擎用多版本并发控制（MVCC）——读操作读快照而不加锁，写操作产生新版本；锁（行锁、间隙锁）用于解决写冲突与幻读。隔离级别越高，锁与版本检查越多，并发度越低。</li>
+            <li><strong>权衡</strong>：串行化最安全但并发最低；读已提交并发高但需接受不可重复读。多数在线事务系统默认读已提交或可重复读。</li>
+            <li><strong>与 CAP / 一致性模型</strong>：单机事务用隔离级别描述一致性；分布式系统还要面对网络分区与跨节点一致性，模型更复杂。</li>
+          </ul>
+          <div class="prompt-block"><span class="prompt-label">事务与锁</span><button class="copy-btn" type="button">复制</button>BEGIN;                       -- 开启事务
+UPDATE account SET bal = bal - 100 WHERE id = 1;
+UPDATE account SET bal = bal + 100 WHERE id = 2;
+COMMIT;                      -- 要么都生效，要么都回滚
+
+-- 危险的「读-改-写」在两个事务里交错会丢失更新；
+-- 方案：把计算下推到 SQL（原子），或显式加锁 SELECT ... FOR UPDATE
+SELECT bal FROM account WHERE id = 1 FOR UPDATE;  -- 悲观锁住该行</div>
+          <div class="callout tip"><span class="callout-label">纪律</span>转账类操作必须在同一事务内完成；能用一个 UPDATE 原子完成的就不要「先查再改」（避免丢失更新）。明确声明隔离级别，别依赖默认值的偶然性。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>查询优化器与代价模型</h2>
+          <p class="lede">优化器把关系代数表达式改写成等价但更快的计划，再按代价估算选出「最便宜」的一个。理解它，就能解释「为什么它不走我的索引」。</p>
+          <ul>
+            <li><strong>两个阶段</strong>：逻辑优化（基于关系代数等价改写，如选择/投影下推、连接重排）与物理优化（为每个算子选择具体算法，如哈希连接 vs 嵌套循环，并估算代价）。</li>
+            <li><strong>代价模型</strong>：综合估算各候选计划的 I/O 次数、CPU 开销、中间结果大小。它依赖<strong>统计信息</strong>——表的行数、列的不同值个数（基数 cardinality）、数据分布直方图。统计信息过期，估算就会离谱。</li>
+            <li><strong>基数是关键</strong>：选择性（selectivity）估算决定连接顺序与算法选择。若优化器以为某条件只返回 10 行（实际 10 万行），它可能选错连接算法，导致灾难性慢查询。</li>
+            <li><strong>为什么「不走索引」</strong>：不是因为优化器笨，而是它估算走索引回表 + 随机 I/O 的代价高于全表顺序扫描（常见于返回大比例行、或选择性差的列）。此时强制用索引反而更慢。</li>
+            <li><strong>可干预的手段</strong>：更新统计信息（<code>ANALYZE</code>）、重写查询、加合适的联合/覆盖索引；提示（hint）应作为最后手段，因为它绕过优化器的自适应能力。</li>
+          </ul>
+          <div class="callout tip"><span class="callout-label">理解</span>读懂一个执行计划，等于读懂优化器对「你有多少数据、条件有多挑、该怎么连接」的全部假设。优化查询常常就是修正它的错误假设（过期的统计信息）。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>前沿与研究进展</h2>
+          <p class="lede">数据库并非陈旧技术。围绕查询优化、存储引擎与分析能力，近二十年出现多条重要演进线索。</p>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-era">列式存储与 OLAP</div><p>分析型查询（OLAP）从行存转向列存：同列数据连续存放，压缩率高、只读需要的列，扫描吞吐显著提升。列存成为现代分析型数据库的重要基础。</p></div>
+            <div class="tl-item"><div class="tl-era">向量化与 JIT</div><p>查询执行从「逐行处理」转向「批量、向量化处理」，配合即时编译（JIT）生成专用代码，大幅降低每行的解释开销。这是现代分析引擎性能跃升的关键手段。</p></div>
+            <div class="tl-item"><div class="tl-era">学习型索引</div><p>2018 年前后出现「学习型索引」（learned index）研究，用模型拟合数据分布以替代或辅助传统 B+ 树，目标是更小的空间与更快的查找。据通行说法，该方向引发大量后续研究，但生产落地仍在演进中。</p></div>
+            <div class="tl-item"><div class="tl-era">HTAP 与 NewSQL</div><p>HTAP（混合事务分析处理）尝试在一套系统内兼顾 OLTP 与 OLAP；NewSQL 则在保证分布式可扩展的同时提供事务语义与 SQL 接口，回应「既要关系一致性又要水平扩展」的需求。</p></div>
+            <div class="tl-item"><div class="tl-era">面向机器学习的数据库</div><p>出现把数据库用于特征存储、以及用数据库系统优化机器学习工作流（含数据版本、可复现）的探索；方向上强调「声明式」与「自动化优化」——与 SQL 的哲学一脉相承。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">读法</span>共同线索是：用更聪明的数据结构与执行方式，把「声明式描述 + 自动优化」这一 SQL 核心思想推向更大规模、更复杂负载。理解关系代数与代价模型，是理解这些新系统的通用钥匙。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">11</span>跨学科视角：SQL 背后的理论与工程</h2>
+          <p class="lede">SQL 是关系理论与工程实践的结合体。看清它与代数、并发理论、分布式系统的连接，能把零散知识串成体系。</p>
+          <div class="grid-2">
+            <div class="card">
+              <h3>与集合论 / 代数</h3>
+              <p>关系模型基于集合论：表是元组的集合，查询是集合运算的组合。关系代数的等价律（如选择下推）是优化器的理论依据——SQL 的正确性最终可归约到这些恒等式。</p>
+            </div>
+            <div class="card">
+              <h3>与并发理论</h3>
+              <p>隔离级别对应并发控制理论中的「可串行化」与各类异常。MVCC、两阶段锁、快照隔离都是并发理论的具体实现，事务是「把并发问题封装为串行语义」的工程抽象。</p>
+            </div>
+            <div class="card">
+              <h3>与数据结构</h3>
+              <p>B+ 树索引、哈希表、排序归并直接决定查询复杂度。数据结构的选择决定了「log n 还是 n、顺序还是随机 I/O」，是数据库性能的第一性来源。</p>
+            </div>
+            <div class="card">
+              <h3>与分布式系统</h3>
+              <p>分库分表、复制、一致性与分区容错把单机 SQL 推向分布式。跨节点查询要把连接、聚合、排序下推到各节点再汇总，等于在分布式环境下重演关系代数优化。</p>
+            </div>
+          </div>
+          <p>统一视角：SQL 的强大源于「声明式接口 + 可自动优化的形式化基础」。用户描述结果（关系代数表达式），系统负责找到高效路径（优化器）。这与编译器、乃至人工智能中的「声明式求解」思想高度相通。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">12</span>常见误区与边界条件</h2>
+          <p class="lede">把常见误区与正确理解并列，是避免踩坑最快的方式。很多「SQL 的坑」其实是三值逻辑、执行顺序与优化器假设的必然结果。</p>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">常见误区</span>
+              <p>「WHERE 里写了 <code>col &lt;&gt; 'x'</code> 就会返回所有不等于 x 的行，包括 col 为 NULL 的行」。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">正确理解</span>
+              <p>NULL 参与的比较结果是 UNKNOWN，不会被 WHERE 接受，因此这些行被排除。要包含它们需显式写 <code>col &lt;&gt; 'x' OR col IS NULL</code>。</p>
+            </div>
+          </div>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">常见误区</span>
+              <p>「建了索引查询就一定快，优化器应该总是走索引」。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">正确理解</span>
+              <p>当返回行比例很大或列选择性差时，优化器可能判定全表顺序扫描更便宜；应看执行计划与统计信息，而非强求走索引。</p>
+            </div>
+          </div>
+          <table>
+            <caption class="caption">边界条件清单</caption>
+            <thead><tr><th>场景</th><th>边界/陷阱</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">COUNT 口径</th><td><code>COUNT(*)</code> 含 NULL 行，<code>COUNT(col)</code> 忽略 NULL，二者常被混用导致对不上账</td></tr>
+              <tr><th scope="row">LEFT JOIN 过滤</th><td>对右表列的条件放 WHERE 会退化成 INNER JOIN，应放 ON</td></tr>
+              <tr><th scope="row">索引失效</th><td>列上套函数、隐式类型转换、前模糊匹配都会让索引不可用</td></tr>
+              <tr><th scope="row">窗口函数位置</th><td>不能出现在 WHERE/GROUP BY/HAVING，需套一层子查询或 CTE</td></tr>
+              <tr><th scope="row">可移植性</th><td>FULL OUTER JOIN、窗口函数语法、CTE 支持度在不同数据库间有差异</td></tr>
+              <tr><th scope="row">隔离级别默认值</th><td>各数据库默认级别不同（如 MySQL 默认可重复读、PostgreSQL 默认读已提交），行为随之不同</td></tr>
+            </tbody>
+          </table>
+          <div class="callout warn"><span class="callout-label">边界</span>本文按 SQL 标准与主流数据库（PostgreSQL/MySQL）的通行行为描述；具体语法、默认隔离级别、优化器行为与统计信息机制请以所用数据库版本文档与实测执行计划为准。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">13</span>速查卡</h2>
           <div class="prompt-block"><span class="prompt-label">SQL 速记</span><button class="copy-btn" type="button">复制</button>· 逻辑顺序：FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT
+· 关系代数：σ 选择 / π 投影 / γ 分组 / ⋈ 连接 / × 笛卡尔积
+· 选择下推 σ_a(R ⋈ S)=σ_a(R) ⋈ S：先过滤再连接更快
 · WHERE 不能用 SELECT 别名；HAVING 专管分组后
 · JOIN 键不唯一 → 行数膨胀，先查键再合并
+· 连接算法：嵌套循环 O(m×n)/有索引 O(m log n)、哈希 O(m+n)、排序归并 O(n log n)
 · LEFT JOIN 后右表条件放 ON，放 WHERE 会退化成 INNER
 · 合并前后 COUNT(*) 对账，行数异常立刻暴露问题
-· COUNT(*) 计行、COUNT(col) 忽略 NULL、DISTINCT 去重
-· WHERE 能过滤的不留给 HAVING
-· SELECT 非聚合列必须都在 GROUP BY
-· 三层以上嵌套改写成 CTE，逻辑从下往上读
-· NOT IN 遇 NULL 全空，优先 NOT EXISTS
+· COUNT(*) 计行含 NULL、COUNT(col) 忽略 NULL、DISTINCT 去重
+· NULL 比较结果是 UNKNOWN；判断 NULL 必须用 IS NULL
+· NOT IN 子查询含 NULL → 结果全空；优先 NOT EXISTS
+· 三层以上嵌套改写成 CTE
 · 窗口函数：PARTITION BY 分组边界，不压缩行数
 · ROW_NUMBER 严格排号 / RANK 跳号 / DENSE_RANK 不跳号
 · 窗口函数不能进 WHERE，套一层子查询再过滤
+· B+ 树查找 O(log n)，范围 O(log n + k)；高扇出、低树高
 · 联合索引最左前缀，列上套函数即失效
-· EXPLAIN 先行：type、rows、filesort 三处找瓶颈</div>
+· 覆盖索引免回表，用空间换 I/O
+· 范式消冗余：1NF 原子、2NF 完全依赖、3NF 无传递依赖、BCNF 决定因素皆候选键
+· 反范式换读性能，代价是维护一致性
+· 隔离级别越高越安全、并发越低；默认值因数据库而异
+· 丢失更新：能用一个 UPDATE 原子完成，就别「先查再改」
+· 优化先 EXPLAIN，看 type/rows/Extra；统计信息过期会选错计划</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">14</span>练习清单</h2>
+          <p class="lede">以下练习要求推导、验证或实现，做完你应能预测查询的行为与代价，而不只是会写语法正确的 SQL。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">在 WHERE 里写列别名并触发报错，再用子查询包一层让它通过，验证执行顺序</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">构造一个一对多 JOIN，分别用错误口径（先 join 再 sum）与正确口径（先聚合再 join）算总金额</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">在 LEFT JOIN 的 WHERE 里放右表条件，观察退化成 INNER JOIN，再改到 ON 验证差异</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">分别用 COUNT(*)、COUNT(col)、COUNT(DISTINCT col) 统计同一张含 NULL 的表并解释差异</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用 CTE + ROW_NUMBER 写出「每个部门薪资前三」的查询，再对比 RANK 与 DENSE_RANK 的结果</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">写一个返回 NULL 的 NOT IN 子查询，观察结果为空后改写为 NOT EXISTS</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">对一个 10 万行表做 LIKE '%x' 查询，建索引前先 EXPLAIN，再用前缀匹配与覆盖索引优化并对比执行计划</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">在 WHERE 里写列别名并触发报错，再用子查询包一层让它通过，验证执行顺序并写出对应的关系代数表达式</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">构造一个一对多 JOIN，分别用错误口径（先 join 再 sum）与正确口径（先聚合再 join）算总金额，解释膨胀如何发生</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">在 LEFT JOIN 的 WHERE 里放右表条件，观察退化成 INNER JOIN，再改到 ON 验证差异，并解释选择下推的原理</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">构造含 NULL 的数据，分别验证 NULL = NULL、NOT IN 含 NULL、COUNT(*) vs COUNT(col) 三种三值逻辑现象并解释</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用 CTE + ROW_NUMBER 写出「每个部门薪资前三」，再对比 RANK 与 DENSE_RANK 结果；另用 OVER 帧算出每人薪资占部门累计占比</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">建联合索引 (a,b,c)，用 EXPLAIN 分别验证 a=?、a=? AND b=?、仅 b=? 三种条件的索引使用情况，推导最左前缀原理</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">设计一张存在传递依赖的表，规范化到 3NF，说明每次分解消除了哪种函数依赖与更新异常</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">开两个会话模拟丢失更新，再分别用「单条原子 UPDATE」与 SELECT ... FOR UPDATE 修复，解释隔离级别与锁的作用</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">给定一个走全表扫的慢查询，用 EXPLAIN 读出 type/rows/Extra，判断是统计信息、索引缺失还是选择性差导致，并给出优化方案与预期收益</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">内容依据 SQL 标准及 PostgreSQL、MySQL 官方文档的通行语法整理，个别特性（如 FULL OUTER JOIN、窗口函数语法细节）请以所用数据库的文档为准。</p>
+        <p class="footnote">内容依据关系代数理论、SQL 标准及 PostgreSQL、MySQL 官方文档的通行语法整理；FULL OUTER JOIN、窗口函数语法、默认隔离级别与优化器行为等细节请以所用数据库的文档为准。</p>
       </footer>
     </div>
   </article>

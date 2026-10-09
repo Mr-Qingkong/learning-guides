@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>算法与数据结构指南</title>
+  <title>算法与数据结构进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>算法与数据结构指南</h1>
-          <p class="report-intro__summary">数据结构回答「数据以什么形态组织、代价才最低」，算法分析回答「规模增长时代价按什么阶增长」。本指南从复杂度分析、线性结构取舍、树与图、排序对比讲到动态规划，聚焦原理与迁移，而非题库套路。</p>
+          <h1>算法与数据结构进阶指南</h1>
+          <p class="report-intro__summary">算法分析的本质，是把「程序跑多久」还原成「基本操作次数随输入规模的增长阶」。本指南从渐进符号与主定理出发，推导比较排序下界、哈希摊销、图算法正确性、动态规划最优子结构与 NP 完全性，把结论背后的「为什么成立」讲清楚，而不是罗列复杂度表。</p>
           <div class="intro-meta">
             <span>领域：科技 · AI</span>
             <span>难度：进阶</span>
@@ -26,8 +26,28 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>复杂度分析</h2>
-          <p class="lede">大 O 刻画「规模趋于无穷」时的增长阶，常数与低阶项被有意丢弃。</p>
+          <h2><span class="sec-num">1</span>渐进符号与主定理：把「跑得快」写成数学</h2>
+          <p class="lede">O、Ω、Θ 不是三个形容词，而是三组关于「存在某个常数与规模阈值」的量化命题；分治递归的复杂度由主定理一次性给出。</p>
+          <p>先给出严格定义。设 f(n)、g(n) 为定义在正整数上的非负函数：</p>
+          <div class="prompt-block"><span class="prompt-label">三个渐进符号的定义</span><button class="copy-btn" type="button">复制</button>O(g)：f = O(g) ⟺ ∃ c&gt;0, n₀&gt;0，∀ n≥n₀ 有 0 ≤ f(n) ≤ c·g(n)   （上界）
+Ω(g)：f = Ω(g) ⟺ ∃ c&gt;0, n₀&gt;0，∀ n≥n₀ 有 0 ≤ c·g(n) ≤ f(n)   （下界）
+Θ(g)：f = Θ(g) ⟺ f = O(g) 且 f = Ω(g)                     （紧界）
+
+含义：O 只说「不超过」，Ω 只说「不少于」，只有 Θ 才是「同阶」。
+常见误用：把 O 当成「大致等于」。O(n²) 的算法也可以是 O(n³)、O(2ⁿ)——这不矛盾，只是界不紧。</div>
+          <p>对分治法，设规模 n 的问题被拆成 a 个规模 n/b 的子问题，拆分与合并的额外代价为 f(n)，则 T(n) = a·T(n/b) + f(n)。<strong>主定理</strong>用临界指数 p = log_b a（即 a = bᵖ）比较 f(n) 与 nᵖ 的量级：</p>
+          <div class="prompt-block"><span class="prompt-label">主定理（Master Theorem）</span><button class="copy-btn" type="button">复制</button>令 T(n) = a·T(n/b) + f(n)，a ≥ 1，b &gt; 1，记 p = log_b a：
+
+情形 1（叶子代价主导）：f(n) = O(n^(p−ε))，ε&gt;0   ⟹  T(n) = Θ(nᵖ)
+    直觉：递归树越往下层总代价越大，最后被叶子那一层主导。
+    例：T(n)=2T(n/2)+O(n) 中 p=1，f(n)=O(n)=Θ(n¹)，属情形 2 而非 1。
+
+情形 2（各层代价相当）：f(n) = Θ(nᵖ·logᵏn)，k≥0   ⟹  T(n) = Θ(nᵖ·log^(k+1)n)
+    例：归并排序 T(n)=2T(n/2)+Θ(n)，p=log₂2=1，k=0 ⟹ Θ(n log n)。
+
+情形 3（根代价主导）：f(n) = Ω(n^(p+ε))，ε&gt;0，且满足正则条件
+    a·f(n/b) ≤ c·f(n)（c&lt;1）  ⟹  T(n) = Θ(f(n))</div>
+          <p>为什么是「比较 f(n) 与 nᵖ」？把递归树逐层展开：第 i 层有 aⁱ 个节点、每个的合并代价是 f(n/bⁱ)，该层总代价 ≈ aⁱ·f(n/bⁱ)。当 f 是幂函数 f(n)=nᵈ 时，该层代价为 aⁱ·(n/bⁱ)ᵈ = nᵈ·(a/bᵈ)ⁱ，公比 r = a/bᵈ = b^(p−d)。于是：d &lt; p 时 r&gt;1，代价沿树向下几何增长，叶子层主导；d &gt; p 时 r&lt;1，根层主导；d = p 时每层代价相等，共 log_b n 层，得到 nᵖ·log n。<mark class="key">主定理不是要背的公式，而是这棵几何级数树的三种收敛情形</mark>。</p>
           <table>
             <caption class="caption">常见复杂度阶与典型场景</caption>
             <thead><tr><th>复杂度</th><th>增长直觉</th><th>典型例子</th></tr></thead>
@@ -39,17 +59,27 @@
               <tr><th scope="row">O(2ⁿ)</th><td>指数爆炸</td><td>朴素递归斐波那契、子集枚举</td></tr>
             </tbody>
           </table>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>均摊分析</h4><p>动态数组按<strong>倍增</strong>策略扩容：单次插入最坏 O(n)，但把搬迁成本摊给此前插入的元素，<strong>均摊 O(1)</strong>。均摊看的是「一串操作的总代价 ÷ 操作数」，而不是单次最坏。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>空间换时间</h4><p>哈希表、前缀和、记忆化、缓存，本质都是多存一份中间结果，换取后续操作降阶。内存相对廉价之后，这是最常用、也最容易被滥用的优化方向。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>常数不可忽略</h4><p>n 很小时 O(n²) 可能快于 O(n log n)：小数组上插入排序常胜过快排，所以标准库实现普遍在小区间切换到插入排序。</p></div></div>
-          </div>
-          <div class="callout tip"><span class="callout-label">易错点</span>先分清<strong>平均、最坏、均摊</strong>三种口径再谈复杂度：快排平均 O(n log n) 而最坏 O(n²)；动态数组尾部插入最坏 O(n) 而均摊 O(1)。混用口径是分析与面试中最常见的错误。</div>
+          <h3>均摊分析：倍增扩容为何是 O(1)</h3>
+          <p>动态数组按倍增策略扩容：容量满时申请 2 倍空间并整体搬迁。第 i 次扩容发生在容量为 2ⁱ 时，搬迁代价为 2ⁱ。连续 n 次插入中，扩容发生在容量 1,2,4,…,2^⌊log n⌋ 时，搬迁总代价为 1+2+4+…+2^⌊log n⌋ &lt; 2n。于是「n 次插入的总代价 ≤ n（写入）+ 2n（搬迁）= 3n」，均摊到每次插入即 Θ(1)。三种口径必须分清：单次插入<strong>最坏</strong> O(n)，<strong>均摊</strong> O(1)——均摊衡量的是「一串操作的平均成本」，不是概率意义上的「平均」。</p>
+          <div class="callout tip"><span class="callout-label">易错点</span>先分清<strong>平均、最坏、均摊</strong>三种口径再谈复杂度：快排平均 O(n log n) 而最坏 O(n²)；动态数组尾部插入最坏 O(n) 而均摊 O(1)。均摊是<strong>确定性</strong>的（对任意操作序列成立），平均是<strong>概率性</strong>的（依赖输入分布或随机化），二者常被混为一谈。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>线性结构取舍</h2>
-          <p class="lede">没有最好的结构，只有让「高频操作落在低复杂度」的结构。</p>
+          <h2><span class="sec-num">2</span>比较排序下界与线性结构取舍</h2>
+          <p class="lede">「基于比较的排序不可能优于 Ω(n log n)」不是经验规律，而是一个可证的决策树下界；而结构选型的本质，是让高频操作落在低复杂度上。</p>
+          <h3>决策树下界：一次证明，终身受用</h3>
+          <p>任何基于比较的排序，对 n 个互异元素的操作过程都能画成一棵<strong>二叉决策树</strong>：每个内部节点是一次「a&lt;b?」的比较，两条出边代表两个结果，叶子对应一种最终排列。要把 n! 种输入排列区分开，树至少需要 n! 个叶子，而深度为 h 的二叉树至多有 2ʰ 个叶子，故：</p>
+          <div class="prompt-block"><span class="prompt-label">比较排序下界推导</span><button class="copy-btn" type="button">复制</button>叶子数 ≥ n! 且 叶子数 ≤ 2ʰ  ⟹ 2ʰ ≥ n! ⟹ h ≥ log₂(n!)
+
+用斯特林近似：n! ≈ (n/e)ⁿ·√(2πn)
+取对数：log₂(n!) = n·log₂n − n·log₂e + O(log n) = Θ(n log n)
+
+故最坏情况下比较次数 h = Ω(n log n)。
+结论：归并排序与堆排序在最坏情形下达到该下界，是渐近最优的比较排序。
+推论：想突破 n log n，必须放弃「仅用比较」这一前提——于是有了
+      计数排序 O(n+k)、基数排序 O(d(n+k))，它们利用了值域/位数结构。</div>
+          <p>这条下界的价值不在「证明归并最优」，而在于它<strong>划定了战场</strong>：任何号称「通用比较排序快于 n log n」的说法必然有隐含前提（值域有限、数据近乎有序、允许并行等）。它也是理解 P/NP 类证明技巧（对角化、对手论证）的入门练习。</p>
+          <h3>线性结构：让高频操作落在低复杂度</h3>
           <table>
             <caption class="caption">数组与链表</caption>
             <thead><tr><th>维度</th><th>数组</th><th>链表</th></tr></thead>
@@ -60,104 +90,203 @@
               <tr><th scope="row">代价</th><td>扩容需整体搬迁</td><td>每节点多一个指针</td></tr>
             </tbody>
           </table>
+          <p>表中被低估的一行是<strong>缓存局部性</strong>。理论的 O(1) 是「指令级操作数」，而真实耗时由<strong>内存层级</strong>决定：一次 L1 命中与一次主存访问的延迟可差两个数量级。数组顺序扫描几乎每步都在预取与缓存行（通常 64 字节）内，链表每跳一次就可能是一次缓存缺失。这就是为什么「链表插入 O(1) 优于数组 O(n)」在 n 不大、且访问模式随机时经常被实测推翻——<mark class="key">渐进复杂度是模型，缓存与常数是现实</mark>。工程上因此出现「展开链表」（unrolled linked list）、跳表等折中结构。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>栈：后进先出</h4><p>函数调用栈、括号匹配、DFS、表达式求值——凡「嵌套回退」语义，先想到栈。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>队列：先进先出</h4><p>BFS、消息缓冲、任务调度。双端队列两头都 O(1)，是滑动窗口问题的常客。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>栈：后进先出</h4><p>函数调用栈、括号匹配、DFS、表达式求值——凡「嵌套回退」语义，先想到栈。所有操作 Θ(1)，但容量固定时需处理溢出。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>队列：先进先出</h4><p>BFS、消息缓冲、任务调度。双端队列两头都 O(1)，是滑动窗口问题的常客（配单调队列可把窗口最值降到均摊 O(1)）。</p></div></div>
             <div class="feature"><div class="f-ico">3</div><div><h4>哈希表</h4><p>平均 O(1) 的键值映射；代价是不保序、最坏 O(n)（全冲突）、有装载因子与再散列问题。需要有序遍历或范围查询时，改用平衡树（O(log n)）。</p></div></div>
           </div>
-          <div class="callout tip"><span class="callout-label">选型心法</span>按下标读写选<strong>数组</strong>；在已知位置频繁增删选<strong>链表</strong>；按内容查找选<strong>哈希</strong>；要有序与范围查询选<strong>平衡树</strong>。</div>
+          <h3>哈希与摊销：把冲突变成可控的量</h3>
+          <p>哈希表用装载因子 α = 元素数 m / 桶数 n 刻画拥挤程度。假设哈希是「简单均匀」的，插入 key 落入某桶的概率为 1/n，则一次插入探测到的元素数期望为 α。于是<strong>平均</strong>查找/插入代价为 Θ(1+α)——只要 α 是常数。当 α 超过阈值（如 α&gt;1）时桶数翻倍并全体再散列，单次再散列 O(m)，但和动态数组同理，总代价摊开后<strong>均摊</strong>仍是 Θ(1)。这里隐藏一个不变量：<strong>平均性能依赖「哈希均匀 + α 有界」两个假设</strong>，一旦攻击者能预测哈希函数并构造全冲突输入（算法复杂度攻击），退化到 O(n²) 的现实攻击是成立的——这也是各大语言运行时改用随机化种子（如 SipHash 类函数）的动机。</p>
+          <div class="callout tip"><span class="callout-label">选型心法</span>按下标读写选<strong>数组</strong>；在已知位置频繁增删选<strong>链表</strong>；按内容查找选<strong>哈希</strong>；要有序与范围查询选<strong>平衡树</strong>。但永远先看访问模式落在内存哪一层。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>树与图</h2>
-          <p class="lede">树是无环连通图的特例；遍历顺序决定了你从哪个视角「看」一张图。</p>
+          <h2><span class="sec-num">3</span>树与图：遍历、最短路与正确性</h2>
+          <p class="lede">树是无环连通图的特例；遍历顺序决定了你从哪个视角「看」一张图，而每个算法的正确性都依赖一条可陈述的不变量。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>二叉树遍历</h4><p>前序 / 中序 / 后序由「访问根的时机」区分，均为 O(n)；中序遍历 BST 得到升序序列。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>BFS：按层扩散</h4><p>队列驱动；在<strong>无权图</strong>上首次到达某点的路径即最短路，层数就是距离。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>DFS：一路到底</h4><p>递归或显式栈；适合连通性、环检测、拓扑排序与回溯搜索。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>二叉树遍历</h4><p>前序 / 中序 / 后序由「访问根的时机」区分，均为 Θ(n)；中序遍历 BST 得到升序序列。这给出 O(n) 判定 BST 是否合法的算法——比「递归比较每对父子」更省。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>BFS：按层扩散</h4><p>队列驱动；在<strong>无权图</strong>上首次到达某点的路径即最短路。正确性来自「队列的 FIFO 顺序保证距离单调不减」，用邻接表总代价 Θ(V+E)。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>DFS：一路到底</h4><p>递归或显式栈，代价同样是 Θ(V+E)；适合连通性、环检测、拓扑排序与回溯搜索。显式栈要防止递归过深导致栈溢出。</p></div></div>
           </div>
+          <h3>最短路的正确性：Dijkstra 为何要求非负权</h3>
+          <p>Dijkstra 的<strong>贪心不变量</strong>是：每次从优先队列取出距离最小的未定顶点 u 时，dist[u] 已经等于真实最短路长度。证明依赖一个交换论证——假设存在一条更短的路径 P 到达 u，P 在离开已定集合时的第一条边的另一端是 x。若所有边权非负，则 P 在 x 处的长度已 ≤ P 的总长，而 dist[x] ≥ dist[u]（u 是当前最小）会导出矛盾。整个链条唯独在<strong>「边权非负 ⟹ 路径只会变长」</strong>这一步断掉：出现负权边时，后面可能通过负数边「倒着减」，使已定顶点的距离还能被改小，不变量失效。这正是副作用——需要 Bellman-Ford 反复松弛来兜底。</p>
+          <p>Bellman-Ford 的核心是：若图中无负环，最短路至多有 V−1 条边，故对全部边做 V−1 轮松弛必然收敛，代价 O(VE)。第 V 轮若仍能松弛，说明存在负环——这条「多跑一轮做检测」的技巧是 O(VE) 里最优雅的一笔。</p>
           <table>
-            <caption class="caption">最短路算法对比</caption>
-            <thead><tr><th>算法</th><th>适用</th><th>复杂度</th></tr></thead>
+            <caption class="caption">最短路算法对比（V 顶点、E 边）</caption>
+            <thead><tr><th>算法</th><th>适用</th><th>复杂度</th><th>关键前提</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Dijkstra</th><td>非负权单源</td><td>O((V+E) log V)，配二叉堆</td></tr>
-              <tr><th scope="row">Bellman-Ford</th><td>允许负权边，可判负环</td><td>O(VE)</td></tr>
-              <tr><th scope="row">Floyd-Warshall</th><td>多源、稠密图</td><td>O(V³)</td></tr>
+              <tr><th scope="row">Dijkstra</th><td>非负权单源</td><td>O((V+E) log V)，配二叉堆</td><td>边权非负</td></tr>
+              <tr><th scope="row">Bellman-Ford</th><td>允许负权边，可判负环</td><td>O(VE)</td><td>无负环（否则不可定义）</td></tr>
+              <tr><th scope="row">Floyd-Warshall</th><td>多源、稠密图</td><td>O(V³)</td><td>无负环，DP 三重循环</td></tr>
             </tbody>
           </table>
-          <p>Dijkstra 贪心的前提是<strong>边权非负</strong>：已确定的最短距离不会再被后续路径反超；负权边破坏这一不变量，才需要 Bellman-Ford 反复松弛。理解每个算法「为什么成立」，比背复杂度更能迁移到新问题。</p>
+          <p>把 Dijkstra 换成斐波那契堆可得 O(E+V log V)——当 E 远大于 V 时更优，但常数大、实现复杂，工程上二选一要看真实图形态。</p>
+          <h3>最小生成树：割性质与环性质</h3>
+          <p>Kruskal 与 Prim 之所以都对，共同基础是两条交换性质：<strong>割性质</strong>——把顶点分成两个集合，横跨该割的最小权边必在某棵 MST 中；<strong>环性质</strong>——任一环中权最大的边不属于任何 MST（权唯一时）。Kruskal 按边权升序扫描、用并查集跳过成环的边（代价 O(E log E) 主导于排序）；Prim 从任一点出发、每次用优先队列取「连接已有树与外部的最小边」（二叉堆下 O(E log V)）。二者产出的总权重相同（若权值互异则 MST 唯一），差异在实现与图形态适配。</p>
+          <div class="callout warn"><span class="callout-label">勘误提醒</span>「最小生成树 = 最短路径树」是高频错误。MST 最小化<strong>总边权</strong>，最短路树最小化<strong>到源点的各条路径</strong>；两者一般不同，只有极特殊图才重合。把 Dijkstra 的输出直接当 MST 用是实质错误。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>排序算法对比</h2>
-          <p class="lede">基于比较的排序有 Ω(n log n) 下界；工程选型看稳定性、空间与数据形态。</p>
-          <table>
-            <caption class="caption">主流排序一览</caption>
-            <thead><tr><th>算法</th><th>平均</th><th>最坏</th><th>额外空间</th><th>稳定</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">快速排序</th><td>O(n log n)</td><td>O(n²)</td><td>O(log n) 栈</td><td>否</td></tr>
-              <tr><th scope="row">归并排序</th><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td><td>是</td></tr>
-              <tr><th scope="row">堆排序</th><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td><td>否</td></tr>
-              <tr><th scope="row">插入排序</th><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>是</td></tr>
-            </tbody>
-          </table>
-          <ul>
-            <li><strong>稳定性</strong>：键值相等的元素排序后相对次序不变；「先按次键、再按主键」的多轮排序技巧依赖稳定性成立。</li>
-            <li><strong>快排</strong>：Tony Hoare 于 1960 年前后提出；分区缓存友好、常数小，实际平均最快。固定基准遇有序输入退化 O(n²)，随机基准或三数取中可规避。</li>
-            <li><strong>工程现实</strong>：Python 的 Timsort（归并与插入的混合，稳定）说明真实数据常有局部有序，标准库普遍采用混合策略而非教科书里的单一算法。</li>
-          </ul>
-        </section>
+          <h2><span class="sec-num">4</span>动态规划：最优子结构与状态转移的推导</h2>
+          <p class="lede">DP 的本质：把指数级的重复计算，压缩成「每格只算一次」的查表递推；难点从来不在编码，而在证明最优子结构与无后效性。</p>
+          <p>DP 合法性依赖两个数学前提：<strong>最优子结构</strong>（全局最优由子问题最优组合而成）与<strong>无后效性</strong>（状态一旦确定，后续决策不依赖到达它的路径）。二者不满足时，递推给出的只是「局部贪心的堆叠」，未必最优——这就是要证明而不是「照抄公式」的原因。</p>
+          <h3>从暴力到 DP：以 0/1 背包为例</h3>
+          <div class="prompt-block"><span class="prompt-label">0/1 背包的状态与转移</span><button class="copy-btn" type="button">复制</button>问题：n 件物品，第 i 件重量 wᵢ、价值 vᵢ，容量 W，每件选 0 或 1 次，求最大总价值。
 
-        <section>
-          <h2><span class="sec-num">5</span>动态规划入门</h2>
-          <p class="lede">DP 的本质：把指数级的重复计算，压缩成「每格只算一次」的查表递推。</p>
+状态：dp[i][j] = 只考虑前 i 件、容量为 j 时的最大价值
+转移：dp[i][j] = max( dp[i−1][j],                       // 不选第 i 件
+                     dp[i−1][j−wᵢ] + vᵢ )               // 选第 i 件（j ≥ wᵢ）
+边界：dp[0][j] = 0；dp[i][0] = 0
+答案：dp[n][W]。时间 Θ(nW)，空间可由滚动数组压到 Θ(W)。
+
+关键：一维压缩时容量必须<strong>倒序</strong>遍历（j 从 W 递减到 wᵢ），
+      保证 dp[j−wᵢ] 读到的还是「上一行」的旧值；
+      若正序遍历，就退化成完全背包（同一件可重复选）。</div>
+          <p>注意这里时间 Θ(nW) 是<strong>伪多项式</strong>：W 是数值大小而非输入位数。若 W 用二进制表示只需 log₂W 位，则代价对输入规模是指数的——这正是背包判定问题为 NP 完全的原因（见下一节）。<mark class="key">「多项式」必须相对于输入长度而言，而非数值大小</mark>。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>重叠子问题</h4><p>朴素递归斐波那契是指数级（精确为 Θ(1.618ⁿ)），因为 fib(2) 等子问题被反复计算；加一张备忘录后每个子问题只算一次，降为 O(n)。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>最优子结构</h4><p>整体最优解由子问题最优解组合而成：最短路的子路径必是最短路，这是转移方程合法性的来源。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>无后效性</h4><p>某阶段状态一旦确定，后续决策不受「如何到达该状态」的影响。状态定义总出错时，先补维度再列转移。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>重叠子问题</h4><p>朴素递归斐波那契是指数级（精确为 Θ(φⁿ)，φ≈1.618），因为 fib(2) 等子问题被反复计算；加一张备忘录后每个子问题只算一次，降为 O(n)。DP ≈ 「递归 + 缓存」的形式化。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>最优子结构</h4><p>整体最优解由子问题最优解组合而成：最短路的最优子路径必是最短路，这正是 Bellman 方程 dist[v] = min(dist[u]+w(u,v)) 合法性的来源。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>无后效性</h4><p>某阶段状态一旦确定，后续决策不受「如何到达该状态」的影响。状态定义总出错时，先补维度再列转移——大多数「转移写不出来」其实是「状态没定义全」。</p></div></div>
           </div>
-          <ul>
-            <li><strong>四步法</strong>：定义 dp 状态 → 写转移方程 → 定边界初值 → 按依赖顺序填表。0/1 背包：dp[j] = max(dp[j], dp[j−w] + v)，容量倒序遍历防止重复选取。</li>
-            <li><strong>自顶向下</strong>是记忆化递归，写法贴近原问题；<strong>自底向上</strong>是递推填表，空间常可滚动优化到一维。</li>
-            <li><strong>与贪心的边界</strong>：贪心每步取局部最优且不回头，DP 枚举全部转移。贪心能做对的问题，多是 DP 结构退化为「局部最优即全局最优」。</li>
-          </ul>
+          <h3>DP 与贪心的边界</h3>
+          <p>贪心每步取局部最优且不回头，DP 枚举全部转移。贪心能做对的问题，多是 DP 结构退化为「局部最优即全局最优」（如区间调度、Huffman 编码、带非负权的单源最短路）。判定贪心是否可行的通用工具是<strong>交换论证</strong>：假设最优解与贪心在第一步不同，构造一个「交换后不更差」的解替换，逐步把最优解改造成贪心解。写不出这个论证，就该退回 DP。</p>
           <div class="callout tip"><span class="callout-label">检验标准</span>能默写转移方程不算懂；能讲清「状态是什么、为什么无后效性、为什么这样定边界」，才是把 DP 变成了自己的工具。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">算法速记</span><button class="copy-btn" type="button">复制</button>· 大 O 是增长阶：先分清平均 / 最坏 / 均摊口径
-· 动态数组倍增扩容：尾部插入均摊 O(1)
-· 数组随机访问 O(1)；链表已知位置插删 O(1)
-· 哈希表平均 O(1)，冲突退化 O(n)，且不保序
-· 栈配嵌套回退；队列配 BFS 与缓冲
-· BFS 用队列，无权图上即最短路；DFS 用栈 / 递归
-· Dijkstra 要求非负权；Bellman-Ford 允许负权，O(VE)
-· Floyd-Warshall 多源 O(V³)
-· 快排平均 O(n log n)、最坏 O(n²)、不稳定
-· 归并稳定但 O(n) 空间；堆排原地但不稳定
-· 比较排序下界 Ω(n log n)
-· DP 三要素：状态、转移、边界；先验无后效性
-· 记忆化 = 自顶向下 DP；递推 = 自底向上 DP</div>
+          <h2><span class="sec-num">5</span>计算复杂性：P、NP 与 NP 完全性</h2>
+          <p class="lede">复杂度分析问「这一个算法多快」，复杂性理论问「这一类问题是否存在高效算法」。后者用「可判定」与「可验证」的区分，给出一张问题的宇宙地图。</p>
+          <div class="prompt-block"><span class="prompt-label">核心类的定义</span><button class="copy-btn" type="button">复制</button>P     ：存在多项式时间算法「求解」的判定问题类。
+NP    ：存在多项式时间算法「验证」解是否正确的问题类（证书 c 的长度多项式）。
+          显然 P ⊆ NP；P = NP 是否成立是千禧年难题之一，主流猜想 P ≠ NP。
+NP-hard：所有 NP 问题都能在多项式时间内归约到它（它至少和 NP 里最难的一样难，
+          但其自身不一定属于 NP）。
+NP-完全（NP-complete）：既属于 NP，又是 NP-hard ——NP 中最难的那层。
+归约：若 A ≤ₚ B（A 多项式时间归约到 B），则 B 至少有 A 那么难；
+      这是证明「某问题 NP-hard」的标准手段。</div>
+          <p>历史上被广泛引用的第一个 NP 完全问题是<strong>布尔可满足性 SAT</strong>（Cook–Levin 定理，1971）：给定一个布尔公式，是否存在一组变量赋值使其为真。它之所以关键，是因为任何 NP 问题的验证过程本身都能编码成一个多项式规模的电路、再转成布尔公式——于是「解 SAT 就能解所有 NP 问题」。此后 Karp 给出了二十余个经典问题的 NP 完全性证明，背包判定、团问题、旅行商判定等都在其中。</p>
+          <table>
+            <caption class="caption">面对 NP 完全问题的四类实用策略</caption>
+            <thead><tr><th>策略</th><th>做法</th><th>代价/适用</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">近似算法</th><td>求有质量保证的次优解（如顶点覆盖的 2-近似）</td><td>牺牲最优性换取多项式时间</td></tr>
+              <tr><th scope="row">参数化算法</th><td>把复杂度写成 O(f(k)·n)，k 为小参数</td><td>当参数 k 很小（如图的树宽）时实用</td></tr>
+              <tr><th scope="row">指数级精确算法</th><td>分支限界、DP over subsets，如 TSP 的 O(2ⁿ·n²)</td><td>n 较小时（约 n≤20）可接受</td></tr>
+              <tr><th scope="row">启发式/元启发式</th><td>模拟退火、局部搜索、整数规划求解器</td><td>无理论保证，工程上常用</td></tr>
+            </tbody>
+          </table>
+          <p>证明一个问题是 NP-hard，通常是：先选一个已知 NP 完全问题 A，构造多项式时间的归约 A ≤ₚ B（说明如何把 A 的任意实例改写成 B 的实例，且「A 有解 ⟺ B 有解」）。写不出归约，就说明你还没证明它难——只是「一时没想到多项式算法」。<mark class="key">「没想到」与「不存在」之间，隔着一条 P vs NP 的鸿沟</mark>。</p>
+          <div class="callout warn"><span class="callout-label">常见误用</span>把 O(n²) 直接说成「NP」、把指数级算法说成「NP 完全」，是两类高频错误。NP 是关于<strong>判定问题</strong>的类，不是「慢」的同义词；许多 NP 完全问题在真实实例上被启发式解得又快又好。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">算法研究近二十年最活跃的方向，集中在「突破经典下界」与「用硬件/随机性换阶」两条线上。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">整数的近似线性时间乘法</span><span class="tl-date">2019 起</span><p>哈维与范德胡芬（Harvey &amp; van der Hoeven）给出把两个 n 位整数相乘做到 O(n log n) 的算法（arXiv 预印本于 2019 年公开），被媒体称为「乘法达到理论下界」。注意：其 ω 项常数极大，<strong>不适用于实际规模</strong>，工程上仍用小规模 Karatsuba/Toom-Cook 与中等规模的 Schönhage-Strassen（FFT 法）。</p></div>
+            <div class="tl-item"><span class="tl-era">矩阵乘法的指数改进</span><span class="tl-date">Strassen 1969 起</span><p>朴素矩阵乘法为 O(n³)；Strassen 用分治把指数降到约 2.807，其后 Coppersmith–Winograd（1990）与后续工作不断下调理论指数（主流文献给出的下界均在 2.37 附近），但常数与数值稳定性问题使其无法落地，实践中大矩阵仍多用优化过的分块 O(n³)。</p></div>
+            <div class="tl-item"><span class="tl-era">哈希表的最坏情形保证</span><span class="tl-date">2000s–2010s</span><p>为对抗「哈希碰撞攻击」，出现带最坏情形 O(log n) 保证的哈希方案与随机化哈希族。现代语言运行时的哈希多采用随机种子 + 结构改进，把「平均快」升级为「对抗下也稳」。</p></div>
+            <div class="tl-item"><span class="tl-era">近似与固定参数算法</span><span class="tl-date">1990s 至今</span><p>PCP 定理（1992）建立了「近似难度」与 NP 硬度之间的联系，让「能近似到多好」变成可证明的问题；参数化复杂度（FPT）则把看似指数的问题用「小参数」驯服。二者共同说明：面对 NP 难问题，正确问题是「在什么约束下可解」，而非「能不能最优先解」。</p></div>
+            <div class="tl-item"><span class="tl-era">机器学习与算法设计融合</span><span class="tl-date">2010s 至今</span><p>「学习增强算法」（learning-augmented algorithms）把机器学习预测当作辅助输入嵌入经典算法（如带预测的缓存、跳表、排序），目标是「预测准则超过经典最优、预测错则不比经典差太多」——这是当前很活跃、但结论仍在快速演变的方向。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类结论</span>看到「某算法达到理论最优」的新闻，先分清三件事：是<strong>渐进最优</strong>还是<strong>实际可用</strong>？常数与低阶项多大？在哪个输入规模上被实测过？渐近下界与工程性能之间，往往隔着几个数量级的常数。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">算法不是孤立技能，它与其他学科共享同一套「离散结构 + 最优化 + 信息约束」的语言。</p>
+          <div class="grid-2">
+            <div class="card"><h4>离散数学 / 组合学</h4><p>决策树下界、鸽巢原理、几何级数是复杂度分析的直接工具；图论给出树、割、匹配的统一框架。</p></div>
+            <div class="card"><h4>概率论与随机化</h4><p>随机快排、哈希的均匀性、随机化算法的期望代价，都建立在「期望线性性」与「集中不等式」上。</p></div>
+            <div class="card"><h4>信息论</h4><p>比较排序下界本质是熵下界：区分 n! 种结果至少需要 log₂(n!) 比特判定信息。熵、编码长度、压缩极限都是同一种「信息量」度量。</p></div>
+            <div class="card"><h4>数理逻辑与可计算性</h4><p>P vs NP、归约、可判定性来自逻辑与递归论；SAT 与一阶逻辑的可满足性共享同一套化简技巧。</p></div>
+            <div class="card"><h4>运筹学 / 最优化</h4><p>线性规划、整数规划、网络流都是算法与优化交叉的产物；对偶理论解释了为什么「最大流 = 最小割」。</p></div>
+            <div class="card"><h4>计算机体系结构</h4><p>缓存、分支预测、SIMD 决定常数因子；渐进分析之后，性能工程本质是「让访问模式贴合内存层级」。</p></div>
+          </div>
+          <p>把这些放一起看，会发现一个共同结构：<strong>在信息与资源的约束下，寻找可证明的最优或近优策略</strong>。这正是「算法思维」的通用形态，也是它能迁移到调度、定价、资源分配等现实问题的原因。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「O 就是大概等于，可以随便写」
+
+「链表插入 O(1)，一定比数组快」
+
+「快排平均最快，所以任何情况都用快排」
+
+「NP 问题就是很慢的问题」
+
+「大 O 越大，实测一定越慢」</pre><div class="why">问题：把模型当成现实。O 是上界而非等式；链表的 O(1) 忽略了缓存代价；快排在有序输入 + 固定基准时退化 O(n²)；NP 描述的是判定问题类而非速度形容词；n 很小时常数项会主导排序结果。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>说「同阶」用 Θ；只给上界才用 O
+
+结构选型先看访问模式与内存层级，
+再看渐进代价
+
+快排用随机基准/三数取中规避最坏；
+小数组切换插入排序
+
+NP 完全 = NP 中最难的一层；
+问的是「是否有多项式算法」
+
+复杂度只是趋势，实测需看常数与规模</pre><div class="why">要点：复杂度是<strong>分析工具</strong>，不是性能预言。任何结论都要回到「在什么输入分布、什么规模、什么硬件上」。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法/结论</th><th>成立条件</th><th>失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">主定理</th><td>递归为 T(n)=aT(n/b)+f(n)，且形如「均匀分治」</td><td>子问题规模不均（如 T(n)=T(n−1)+T(n/2)）</td></tr>
+              <tr><th scope="row">哈希 O(1)</th><td>哈希均匀、装载因子有界</td><td>对抗性输入 / 哈希函数被预测</td></tr>
+              <tr><th scope="row">Dijkstra</th><td>边权非负</td><td>存在负权边（须用 Bellman-Ford）</td></tr>
+              <tr><th scope="row">贪心最优</th><td>有交换论证或拟阵结构支撑</td><td>局部最优 ≠ 全局最优（如 0/1 背包）</td></tr>
+              <tr><th scope="row">DP 伪多项式</th><td>状态空间由数值大小决定</td><td>数值用二进制表示时，规模是数值的对数</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">算法与数据结构速记</span><button class="copy-btn" type="button">复制</button>· 渐进符号：O 上界、Ω 下界、Θ 紧界；别把 O 当「等于」
+· 主定理比的是 f(n) 与 n^(log_b a)：小于、相当、大于分三种情形
+· 主定理 = 递归树每层代价的几何级数：收敛于根、均匀、收敛于叶
+· 动态数组倍增扩容：单次最坏 O(n)，总代价 &lt; 3n，均摊 O(1)
+· 均摊是确定性的；平均是概率性的——两种口径不可混用
+· 比较排序下界 Ω(n log n)：n! 个叶子 ≥ 深度 h 的 2ʰ
+· 突破 n log n 必须放弃比较：计数/基数排序用值域结构
+· 哈希平均 O(1+α)；对抗性输入可退化，需随机化哈希
+· 缓存局部性常比渐进阶更影响实测：数组顺序扫描胜过链表跳转
+· BFS 队列、DFS 栈；邻接表下均为 Θ(V+E)
+· Dijkstra 要非负权（贪心不变量）；Bellman-Ford O(VE) 可判负环
+· Floyd-Warshall 多源 O(V³)；最小生成树用割/环性质，≠ 最短路树
+· 0/1 背包：一维压缩时容量倒序；正序就变成完全背包
+· DP 三要素：状态、转移、边界；先证无后效性再写转移
+· 时间 Θ(nW) 是伪多项式：多项式是相对输入长度而非数值
+· P ⊆ NP；NP 完全 = NP 中最难；P = NP 仍开放，主流猜想不等
+· 证明 NP-hard 靠归约；「没想到算法」不等于「问题难」</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求<strong>推导、验证或实现</strong>并附判据，而非「做过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导动态数组倍增扩容为何均摊 O(1)</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">手写二分查找，验证左右边界不越界</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用邻接表各实现一遍 DFS 与 BFS</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">实现快排，并构造使它退化为 O(n²) 的输入</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">写出 0/1 背包的转移方程并编码通过</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用记忆化把递归斐波那契优化到 O(n)</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">给同伴讲清 Dijkstra 为何不能处理负权边</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用主定理分别求 T(n)=2T(n/2)+Θ(n)、T(n)=3T(n/2)+Θ(n)、T(n)=2T(n/4)+Θ(n) 的 Θ 界，并画出递归树验证各层代价的收敛方向</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">写出动态数组倍增扩容的总搬迁代价求和式，用几何级数证明均摊 O(1)；再把倍率从 2 改为 1.5，验证均摊仍是 O(1)</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">独立完成比较排序 Ω(n log n) 下界证明：写出决策树叶子数不等式，并用斯特林近似推出 Θ(n log n)（不得照抄本文）</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">实现快排并构造一个使它退化为 O(n²) 的输入；再改用随机基准或三数取中，用计时实验证明退化被消除（给出 n 与耗时数据）</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">对一张 10 万节点的随机图，分别用数组（邻接矩阵）与邻接表跑 BFS，测量耗时并解释差异，判断哪一步被内存层级主导</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">实现 Dijkstra（二叉堆）与 Bellman-Ford，构造一个含负权边的图，实证 Dijkstra 给出错误结果而 Bellman-Ford 正确，并指出是哪条不变量被破坏</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">写出 0/1 背包一维压缩的伪代码；把它改成容量正序遍历，用一个具体小例子说明为什么它变成了完全背包</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">为某个贪心算法（如区间调度）写出完整的交换论证，再举一个反例说明为何 0/1 背包不能贪心</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">查阅 Cook–Levin 定理或 Karp 的 21 个 NP 完全问题，写出顶点覆盖 → 团问题 的归约构造，并核对「有解 ⟺ 有解」两个方向</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">基于《算法导论》（CLRS）等经典教材与通行工程实践整理，复杂度均按标准分析口径给出。</p>
+        <p class="footnote">基于《算法导论》（CLRS）等经典教材与通行工程实践整理。渐进符号定义、主定理三种情形、决策树下界与斯特林近似、0/1 背包状态转移均按标准形式给出；P/NP 与 NP 完全的定义、Cook–Levin 定理（1971）及 Karp 的经典归约依通行说法陈述。整数乘法的 O(n log n)（Harvey &amp; van der Hoeven, 2019 预印本）与矩阵乘法指数的历史改进（Strassen 1969、Coppersmith–Winograd 1990 及其后继）为真实工作，但常数极大、不适用于实际规模，正文已注明。所有复杂度均按标准分析口径（最坏/平均/均摊分别标注）给出，具体数值为量级估计。</p>
       </footer>
     </div>
   </article>

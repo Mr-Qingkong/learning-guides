@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>数学思维指南</title>
+  <title>数学思维进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>数学思维指南</h1>
-          <p class="report-intro__summary">数学不等于计算——它是用符号压缩现实、用逻辑保证结论、用模型理解世界的思维方式。本指南从抽象化到证明方法、从建模到对称之美，帮你建立真正的数学直觉。</p>
+          <h1>数学思维进阶指南</h1>
+          <p class="report-intro__summary">数学不只是计算。本指南把每个结论还原到机制层：为什么 √2 不能写成两整数之比、为什么归纳法能覆盖无穷、为什么贝叶斯公式能纠正直觉、为什么 e^(iπ)+1=0 不是巧合。每节都给出可复算的推导链，读完你应能自己证明而非背诵。</p>
           <div class="intro-meta">
             <span>领域：科学 · 方法</span>
             <span>难度：进阶</span>
@@ -25,135 +25,230 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>抽象与符号化</h2>
-          <p class="lede">数学的起点是「去掉无关细节」——把三个苹果和三只羊的共同属性抽象成「3」，数学就开始了。</p>
+          <h2><span class="sec-num">1</span>抽象与符号化：数学的起点</h2>
+          <p class="lede">数学的起点不是计算，而是"去掉无关细节"。把三个苹果和三只羊的共同属性抽象成"3"，把"任意两个数相加与次序无关"抽象成 a+b=b+a——每一次抽象都是把无穷多个案例压缩成一次推理。</p>
           <table>
             <caption class="caption">抽象化的三个层次</caption>
             <thead><tr><th>层次</th><th>做了什么</th><th>例子</th></tr></thead>
             <tbody>
               <tr><th scope="row">经验抽象</th><td>从实物中提取数量、形状等属性</td><td>三块石头 → 自然数 3</td></tr>
-              <tr><th scope="row">符号抽象</th><td>用符号代替具体数值，关注关系而非数值</td><td>a + b = b + a（交换律）</td></tr>
+              <tr><th scope="row">符号抽象</th><td>用符号代替具体数值，关注关系</td><td>a + b = b + a（交换律）</td></tr>
               <tr><th scope="row">结构抽象</th><td>关注运算本身满足的公理结构</td><td>群、环、域的定义</td></tr>
             </tbody>
           </table>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>符号是思维压缩器</h4><p>没有符号，你无法在脑中同时持有一百位数字的乘法。代数符号把「一个数加上另一个数等于……」压缩成 a+b，释放了认知带宽去关注关系和模式。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>变量代表「任意」</h4><p>x 不代表某个具体的数，而代表「满足条件的任意一个数」——这使得一条推理可以覆盖无穷多个案例。这是数学与算术的分水岭。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>定义先行</h4><p>数学讨论的前提是所有术语有精确的定义。日常语言中「大」可以指体积、面积、重量，数学中必须定义清楚是在哪个度量上比较——模糊是推理失败的第一步。</p></div></div>
-          </div>
-          <div class="callout tip"><span class="callout-label">直觉</span>当你发现自己在反复处理「不同案例但相同的逻辑」时，就是该抽象的信号——引入一个变量，把重复变成一次推理。</div>
+          <div class="prompt-block"><span class="prompt-label">从算术到代数：为什么必须引入变量</span><button class="copy-btn" type="button">复制</button>算术命题是"封闭"的：3 + 5 = 8，只陈述一个事实。
+代数命题是"全称"的：∀a, b ∈ ℝ, a + b = b + a，一次陈述覆盖无穷多事实。
+形式化对比：
+  · 算术：验证 3+5=8, 7+2=9, … ⇒ 需无穷次验证
+  · 代数：证明 ∀a,b a+b = b+a ⇒ 一次推理覆盖全部
+关键机制：变量 x 的语义是"论域中的任意元素"，
+  因此对 x 成立的结论对所有取值成立——这是"证明"能替代"穷举"的根本原因。
+公理化结构示例（群）：
+  集合 G 与二元运算 · 构成群 ⟺ 同时满足：
+  (G1) 封闭：∀a,b ∈ G ⇒ a·b ∈ G
+  (G2) 结合：(a·b)·c = a·(b·c)
+  (G3) 单位元：∃e ∈ G, ∀a: a·e = e·a = a
+  (G4) 逆元：∀a ∈ G, ∃a⁻¹: a·a⁻¹ = e
+一旦某对象满足 (G1)-(G4)，所有群论定理自动适用——这就是"结构抽象"的杠杆。</div>
+          <div class="callout tip"><span class="callout-label">直觉</span>当你发现自己在反复处理"不同案例但相同的逻辑"时，就是该抽象的信号——引入一个变量，把重复变成一次推理。</div>
         </section>
         <section>
-          <h2><span class="sec-num">2</span>逻辑推理与证明方法</h2>
-          <p class="lede">数学证明不是说服，而是演绎——从公理出发，每一步都必须被逻辑保证。掌握几种核心证明策略，就拥有了数学推理的工具箱。</p>
+          <h2><span class="sec-num">2</span>逻辑推理与证明方法：推导链</h2>
+          <p class="lede">数学证明不是说服，而是演绎——从公理出发，每一步都必须被逻辑保证。以下给出几种核心证明策略的完整推导链。</p>
+          <div class="prompt-block"><span class="prompt-label">反证法：√2 是无理数（完整推导）</span><button class="copy-btn" type="button">复制</button>目标：证明 √2 ∉ ℚ，即不存在整数 p, q 使 √2 = p/q。
+证明（反证法）：
+  (1) 假设 √2 ∈ ℚ。则存在互素整数 p, q（q ≠ 0），使
+        √2 = p / q       —— 关键：可取 p, q 互素（gcd(p,q)=1）
+  (2) 两边平方：2 = p² / q² ⇒ p² = 2q²
+  (3) 由 (2)，p² 是偶数 ⇒ p 是偶数（奇数的平方仍是奇数）
+        故可写 p = 2k（k 为整数）
+  (4) 代入 (2)： (2k)² = 2q² ⇒ 4k² = 2q² ⇒ q² = 2k²
+  (5) 由 (4)，q² 是偶数 ⇒ q 是偶数
+  (6) 于是 p、q 都是偶数 ⇒ gcd(p,q) ≥ 2，与 (1) 中"互素"矛盾
+  (7) 假设不成立，故 √2 ∉ ℚ。∎
+机制要点：反证法用"假设反面 ⇒ 推出矛盾"代替"正面构造"，
+  当"不存在"类命题难以正面证明时，反证往往唯一可行。</div>
+          <div class="prompt-block"><span class="prompt-label">数学归纳法：为何能覆盖无穷</span><button class="copy-btn" type="button">复制</button>命题 P(n)。要证 ∀n ∈ ℕ, P(n)。
+归纳法结构：
+  基础步：证明 P(1) 成立
+  归纳步：证明 P(n) ⇒ P(n+1)（对任意 n）
+为何"两步"能覆盖无穷：
+  由 P(1) 与 P(1)⇒P(2) 得 P(2)
+  由 P(2) 与 P(2)⇒P(3) 得 P(3)
+  …… 无限延展 ⇒ 对每个自然数都成立
+形式化依据：这正是皮亚诺公理中的归纳公理——
+  "若 P(1) 成立且 P(n)⇒P(n+1)，则 ∀n P(n)"被直接作为公理。
+实例：证 Σ_{k=1}^{n} k = n(n+1)/2
+  基础步：n=1，左边 = 1，右边 = 1·2/2 = 1 ✓
+  归纳步：设 Σ_{k=1}^{n} k = n(n+1)/2
+    则 Σ_{k=1}^{n+1} k = n(n+1)/2 + (n+1)
+                    = (n+1)(n/2 + 1)
+                    = (n+1)(n+2)/2 ✓
+  结论：对所有 n ∈ ℕ 成立。∎
+注意：归纳法不是循环论证——它证的是"传递性"，而非"P(n) 成立"本身。</div>
           <table>
-            <caption class="caption">核心证明策略</caption>
+            <caption class="caption">核心证明策略对比</caption>
             <thead><tr><th>方法</th><th>思路</th><th>经典案例</th></tr></thead>
             <tbody>
               <tr><th scope="row">直接证明</th><td>从前提直接推导结论</td><td>奇数的平方是奇数</td></tr>
               <tr><th scope="row">反证法</th><td>假设结论不成立，推出矛盾</td><td>√2 是无理数</td></tr>
-              <tr><th scope="row">数学归纳法</th><td>证基础步 + 证「若 n 成立则 n+1 成立」</td><td>前 n 个自然数之和 = n(n+1)/2</td></tr>
-              <tr><th scope="row">构造性证明</th><td>直接构造出满足条件的对象</td><td>存在无穷多个素数</td></tr>
+              <tr><th scope="row">数学归纳法</th><td>基础步 + 传递步覆盖自然数</td><td>Σk = n(n+1)/2</td></tr>
+              <tr><th scope="row">构造性证明</th><td>直接构造出满足条件的对象</td><td>素数无穷多</td></tr>
+              <tr><th scope="row">鸽巢原理</th><td>抽屉数少于物体数必有重复</td><td>367 人中必有两人生日相同</td></tr>
             </tbody>
           </table>
-          <ul>
-            <li><strong>反证法的力量</strong>：当正面推导走不通时，假设结论的反面往往能推出明显矛盾——欧几里得证明 √2 是无理数就是经典范例：假设 √2 = p/q（最简分数），推出 p、q 都是偶数，与最简矛盾。</li>
-            <li><strong>数学归纳法不是循环论证</strong>：它证明的是「如果一个命题对 n 成立，则对 n+1 也成立」，加上基础步（n=1 成立），就由逻辑保证了所有自然数成立——这是皮亚诺公理体系中自然数的归纳性质。</li>
-            <li><strong>鸽巢原理</strong>：把 n+1 个物体放入 n 个盒子，至少有一个盒子有 2 个物体。看似显然，却是组合数学中威力巨大的工具——比如证明任意 367 人中至少有两人生日相同。</li>
-          </ul>
-          <p>波利亚在《怎样解题》（1945）中提出四步启发式：<mark class="key">理解问题 → 拟定计划 → 执行计划 → 回顾反思</mark>。核心不在于「背公式」，而在于把未知问题与已知问题建立联结——「你以前见过类似的问题吗？」</p>
+          <p>波利亚在《怎样解题》中提出四步启发式：<mark class="key">理解问题 → 拟定计划 → 执行计划 → 回顾反思</mark>。核心不在"背公式"，而在把未知问题与已知问题建立联结——"你以前见过类似的问题吗？"</p>
         </section>
         <section>
-          <h2><span class="sec-num">3</span>数学建模</h2>
-          <p class="lede">建模是用数学语言给现实「拍快照」——必然失真，但要保留你最关心的那部分结构。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>确定建模问题</h4><p>第一步不是列方程，而是问清楚：要回答什么问题？哪些因素重要、哪些可以忽略？模型精度要多高？——建模是工程，不是纯数学。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>选择数学工具</h4><p>人口增长可以用指数模型（简单但发散），也可以用逻辑斯蒂模型（有限承载量）。工具选择取决于你关心的尺度和精度。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>验证与迭代</h4><p>模型的优劣要用数据检验——预测与现实的偏差告诉你模型在哪里失真，然后回头修正假设。建模永远是迭代的。</p></div></div>
-          </div>
+          <h2><span class="sec-num">3</span>数学建模：从现实到方程</h2>
+          <p class="lede">建模是用数学语言给现实"拍快照"——必然失真，但要保留你最关心的那部分结构。</p>
+          <div class="prompt-block"><span class="prompt-label">种群模型：从指数到逻辑斯蒂</span><button class="copy-btn" type="button">复制</button>模型 I（马尔萨斯指数模型）：
+  假设：单位时间增长率恒定，无资源限制
+  dN/dt = r·N   （r = 内禀增长率）
+  解：N(t) = N₀ · e^(rt)  ⇒ t→∞ 时 N→∞（发散，不现实）
+模型 II（逻辑斯蒂模型）：
+  假设：环境有承载量 K，增长率随 N 增大而下降
+  dN/dt = r·N·(1 − N/K)
+  定性分析：
+    · N ≈ 0 ⇒ dN/dt ≈ rN ⇒ 近似指数增长
+    · N = K ⇒ dN/dt = 0 ⇒ 平衡点
+    · N &gt; K ⇒ dN/dt &lt; 0 ⇒ 数量回落
+  解为 S 形曲线，平衡点 N* = K（稳定）。
+推导要点：把"限制"写成乘子 (1 − N/K)，
+  N 越小该乘子越接近 1，N 越接近 K 该乘子越接近 0，
+  于是"越拥挤越难增长"被一个简单因式表达。
+关键结论：模型精度由假设决定，而非由方程复杂度决定。
+  · 短期、资源充裕 ⇒ 指数模型够用
+  · 长期、资源有限 ⇒ 必须引入承载量 K</div>
           <table>
             <caption class="caption">经典数学模型举例</caption>
             <thead><tr><th>问题</th><th>模型</th><th>核心假设</th></tr></thead>
             <tbody>
-              <tr><th scope="row">种群增长</th><td>逻辑斯蒂方程 dN/dt = rN(1 - N/K)</td><td>环境承载量 K 有限</td></tr>
+              <tr><th scope="row">种群增长</th><td>逻辑斯蒂方程 dN/dt = rN(1 − N/K)</td><td>环境承载量 K 有限</td></tr>
               <tr><th scope="row">传染病传播</th><td>SIR 模型（易感-感染-恢复）</td><td>均匀混合，无空间结构</td></tr>
               <tr><th scope="row">博弈决策</th><td>纳什均衡</td><td>理性参与者，收益函数已知</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">警示</span>乔治·博克斯说过「所有模型都是错的，但有些是有用的」——模型的价值不在于完美，而在于在特定尺度上提供可检验的洞察。</div>
+          <div class="callout tip"><span class="callout-label">警示</span>乔治·博克斯说过"所有模型都是错的，但有些是有用的"——模型的价值不在于完美，而在于在特定尺度上提供可检验的洞察。</div>
         </section>
         <section>
-          <h2><span class="sec-num">4</span>概率与组合思维</h2>
-          <p class="lede">概率思维的核心不是「算概率」，而是在不确定中做出不后悔的决策——关注期望值和分布形态，而非单次结果。</p>
+          <h2><span class="sec-num">4</span>概率与组合：贝叶斯与期望</h2>
+          <p class="lede">概率思维的核心不是"算概率"，而是在不确定中做出不后悔的决策——关注期望值与分布形态，而非单次结果。</p>
+          <div class="prompt-block"><span class="prompt-label">贝叶斯定理：为什么检测阳性不等于患病</span><button class="copy-btn" type="button">复制</button>贝叶斯定理（由条件概率定义 P(A|B)=P(A∩B)/P(B) 推出）：
+  P(A|B) = P(B|A)·P(A) / P(B)
+其中 P(B) = P(B|A)P(A) + P(B|¬A)P(¬A)（全概率公式）
+医学检测实例（假设数据，仅作演示）：
+  · 患病率 P(D) = 1%  ⇒ P(¬D) = 99%
+  · 灵敏度：P(+|D) = 99%（真阳性率）
+  · 假阳性率：P(+|¬D) = 5%
+求 P(D|+)（检测阳性时真患病概率）：
+  P(+) = 0.99×0.01 + 0.05×0.99
+       = 0.0099 + 0.0495 = 0.0594
+  P(D|+) = 0.0099 / 0.0594 ≈ 0.167 ≈ 16.7%
+结论：即使检测"准确率 99%"，阳性时真患病概率仍不到 17%。
+机制：低患病率（基础率）使假阳性在总阳性中占比很高。
+启示：忽略基础率的直觉判断（认为"99% 准确 ⇒ 99% 患病"）会严重高估。</div>
           <table>
             <caption class="caption">三种理解概率的方式</caption>
             <thead><tr><th>视角</th><th>定义</th><th>适用场景</th></tr></thead>
             <tbody>
-              <tr><th scope="row">古典概率</th><td>等可能事件数之比</td><td>掷骰子、抽牌（有限等可能）</td></tr>
-              <tr><th scope="row">频率概率</th><td>长期试验中事件发生的频率极限</td><td>质量控制、保险精算</td></tr>
+              <tr><th scope="row">古典概率</th><td>等可能事件数之比</td><td>掷骰子、抽牌</td></tr>
+              <tr><th scope="row">频率概率</th><td>长期试验中频率的极限</td><td>质量控制、保险精算</td></tr>
               <tr><th scope="row">贝叶斯概率</th><td>对命题为真的信念程度，可随证据更新</td><td>诊断推理、机器学习</td></tr>
             </tbody>
           </table>
-          <ul>
-            <li><strong>条件概率</strong>：P(A|B) ≠ P(B|A)。医生检测阳性不等于有病——还要看基础率。这是贝叶斯定理 P(A|B) = P(B|A)·P(A) / P(B) 的核心。</li>
-            <li><strong>期望值</strong>：不关心这一次赚多少，关心「重复一万次的平均结果」。赌场靠的不是运气，而是期望值在玩家一侧为负。</li>
-            <li><strong>大数定律 vs 赌徒谬误</strong>：大数定律说频率趋近期望——但这是「当试验次数趋近无穷」时的事，与下一次结果无关。前 10 次掷硬币都是正面，第 11 次正反面仍是各 50%。</li>
-          </ul>
-          <p>组合思维的关键是<mark class="key">「不重不漏」</mark>——计数时要确保每个情况被恰好数一次。容斥原理、隔板法都是为「不重不漏」服务的工具。</p>
+          <p>组合思维的关键是<mark class="key">"不重不漏"</mark>——计数时要确保每个情况被恰好数一次。容斥原理、隔板法都是为"不重不漏"服务的工具。大数定律说频率趋近期望，但那是"当试验次数趋近无穷"时的事，与下一次结果无关——这正是赌徒谬误的来源。</p>
         </section>
         <section>
-          <h2><span class="sec-num">5</span>数学之美：对称与模式</h2>
-          <p class="lede">欧拉公式 e^(iπ) + 1 = 0 把五个最重要的常数用一个等号连起来——这不是巧合，是结构深处的一致性。</p>
-          <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>欧拉公式</h4><p>e^(iπ) + 1 = 0，把指数函数 e、虚数单位 i、圆周率 π、加法单位元 0、乘法单位元 1 统一在一个等式里。它揭示了指数函数与三角函数在复数域的深层等价——这是分析学最优雅的结果之一。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>群论基础</h4><p>群是一个集合配一个运算，满足封闭性、结合律、有单位元、有逆元。群论研究「对称」的代数结构——正三角形的旋转对称群有 6 个元素，分子的对称群决定其化学性质，基本粒子的分类用群论完成。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>模式与不变量</h4><p>数学之美的核心是「变化中的不变」。拓扑学里，无论怎样连续变形咖啡杯，它的亏格（洞的个数）不变——不变量帮你把无穷多种形状压缩成有限分类。</p></div></div>
+          <h2><span class="sec-num">5</span>前沿与研究进展</h2>
+          <p class="lede">数学的前沿看似遥远，但其方法与思想正在渗入算法、物理、生物与人工智能。以下为几条被广泛讨论的主线。</p>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-era">20 世纪</div><div class="tl-date">形式化与基础危机</div><p>从集合论悖论到哥德尔不完备性定理，数学基础被反复审视。核心结论（谨慎表述）：任何足够强的一致形式系统中，存在既不能证明也不能证伪的命题——这界定"公理化方法"的能力边界。</p></div>
+            <div class="tl-item"><div class="tl-era">20 世纪中</div><div class="tl-date">抽象结构与范畴论</div><p>群、环、域等抽象结构被系统化，随后范畴论提供"结构的结构"的通用语言。这一语言今日广泛用于代数几何、拓扑与理论计算机科学。</p></div>
+            <div class="tl-item"><div class="tl-era">1990s–2000s</div><div class="tl-date">概率方法与随机化算法</div><p>概率方法被用于证明确定性对象的存在性（若随机对象以正概率具有某性质，则该性质存在）。随机化算法、集中不等式成为算法设计的常规工具，也被用于组合数学的重大结果。</p></div>
+            <div class="tl-item"><div class="tl-era">2000s 起</div><div class="tl-date">大数据与高维几何</div><p>高维空间中"距离集中""体积集中"等现象冲击低维直觉，推动了压缩感知、随机矩阵理论等方向的进展，也为机器学习提供了理论支撑。</p></div>
+            <div class="tl-item"><div class="tl-era">2010s</div><div class="tl-date">数学与人工智能的互促</div><p>深度学习带来大量待解释的经验现象，吸引数学家从逼近论、优化理论角度研究；同时机器学习辅助发现数学猜想的结构线索，也引发对"机器能否参与数学发现"的持续讨论。</p></div>
+            <div class="tl-item"><div class="tl-era">近年</div><div class="tl-date">形式化证明与证明助手</div><p>借助交互式证明助手（如基于类型论的证明系统），大型数学证明被部分形式化验证。这被视为提高证明可靠性与可协作性的方向，但覆盖率与实用门槛仍是现实议题。</p></div>
           </div>
+          <div class="callout warn"><span class="callout-label">审慎提示</span>上述为研究方向的概括性描述。数学结论本身是严格的，但"某方向是否重要/是否已达共识"属学术判断，需对照具体文献。</div>
+        </section>
+        <section>
+          <h2><span class="sec-num">6</span>跨学科视角</h2>
+          <p class="lede">数学是各学科共享的"语法"。同一种结构往往在不同领域反复出现——这正是抽象的力量。</p>
+          <div class="grid-2">
+            <div class="card"><h3>数学 × 物理</h3><p>黎曼几何之于广义相对论、群论之于粒子物理，都是"纯数学先行、物理后至"的经典案例。维格纳曾以"数学在自然科学中不合理的有效性"来形容这种深层契合。</p></div>
+            <div class="card"><h3>数学 × 计算机</h3><p>可计算性理论界定"哪些问题根本算不了"，复杂度理论区分"多项式可解"与"疑似难解"。P 与 NP 问题至今开放，是理论计算机科学的核心悬念。</p></div>
+            <div class="card"><h3>数学 × 生物</h3><p>逻辑斯蒂方程描述种群、SIR 方程描述传染病、图论描述食物网。数学建模把"定性描述"升级为"可检验预测"，但也暴露模型假设的边界。</p></div>
+            <div class="card"><h3>数学 × 经济</h3><p>博弈论用纳什均衡刻画策略互动，最优化理论刻画理性选择。数学使经济学可建模、可比较，但也引发"理性人假设是否失真"的长期争论。</p></div>
+            <div class="card"><h3>数学 × 哲学</h3><p>数学对象是"发现"还是"发明"？哥德尔不完备性对形式主义纲领的冲击，使数学本体论与认识论至今仍是活跃的哲学议题。</p></div>
+            <div class="card"><h3>数学 × 艺术</h3><p>黄金比、分形与对称群在建筑、绘画与音乐结构中被反复观察。数学为"美"提供了可分析的结构语言，但"数学美"与"感官美"并非同一概念。</p></div>
+          </div>
+        </section>
+        <section>
+          <h2><span class="sec-num">7</span>常见误区与边界条件</h2>
+          <p class="lede">数学的严谨性最容易被"直觉"侵蚀。识别误区的关键，是回到"结论成立需要哪些前提"。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">误区</span><h4>"观察到规律就等于规律成立"</h4><p>从前若干项符合某个公式，不能推出该公式对所有项成立。例如数列前几项都可能碰巧满足某多项式——这正是归纳步不可省略的原因。</p></div>
+            <div class="side good"><span class="side-tag">正确做法</span><h4>区分"验证"与"证明"</h4><p>验证是有限次的检验，证明是覆盖无穷的演绎。归纳法之所以有效，正因它把"无穷验证"替换为"基础步 + 传递步"。</p></div>
+          </div>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">误区</span><h4>"概率 = 单次结果的保证"</h4><p>把"某事件概率 90%"误读为"这次一定发生"。概率描述的是长期频率或信念度，对单次结果不作保证。</p></div>
+            <div class="side good"><span class="side-tag">边界条件</span><h4>大数定律的适用前提</h4><p>大数定律要求"独立同分布"且"次数趋于无穷"。样本相关、分布漂移时，频率未必收敛到期望——这是把统计模型套用到现实时的关键边界。</p></div>
+          </div>
+          <h4>几条易被忽略的边界条件</h4>
           <table>
-            <caption class="caption">群的基本公理</caption>
-            <thead><tr><th>公理</th><th>含义</th></tr></thead>
+            <caption class="caption">常见结论的适用边界</caption>
+            <thead><tr><th>结论</th><th>成立前提</th><th>易失效情境</th></tr></thead>
             <tbody>
-              <tr><th scope="row">封闭性</th><td>群中两个元素的运算结果仍在群中</td></tr>
-              <tr><th scope="row">结合律</th><td>(a·b)·c = a·(b·c)</td></tr>
-              <tr><th scope="row">单位元</th><td>存在 e，使 a·e = e·a = a</td></tr>
-              <tr><th scope="row">逆元</th><td>每个 a 都有逆元 a⁻¹，使 a·a⁻¹ = e</td></tr>
+              <tr><th scope="row">公式对所有 n 成立</th><td>基础步与归纳步都被证明</td><td>只用前几项验证</td></tr>
+              <tr><th scope="row">期望值决定"最优"</th><td>可重复、风险中性</td><td>单次且后果不可承受（需考虑风险）</td></tr>
+              <tr><th scope="row">模型预测可信</th><td>假设与现实尺度匹配</td><td>结构性突变、假设被破坏</td></tr>
+              <tr><th scope="row">群论定理可用</th><td>对象确实满足四条公理</td><td>存在性/封闭性未被验证</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">洞察</span>物理学家维格纳在《数学在自然科学中不合理的有效性》中指出：数学家「纯粹为美」发展的结构，往往在几十年后被物理学家发现恰好描述了自然规律——群论之于粒子物理，黎曼几何之于广义相对论，都是经典案例。</div>
+          <div class="callout warn"><span class="callout-label">判据</span>面对任何"数学结论"，先问三句：前提假设是什么？是否覆盖了无穷（还是只验证了有限）？反例（边界）在哪里？</div>
         </section>
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
+          <h2><span class="sec-num">8</span>速查卡</h2>
+          <p class="lede">把抽象层次、证明方法与关键公式压缩成一张可随身自查的卡片。</p>
           <div class="prompt-block"><span class="prompt-label">数学思维速记</span><button class="copy-btn" type="button">复制</button>· 抽象三层次：经验抽象→符号抽象→结构抽象
-· 符号是思维压缩器，变量代表「任意」
-· 证明四法：直接、反证、归纳、构造
-· 反证法：假设反面，推出矛盾
-· 数学归纳法：基础步 + 归纳步，覆盖所有自然数
-· 鸽巢原理：n+1 物 n 盒，至少一盒有 2
-· 波利亚四步：理解→计划→执行→回顾
-· 建模流程：定问题→选工具→验证→迭代
-· 博克斯：「所有模型都是错的，有些是有用的」
-· 期望值看重复均值，不看单次结果
-· P(A|B) ≠ P(B|A)，注意基础率
-· 欧拉公式 e^(iπ)+1=0：五常数合一
+· 变量语义 = 论域中"任意元素" ⇒ 一次推理覆盖无穷
 · 群四公理：封闭、结合、单位元、逆元
+· 反证法：假设反面 ⇒ 推出矛盾 ⇒ 原命题成立
+· √2 无理：假设 p/q 互素 ⇒ 推出 p、q 皆偶 ⇒ 矛盾
+· 归纳法：基础步 P(1) + 传递步 P(n)⇒P(n+1) ⇒ ∀n P(n)
+· Σ_{k=1}^{n} k = n(n+1)/2（归纳法可证）
+· 鸽巢原理：n+1 物入 n 盒 ⇒ 至少一盒有 2 物
+· 波利亚四步：理解→计划→执行→回顾
+· 逻辑斯蒂：dN/dt = rN(1−N/K)，平衡点 N* = K
+· 指数模型 N(t) = N₀e^(rt) 无上限 ⇒ 仅短期适用
+· 贝叶斯：P(A|B) = P(B|A)P(A)/P(B)
+· 全概率：P(B) = P(B|A)P(A) + P(B|¬A)P(¬A)
+· 基础率低 ⇒ 阳性预测值可能很低（假阳性占比高）
+· 大数定律前提：独立同分布 + 次数趋于无穷
+· 期望值 = 长期均值，非单次结果
+· 计数原则：不重不漏（容斥、隔板法服务于它）
 · 数学之美 = 变化中的不变量</div>
         </section>
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">9</span>练习清单</h2>
+          <p class="lede">以下练习要求"完整推导"，而非"复述步骤"。逐条完成，逐条打勾。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用反证法证明 √2 是无理数，写出完整的推导链条</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用数学归纳法证明 1+2+...+n = n(n+1)/2，区分基础步和归纳步</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">用鸽巢原理证明：从 1 到 100 的整数中任取 51 个，必有两个数之差为 50</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用波利亚四步法解一道你不会的数学题，每步都写下来</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用 SIR 模型描述一种传染病的传播，列出假设并讨论模型在哪里失真</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">验证一个简单的群（如模 5 的非零剩余数乘法群）满足四条公理</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">找一个「变化中的不变量」的例子（如三角形内角和始终 180°）并解释为什么它「美」</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">用反证法完整证明 √2 是无理数，标出每一步依赖的假设（尤其是"互素"与"奇数平方是奇数"）</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用数学归纳法证明 1²+2²+…+n² = n(n+1)(2n+1)/6，区分基础步与归纳步</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">证明 Σ_{k=1}^{n} k = n(n+1)/2 后，说明为何"验证 n=1,2,3 成立"不足以代替归纳步</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用鸽巢原理证明：从 1 到 100 的整数中任取 51 个，必有两个数之差为 50（先想清楚"盒子"怎么设）</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用贝叶斯公式重算一遍：患病率 1%、灵敏度 99%、假阳性 5% 时，两次独立检测均为阳性后的患病概率是多少？</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">对逻辑斯蒂方程 dN/dt = rN(1−N/K)，验证 N=0 与 N=K 是平衡点，并判断其稳定性（扰动后是否回到平衡）</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">用波利亚四步法解一道你从未见过的题，把"拟定计划"中如何与已知问题建立联结单独写清楚</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">验证模 5 的非零剩余数乘法群满足四条公理，给出单位元与每个元素的逆元</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">找一个"变化中的不变量"（如三角形内角和、变换下的亏格），解释它为何是不变量，以及"不变量"在研究中的方法论价值</label></div>
           </div>
         </section>
       </main>
       <footer>
-        <p class="footnote">内容综合自 Pólya《怎样解题》(1945)、欧拉公式与复分析基础、群论入门及 George Box 的建模哲学，建议对照实践与原典阅读。</p>
+        <p class="footnote">内容综合自 Pólya《怎样解题》、欧拉公式与复分析基础、群论入门、贝叶斯推断与条件概率基础、逻辑斯蒂模型与 SIR 模型、George Box 的建模哲学，以及博弈论与计算理论中的相关主线。数学命题本身可由读者自行验证；前沿部分为研究方向概括，具体结论请对照原始文献。</p>
       </footer>
     </div>
   </article>

@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>AI 提示词工程进阶指南</h1>
-          <p class="report-intro__summary">提示词工程的本质，是把「模糊意图」翻译成模型可稳定执行的指令。这份指南不讲入门套话，而是拆解推理增强、结构化输出、上下文管理与评估迭代这四块真正决定效果的技术。</p>
+          <p class="report-intro__summary">提示词工程的本质，是把「模糊意图」翻译成模型可稳定执行的指令。本指南不停留在「角色+任务」的模板层，而是从条件概率与自回归解码出发，推导为什么思维链有效、为什么上下文中间会被忽略、为什么采样温度是一个方差—偏差权衡；再连接近期关于推理模型、评测污染与对齐的研究。</p>
           <div class="intro-meta">
             <span>领域：科技 / AI</span>
             <span>难度：进阶</span>
@@ -26,103 +26,242 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>一条优质提示词的结构</h2>
+          <h2><span class="sec-num">1</span>底层原理：提示词是在操纵条件概率</h2>
+          <p class="lede">要理解「为什么某条提示词有效」，先要看清模型在做什么：它是一台条件概率机器，提示词是给它的条件。</p>
+          <p>主流大语言模型（LLM）是<strong>自回归</strong>的：给定已生成的词元序列 t₁…t_{i−1}，它输出下一个词元上的概率分布，再据此采样。整个回复的联合概率被分解为：</p>
+          <div class="prompt-block"><span class="prompt-label">生成模型的形式化</span><button class="copy-btn" type="button">复制</button>P(t₁…t_n | prompt) = ∏_{i=1..n} P(t_i | t₁…t_{i−1}, prompt)
+
+· 模型参数（权重）是固定的；你能改变的只有 prompt
+· 所以「提示词工程」= 在给定参数下，把输出分布 P(·|prompt)
+  推向你期望回答所在的高概率区域
+· 若你期望的答案在该条件下概率极低 → 靠措辞也难救，
+  应改用「检索证据」「工具调用」或「微调」补充条件
+
+解码策略同样重要：
+· 贪心：t_i = argmax P(·)         → 稳定但可能陷入重复
+· 温度 T：P'(t) ∝ P(t)^{1/T}      → T↑ 更随机，T↓ 更确定
+· top-p / top-k：截断长尾，只在前 p 累积概率内采样</div>
+          <p>这个视角解释了三个常见困惑：<strong>其一</strong>，为什么「说清楚」比「说得长」重要——清晰的条件能把分布集中到窄峰，冗余信息反而稀释了真正有用的条件；<strong>其二</strong>，为什么同一个提示词换一次采样结果就变——因为采样引入了随机性；<strong>其三</strong>，为什么有些任务「怎么调都不行」——那是条件不足或模型能力边界，不是措辞问题。</p>
+          <h3>质量的两个正交维度：有效性 × 稳定性</h3>
+          <p>不要把提示词质量压成一个标量。至少要分两轴衡量：<strong>有效性</strong>（期望答案的概率是否被抬高）与<strong>稳定性</strong>（多次运行的方差是否够小）。一个提示词可能「偶尔惊艳、多数拉胯」——这类提示词在工程上不可用，因为不可预测。工程目标通常是「在尽量高的有效性下，把方差压到可接受」。这也直接引出第 4 节的温度权衡与第 6 节的评测集。</p>
+          <div class="callout tip"><span class="callout-label">判断标准</span>写提示词时问自己：我这条指令，是在抬高「正确输出」的条件概率，还是在碰运气？前者可复现，后者只在演示时好看。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">2</span>提示词的要素分解与信息论视角</h2>
           <p class="lede">入门者只写「任务」，进阶者写「契约」——把模型输出变成一个可预测、可验收的交付物。</p>
-          <p>一个完整的高质量提示词，通常由六类要素按需组合，而非全部堆砌：</p>
+          <p>一个完整的高质量提示词，由六类要素按需组合，而非全部堆砌。把每类要素看成「对输出分布的约束」，能看出它们的作用各不相同：任务约束的是「主题」，格式约束的是「形状」，示例约束的是「风格先验」。</p>
           <table>
-            <caption class="caption">提示词的六类要素</caption>
-            <thead><tr><th>要素</th><th>作用</th><th>示例片段</th></tr></thead>
+            <caption class="caption">提示词的六类要素：每类都在施加一种约束</caption>
+            <thead><tr><th>要素</th><th>作用</th><th>约束的是什么</th><th>示例片段</th></tr></thead>
             <tbody>
-              <tr><th scope="row">角色</th><td>激活专业语料与视角</td><td>「你是一名资深安全工程师」</td></tr>
-              <tr><th scope="row">任务</th><td>明确要做什么</td><td>「审查以下代码的注入漏洞」</td></tr>
-              <tr><th scope="row">上下文</th><td>补足背景与约束</td><td>「这是面向 C 端的上线前代码」</td></tr>
-              <tr><th scope="row">格式</th><td>规定输出结构</td><td>「用 JSON 输出，字段见 schema」</td></tr>
-              <tr><th scope="row">示例</th><td>示范风格与标准（少样本）</td><td>「好的回答长这样：……」</td></tr>
-              <tr><th scope="row">评估标准</th><td>定义「怎样算好」</td><td>「按 1–5 分对每个结论给出置信度」</td></tr>
+              <tr><th scope="row">角色</th><td>激活专业语料与视角</td><td>词汇与推理风格的先验</td><td>「你是一名资深安全工程师」</td></tr>
+              <tr><th scope="row">任务</th><td>明确要做什么</td><td>输出主题与动作类型</td><td>「审查以下代码的注入漏洞」</td></tr>
+              <tr><th scope="row">上下文</th><td>补足背景与约束</td><td>条件分布的定义域</td><td>「这是面向 C 端的上线前代码」</td></tr>
+              <tr><th scope="row">格式</th><td>规定输出结构</td><td>输出的语法形状</td><td>「用 JSON 输出，字段见 schema」</td></tr>
+              <tr><th scope="row">示例</th><td>示范风格与标准（少样本）</td><td>从示例中归纳的映射</td><td>「好的回答长这样：……」</td></tr>
+              <tr><th scope="row">评估标准</th><td>定义「怎样算好」</td><td>引导模型自检的行为</td><td>「按 1–5 分给出置信度」</td></tr>
             </tbody>
           </table>
-          <div class="callout tip"><span class="callout-label">进阶要点</span>真正拉开差距的往往不是「任务」，而是「示例」和「评估标准」——它们把模型从「自由发挥」拉回到「对齐你的预期」。</div>
+          <p>从信息论角度看，六要素是在注入<strong>约束</strong>；而约束越强，输出的熵越低、越确定。这就是为什么「格式 + 示例 + 评估标准」能显著提升稳定性——它们直接砍掉了输出的可能性空间。但约束不是越多越好：过度约束会引发「指令冲突」（详见第 5 节）。</p>
+          <p>关于<strong>少样本示例</strong>，一个关键机制是：模型在推理时并没有更新权重，它是在做<strong>上下文内学习</strong>（in-context learning）——把示例当作「运行时临时条件」，从中归纳出输入到输出的映射。因此示例的质量（是否一致、是否覆盖边界）直接决定它学到什么映射。这也解释了为什么自相矛盾的示例会让效果崩坏。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">弱要素组合</span><pre>帮我总结一下这篇文章。</pre><div class="why">只给了模糊的任务。输出长度、视角、格式都不确定，分布很宽，稳定性差。</div></div>
+            <div class="side good"><span class="side-tag">强要素组合</span><pre>你是科技新闻编辑。把下面文章总结成 3 条要点，
+每条 ≤ 30 字，用「·」开头，不含个人评价。
+若原文未提及某要点，不要推测。
+文章：［粘贴］</pre><div class="why">角色 + 任务 + 格式 + 负向约束同时施加，把分布压成窄峰，可复现。</div></div>
+          </div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>推理增强：让模型「先想再答」</h2>
-          <p class="lede">对大语言模型而言，「张口就来」是幻觉的主要来源。强制暴露推理过程，是提升复杂任务可靠性的最有效手段之一。</p>
+          <h2><span class="sec-num">3</span>推理增强的机制：为什么「先想再答」有效</h2>
+          <p class="lede">「思维链」不是一个玄学技巧，它有两个可解释的机制：给模型更多计算步骤，以及把隐式计算显式化。</p>
+          <p>Transformer 的每一层只做固定量的计算，一次前向传播所能完成的「串行推理步数」是有限的。对多步题目（如多位数运算、多跳问答），若强迫模型直接输出答案，它必须在极少的内部步骤里完成全部推理，容易出错；若让它<strong>把中间步骤写成词元</strong>，这些词元会作为下一词的条件，等于把「难以在内部完成的串行计算」摊开成多个解码步——<strong>用输出长度换取有效计算深度</strong>。这是思维链（Chain-of-Thought）有效的核心机制。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>思维链（Chain-of-Thought）</h4><p>要求「一步步推理再给结论」，把中间步骤显式化，显著降低计算与多步推理的错误率。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>少样本思维链（Few-shot CoT）</h4><p>给出「问题→推理过程→答案」的完整示例，比只给答案的少样本效果更稳。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>自洽性（Self-Consistency）</h4><p>多次采样生成多个推理路径，取「多数投票」的结果，牺牲一点成本换更高的准确率。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>ReAct / 工具调用</h4><p>「思考（Thought）→ 行动（Action）→ 观察（Observation）」循环，让模型边推理边查外部工具（搜索、计算器、API）。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>思维链（Chain-of-Thought）</h4><p>要求「一步步推理再给结论」，把中间步骤显式化，降低多步推理的错误率。适用于有明确步骤、可核验的任务。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>少样本思维链（Few-shot CoT）</h4><p>给出「问题→推理过程→答案」的完整示例，比只给答案的少样本更稳；示例示范了「推理格式」这一先验。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>自洽性（Self-Consistency）</h4><p>多次采样生成多条推理路径，对<strong>最终答案</strong>做多数投票。以采样成本换准确率，对「答案可枚举」的错误更稳健。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>ReAct / 工具调用</h4><p>「思考→行动→观察」循环，让模型边推理边调用外部工具（搜索、计算器、API），把不擅长的精确计算外包给工具。</p></div></div>
           </div>
+          <p>自洽性为什么有效？可以这样理解：若正确路径在多次采样里被稳定命中，而错误路径分散在众多互不相同的错误答案上，那么<strong>对最终答案投票</strong>会比单次采样更可能选出正确者——前提是正确路径的命中率高于任一条错误路径。若模型对某题根本没有正确路径（能力不足），投票也救不了它，这是适用边界。</p>
           <div class="prompt-block"><span class="prompt-label">思维链模板</span><button class="copy-btn" type="button">复制</button>请解决下面的问题。要求：
-1. 先列出你的推理步骤（Step 1、Step 2、……）
-2. 每一步注明依据
-3. 最后单独给出最终答案
-4. 如果某一步不确定，明确标注「不确定」而不是猜测
+1. 先列出你的推理步骤（第 1 步、第 2 步、……）
+2. 每一步注明依据（公式、定义或已知条件）
+3. 需要精确运算的地方，写出算式而非心算
+4. 最后单独给出一行「最终答案：……」
+5. 若某步不确定，明确标注「不确定」，不要猜测
 问题：［粘贴问题］</div>
+          <div class="callout warn"><span class="callout-label">边界</span>思维链对「有清晰中间步骤」的任务收益最大；对「凭记忆检索事实」的任务几乎无用甚至有害（会编造看似合理的推理来圆一个错误答案）。判断依据是：这个任务的正确性是否依赖可分解的多步计算。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>结构化输出与函数调用</h2>
-          <p class="lede">当结果要进程序、进表格、进数据库时，「自然语言」是灾难，「Schema」才是契约。</p>
-          <p>通过约束输出为严格 JSON 并给出字段定义，你可以把模型的输出直接接入代码流水线；更进一步，函数调用（Function Calling）让模型决定「调用哪个函数、传什么参数」，而不是输出文本。</p>
-          <div class="prompt-block"><span class="prompt-label">结构化输出模板</span><button class="copy-btn" type="button">复制</button>请从下面的用户评价中抽取信息，严格按以下 JSON 输出（不要输出任何其他文字、不要用 Markdown 代码块）：
+          <h2><span class="sec-num">4</span>解码参数：一套可算的偏差—方差权衡</h2>
+          <p class="lede">温度、top-p、top-k 不是「调个感觉」，它们直接改变采样分布，进而改变有效性与稳定性。</p>
+          <p>用温度 T 重标定分布：</p>
+          <div class="prompt-block"><span class="prompt-label">温度与截断</span><button class="copy-btn" type="button">复制</button>温度重标定：P'(t) ∝ P(t)^{1/T}
+
+· T → 0⁺  ：分布尖锐化，趋于贪心（稳定、可能重复或死板）
+· T = 1   ：保持模型原始分布
+· T ↑    ：分布平坦化，趋向均匀（多样、但更易跑偏与幻觉）
+
+top-k：只保留概率最高的 k 个词元
+top-p（核采样）：只保留累积概率达到 p 的最小词元集合
+  例：p=0.9 → 覆盖「最可能的一批词」的 90% 概率质量
+
+经验配伍（非定律）：
+· 抽取/分类/代码 → 低温（确定性优先）
+· 头脑风暴/文案   → 中高温（多样性优先）</div>
+          <p>这里有一个标准的<strong>偏差—方差权衡</strong>：低温降低方差（同一输入多次运行结果一致），但可能把概率上「接近但其实错误」的答案固化下来，形成系统性偏差；高温降低「卡在单一错误答案」的风险，却抬高方差，让输出不可复现。工程上要按任务目标选点：<strong>可验收的确定性任务偏低，需要创造性的任务偏高</strong>。</p>
+          <p>配合<strong>结构化输出</strong>，温度的影响会被进一步约束。当结果要进程序、进表格、进数据库时，「自然语言」是灾难，「Schema」才是契约。通过约束输出为严格 JSON 并给出字段类型与枚举，你可以把模型的输出直接接入代码流水线；更进一步，<strong>函数调用</strong>让模型决定「调用哪个函数、传什么参数」，而不是输出自由文本。</p>
+          <div class="prompt-block"><span class="prompt-label">结构化输出模板</span><button class="copy-btn" type="button">复制</button>请从下面的用户评价中抽取信息，严格按以下 JSON 输出。
+规则：
+1. 只输出一个 JSON 对象，不要输出任何解释文字
+2. 不要使用 Markdown 代码块包裹
+3. 字段类型与取值范围必须严格遵守
 {
-  "sentiment": "positive | neutral | negative",
+  "sentiment": "positive" | "neutral" | "negative",
   "aspects": ["价格", "质量", "物流"],
-  "rating": 1-5 的整数
+  "rating": 1 到 5 的整数,
+  "confidence": 0 到 1 的小数
 }
+若某字段无法从原文得到，填 null，不要臆测。
 评价：［粘贴］</div>
-          <div class="callout warn"><span class="callout-label">常见坑</span>要求 JSON 却让模型「自由发挥」、字段类型不写清、允许它输出 ```json 代码块，都会让下游解析失败。把类型、枚举、禁止项都写进提示词。</div>
+          <div class="callout warn"><span class="callout-label">常见坑</span>要求 JSON 却允许模型「自由发挥」、字段类型不写清、允许它输出代码块，都会让下游解析失败。把<strong>类型、枚举、禁止项、缺失值约定</strong>都写进提示词，再配一个 schema 校验器做兜底。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>上下文与长度管理</h2>
-          <p class="lede">模型的「上下文窗口」有限且「注意力」不均匀——中间的信息容易被忽略。</p>
-          <p>关键信息放在<strong>开头和结尾</strong>比埋在中间更易被关注；超长材料应分块处理、先摘要再逐步深入；需要引用原文时，要求模型「逐字引用并标注位置」，能显著抑制幻觉。对长文档，优先用「检索增强（RAG）」先召回相关片段再提问，而不是把整本塞进去。</p>
+          <h2><span class="sec-num">5</span>长上下文与注意力分配</h2>
+          <p class="lede">模型的「上下文窗口」有限，且「注意力」不均匀——中间的信息容易被忽略。</p>
+          <p>一句被广泛引用的经验是：关键信息放在<strong>开头和结尾</strong>比埋在中间更易被关注，这个「中间容易丢失」的现象常被称为「lost in the middle」（据通行说法，多篇针对长上下文模型的位置敏感性研究观察到该趋势；具体幅度随模型与任务而变，应以你要用的模型实测为准）。其直觉解释是：注意力权重与位置编码的交互，使序列中段的信息相对不易被稳定聚焦。</p>
+          <p>工程对策有三个层次：</p>
+          <ul>
+            <li><strong>重排</strong>：把最关键的指令与证据放在提示词开头和结尾，次要材料居中。</li>
+            <li><strong>压缩</strong>：超长材料先摘要、再逐步深入；用「逐字引用并标注位置」来抑制幻觉。</li>
+            <li><strong>检索增强（RAG）</strong>：先按相关性召回少量片段再提问，而不是把整本材料塞进去。这本质上是把「广撒网」换成「精确条件」。</li>
+          </ul>
+          <p>从概率角度看，RAG 的价值在于<strong>提高条件信号密度</strong>：与其给模型一堆含噪上下文（其中真正相关的可能只有几段），不如先提高「相关证据在上下文中的占比」，让正确回答的条件概率更高。代价是引入了检索环节，可能漏召回（recall 不足）——于是检索质量本身成了新的瓶颈。</p>
+          <div class="callout tip"><span class="callout-label">工程技巧</span>把长任务拆成「先抽取、再推理、后格式化」的流水线，每一步都只需短上下文。这比在超长上下文里一次性完成，稳定得多，也更容易定位是哪一步出错。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>评估与迭代：把「感觉」变成「指标」</h2>
+          <h2><span class="sec-num">6</span>评估与迭代：把「感觉」变成「指标」</h2>
           <p class="lede">没有评估的优化是玄学。好提示词是「评测」出来的，不是「拍脑袋」出来的。</p>
+          <p>评测的第一性问题是：<strong>你用什么替代指标来逼近你真正想要的目标？</strong>大多数业务目标是「有用」，但它不可直接测量，于是需要一组可计算、且与目标相关的代理指标。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>建立评测集</h4><p>收集 20–50 个有标准答案或明确标准的典型任务，作为每次改提示词的「基准线」。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>量化指标</h4><p>准确率、格式通过率、关键要素命中率；复杂任务用「模型当裁判」打 1–5 分。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>A/B 对照</h4><p>每次只改一个变量，对比新旧提示词在同一评测集上的得分差异。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>记录失败样本</h4><p>把「答错的例子」放进少样本示例里，是最直接的纠错方式。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>建立评测集</h4><p>收集 20–50 个有标准答案或明确标准的典型任务，作为每次改提示词的「基准线」。样本要覆盖常见输入与边界样例。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>量化指标</h4><p>分类任务看准确率 / 精确率 / 召回率；抽取任务看字段命中率与格式通过率；主观任务用「模型当裁判」打 1–5 分并抽检校准。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>A/B 对照</h4><p>每次只改一个变量，对比新旧提示词在同一评测集上的得分差异。一次改多处，就无法归因。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>记录失败样本</h4><p>把「答错的例子」放进少样本示例里，是最直接的纠错方式；同时统计失败模式（漏字段？过推理？跑题？），对症下药。</p></div></div>
           </div>
+          <p>这里要警惕<strong>过拟合评测集</strong>：如果你反复针对同一批样本调提示词，得分会上升，但迁移到真实新数据上可能不升反降。缓解办法是留出一份「从没用来调参」的保留集，只在最终交付前测一次；这与机器学习里训练集/验证集/测试集的分工同源。</p>
+          <div class="callout warn"><span class="callout-label">常见误区</span>「模型当裁判」省钱但会带入裁判自身的偏好与偏差（例如偏好更长的回答），且可能被被测提示词「讨好」。用它做粗筛可以，做最终裁决前应用人工抽检校准，并固定裁判的提示词与温度。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">进阶速记</span><button class="copy-btn" type="button">复制</button>· 六要素：角色 / 任务 / 上下文 / 格式 / 示例 / 评估标准
-· 复杂推理：CoT、Few-shot CoT、Self-Consistency、ReAct
-· 机器可读：严格 JSON + 字段类型 + 禁止项；函数调用
-· 长上下文：关键信息放头尾；RAG 先召回再提问
-· 优化靠评测集 + A/B，不靠感觉</div>
+          <h2><span class="sec-num">7</span>前沿与研究进展</h2>
+          <p class="lede">提示词工程近年经历了从「技巧」到「训练范式」的迁移，以下是几条可核实的主线。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">指令微调与 RLHF</span><span class="tl-date">约 2022 起</span><p>InstructGPT 等工作（OpenAI，2022）表明：用人类反馈做强化学习（RLHF）微调后，模型「听懂指令」的能力大幅提升，提示词的写法因此从「猜模型脾气」转向「按契约表达」。这是提示词工程变得可行的前提。</p></div>
+            <div class="tl-item"><span class="tl-era">思维链</span><span class="tl-date">Wei 等, 2022</span><p>「Chain-of-Thought Prompting」系统展示：让模型显式写推理步骤能显著提升算术与常识推理正确率，且该能力随模型规模出现「涌现」特征。它把「先想再答」从经验升级为有据可循的方法。</p></div>
+            <div class="tl-item"><span class="tl-era">自洽性投票</span><span class="tl-date">Wang 等, 2022/2023</span><p>Self-Consistency 提出对多条推理路径的最终答案做多数投票，在多项推理基准上超过单次贪心解码，确立了「以采样换准确率」这一范式。</p></div>
+            <div class="tl-item"><span class="tl-era">工具使用与智能体</span><span class="tl-date">ReAct, 2022 起</span><p>ReAct 把「推理」与「行动（调用工具/环境）」交织，让模型能查资料、算数、执行动作。此后「提示词 + 工具 + 循环」演化出智能体（agent）范式。</p></div>
+            <div class="tl-item"><span class="tl-era">推理专用模型</span><span class="tl-date">约 2024 起</span><p>一类模型把「长时间内部推理」训练进模型本身（用强化学习在可验证任务上优化），推理时消耗更多「思考词元」。据通行说法，这使部分任务的提示词重心从「教它怎么想」转向「把目标与约束说清楚、给它验证手段」。具体能力边界随模型而异。</p></div>
+            <div class="tl-item"><span class="tl-era">评测污染与可靠性</span><span class="tl-date">近年持续讨论</span><p>公开基准可能被训练数据「看到」从而虚高（数据污染），以及「模型当裁判」的偏差问题，是当前公认的争议与开放问题。引用任何「提升 X%」的结论前，应先确认评测设置与可复现性。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类进展</span>看到「某提示技巧提升 X%」时，先问四件事：用的什么模型（能力边界不同）、什么任务与数据集（是否被污染）、基线和对照是否公平、能否独立复现。多数技巧是「在该模型该任务上的经验」，而非普适定律。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">8</span>跨学科视角</h2>
+          <p class="lede">提示词工程不是孤立技能，它借用了多个学科的语言与工具。</p>
+          <div class="grid-2">
+            <div class="card"><h4>概率论与信息论</h4><p>模型是条件分布发生器，提示词是条件；温度是对分布的变换。「约束越强→熵越低→越确定」直接来自信息论直觉（熵衡量不确定性）。</p></div>
+            <div class="card"><h4>软件工程与接口设计</h4><p>结构化输出把自然语言变成 API 契约；Schema 校验、契约先行、失败重试，都是软件工程的老朋友。</p></div>
+            <div class="card"><h4>认知心理学</h4><p>「少样本示例」类似人类的学习迁移；「思维链」类似「把草稿写出来」以减轻工作记忆负担。这些类比有助于直觉理解机制。</p></div>
+            <div class="card"><h4>统计学与实验设计</h4><p>A/B 对照、保留集、过拟合，全部来自统计实验方法。没有对照与保留集的「优化」很容易自欺。</p></div>
+            <div class="card"><h4>形式语言与文法</h4><p>要求模型输出 JSON，本质是要求它生成满足某文法（文法 G）的串；约束越形式化，越适合用解析器自动验收。</p></div>
+            <div class="card"><h4>逻辑学与证明</h4><p>分步推理把「结论」变成可检验的「证明链」；每一步的依据是否成立，可以被逐段审阅——这正是逻辑学对推理有效性的要求。</p></div>
+          </div>
+          <p>把这几条放一起看，会发现一个共同结构：<strong>用形式化的约束，把不确定的输出逼向可验证的结果</strong>。这与编译器用类型系统约束程序、统计学家用实验设计约束推断，是同一种工程直觉。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>常见误区与边界条件</h2>
+          <p class="lede">以下说法流传很广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「提示词越长越好，信息越多越强」
+
+「加了思维链就一定更准」
+
+「温度调低就不会胡说」
+
+「模型说得很自信，所以是对的」
+
+「提示词能弥补知识缺失」</pre><div class="why">问题：长度不等于信息量，冗余会稀释条件；CoT 只对可分解的推理任务有效；低温只降低随机性，不消除系统性错误；流畅与自信不表征正确；若模型没有该知识，再好的措辞也变不出来。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>用最小充分信息+结构化约束，关键证据放头尾
+
+有明确中间步骤的任务才上 CoT，并逐段核验
+
+低温换来可复现，但要配套评测检查系统偏差
+
+以可验证证据判断对错，不以外在语气判断
+
+知识/事实缺失靠 RAG、工具或微调，不靠措辞</pre><div class="why">要点：把每条技巧对应到它解决的具体机制（分布集中、计算深度、方差、条件补充），才不会误用。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">思维链</th><td>多步计算、逻辑推理</td><td>纯事实检索（易编造推理而不是承认不知道）</td></tr>
+              <tr><th scope="row">自洽性投票</th><td>答案可枚举、错误分散</td><td>开放式生成（无「同一答案」可投票）</td></tr>
+              <tr><th scope="row">低温解码</th><td>抽取、分类、代码</td><td>头脑风暴（会过度收敛、重复）</td></tr>
+              <tr><th scope="row">少样本示例</th><td>风格/格式需要对齐</td><td>示例自相矛盾时（学到错误映射）</td></tr>
+              <tr><th scope="row">RAG</th><td>私域/更新频繁的知识</td><td>检索库本身缺失或召回质量差时</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">10</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">提示词工程速记</span><button class="copy-btn" type="button">复制</button>· 模型是条件概率机器：P(t₁…t_n|prompt)=∏P(t_i|前文,prompt)
+· 提示词工程 = 把输出分布推向期望答案的高概率区
+· 质量有两轴：有效性 × 稳定性；只追一轴不可用
+· 六要素：角色/任务/上下文/格式/示例/评估标准（各自施加约束）
+· 少样本 = 上下文内学习，示例一致性与覆盖决定学到的映射
+· 思维链机制：用输出长度换有效计算深度；仅对可分解任务有效
+· 自洽性 = 多路径对最终答案投票，以采样成本换准确率
+· 温度 P'(t)∝P(t)^{1/T}：低温降方差、高温增多样性（偏差—方差权衡）
+· top-p/top-k 截断长尾；抽取任务低温，创意任务高温
+· 结构化：JSON + 类型 + 枚举 + 禁止项 + 缺失值约定
+· 长上下文：关键信息放头尾（中间易丢，随模型而异）
+· RAG 的价值是提高条件信号密度；瓶颈在召回质量
+· 评测：评测集 + 可计算代理指标 + 单变量 A/B + 失败样本回流
+· 谨防评测集过拟合：留一份从未用于调参的保留集
+· 「模型当裁判」有偏好偏差，需人工抽检校准
+· 读结论先问：什么模型、什么任务、是否污染、能否复现</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">11</span>练习清单</h2>
+          <p class="lede">以下练习要求推导、验证或实现，产出可检验的证据，而非「做过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">为一个任务写「六要素」完整提示词</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">用思维链让模型解一道多步推理题并核验步骤</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">让模型输出严格 JSON，并写代码解析验证</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">建一个 10 条样本的评测集并量化当前提示词得分</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">对失败样本做一次 A/B 改写并对比得分</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">尝试用 RAG 思路处理一份长文档并对比效果</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：写出一段长度为 n 的回复的联合概率分解式，并解释「为什么同一个提示词两次运行结果可能不同」</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">实现：为一个分类任务写「六要素」完整提示词，并对照只写「任务」的版本，说明每类要素削减了哪部分输出不确定性</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">验证：对同一道多步推理题，比较「直接作答」与「思维链」的准确率（各跑 5 次），并判断该题是否属于 CoT 适用边界</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">推导：用 P'(t)∝P(t)^{1/T} 解释温度趋近 0 与趋近无穷时分布的变化，并各举一个该温度适用的任务</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">实现：设计严格 JSON 输出提示词并写一段解析+校验代码（含字段类型与缺失值处理），统计格式通过率</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">实验：搭建 20 条样本评测集，量化当前提示词得分，再做一次单变量 A/B 改写并对比差异</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">验证：把同一批证据分别放在提示词的开头、中间、结尾，比较抽取准确率，验证位置效应是否存在</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">实现：用自洽性思路对一道答案可枚举的题采样 5 条路径并投票，记录投票前/后的正确率变化</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">查证：查阅 Wei 等（2022）或 Wang 等关于自洽性的论文，写出其方法、结论与至少一条局限，并指出可能的评测污染风险</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <div class="sources">
-          <h2>延伸阅读</h2>
-          <ol>
-            <li>OpenAI 提示词工程指南 — <a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" rel="noopener">platform.openai.com/docs/guides/prompt-engineering</a></li>
-            <li>Anthropic 提示词工程概述 — <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview</a></li>
-          </ol>
-        </div>
+        <p class="footnote">原创交互式学习资料。机制部分依据自回归语言模型的条件概率分解与常用解码策略（温度、top-p）整理；推理增强部分参考 Chain-of-Thought（Wei 等，2022）与 Self-Consistency（Wang 等）的通行表述；指令微调与 RLHF 参考 InstructGPT（OpenAI，2022）的公开描述；工具使用参考 ReAct 范式。需注意：长上下文的「中间丢失」现象、推理专用模型的能力边界、以及「模型当裁判」的偏差程度，均随模型与任务变化，本指南已在正文中标注其不确定状态，具体结论请以原始文献与你所用模型的实测为准。</p>
       </footer>
     </div>
   </article>

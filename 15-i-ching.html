@@ -14,7 +14,7 @@
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
           <h1>易经与阴阳五行进阶指南</h1>
-          <p class="report-intro__summary">从阴阳的辩证思想，到五行的相生相克、八卦的取象系统，再到《易经》的哲学地位——这份指南系统梳理这套影响了中华文明三千年的思维体系。</p>
+          <p class="report-intro__summary">把卦爻系统当作一套可计数的形式结构，把阴阳五行当作一种古老的系统语言，同时把「文化符号」与「科学结论」严格分开——这份指南用数学、系统论与科学哲学的视角重新审视易学，既不神化，也不轻慢。</p>
           <div class="intro-meta">
             <span>领域：传统文化 / 哲学</span>
             <span>难度：进阶</span>
@@ -26,20 +26,46 @@
     <div class="page__content">
       <main>
         <section>
-          <h2><span class="sec-num">1</span>阴阳：一种辩证思维</h2>
-          <p class="lede">阴阳不是「两个对立的实体」，而是「同一事物相互依存的两种属性」。</p>
-          <ul>
-            <li><strong>对立</strong>：昼与夜、动与静、热与冷——互为反面。</li>
-            <li><strong>互根</strong>：没有「上」就无所谓「下」，双方以对方为存在前提。</li>
-            <li><strong>消长转化</strong>：此消彼长，盛极而衰、否极泰来（如昼夜交替、寒来暑往）。</li>
-            <li><strong>和谐</strong>：追求的不是消灭一方，而是「动态平衡」。</li>
-          </ul>
-          <div class="callout tip"><span class="callout-label">思想价值</span>阴阳提供了一种「关系思维」：任何事物都在关系中定义、在平衡中存在、在转化中发展——这与现代系统思维有相通之处。</div>
+          <h2><span class="sec-num">1</span>卦爻系统：一套可计数的形式结构</h2>
+          <p class="lede">如果暂时搁置占筮功能，卦爻系统首先是一个「由有限符号按固定规则组合」的形式系统——这类对象在现代数学里可以用组合计数精确描述。</p>
+          <p>设每一爻有两个取值：阴爻（记 0）与阳爻（记 1）。那么：</p>
+          <div class="prompt-block"><span class="prompt-label">组合计数的推导</span><button class="copy-btn" type="button">复制</button>一爻：2 种可能 → 2
+三爻成卦（八卦）：2³ = 8 种
+六爻成卦（六十四卦）：2⁶ = 64 种
+
+一般地，n 爻可得 2ⁿ 种结构。
+这是一个「二元长度为 6 的串」的全集，恰好覆盖所有取法，无遗漏、无重复。</div>
+          <p>值得强调的是：这里的「二进制」是<strong>结构上的等价</strong>——每个六爻卦可以用一个 6 位二元串唯一标识（如乾为 111111，坤为 000000），卦与卦之间的变换（如「错卦」逐爻取反、「综卦」整体倒序）恰好对应二元串上的位运算（按位取反、位序反转）。这是<strong>形式同构</strong>，而不是说古人「发明了计算机」。</p>
+          <div class="callout tip"><span class="callout-label">关键区分</span>「结构同构」是一种数学对照：两套系统在运算规则上可以一一对应。它说明卦爻系统具有清晰的组合结构，<strong>但不能</strong>推论出古人有二进制算术、逻辑代数或信息论的思想。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">2</span>五行：相生相克的系统模型</h2>
-          <p class="lede">五行（木火土金水）不是五种物质，而是五种「功能属性」，用来描述系统内部的促进与制约。</p>
+          <h2><span class="sec-num">2</span>位运算与对称：卦与卦之间的变换</h2>
+          <p class="lede">给卦一个坐标后，传统术语里的「变卦」「错综」就可以翻译成明确的映射。</p>
+          <div class="feature-list">
+            <div class="feature"><div class="f-ico">错</div><div><h4>错卦（旁通）</h4><p>六爻逐位取反，即二元串的按位取反。乾 111111 ↔ 坤 000000。任意卦的错卦唯一，且「取反两次回到自身」——满足对合律。</p></div></div>
+            <div class="feature"><div class="f-ico">综</div><div><h4>综卦（反卦）</h4><p>整卦上下颠倒，即位序反转（将一个 6 位串首尾翻转）。泰 111000 ↔ 否 000111。同样是对合变换。</p></div></div>
+            <div class="feature"><div class="f-ico">互</div><div><h4>互卦</h4><p>取 2~4 爻为下卦、3~5 爻为上卦，是一种「局部采样」式的重新编码，用于刻画情境内部的结构。</p></div></div>
+            <div class="feature"><div class="f-ico">变</div><div><h4>变爻（动爻）</h4><p>对某一位取反，得到「之卦」。一次变爻即一次单位翻转；从本卦到之卦的汉明距离就是发生改变爻的个数。</p></div></div>
+          </div>
+          <p>用位运算的语言看：错卦 = 按位取反，综卦 = 位序反转，变爻 = 单位翻转（翻转 k 位则两卦的汉明距离为 k）。这给「错综复杂」这类传统说法提供了一个可计算的解释框架。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">3</span>阴阳：一种关系性的二元标记</h2>
+          <p class="lede">阴阳不是「两个对立的实体」，而是「同一系统里相互依存的两种属性标签」。</p>
+          <ul>
+            <li><strong>对立</strong>：昼与夜、动与静、热与冷——互为反面，构成一对可区分状态。</li>
+            <li><strong>互根</strong>：没有「上」就无所谓「下」，双方以对方为存在前提——这在逻辑上是一种「相对谓词」结构。</li>
+            <li><strong>消长转化</strong>：此消彼长，盛极而衰、否极泰来（如昼夜交替、寒来暑往）。</li>
+            <li><strong>和谐</strong>：追求的不是消灭一方，而是「动态平衡」。</li>
+          </ul>
+          <div class="callout tip"><span class="callout-label">思想价值</span>阴阳提供了一种「关系思维」：事物在关系中定义、在平衡中存在、在转化中发展。用系统论的话说，它是一种强调<strong>相互依赖与负反馈调节</strong>的朴素表述。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>五行：相生相克的系统论解读</h2>
+          <p class="lede">五行（木火土金水）不是五种物质，而是五种「功能属性」。若把相生相克画成有向图，它其实是一个结构规整的耦合系统。</p>
           <table>
             <caption class="caption">五行对应关系</caption>
             <thead><tr><th>五行</th><th>方位</th><th>季节</th><th>颜色</th><th>脏腑（中医）</th></tr></thead>
@@ -51,14 +77,24 @@
               <tr><th scope="row">水</th><td>北</td><td>冬</td><td>黑</td><td>肾</td></tr>
             </tbody>
           </table>
-          <p><strong>相生</strong>：木→火→土→金→水→木（促进）；<strong>相克</strong>：木克土、土克水、水克火、火克金、金克木（制约）。生克共同构成「动态平衡」，任何一环节过强或过弱都会引发连锁反应。</p>
+          <p><strong>相生</strong>：木→火→土→金→水→木（促进）；<strong>相克</strong>：木克土、土克水、水克火、火克金、金克木（制约）。</p>
+          <p>把它看成有向图：相生是一条长度为 5 的<strong>有向环</strong>（每点入度=出度=1）；相克是另一条「隔位」的<strong>有向环</strong>（木→土→水→火→金→木，同样每点入度=出度=1）。两条环叠加后，每个节点都恰好有 2 条出边、2 条入边，整体是一个<strong>节点对称的耦合结构</strong>。</p>
+          <div class="prompt-block"><span class="prompt-label">系统论视角</span><button class="copy-btn" type="button">复制</button>· 相生环 ≈ 正反馈式链（A 促进 B）
+· 相克环 ≈ 负反馈式链（A 抑制 B）
+
+两层反馈叠加 = 一个「带自我调节」的闭环，
+任一环节过强/过弱都会沿两条环传播影响，
+这就是「过犹不及」的结构来源。
+
+注意：这是对传统模型的「系统类比」，
+不是说五行等同于现代控制论。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">3</span>八卦：一套「取象」符号系统</h2>
-          <p class="lede">八卦由阴爻（⚋）、阳爻（⚊）三叠而成，每卦象征一类自然现象及其属性。</p>
+          <h2><span class="sec-num">5</span>八卦取象与六十四卦的编码</h2>
+          <p class="lede">八卦由阴爻（⚋）、阳爻（⚊）三叠而成，每卦象征一类自然现象及其属性；两两相叠则成六十四卦。</p>
           <table>
-            <caption class="caption">八卦与先天/后天方位</caption>
+            <caption class="caption">八卦与先天方位</caption>
             <thead><tr><th>卦名</th><th>卦象</th><th>自然</th><th>属性</th><th>先天方位</th></tr></thead>
             <tbody>
               <tr><th scope="row">乾</th><td>☰</td><td>天</td><td>健</td><td>南</td></tr>
@@ -71,46 +107,123 @@
               <tr><th scope="row">坤</th><td>☷</td><td>地</td><td>顺</td><td>北</td></tr>
             </tbody>
           </table>
-          <p>八卦两两相叠，组成<strong>六十四卦</strong>，构成《易经》的主体。每一卦都有卦辞、爻辞，描述特定情境及其「应变之道」。</p>
+          <p>若把下卦、上卦各视为一个 3 位二元串，则六十四卦等价于「3 位串 + 3 位串」的有序对，共 8 × 8 = 64 种，取法穷尽。每一卦都有卦辞、爻辞，描述特定情境及其「应变之道」。这也是「六爻编码」与「两个八进制位」在结构上相互对应的原因。</p>
         </section>
 
         <section>
-          <h2><span class="sec-num">4</span>《易经》的历史地位与影响</h2>
-          <p class="lede">《易经》位列「群经之首」，其思想渗透到中华文明的各个层面。</p>
-          <ul>
-            <li><strong>哲学</strong>：「一阴一阳之谓道」「穷则变，变则通」的变易观。</li>
-            <li><strong>中医</strong>：阴阳五行是中医辨证论治的理论基础。</li>
-            <li><strong>兵法与谋略</strong>：强调「因时、因地、因势」而变。</li>
-            <li><strong>建筑与风水</strong>：方位、朝向、布局的观念来源之一。</li>
-          </ul>
-          <div class="callout warn"><span class="callout-label">现代视角</span>阴阳五行与八卦是<strong>哲学与文化符号系统</strong>，是理解传统思想的重要钥匙；但并非现代科学理论，不应替代医学诊断、投资等理性决策。</div>
+          <h2><span class="sec-num">6</span>前沿与考据：与莱布尼茨关系的真实面貌</h2>
+          <p class="lede">「易经启发了莱布尼茨的二进制」是一个流传极广、但需要仔细分辩的说法。下面按时间线和证据强弱分层说明。</p>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-era">先后关系</div>
+              <div class="tl-date">约 1679 年前后</div>
+              <p>据通行说法，莱布尼茨在此时期已系统阐述其二进制算术（以 0/1 表示一切数）。也就是说，他的二进制工作<strong>早于</strong>他接触到八卦符号的时期。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">接触与通信</div>
+              <div class="tl-date">约 1701 年前后</div>
+              <p>据通行说法，莱布尼茨与在华传教士白晋（Joachim Bouvet）通信，白晋向其介绍了邵雍所传的「先天六十四卦次序图」。莱布尼茨注意到：若把阴爻记为 0、阳爻记为 1，该图的排列顺序与他的二进制数序可以相互对照。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">结论分寸</div>
+              <div class="tl-date">史学共识方向</div>
+              <p>较稳妥的表述是：<strong>莱布尼茨的二进制并非源自易经</strong>；他在看到卦序图后，将其视为自己已有二进制思想的一个「来自古代的印证」，并对此感到欣喜。把「印证」说成「起源」，是把因果方向弄反了。</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-era">当代论述</div>
+              <div class="tl-date">近数十年</div>
+              <p>学界也常讨论《易经》思维与「变易/系统/整体」观念的关联，但这类讨论多属<strong>哲学诠释</strong>，与「古代已有现代科学」的主张不是一回事，需区别对待。</p>
+            </div>
+          </div>
+          <div class="callout warn"><span class="callout-label">证据纪律</span>涉及具体通信日期、人名、图名的细节，不同文献表述略有出入。本指南只陈述学界较通行的框架，<strong>不给出精确到日的断言</strong>，也不夸大易经与二进制的因果关系。</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">5</span>速查卡</h2>
+          <h2><span class="sec-num">7</span>跨学科视角：可以类比，不能等同</h2>
+          <p class="lede">易学与多个现代学科之间存在「结构层面」的可类比性。类比能启发思考，但不能当成证明。</p>
+          <div class="grid-2">
+            <div class="card">
+              <h3>组合数学</h3>
+              <p>卦爻系统的穷举性（2ⁿ）与变换（取反、反转、翻位）是非常干净的组合对象，适合作为「有限符号系统」的教学案例。</p>
+            </div>
+            <div class="card">
+              <h3>系统论 / 控制论</h3>
+              <p>相生相克可读作正负反馈叠加的闭环，与「调节—平衡」的直觉相通；但五行的具体对应关系并非从这些原理推导而来，而是历史约定。</p>
+            </div>
+            <div class="card">
+              <h3>符号学</h3>
+              <p>八卦是典型的「取象」符号系统：用少量符号承载大量情境意义，其解释依赖语境与策展，与自然语言的隐喻机制同类。</p>
+            </div>
+            <div class="card">
+              <h3>科学哲学</h3>
+              <p>一个理论是否「科学」，取决于它能否给出可检验的预测、可否被证伪。阴阳五行可作为哲学隐喻与解释框架，但其陈述通常缺乏可证伪的定量预测，因而一般不被视为现代意义上的科学理论。</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界</h2>
+          <p class="lede">最容易出错的，是把「文化价值」与「科学效力」混为一谈，或把「结构同构」误读为「思想起源」。</p>
+          <div class="compare">
+            <div class="side bad">
+              <span class="side-tag">常见误区</span>
+              <p>「易经是二进制的源头」「古人早已掌握现代科学」——把结构对照当成历史因果。</p>
+              <p>「五行相克能解释/治疗一切疾病」——用哲学框架替代临床证据。</p>
+              <p>「卦象可以预测股价、赛事、疾病」——把封闭的符号系统当作对开放世界的可靠预言。</p>
+            </div>
+            <div class="side good">
+              <span class="side-tag">更稳的立场</span>
+              <p>卦爻系统确有清晰的组合与位运算结构，值得作为「古代形式系统」研究。</p>
+              <p>阴阳五行是重要的哲学与文化符号体系，是理解传统思想的钥匙。</p>
+              <p>是否采用某项具体主张，应回到可检验的证据与学科规范，而非诉诸经典权威。</p>
+            </div>
+          </div>
+          <table>
+            <caption class="caption">边界清单</caption>
+            <thead><tr><th>议题</th><th>可以说</th><th>不宜说</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">组合结构</th><td>卦爻系统可精确计数与描述</td><td>古人已懂二进制算术</td></tr>
+              <tr><th scope="row">与莱布尼茨</th><td>他曾以卦图印证自己的二进制</td><td>二进制源于易经</td></tr>
+              <tr><th scope="row">医学</th><td>阴阳五行是传统医学的理论语言</td><td>它可替代现代诊断与循证治疗</td></tr>
+              <tr><th scope="row">预测</th><td>卦辞可作伦理与决策的反思工具</td><td>卦象能可靠预测未来事件</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>速查卡</h2>
           <div class="prompt-block"><span class="prompt-label">易学进阶速记</span><button class="copy-btn" type="button">复制</button>· 阴阳四义：对立、互根、消长转化、和谐
-· 相生：木→火→土→金→水→木
-· 相克：木克土克水克火克金克木
+· 相生：木→火→土→金→水→木（有向环）
+· 相克：木克土克水克火克金克木（有向环）
+· 五行配：木东春青肝 / 火南夏赤心 / 土中长夏黄脾 / 金西秋白肺 / 水北冬黑肾
 · 八卦：乾天/兑泽/离火/震雷/巽风/坎水/艮山/坤地
-· 六十四卦 = 八卦两两相叠</div>
+· 卦数：一爻 2 种；八卦 2³=8；六十四卦 2⁶=64
+· 六十四卦 = 上下卦有序对，8×8=64
+· 错卦 = 按位取反；综卦 = 位序反转
+· 变爻 = 单位翻转；变 k 爻则汉明距离 k
+· 与莱布尼茨：二进制在先，卦图在后为其「印证」，非其源头
+· 定位：文化符号与哲学框架；不等于现代科学理论</div>
         </section>
 
         <section>
-          <h2><span class="sec-num">6</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 6</span></div>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 9</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">默写五行相生与相克的顺序</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">说出五行与方位/季节的对应</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">默写八卦的名称与卦象</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">用「阴阳」解释一个生活中的对立统一现象</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">说明《易经》对中医或建筑的影响</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">区分「哲学解读」与「命理预测」的边界</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">推导：给出 n 爻系统可产生多少种结构，并证明 3 爻为 8、6 爻为 64 无一遗漏</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">建模：为六十四卦设计一个唯一的 6 位二元串编码，写出乾、坤、泰、否四卦的编码</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">验证：证明「错卦」变换是对合运算（取反两次回到自身），并举一例数值验证</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">计算：任取两卦，计算它们的汉明距离，并说明等于「需变几爻」</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">作图：把相生、相克分别画成有向图，统计每点的入度与出度，说明为何是「对称耦合」</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">论证：用正/负反馈语言重述相生相克，并指出这种类比在哪些方面会失效</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">考据：梳理莱布尼茨二进制与八卦的时间顺序，写出一个「不过度断言」的结论句</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">辨析：举出三个「文化价值」与「科学效力」被混为一谈的说法，并各写一句反驳</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">设计：从可证伪性出发，说明为何阴阳五行一般不作为现代科学理论，同时肯定其哲学意义</label></div>
           </div>
         </section>
       </main>
 
       <footer>
-        <p class="footnote">原创交互式学习资料，从文化与哲学角度介绍易学概念，不涉及命理预测。</p>
+        <p class="footnote">原创交互式学习资料，从文化、数学与科学哲学角度介绍易学概念，不涉及命理预测。涉及历史细节处依「通行说法」表述，不作精确断言。</p>
       </footer>
     </div>
   </article>

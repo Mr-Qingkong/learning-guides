@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>人际沟通指南</title>
+  <title>人际沟通进阶指南</title>
   <link rel="stylesheet" href="_shared/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <div class="report-intro__surface">
         <div class="report-intro__content">
           <div class="crumb"><a href="index.html">← 全部指南</a></div>
-          <h1>人际沟通指南</h1>
-          <p class="report-intro__summary">沟通的本质不是「把话说出去」，而是「让对方接得住」——信息、情绪、需求三层同时在传递。这份指南覆盖三层倾听、非暴力沟通四步、提问技术、SBI 反馈模型与五种冲突模式，帮你把日常对话变成可复用的操作系统。</p>
+          <h1>人际沟通进阶指南</h1>
+          <p class="report-intro__summary">沟通可以被建模：以 Shannon–Weaver 的编码—信道—噪声为骨架，受信道容量约束，受 Grice 语用原则与共同基础塑造，并被情绪唤醒度与认知负荷调制。本指南把「会说话」拆成编码、解码、反馈、冲突四个可计算环节，并连接语用学、信息论、认知神经科学与博弈论。</p>
           <div class="intro-meta">
             <span>领域：职场 · 沟通</span>
             <span>难度：进阶</span>
@@ -24,106 +24,197 @@
     </header>
     <div class="page__content">
       <main>
+
         <section>
-          <h2><span class="sec-num">1</span>倾听的三个层次：内容、情绪、需求</h2>
-          <p class="lede">多数人一辈子停在第一层「听内容」，而冲突的化解与信任的建立，发生在第二、第三层。</p>
+          <h2><span class="sec-num">1</span>沟通的信息论模型：噪声、冗余与信道容量</h2>
+          <p class="lede">Shannon 与 Weaver 把通信拆成「信源—编码—信道—噪声—解码—信宿」；人际沟通的失效点，大多落在这条链的某一环上，而不是落在「对方不配合」。</p>
+          <p>把一次对话形式化：说话人有意图 I，编码成话语 M（语言 + 副语言 + 非语言），经信道 C 传给受话人，受话人解码得表征 D。误差 Δ = D − I。</p>
+          <div class="prompt-block"><span class="prompt-label">沟通误差分解</span><button class="copy-btn" type="button">复制</button>Δ = 编码损耗 + 信道噪声 + 解码偏差
+· 编码损耗：想清楚却没说明白（词汇不足、省略前提、黑话）
+· 信道噪声：物理噪声 + 语义歧义 + 关系性噪声（成见、情绪）
+· 解码偏差：受话人用经验补空（投射、刻板印象、框架效应）
+信道容量 C = W·log₂(1 + SNR)（W 带宽，SNR 信噪比）
+→ 提带宽或提信噪比，都能提升一次沟通可传递的信息量</div>
+          <p><strong>其一</strong>，媒介选择是工程决策——高模糊、高情绪、高风险议题走高带宽信道（面对面/视频），事务性信息走文字；<strong>其二</strong>，冗余（复述、总结）不是啰嗦，而是对抗噪声的纠错码；<strong>其三</strong>，反馈是通信的确认机制（ACK），没有 ACK 就是开环传输。</p>
+          <div class="callout tip"><span class="callout-label">判断标准</span>沟通失败先定位：是编码（没说清）、信道（媒介错/噪声大）还是解码（对方补全错）？答案不同，补救动作完全不同——改措辞 / 换媒介 / 对齐前提。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">2</span>从「传递」到「共建」：Grice 语用学与共同基础</h2>
+          <p class="lede">信息论模型解释「传得准不准」，语用学解释「听的人如何推断你的意思」。后者才是人际沟通复杂度的真正来源。</p>
+          <p>Grice 的<strong>合作原则</strong>含四条准则：量（信息量恰到好处）、质（只说真话）、关系（切题）、方式（清楚无歧义）。日常对话中人们持续、无意识地<strong>违反</strong>它们——而违反本身携带意义，即<strong>会话含义</strong>（implicature）：A 问「你觉得这方案怎么样」，B 答「今天天气不错」，反常回应反推出「我不想直接评价」。</p>
           <table>
-            <caption class="caption">倾听三层次对照</caption>
-            <thead><tr><th>层次</th><th>在听什么</th><th>典型反应</th><th>关键动作</th></tr></thead>
+            <caption class="caption">信息论视角与语用学视角对照</caption>
+            <thead><tr><th>维度</th><th>信息论模型</th><th>语用学（共建）模型</th></tr></thead>
             <tbody>
-              <tr><th scope="row">一 · 内容</th><td>对方陈述的事实与观点</td><td>给建议、反驳、补充信息</td><td>复述确认：「你的意思是……对吗」</td></tr>
-              <tr><th scope="row">二 · 情绪</th><td>语气、停顿、用词背后的感受</td><td>命名情绪：「听起来你挺委屈」</td><td>先接住情绪，再谈事情</td></tr>
-              <tr><th scope="row">三 · 需求</th><td>情绪背后未满足的需要</td><td>探询需求：「你其实希望被提前告知」</td><td>把对话从立场拉回需要</td></tr>
+              <tr><th scope="row">核心问题</th><td>信号能否无误送达</td><td>听者能否推断出说话人意图</td></tr>
+              <tr><th scope="row">信息地位</th><td>信息在符号里</td><td>信息靠听者「共建」</td></tr>
+              <tr><th scope="row">关键变量</th><td>信噪比、带宽、冗余</td><td>共同基础、语境、语用含义</td></tr>
+              <tr><th scope="row">失配举例</th><td>照稿念但音质很差</td><td>字字清楚但对方理解偏了</td></tr>
             </tbody>
           </table>
-          <p>第二层是分水岭：<mark class="key">情绪没有被命名之前，内容是进不去的</mark>。对方重复诉说同一件事，往往不是要方案，而是要被听见——绕过情绪直接给建议，等于在伤口上讲道理，讲得越对，对方越愤怒。</p>
+          <p><strong>共同基础</strong>（common ground）是双方默认对方知道的知识。它越大，可省略的越多，一个眼神就够；越小，越必须铺足前提。这就是「给外行解释」与「和老搭档同步」需要不同表达的原因——不是能力问题，是共同基础的量级问题。</p>
+          <p>由此得反常识推论：<mark class="key">说得多不等于传得多；超出共同基础的信息会被噪声淹没</mark>。对不懂技术的高管讲架构细节，信息量与信任度往往同时下降。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">2</span>非暴力沟通四步：观察、感受、需要、请求</h2>
-          <p class="lede">Marshall Rosenberg 的 NVC 把容易引发对抗的表达，重构为「观察—感受—需要—请求」四步，每一步都有严格的语法约束。</p>
+          <h2><span class="sec-num">3</span>倾听的认知机制：工作记忆与三层解码</h2>
+          <p class="lede">倾听不是被动接收，而是主动建构过程，其瓶颈是工作记忆的有限容量。三层倾听正对应三种深度的解码任务。</p>
+          <p>工作记忆的操作容量有限（经典估计约 4±1 个组块），倾听时能同时「挂住」的信息单元是稀缺资源。人们停在第一层，是因为把资源全用来处理字面内容，没有余量去解码情绪与需求。</p>
+          <table>
+            <caption class="caption">倾听三层次对照（解码深度递增）</caption>
+            <thead><tr><th>层次</th><th>在听什么</th><th>认知负荷</th><th>关键动作</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">一 · 内容</th><td>事实、观点、论据</td><td>低（字面解码）</td><td>复述确认：「你的意思是……对吗」</td></tr>
+              <tr><th scope="row">二 · 情绪</th><td>语气、停顿、用词背后感受</td><td>中（需推断状态）</td><td>命名情绪：「听起来你挺委屈」</td></tr>
+              <tr><th scope="row">三 · 需求</th><td>情绪背后未满足的需要</td><td>高（需心智化）</td><td>探询需求：「你希望被提前告知」</td></tr>
+            </tbody>
+          </table>
+          <p>机制上，第二层依赖<strong>心智理论</strong>（读懂他人心理状态），第三层要把「他为什么这样说」映射到「什么需要未被满足」。神经影像证据指向一个与心智化相关的脑网络（常被概括为含内侧前额叶、颞顶联合区、楔前叶）在推断意图时激活增强；共情（感受情绪）与心智化（推断想法）可区分，这解释了为何有人「很能共情却看不透局势」，也有人相反。</p>
+          <p><mark class="key">情绪没有被命名之前，内容是进不去的</mark>：对方高唤醒时认知资源被情绪占用，此时讲道理等于向已占满的信道继续灌数据。命名情绪的作用是替对方把状态结构化，释放处理内容的资源。</p>
+          <div class="callout warn"><span class="callout-label">反直觉</span>「多问几个问题」不一定更懂对方。若问题提高对方认知负荷（要求当场回忆、计算、辩解），反而压低有效表达。倾听的目标是降低对方的表达成本。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">4</span>NVC 四步与 SBI：把评价信号换成观察信号</h2>
+          <p class="lede">非暴力沟通（Rosenberg）与 SBI 反馈（CCL）共享同一机制内核：把「评价性信号」翻译成「观察性信号」，从而绕过对方的防御反应。</p>
+          <p>为什么评价触发防御？评价通常指向<strong>稳定的、全局的人格特质</strong>（「你不专业」），在心理上等同于对自我的整体否定，会激活威胁反应并优先消耗资源去辩护；而可观察的行为是<strong>具体的、局部的、可改变的</strong>，可被当作待办事项处理。用归因理论说：归因于可控、特定、不稳定的原因（行为），比归因于不可控、普遍、稳定的原因（人格），更能引发改善动机。</p>
           <div class="feature-list">
-            <div class="feature"><div class="f-ico">1</div><div><h4>观察：只说摄像头能拍到的</h4><p>「你本周三次迟交周报」是观察，「你总是拖延」是评判——评判会瞬间触发防御，观察才有讨论的余地。</p></div></div>
-            <div class="feature"><div class="f-ico">2</div><div><h4>感受：用指向自己的情绪词</h4><p>「我有些着急」而非「我觉得你不专业」——前者可以被接住，后者只能被反驳。</p></div></div>
-            <div class="feature"><div class="f-ico">3</div><div><h4>需要：说出感受背后的根源</h4><p>「因为排期完全依赖你的数据」——需要越具体，对方越知道从哪里配合你。</p></div></div>
-            <div class="feature"><div class="f-ico">4</div><div><h4>请求：具体、可执行、可拒绝</h4><p>「明天中午前给我数据行吗」优于「你能不能上点心」——可拒绝的请求才是请求，不可拒绝的是命令。</p></div></div>
+            <div class="feature"><div class="f-ico">1</div><div><h4>观察：只说摄像头能拍到的</h4><p>「你本周三次迟交周报」是可核验的观察，「你总是拖延」是不可证伪的评价。可核验才有讨论空间。</p></div></div>
+            <div class="feature"><div class="f-ico">2</div><div><h4>感受：用指向自己的情绪词</h4><p>「我有些着急」而非「我觉得你不专业」——前者陈述内部状态（无法被反驳），后者是伪装成感受的评价（必然引发反驳）。</p></div></div>
+            <div class="feature"><div class="f-ico">3</div><div><h4>需要：说出感受背后的根源</h4><p>「因为排期完全依赖你的数据」——把情绪落到具体依赖上，对方才能定位可操作的部分。</p></div></div>
+            <div class="feature"><div class="f-ico">4</div><div><h4>请求：具体、可执行、可拒绝</h4><p>「明天中午前给我数据行吗」优于「你能不能上点心」——可拒绝的请求才是请求，否则是指令，会激活自主性威胁。</p></div></div>
           </div>
-          <div class="callout tip"><span class="callout-label">综合示例</span>「本周三次会你都在中途改需求（观察），我有些着急（感受），因为排期已经压到极限（需要），能不能先冻结范围、变更走评审（请求）？」——四句无一处指责，却句句有信息量。</div>
-        </section>
-        <section>
-          <h2><span class="sec-num">3</span>提问技术：开放式、追问与确认</h2>
-          <p class="lede">问题决定了对话的分辨率：问得越封闭，得到的越是你已经知道的东西。</p>
-          <ul>
-            <li><strong>开放式提问</strong>：以「什么 / 如何」开头。「这个方案你最担心什么」比「你觉得行吗」多挖出一整层信息。</li>
-            <li><strong>追问</strong>：紧贴上一个答案下钻——「为什么」「具体指哪部分」「能举个例子吗」。真话往往在第三层追问之后才出现。</li>
-            <li><strong>确认理解</strong>：用自己的话复述再请对方校验。「我总结一下：……对吗」——防的是两个人各自以为达成了共识。</li>
-            <li><strong>留白</strong>：抛出问题后忍住三秒不说话。沉默会把更真实的答案逼出来，也把说话的权利还给对方。</li>
-          </ul>
-          <p>提问质量暴露的不是临场口才，而是你的准备程度：提前写下「这场对话我最想弄清的三个问题」，对话的产出通常就已经决定了一半。</p>
-        </section>
-        <section>
-          <h2><span class="sec-num">4</span>给予与接受反馈：SBI 模型</h2>
-          <p class="lede">反馈失效的根源是混入评判。创造性领导力中心（CCL）的 SBI 只谈情境、行为、影响，让反馈可接收、可执行。</p>
           <table>
             <caption class="caption">SBI 反馈三要素</caption>
-            <thead><tr><th>要素</th><th>问自己</th><th>反例</th><th>正例</th></tr></thead>
+            <thead><tr><th>要素</th><th>问自己</th><th>反例（含评价）</th><th>正例（纯观察）</th></tr></thead>
             <tbody>
               <tr><th scope="row">情境（S）</th><td>何时何地的具体场景</td><td>「你最近……」</td><td>「昨天评审会上」</td></tr>
               <tr><th scope="row">行为（B）</th><td>可观察的动作</td><td>「你不专业」</td><td>「你打断了客户三次」</td></tr>
-              <tr><th scope="row">影响（I）</th><td>对我与项目的后果</td><td>「气死我了」</td><td>「客户没再提需求，我后面推进变难」</td></tr>
+              <tr><th scope="row">影响（I）</th><td>对我与项目的后果</td><td>「气死我了」</td><td>「客户没再提需求，我推进变难」</td></tr>
             </tbody>
           </table>
-          <p>接受反馈同样有技术：先复述再回应，不当场辩解，把每条反馈当<strong>数据样本</strong>而不是审判——单个来源可能失真，多个来源的交叉验证才值得行动。反馈后的 48 小时里给对方一个「我做了什么改变」的回音，反馈渠道才会持续向你打开。</p>
+          <p>接受反馈同样有机制支撑：先复述再回应，是把对方的话先完整解码成工作记忆中的表征，避免理解完成前就启动辩护；不当场辩解，是把单条反馈当作<strong>数据样本</strong>而非审判。反馈后 48 小时内回音「我做了什么改变」，是给对方反馈闭环的奖励信号，使渠道持续开放。</p>
         </section>
+
         <section>
-          <h2><span class="sec-num">5</span>冲突处理的五种模式</h2>
-          <p class="lede">Thomas 与 Kilmann 用「坚持己见 × 合作程度」两轴切出五种模式——没有最好的模式，只有合不合情境。</p>
+          <h2><span class="sec-num">5</span>冲突的博弈结构：五种模式的代价函数</h2>
+          <p class="lede">Thomas 与 Kilmann 用「坚持己见 × 合作程度」两轴切出五种模式。用代价—收益结构理解它们，才能判断何时该用哪种。</p>
           <table>
             <caption class="caption">五种冲突处理模式（Thomas-Kilmann）</caption>
             <thead><tr><th>模式</th><th>特征</th><th>适用场景</th><th>滥用代价</th></tr></thead>
             <tbody>
               <tr><th scope="row">竞争</th><td>高坚持 · 低合作</td><td>危机、原则问题、安全底线</td><td>关系损耗，换来表面服从</td></tr>
-              <tr><th scope="row">回避</th><td>低坚持 · 低合作</td><td>议题琐碎、时机不对、需要冷静</td><td>问题发酵，沉默被当默许</td></tr>
+              <tr><th scope="row">回避</th><td>低坚持 · 低合作</td><td>议题琐碎、时机不对、需冷静</td><td>问题发酵，沉默被当默许</td></tr>
               <tr><th scope="row">迁就</th><td>低坚持 · 高合作</td><td>议题对对方更重要、修复关系</td><td>诉求被系统性忽略</td></tr>
               <tr><th scope="row">妥协</th><td>中坚持 · 中合作</td><td>力量对等、时间有限</td><td>双方都只拿到一半</td></tr>
               <tr><th scope="row">合作</th><td>高坚持 · 高合作</td><td>关系与结果都重要、有时间深挖</td><td>成本高，不值得用于琐事</td></tr>
             </tbody>
           </table>
-          <p>TKI（Thomas-Kilmann 冲突模式工具）测出的「默认模式」揭示了关键事实：人在压力下会退回默认模式。高手与普通人的差别不在会用哪种模式，而在<strong>能否觉察并主动选择</strong>——合作不是永远正确，竞争也不天然卑鄙。</p>
-          <div class="callout tip"><span class="callout-label">选择顺序</span>先问「这个议题值得投入多少关系与时间」，再选模式：琐事用回避 / 迁就快速放行，核心利益用竞争或合作，别用妥协糊弄真正重要的议题。</div>
+          <p>把一次冲突形式化为「收益 R × 关系 V」的二维目标：竞争最大化 R 牺牲 V，迁就最大化 V 牺牲 R，回避两者归零（但省时间），妥协给出 (R/2, V/2)，而<strong>合作要把 (R, V) 同时做大</strong>——它只有在「存在整合空间」时才可行。</p>
+          <p>冲突研究的一个稳定发现：策略选择高度依赖<strong>双方目标的相关性</strong>。目标负相关（纯分配）时过度合作会被利用；高度正相关（共同交付）时竞争近乎自毁。TKI 的关键事实是：人在压力下会退回默认模式。高手与普通人的差别不在会用哪种模式，而在能否觉察并主动选择。</p>
+          <div class="callout tip"><span class="callout-label">选择顺序</span>先问「这个议题值得投入多少关系与时间」，再选模式：琐事用回避/迁就快速放行，核心利益用竞争或合作，别用妥协糊弄真正重要的议题。</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">6</span>速查卡</h2>
-          <div class="prompt-block"><span class="prompt-label">人际沟通速记</span><button class="copy-btn" type="button">复制</button>· 倾听三层：内容 → 情绪 → 需求，转折在后两层
+          <h2><span class="sec-num">6</span>前沿与研究进展</h2>
+          <p class="lede">沟通研究近半个世纪从「修辞技巧」走向「可测量的认知与语用科学」，以下几条是主干。</p>
+          <div class="timeline">
+            <div class="tl-item"><span class="tl-era">信息论奠基</span><span class="tl-date">Shannon, 1948</span><p>《通信的数学理论》给出信道容量 C = W·log₂(1+SNR) 与冗余对抗噪声的框架，后来被普遍借用来描述人际沟通的带宽与失真。</p></div>
+            <div class="tl-item"><span class="tl-era">语用学与意图推断</span><span class="tl-date">Grice, 1975</span><p>合作原则与会话含义理论，把「听者如何推断言外之意」变成可分析对象，是「说到点上」这一直觉的形式化来源。</p></div>
+            <div class="tl-item"><span class="tl-era">心智化与共情的神经基础</span><span class="tl-date">约 1990s–2010s</span><p>心智化（推断想法）与共情（感受情绪）被区分开来，并对接到部分共享的脑网络，为「读懂需求」提供可研究机制。</p></div>
+            <div class="tl-item"><span class="tl-era">共同基础与会话对齐</span><span class="tl-date">Pickering &amp; Garrod 等, 2004 起</span><p>用「互动对齐」解释对话中双方在词汇、句法、节奏上的趋同，说明理解是双向共建，而非单向传递。</p></div>
+            <div class="tl-item"><span class="tl-era">非暴力沟通的实证检验</span><span class="tl-date">2010s 至今</span><p>操作性研究不断增多，但样本与测量口径差异大，效应量证据强弱不一；宜作为「有实践支持、机制合理、尚待更强复现」的方法。</p></div>
+            <div class="tl-item"><span class="tl-era">计算机介导沟通</span><span class="tl-date">2000s 至今</span><p>表情、已读、异步消息如何改变解码难度与关系信号，是近十年增长最快的方向；关键争议在于媒介是否系统性削弱共同基础的建立。</p></div>
+          </div>
+          <div class="callout tip"><span class="callout-label">如何读这类研究</span>看到「可提升 X% 沟通效果」的结论，先问三件事：样本是谁、测的是主观感受还是可核验结果、效应能否独立重复。多数畅销结论属于「可自测的启发式」，而非「已验证的因果规律」。</div>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">7</span>跨学科视角</h2>
+          <p class="lede">沟通不是一个孤立技能，它与多个学科共享同一套形式语言。</p>
+          <div class="grid-2">
+            <div class="card"><h4>信息论</h4><p>信道容量、信噪比、冗余、纠错，解释为什么选对媒介、主动复述能降低沟通误差。</p></div>
+            <div class="card"><h4>语用学 / 语言学</h4><p>Grice 准则、预设、会话含义、共同基础，把「言外之意」与「省略的前提」变成可分析结构。</p></div>
+            <div class="card"><h4>认知心理学</h4><p>工作记忆容量决定倾听深度；认知负荷理论解释为什么信息过载时人退回字面反应。</p></div>
+            <div class="card"><h4>社会心理学与归因</h4><p>基本归因错误、防御性归因解释评价为何触发对抗；把归因从人格改到行为是 NVC/SBI 的核心。</p></div>
+            <div class="card"><h4>博弈论</h4><p>冲突模式的选择是「结果 vs 关系」的收益分配；合作只有在目标正相关（有整合空间）时才优于竞争。</p></div>
+            <div class="card"><h4>认知神经科学</h4><p>心智化与共情可区分、对应部分共享的神经网络，为「读懂需求」提供机制解释（结论仍在演进）。</p></div>
+          </div>
+          <p>放一起看，会发现一个共同结构：<strong>信息编码 + 意图推断 + 反馈校正 + 目标分配</strong>。这正是「沟通」的通用形态，也是它能迁移到跨文化协作与机器交互研究的原因。</p>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">8</span>常见误区与边界条件</h2>
+          <p class="lede">下面这些说法流传极广，但要么是错的，要么有明确的适用边界。</p>
+          <div class="compare">
+            <div class="side bad"><span class="side-tag">常见误区</span><pre>「沟通就是把话说明白」
+「NVC / 我句式在任何场合都灵」
+「倾听就是多问问题」
+「高情商就是永远不冲突」
+「文字能说清楚所有事」</pre><div class="why">问题：把工具当成普适规律。只说清楚字面（编码）却忽略对方补全（解码）；NVC 在权力不对等或对方高唤醒时可能收效有限；多问可能提高对方负荷；回避冲突会累积成系统性失声；高情绪议题在低带宽信道上必然失真。</div></div>
+            <div class="side good"><span class="side-tag">更准确的表述</span><pre>先定位是编码/信道/解码哪一环出问题，
+再选动作（改措辞 / 换媒介 / 对齐前提）
+先判断对方是否处于高唤醒，
+再决定先接情绪还是先谈事
+提问以「降低对方表达成本」为准
+冲突不是要消灭，而是要选对模式
+高模糊高情绪议题走面对面或视频</pre><div class="why">要点：沟通是双向的误差控制系统。判断一个方法是否适用，看它降低的是编码损耗、信道噪声还是解码偏差——而不是看它听起来是否「情商高」。</div></div>
+          </div>
+          <table>
+            <caption class="caption">适用边界速查</caption>
+            <thead><tr><th>方法</th><th>最适场景</th><th>不适用 / 失效场景</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">NVC 四步</th><td>关系需要维护、有改进空间</td><td>对方无改善意愿或权力悬殊时，易流于形式</td></tr>
+              <tr><th scope="row">SBI 反馈</th><td>行为具体、可观察、可改</td><td>议题是结构性/资源性的，非个人行为问题</td></tr>
+              <tr><th scope="row">三层倾听</th><td>对方有情绪、有未满足需求</td><td>紧急事务性沟通（此时先讲清事实）</td></tr>
+              <tr><th scope="row">合作（TKI）</th><td>关系与结果都重要且有时间</td><td>琐事、时间紧迫、双方目标零和</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2><span class="sec-num">9</span>速查卡</h2>
+          <div class="prompt-block"><span class="prompt-label">人际沟通速记</span><button class="copy-btn" type="button">复制</button>· 沟通误差 Δ = 编码损耗 + 信道噪声 + 解码偏差
+· 信道容量 C = W·log₂(1+SNR)：带宽与信噪比决定传得多准
+· 媒介是工程决策：高模糊/高情绪走面对面或视频
+· 冗余（复述、总结）是对抗噪声的纠错码，不是啰嗦
+· 无反馈 = 开环，发送方永不知道是否送达
+· Grice 合作原则：量、质、关系、方式四条准则
+· 会话含义：违反准则本身也携带信息
+· 共同基础越大，可省略的越多；对不懂的人要铺前提
+· 倾听瓶颈是工作记忆（约 4±1 组块）
+· 三层倾听：内容 → 情绪 → 需求，转折在后两层
 · 情绪未被命名，内容进不去：先接情绪再谈事
 · NVC 四步：观察不评判、感受指自己、需要说根源、请求可执行
-· 「你总是」是评判，「本周三次」是观察
-· 请求要具体可拒：「明天中午前给我数据行吗」
-· 提问用「什么 / 如何」开头，少用「是不是」
-· 追问三层才到真话：为什么 / 具体 / 举个例子
-· 复述确认理解，别各自以为达成了共识
-· 抛出问题后留白三秒，沉默逼出真话
-· SBI 反馈：情境 + 行为 + 影响，零评判
-· 接受反馈：先复述不辩解，当数据不当审判
+· 「你总是」是评价，「本周三次」是观察
+· SBI：情境 + 行为 + 影响，把归因从人格改到行为
+· 接受反馈当数据样本不当审判，48 小时内给回音
 · 五种模式：竞争 / 回避 / 迁就 / 妥协 / 合作
-· 模式无好坏，情境定优劣；警惕压力下的默认模式
-· 重要议题用合作或竞争，别用妥协糊弄</div>
+· 模式无好坏，情境定优劣；警惕压力下的默认模式</div>
         </section>
+
         <section>
-          <h2><span class="sec-num">7</span>练习清单</h2>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 7</span></div>
+          <h2><span class="sec-num">10</span>练习清单</h2>
+          <p class="lede">以下练习要求给出可核验的结论或产物，而不是「做过即完成」。</p>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0 / 10</span></div>
           <div class="checklist">
-            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">下次对话刻意停三秒再回应，全程不打断对方</label></div>
-            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">练一次第二层倾听：说出对方的情绪并请其确认</label></div>
-            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">把一句想说的话改写成 NVC 四步后再说出</label></div>
-            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">连续追问三次，挖出一个答案背后的真实需求</label></div>
-            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">用 SBI 结构写一条反馈（三要素齐全）再开口</label></div>
-            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">复盘最近一次冲突：双方各用了哪种模式，代价是什么</label></div>
-            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">为一件当下分歧，主动发起一次「合作」式对话</label></div>
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">复盘最近一次失败沟通，用 Δ 分解定位主因属编码、信道还是解码，并给出对应补救动作</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">从一件事出发，分别设计「面对面 / 文字」两个版本，说明为什么该议题应走高带宽信道</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">记录一次对话中双方对同一词的用法差异，画出共同基础缺口，并重写一版补偿前提的说法</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">为一次对话写 3 个开放式问题，标注各自预估的信息增益与对方表达成本</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">把一句评价性表达改写成 NVC 四步，并逐项自检是否有评价残留</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">用 SBI 写一条反馈，请对方复述其理解，检验解码是否与意图一致</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">复盘最近一次冲突：为双方各标注 TKI 模式与「结果/关系」得失</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">为一个当下分歧设定冲突处理策略并说明边界：何时改换模式、改换的触发信号是什么</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">设计一个「闭环沟通」方案：为关键信息规定确认机制（复述/回执），并在一周内实测一次</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">查阅 Grice 合作原则或一项 CMC（计算机介导沟通）研究，写出其方法、结论与至少一条局限</label></div>
           </div>
         </section>
+
       </main>
       <footer>
-        <p class="footnote">原创交互式学习资料，基于 Marshall Rosenberg《非暴力沟通》、CCL 的 SBI 反馈模型与 Thomas-Kilmann 冲突模式理论整理。</p>
+        <p class="footnote">原创交互式学习资料。模型部分参考 Shannon 与 Weaver 的信息论框架、Grice 的合作原则与会话含义理论、Pickering 与 Garrod 等关于会话对齐的研究，以及 Rosenberg 的非暴力沟通与 CCL 的 SBI 反馈模型；情绪部分参考工作记忆容量（约 4±1 组块）与认知负荷的通行结论。需注意：非暴力沟通的实证强度弱于信息论与语用学的形式化结论，心智化与共情的神经关联仍在演进，正文已标注争议状态。所有数值为量级估计，具体结论请以原始文献为准。</p>
       </footer>
     </div>
   </article>
