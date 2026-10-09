@@ -257,6 +257,35 @@
     main.appendChild(nav);
   })();
 
+  /* ---------- 首页分类速达：滚动高亮当前分类 ---------- */
+  (function () {
+    var rail = d.querySelector('.cat-nav');
+    if (!rail) return;
+    var links = [].slice.call(rail.querySelectorAll('a'));
+    var targets = [];
+    links.forEach(function (a) {
+      var id = a.getAttribute('href').slice(1);
+      var el = d.getElementById(id);
+      if (el) targets.push({ el: el, a: a });
+    });
+    if (!targets.length) return;
+    var ticking = false;
+    function sync() {
+      ticking = false;
+      var y = window.scrollY + 96;
+      var current = null;
+      for (var i = 0; i < targets.length; i++) {
+        if (targets[i].el.offsetTop <= y) current = targets[i];
+      }
+      links.forEach(function (a) { a.classList.remove('on'); });
+      if (current) current.a.classList.add('on');
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(sync); }
+    }, { passive: true });
+    sync();
+  })();
+
   /* ---------- 示意图 / 图片点击放大（lightbox）---------- */
   var lb = null;
   function ensureLb() {
