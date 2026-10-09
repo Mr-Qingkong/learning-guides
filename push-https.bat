@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 setlocal enabledelayedexpansion
 chcp 65001 >nul
 cd /d "%~dp0"
@@ -8,7 +8,7 @@ echo   Push to GitHub - https://github.com/Mr-Qingkong/learning-guides
 echo ================================================
 echo.
 
-echo [1/5] Testing network to github.com:443 ...
+echo [1/6] Testing network to github.com:443 ...
 powershell -NoProfile -Command "try { $c=New-Object System.Net.Sockets.TcpClient; $c.Connect('github.com',443); if($c.Connected){$c.Close(); exit 0} } catch { exit 1 }" >nul 2>&1
 if errorlevel 1 goto :no_direct
 
@@ -54,7 +54,7 @@ exit /b 1
 
 :do_commit
 echo.
-echo [2/5] Cleaning up any global proxy leftovers for this repo ...
+echo [2/6] Cleaning up any global proxy leftovers for this repo ...
 git config --local --unset http.proxy >nul 2>&1
 git config --local --unset https.proxy >nul 2>&1
 if not "%GITPROXY%"=="" (
@@ -62,15 +62,37 @@ if not "%GITPROXY%"=="" (
   git config --local https.proxy %GITPROXY%
 )
 
-echo [3/5] Configuring remote - HTTPS...
+echo [3/6] Configuring remote - HTTPS...
 git remote remove origin >nul 2>&1
 git remote add origin https://github.com/Mr-Qingkong/learning-guides.git
 
-echo [4/5] Committing local changes...
+echo [4/6] Committing local changes...
 git add -A
 git commit -m "update %DATE%" >nul 2>&1
 
-echo [5/5] Pushing to GitHub ...
+echo [5/6] Fetching remote to check for divergence...
+git fetch origin 2>nul
+if errorlevel 1 (
+  echo   [WARN] fetch failed (network). Will try pushing anyway.
+  goto :do_push
+)
+
+if not exist ".git\refs\remotes\origin\main" goto :do_push
+
+for /f %%A in ('git rev-list --count HEAD..origin/main 2^>nul') do set BEHIND=%%A
+if "%BEHIND%"=="0" goto :do_push
+
+echo   Remote is ahead by %BEHIND% commit^(s^). Merging remote changes first...
+git merge --no-edit origin/main
+if errorlevel 1 (
+  echo   [X] Merge conflict. Resolve it manually in this folder, then rerun.
+  echo       Files in conflict are listed above. Nothing has been pushed.
+  pause
+  exit /b 1
+)
+
+:do_push
+echo [6/6] Pushing to GitHub ...
 echo   If a browser window pops up asking to sign in to GitHub, complete the login there.
 echo.
 git push -u origin main
@@ -88,10 +110,12 @@ echo   [X] Push failed. Check the error message above.
 echo.
 echo   - "Repository not found"  -^> create an EMPTY repo "learning-guides"
 echo                               at https://github.com/new, then retry.
-echo   - "SSL_read ... errno 10053" / "Connection was aborted"
-echo                              -^> network was cut mid-transfer. Retry, or use
-echo                                 push-ssh443.bat. Increasing buffer may help:
-echo                                   git config --global http.postBuffer 524288000
+echo   - "rejected ... fetch first" -^> remote has new commits. Rerun this file;
+echo                                  it now auto-merges them before pushing.
+echo   - "SSL_read ... errno 10053" / "getaddrinfo thread failed" / "Connection was aborted"
+echo                              -^> network was cut mid-transfer. Just rerun later.
+echo                                 If it keeps failing, use push-ssh443.bat.
 echo.
 pause
 exit /b 1
+
