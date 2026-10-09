@@ -340,6 +340,34 @@ body.nav-open .sidebar-scrim { display: block; }
 /* 目录页更宽以铺满屏幕；指南页保持阅读友好的 1180px */
 body.hub-page .page__content,
 body.hub-page .report-intro__surface { max-width: 1380px; }
+
+/* —— 首页紧凑化：减少滚动 —— */
+body.hub-page { padding-top: 1.25rem; }
+body.hub-page .report-intro__surface { padding: var(--space-5) var(--space-6); }
+body.hub-page .report-intro h1 { font-size: clamp(22px, 2.6vw, 30px); }
+body.hub-page .report-intro__summary { margin-top: var(--space-2); font-size: 14.5px; line-height: 1.7; }
+body.hub-page .intro-meta { margin-top: var(--space-3); }
+body.hub-page .intro-meta span { font-size: 12px; padding: 3px 10px; }
+body.hub-page .featured { margin-top: 0; padding: var(--space-4) var(--space-5); border-left-width: 4px; }
+body.hub-page .featured h3 { font-size: 17px; }
+body.hub-page .featured .f-sub { font-size: 12.5px; margin-top: 2px; }
+body.hub-page .featured .f-logo { width: 42px; height: 42px; font-size: 18px; }
+body.hub-page .featured .f-meta { margin-top: var(--space-3); }
+body.hub-page .featured .f-meta span { font-size: 11.5px; padding: 2px 9px; }
+body.hub-page main section { margin-top: var(--space-6); }
+body.hub-page main section > h2 { font-size: 17px; padding-bottom: var(--space-2); margin-bottom: var(--space-4); }
+body.hub-page main section > h2 .bar { height: 18px; }
+body.hub-page .ch-grid { gap: var(--space-3); }
+body.hub-page .ch { padding: var(--space-4); gap: var(--space-3); border-radius: var(--radius-md); }
+body.hub-page .ch__no { width: 38px; height: 38px; font-size: 15px; border-radius: var(--radius-sm); }
+body.hub-page .ch__name { font-size: 15.5px; }
+body.hub-page .ch__desc { font-size: 13px; margin-top: 4px; line-height: 1.55; }
+body.hub-page .tips { margin-top: var(--space-6); padding: var(--space-4) var(--space-5); }
+body.hub-page .tips h3 { font-size: 14.5px; margin-bottom: var(--space-2); }
+body.hub-page .tips ul { columns: 2; column-gap: var(--space-6); margin-left: 1.1em; }
+body.hub-page .tips li { margin: 4px 0; break-inside: avoid; font-size: 13.5px; }
+body.hub-page footer { margin-top: var(--space-5); padding-top: var(--space-4); }
+body.hub-page footer .footnote { margin-top: 0; line-height: 1.7; }
 .hub-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); margin-top: var(--space-7); }
 .hub-stat { background: var(--bg2); border: 1px solid var(--rule); border-radius: var(--radius-md); padding: var(--space-4); text-align: center; }
 .hub-stat b { display: block; font-size: 26px; font-weight: 700; color: var(--accent); line-height: 1.2; }
@@ -406,6 +434,8 @@ main section > h2 .bar { flex: none; width: 5px; height: 22px; background: var(-
   .report-intro__surface { padding: var(--space-5); }
   .grid-2, .grid-3, .compare, .ch-grid { grid-template-columns: 1fr; }
   main section > h2 { flex-wrap: wrap; font-size: 19px; }
+  body.hub-page main section > h2 { font-size: 16px; }
+  body.hub-page .tips ul { columns: 1; }
   table { font-size: 13px; }
   th, td { padding: 7px 9px; }
   .featured::after { display: none; }
